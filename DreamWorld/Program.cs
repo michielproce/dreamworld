@@ -1,5 +1,3 @@
-using System;
-
 namespace DreamWorld
 {
     static class Program

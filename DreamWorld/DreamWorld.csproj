@@ -70,6 +70,9 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -83,6 +86,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cameras\Camera.cs" />
+    <Compile Include="Cameras\DebugCamera.cs" />
+    <Compile Include="Cameras\ThirdPersonCamera.cs" />
+    <Compile Include="Entities\Player.cs" />
+    <Compile Include="InputHandlers\GamepadHandler.cs" />
+    <Compile Include="InputHandlers\InputHandler.cs" />
+    <Compile Include="InputHandlers\KeyboardHandler.cs" />
+    <Compile Include="InputHandlers\MouseHandler.cs" />
+    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Levels\Entities\TestBall.cs" />
+    <Compile Include="Levels\Level.cs" />
+    <Compile Include="Levels\TestLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="DreamWorldGame.cs" />
