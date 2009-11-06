@@ -97,6 +97,7 @@
     <Compile Include="InputManagement\Handlers\KeyboardHandler.cs" />
     <Compile Include="InputManagement\Handlers\MouseHandler.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="InputManagement\Types\DebugInput.cs" />
     <Compile Include="InputManagement\Types\MenuInput.cs" />
     <Compile Include="InputManagement\Types\PlayerInput.cs" />
     <Compile Include="Levels\Level.cs" />

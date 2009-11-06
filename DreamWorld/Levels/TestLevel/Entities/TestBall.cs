@@ -8,6 +8,7 @@ namespace DreamWorld.Levels.TestLevel.Entities
         protected override void LoadContent()
         {
             Model = Game.Content.Load<Model>(@"Models\Test\Ball");
+            base.LoadContent();
         }
     }
 }

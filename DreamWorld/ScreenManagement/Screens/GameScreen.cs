@@ -21,7 +21,11 @@ namespace DreamWorld.ScreenManagement.Screens
         {
             base.Initialize();
 
-            CurrentCamera = new DebugCamera(ScreenManager.Game);
+            CurrentCamera = new DebugCamera
+                                {
+                                    GraphicsDevice = ScreenManager.Game.GraphicsDevice,
+                                    InputManager = ((DreamWorldGame) ScreenManager.Game).InputManager
+                                };
             CurrentCamera.Initialize();
 
             CurrentLevel = new TestLevel {GameScreen = this};

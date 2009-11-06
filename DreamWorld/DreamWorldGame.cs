@@ -15,11 +15,11 @@ namespace DreamWorld
         {
             GraphicsDeviceManager = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
-            InputManager = new InputManager(this);
+            
             ScreenManager = new ScreenManager(this);
-            Components.Add(InputManager);
+            InputManager = new InputManager(this);                     
             Components.Add(ScreenManager);
+            Components.Add(InputManager);
             ScreenManager.AddScreen(new GameScreen());
         }     
     }

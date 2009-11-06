@@ -2,11 +2,10 @@
 {
     public abstract class Input
     {
-        protected InputManager InputManager { get; private set; }
+        public InputManager InputManager { protected get; set; }
 
-        protected Input(InputManager inputManager)
-        {
-            InputManager = inputManager;
+        protected Input()
+        {           
         }
     }
 }
