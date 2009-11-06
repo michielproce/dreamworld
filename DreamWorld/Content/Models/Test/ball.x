@@ -8094,7 +8094,7 @@ Frame Sphere01 {
     0.000000;0.000000;0.000000;;
 
     TextureFilename Diffuse {
-     "ball.tga";
+     "Ball.tga";
     }
    }
   }

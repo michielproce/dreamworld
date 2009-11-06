@@ -100,6 +100,8 @@
     <Compile Include="InputManagement\Types\MenuInput.cs" />
     <Compile Include="InputManagement\Types\PlayerInput.cs" />
     <Compile Include="Levels\Level.cs" />
+    <Compile Include="Levels\TestLevel\Entities\TestBall.cs" />
+    <Compile Include="Levels\TestLevel\TestLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="DreamWorldGame.cs" />
