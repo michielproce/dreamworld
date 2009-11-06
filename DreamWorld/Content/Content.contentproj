@@ -38,10 +38,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\ball.x">
+    <Compile Include="Models\Test\ball.x">
       <Name>ball</Name>
       <Importer>XImporter</Importer>
-      <Processor>ModelProcessor</Processor>
+      <Processor>DreamWorldModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -62,6 +62,12 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DreamWorldContentPipeline\DreamWorldContentPipeline.csproj">
+      <Project>{139D1A30-7557-483B-BD22-5E88840BC136}</Project>
+      <Name>DreamWorldContentPipeline</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Textures\" />
