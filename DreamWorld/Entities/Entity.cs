@@ -21,6 +21,7 @@ namespace DreamWorld.Entities
         public Matrix World { get; private set; }
 
         private Dictionary<ModelMeshPart, Effect> originalEffects;
+        private Matrix[] transforms;
 
         protected Entity()
         {
@@ -44,6 +45,8 @@ namespace DreamWorld.Entities
                         originalEffects.Add(part, part.Effect);
                     }
                 }
+                transforms = new Matrix[Model.Bones.Count];
+                Model.CopyAbsoluteBoneTransformsTo(transforms);
             }
         }
 
@@ -61,7 +64,7 @@ namespace DreamWorld.Entities
                 foreach (ModelMeshPart part in mesh.MeshParts)
                 {
                     part.Effect = Effect;
-                    part.Effect.Parameters["world"].SetValue(World);
+                    part.Effect.Parameters["world"].SetValue(transforms[mesh.ParentBone.Index] * World);
                     part.Effect.Parameters["view"].SetValue(Camera.View);
                     part.Effect.Parameters["projection"].SetValue(Camera.Projection);
                     part.Effect.Parameters["Texture"].SetValue(((BasicEffect)originalEffects[part]).Texture);
