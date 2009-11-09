@@ -58,7 +58,7 @@ technique Default
 {
     pass P0
     {
-        VertexShader = compile vs_1_0 VertexShader();
-        PixelShader = compile ps_1_0 PixelShader();
+        VertexShader = compile vs_1_1 VertexShader();
+        PixelShader = compile ps_1_1 PixelShader();
     }
 }
