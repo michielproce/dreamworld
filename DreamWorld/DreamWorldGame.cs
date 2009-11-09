@@ -20,7 +20,7 @@ namespace DreamWorld
             InputManager = new InputManager(this);                     
             Components.Add(ScreenManager);
             Components.Add(InputManager);
-            ScreenManager.AddScreen(new GameScreen());
+            ScreenManager.AddScreen(new MainMenu());
         }     
     }
 }

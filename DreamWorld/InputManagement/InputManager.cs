@@ -17,13 +17,13 @@ namespace DreamWorld.InputManagement
 
         public InputManager(Game game) : base(game)
         {            
-            Player = new PlayerInput {InputManager = this};
-            Menu = new MenuInput {InputManager = this};
-            Debug = new DebugInput{InputManager=this};
+            Player = new PlayerInput    {InputManager = this};
+            Menu = new MenuInput        {InputManager = this};
+            Debug = new DebugInput      {InputManager = this};
 
-            GamePad = new GamePadHandler {InputManager = this};
-            Keyboard = new KeyboardHandler {InputManager = this};
-            Mouse = new MouseHandler {InputManager = this}; 
+            GamePad = new GamePadHandler    {InputManager = this};
+            Keyboard = new KeyboardHandler  {InputManager = this};
+            Mouse = new MouseHandler        {InputManager = this}; 
         }
 
         public override void Initialize()

@@ -109,6 +109,11 @@
     <Compile Include="ScreenManagement\Screen.cs" />
     <Compile Include="ScreenManagement\ScreenManager.cs" />
     <Compile Include="ScreenManagement\Screens\GameScreen.cs" />
+    <Compile Include="ScreenManagement\Screens\LoadingScreen.cs" />
+    <Compile Include="ScreenManagement\Screens\MainMenu.cs" />
+    <Compile Include="ScreenManagement\Screens\MenuEntry.cs" />
+    <Compile Include="ScreenManagement\Screens\MenuScreen.cs" />
+    <Compile Include="ScreenManagement\Screens\MessageBoxScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

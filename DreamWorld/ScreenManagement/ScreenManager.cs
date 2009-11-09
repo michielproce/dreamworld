@@ -1,48 +1,323 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
+using DreamWorld.InputManagement;
+using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.ScreenManagement
 {
+    /// <summary>
+    /// The screen manager is a component which manages one or more Screen
+    /// instances. It maintains a stack of screens, calls their Update and Draw
+    /// methods at the appropriate times, and automatically routes input to the
+    /// topmost active screen.
+    /// </summary>
     public class ScreenManager : DrawableGameComponent
     {
-        private List<Screen> screens;
+        #region Fields
 
-        public ScreenManager(Game game) : base(game)
+        List<Screen> screens = new List<Screen>();
+        List<Screen> screensToUpdate = new List<Screen>();
+
+        InputManager input;
+
+        SpriteBatch spriteBatch;
+        SpriteFont font;
+        Texture2D blankTexture;
+
+        bool isInitialized;
+
+        bool traceEnabled;
+
+        #endregion
+
+        #region Properties
+
+
+        /// <summary>
+        /// A default SpriteBatch shared by all the screens. This saves
+        /// each screen having to bother creating their own local instance.
+        /// </summary>
+        public SpriteBatch SpriteBatch
         {
-            screens = new List<Screen>();
+            get { return spriteBatch; }
         }
 
+
+        /// <summary>
+        /// A default font shared by all the screens. This saves
+        /// each screen having to bother loading their own local copy.
+        /// </summary>
+        public SpriteFont Font
+        {
+            get { return font; }
+        }
+
+
+        /// <summary>
+        /// If true, the manager prints out a list of all the screens
+        /// each time it is updated. This can be useful for making sure
+        /// everything is being added and removed at the right times.
+        /// </summary>
+        public bool TraceEnabled
+        {
+            get { return traceEnabled; }
+            set { traceEnabled = value; }
+        }
+
+
+        #endregion
+
+        #region Initialization
+
+
+        /// <summary>
+        /// Constructs a new screen manager component.
+        /// </summary>
+        public ScreenManager(Game game)
+            : base(game)
+        {
+        }
+
+
+        /// <summary>
+        /// Initializes the screen manager component.
+        /// </summary>
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            DreamWorldGame dreamWorldGame = (DreamWorldGame)Game;
+            input = dreamWorldGame.InputManager;
+            isInitialized = true;
+        }
+
+
+        /// <summary>
+        /// Load your graphics content.
+        /// </summary>
+        protected override void LoadContent()
+        {
+            // Load content belonging to the screen manager.
+            ContentManager content = Game.Content;
+
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            font = content.Load<SpriteFont>(@"Fonts/Test/menufont");
+            blankTexture = content.Load<Texture2D>(@"Textures/blank");
+
+            // Tell each of the screens to load their content.
+            foreach (Screen screen in screens)
+            {
+                if (screen.LoadingScreen != null)
+                {
+                    AddScreen(screen.LoadingScreen);
+
+                    Thread loadingThread = new Thread(screen.LoadContent);
+                    loadingThread.Start();
+                }
+                else
+                {
+                    screen.LoadContent();
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Unload your graphics content.
+        /// </summary>
+        protected override void UnloadContent()
+        {
+            // Tell each of the screens to unload their content.
+            foreach (Screen screen in screens)
+            {
+                screen.UnloadContent();
+            }
+        }
+
+
+        #endregion
+
+        #region Update and Draw
+
+
+        /// <summary>
+        /// Allows each screen to run logic.
+        /// </summary>
+        public override void Update(GameTime gameTime)
+        {
+
+            // Make a copy of the master screen list, to avoid confusion if
+            // the process of updating one screen adds or removes others.
+            screensToUpdate.Clear();
+
+            foreach (Screen screen in screens)
+                screensToUpdate.Add(screen);
+
+            bool otherScreenHasFocus = !Game.IsActive;
+            bool coveredByOtherScreen = false;
+
+            // Loop as long as there are screens waiting to be updated.
+            while (screensToUpdate.Count > 0)
+            {
+                // Pop the topmost screen off the waiting list.
+                Screen screen = screensToUpdate[screensToUpdate.Count - 1];
+                screensToUpdate.RemoveAt(screensToUpdate.Count - 1);
+
+                // Update the screen.
+                screen.OtherScreenHasFocus = otherScreenHasFocus;
+                screen.CoveredByOtherScreen = coveredByOtherScreen;
+                screen.Update(gameTime);
+
+                if (screen.ScreenState == ScreenState.TransitionOn ||
+                    screen.ScreenState == ScreenState.Active)
+                {
+                    // If this is the first active screen we came across,
+                    // give it a chance to handle input.
+                    if (!otherScreenHasFocus)
+                    {
+                        if (screen is MenuScreen || screen is MessageBoxScreen || screen is LoadingScreen)
+                        {
+                            screen.HandleInput(input.Menu);
+                        }
+                        else if (screen is GameScreen)
+                        {
+                            screen.HandleInput(input.Player);
+                        }
+
+                        otherScreenHasFocus = true;
+                    }
+
+                    // If this is an active non-popup, inform any subsequent
+                    // screens that they are covered by it.
+                    if (!screen.IsPopup)
+                        coveredByOtherScreen = true;
+                }
+            }
+
+            // Print debug trace?
+            if (traceEnabled)
+                TraceScreens();
+        }
+
+
+        /// <summary>
+        /// Prints a list of all the screens, for debugging.
+        /// </summary>
+        void TraceScreens()
+        {
+            List<string> screenNames = new List<string>();
+
+            foreach (Screen screen in screens)
+                screenNames.Add(screen.GetType().Name + screen.ScreenState);
+
+            Trace.WriteLine(string.Join(", ", screenNames.ToArray()));
+        }
+
+
+        /// <summary>
+        /// Tells each screen to draw itself.
+        /// </summary>
+        public override void Draw(GameTime gameTime)
+        {
+            DreamWorldGame dreamWorldGame = (DreamWorldGame)Game;
+            dreamWorldGame.GraphicsDeviceManager.GraphicsDevice.Clear(Color.Black);
+
+            foreach (Screen screen in screens)
+            {
+                if (screen.ScreenState == ScreenState.Hidden)
+                    continue;
+
+                screen.Draw(gameTime);
+            }
+        }
+
+
+        #endregion
+
+        #region Public Methods
+
+
+        /// <summary>
+        /// Adds a new screen to the screen manager.
+        /// </summary>
         public void AddScreen(Screen screen)
         {
             screen.ScreenManager = this;
+            screen.IsExiting = false;
+
             screens.Add(screen);
+
+            // If we have a graphics device, tell the screen to load content.
+            if (isInitialized)
+            {
+                if (screen.LoadingScreen != null)
+                {
+                    AddScreen(screen.LoadingScreen);
+
+                    Thread loadingThread = new Thread(screen.LoadContent);
+                    loadingThread.Start();
+                }
+                else
+                {
+                    screen.LoadContent();
+                }
+            }
+
         }
 
+
+        /// <summary>
+        /// Removes a screen from the screen manager. You should normally
+        /// use Screen.ExitScreen instead of calling this directly, so
+        /// the screen can gradually transition off rather than just being
+        /// instantly removed.
+        /// </summary>
         public void RemoveScreen(Screen screen)
         {
-            screens.Remove(screen);            
+            // If we have a graphics device, tell the screen to unload content.
+            if (isInitialized)
+            {
+                screen.UnloadContent();
+            }
+
+            screens.Remove(screen);
+            screensToUpdate.Remove(screen);
         }
 
-        public override void Initialize()
+
+        /// <summary>
+        /// Expose an array holding all the screens. We return a copy rather
+        /// than the real master list, because screens should only ever be added
+        /// or removed using the AddScreen and RemoveScreen methods.
+        /// </summary>
+        public Screen[] GetScreens()
         {
-            foreach (Screen screen in screens)
-                screen.Initialize();
-            base.Initialize();
+            return screens.ToArray();
         }
 
-        public override void Update(GameTime gameTime)
+
+        /// <summary>
+        /// Helper draws a translucent black fullscreen sprite, used for fading
+        /// screens in and out, and for darkening the background behind popups.
+        /// </summary>
+        public void FadeBackBufferToBlack(int alpha)
         {
-            foreach (Screen screen in screens)
-                screen.Update(gameTime);
-            base.Update(gameTime);
+            Viewport viewport = GraphicsDevice.Viewport;
+
+            spriteBatch.Begin();
+
+            spriteBatch.Draw(blankTexture,
+                             new Rectangle(0, 0, viewport.Width, viewport.Height),
+                             new Color(0, 0, 0, (byte)alpha));
+
+            spriteBatch.End();
         }
 
-        public override void Draw(GameTime gameTime)
-        {
-            foreach (Screen screen in screens)
-                screen.Draw(gameTime);
-            base.Update(gameTime);
-        }
+
+        #endregion
     }
 }
