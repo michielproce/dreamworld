@@ -1,14 +1,12 @@
 ﻿using System;
-using DreamWorld.Cameras;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Entities
 {
-    class Terrain : Entity
+    public class Terrain : Entity
     {
         private string terrain;
-        protected HeightMapInfo HeightMapInfo { get; set; }
+        public HeightMapInfo HeightMapInfo { get; private set; }
 
         public Terrain(string terrain)
         {

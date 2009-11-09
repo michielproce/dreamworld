@@ -27,12 +27,20 @@ namespace DreamWorld.InputManagement.Handlers
 
             Movement = new Vector2
                {
-                   X = state.X - center.X,
-                   Y = state.Y - center.Y
+                   X =  center.X - state.X,
+                   Y = center.Y - state.Y
                };            
 
             PreviousState = Mouse.GetState();
             ResetMouse();
+        }
+
+        public int ScrollWheel
+        {
+            get
+            {
+                return Mouse.GetState().ScrollWheelValue - PreviousState.ScrollWheelValue;
+            }
         }
 
         private void ResetMouse()

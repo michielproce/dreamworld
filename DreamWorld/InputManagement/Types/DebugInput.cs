@@ -30,9 +30,17 @@ namespace DreamWorld.InputManagement.Types
             {
                 return new Vector2
                    {
-                       X = InputManager.Mouse.Movement.X*-RotationSpeed,
-                       Y = InputManager.Mouse.Movement.Y*-RotationSpeed
+                       X = InputManager.Mouse.Movement.X * RotationSpeed,
+                       Y = InputManager.Mouse.Movement.Y * RotationSpeed
                    };
+            }
+        }
+
+        public bool ToggleDebugCamera
+        {
+            get
+            {
+                return InputManager.Keyboard.NewlyPressed(Keys.Tab);
             }
         }
     }

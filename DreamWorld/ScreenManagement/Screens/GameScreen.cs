@@ -20,17 +20,17 @@ namespace DreamWorld.ScreenManagement.Screens
         {
             base.Initialize();
 
-            CurrentCamera = new DebugCamera
+            CurrentLevel = new VillageLevel { GameScreen = this };
+
+            CurrentCamera = new ThirdPersonCamera
             {
+                Level = CurrentLevel,
                 GraphicsDevice = ScreenManager.Game.GraphicsDevice,
                 InputManager = ((DreamWorldGame)ScreenManager.Game).InputManager
             };
-            CurrentCamera.Initialize();
-
-            CurrentLevel = new VillageLevel { GameScreen = this };
+            
             CurrentLevel.Initialize();
-
-
+            CurrentCamera.Initialize();
         }
 
         protected override void LoadContent()

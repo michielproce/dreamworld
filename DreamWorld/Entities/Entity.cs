@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DreamWorld.Cameras;
 using DreamWorld.Levels;
 using Microsoft.Xna.Framework;
@@ -10,10 +11,11 @@ namespace DreamWorld.Entities
     {        
         public Game Game { protected get; set; }
         public Camera Camera { protected get; set; }
+        public Level Level { protected get; set; }
         public Effect Effect { protected get; set; }
-     
+        
         public Vector3 Position { get; set; }
-        public Quaternion Rotation { get; protected set; }
+        public Vector3 Rotation { get; protected set; }
         public Vector3 Scale { get; protected set; }
         public Model Model { get; protected set; }
         
@@ -36,29 +38,29 @@ namespace DreamWorld.Entities
 
         protected virtual void LoadContent()
         {
-            if (Model != null)
+            if (Model == null)
+                throw new InvalidOperationException("Tried to create an entity without a Model.");
+            
+            foreach (ModelMesh mesh in Model.Meshes)
             {
-                foreach (ModelMesh mesh in Model.Meshes)
+                foreach (ModelMeshPart part in mesh.MeshParts)
                 {
-                    foreach (ModelMeshPart part in mesh.MeshParts)
-                    {
-                        originalEffects.Add(part, part.Effect);
-                    }
+                    originalEffects.Add(part, part.Effect);
                 }
-                transforms = new Matrix[Model.Bones.Count];
-                Model.CopyAbsoluteBoneTransformsTo(transforms);
             }
+            transforms = new Matrix[Model.Bones.Count];
+            Model.CopyAbsoluteBoneTransformsTo(transforms);            
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
-            World = Matrix.CreateTranslation(Position) *
-                Matrix.CreateFromQuaternion(Rotation) *
+            World = Matrix.CreateFromYawPitchRoll(Rotation.Y, Rotation.X, Rotation.Z) *
+                Matrix.CreateTranslation(Position) *                 
                 Matrix.CreateScale(Scale);
         }
 
         public void Draw(GameTime gameTime)
-        {
+        {            
             foreach (ModelMesh mesh in Model.Meshes)
             {
                 foreach (ModelMeshPart part in mesh.MeshParts)

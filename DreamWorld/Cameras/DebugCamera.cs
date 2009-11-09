@@ -17,7 +17,9 @@ namespace DreamWorld.Cameras
                MathHelper.ToRadians(45.0f),
                GraphicsDevice.Viewport.AspectRatio,
                1.0f,
-               10000.0f);          
+               10000.0f);
+
+            base.Initialize();
         }
 
         public override void Update(GameTime gameTime)
@@ -30,6 +32,8 @@ namespace DreamWorld.Cameras
                     position,
                     position + RotatedDirection(Vector3.Forward),
                     Vector3.Up);
+
+            base.Update(gameTime);
         }
 
         private void Move(Vector3 direction)

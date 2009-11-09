@@ -6,7 +6,8 @@ namespace DreamWorld.Levels.VillageLevel
     {
         public override void Initialize()
         {
-            AddEntity(new VillageTerrain());
+            Terrain = new VillageTerrain();
+            AddEntity(Terrain);
             base.Initialize();
         }
     }
