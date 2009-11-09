@@ -29,8 +29,6 @@ namespace DreamWorld.ScreenManagement.Screens
 
         void PlayGameMenuEntrySelected(object sender, EventArgs e)
         {
-            Console.WriteLine("play game");
-
             Screen gameScreen = new GameScreen();
             
             ScreenManager.AddScreen(gameScreen);
@@ -40,8 +38,7 @@ namespace DreamWorld.ScreenManagement.Screens
 
         void OptionsMenuEntrySelected(object sender, EventArgs e)
         {
-            Console.WriteLine("Options");
-            //ScreenManager.AddScreen(new OptionsMenuScreen(), e.PlayerIndex);
+
         }
 
         protected override void OnCancel()
