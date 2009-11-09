@@ -41,7 +41,7 @@
     <Compile Include="Models\Test\Ball.x">
       <Name>Ball</Name>
       <Importer>XImporter</Importer>
-      <Processor>DreamWorldModelProcessor</Processor>
+      <Processor>DefaultModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -70,11 +70,20 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\blank.png">
+	<Compile Include="Textures\blank.png">
       <Name>blank</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+	<Compile Include="Terrains\village.bmp">
+      <Name>village</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TerrainProcessor</Processor>
+      <ProcessorParameters_TerrainTextureFilename>sand.jpg</ProcessorParameters_TerrainTextureFilename>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Textures\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Textures\Test\gradient.png">
