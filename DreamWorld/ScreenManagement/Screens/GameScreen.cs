@@ -58,8 +58,9 @@ namespace DreamWorld.ScreenManagement.Screens
         {
             if (!OtherScreenHasFocus)
             {
-                CurrentCamera.Update(gameTime);
                 CurrentLevel.Update(gameTime);
+                CurrentCamera.Update(gameTime);
+                
             }
             base.Update(gameTime);
         }
@@ -78,7 +79,7 @@ namespace DreamWorld.ScreenManagement.Screens
             }
         }
 
-        public void ConfirmExitMessageBoxAccepted(object sender, EventArgs e)
+        private void ConfirmExitMessageBoxAccepted(object sender, EventArgs e)
         {
             ScreenManager.AddScreen(new MainMenuScreen());
             ExitScreen();

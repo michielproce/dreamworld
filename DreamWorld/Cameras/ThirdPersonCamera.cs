@@ -5,7 +5,8 @@ namespace DreamWorld.Cameras
 {
     class ThirdPersonCamera : Camera
     {
-        private const float camFloorDistance = 1f;
+        private const float minCameraHeight = 2f;
+        private bool camOnFloor;
 
         private const float minDistance = 3f;
         private const float maxDistance = 30f;
@@ -37,7 +38,10 @@ namespace DreamWorld.Cameras
             if (distance > maxDistance)
                 distance = maxDistance;
 
-            verticalRotation -= InputManager.Player.VerticalRotation;
+            float verticalRotationInput = InputManager.Player.VerticalRotation;
+            if (camOnFloor && verticalRotationInput < 0)
+                verticalRotationInput = 0;
+            verticalRotation -= verticalRotationInput;
             if (verticalRotation < minVerticalRotation)
                 verticalRotation = minVerticalRotation;
             if (verticalRotation > maxVerticalRotation)
@@ -52,10 +56,16 @@ namespace DreamWorld.Cameras
 
             if(Level.Terrain != null)
             {
-                float cameraHeight = Level.Terrain.HeightMapInfo.GetHeight(cameraPosition) + camFloorDistance;
-                if (cameraPosition.Y < cameraHeight)                
+                float cameraHeight = Level.Terrain.HeightMapInfo.GetHeight(cameraPosition) + minCameraHeight;
+                if (cameraPosition.Y < cameraHeight)
+                {
+                    camOnFloor = true;
                     cameraPosition.Y = cameraHeight;
-                
+                }
+                else
+                {
+                    camOnFloor = false;
+                }
             }
 
             View = Matrix.CreateLookAt(

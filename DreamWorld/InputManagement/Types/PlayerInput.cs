@@ -50,6 +50,14 @@ namespace DreamWorld.InputManagement.Types
             }
         }
 
+        public bool Jump
+        {
+            get
+            {
+                return InputManager.Keyboard.NewlyPressed(Keys.Space);   
+            }
+        }
+
         public bool ShowPauseMenu
         {
             get
