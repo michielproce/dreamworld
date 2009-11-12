@@ -15,7 +15,7 @@ namespace DreamWorld.Entities
 
         protected override void LoadContent()
         {
-            Model = Game.Content.Load<Model>(@"Terrains\" + terrain);
+            Model = Screen.Content.Load<Model>(@"Terrains\" + terrain);
             HeightMapInfo = Model.Tag as HeightMapInfo;
             if (HeightMapInfo == null)
             {

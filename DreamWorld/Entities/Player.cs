@@ -12,7 +12,7 @@ namespace DreamWorld.Entities
 
         protected override void LoadContent()
         {
-            Model = Game.Content.Load<Model>(@"Models\Test\Ball");
+            Model = Screen.Content.Load<Model>(@"Models\Test\Ball");
             base.LoadContent();
         }
 

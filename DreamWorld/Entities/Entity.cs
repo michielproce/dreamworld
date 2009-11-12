@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using DreamWorld.Cameras;
 using DreamWorld.Levels;
+using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Entities
 {
     public abstract class Entity
-    {        
-        public Game Game { protected get; set; }
+    {
+        public GameScreen Screen { protected get; set; }
         public Camera Camera { protected get; set; }
         public Level Level { protected get; set; }
         public Effect Effect { protected get; set; }

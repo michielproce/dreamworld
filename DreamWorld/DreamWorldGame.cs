@@ -1,3 +1,4 @@
+using System.Threading;
 using DreamWorld.InputManagement;
 using DreamWorld.ScreenManagement;
 using DreamWorld.ScreenManagement.Screens;
@@ -20,7 +21,8 @@ namespace DreamWorld
             InputManager = new InputManager(this);                     
             Components.Add(ScreenManager);
             Components.Add(InputManager);
-            ScreenManager.AddScreen(new GameScreen());
+
+            ScreenManager.AddScreen(new MainMenuScreen());
         }     
     }
 }

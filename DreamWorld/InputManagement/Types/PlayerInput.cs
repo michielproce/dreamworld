@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using DreamWorld.InputManagement.Handlers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace DreamWorld.InputManagement.Types
@@ -46,6 +47,24 @@ namespace DreamWorld.InputManagement.Types
             get
             {
                 return InputManager.Mouse.ScrollWheel / 100f;
+            }
+        }
+
+        public bool ShowPauseMenu
+        {
+            get
+            {
+                return InputManager.Keyboard.NewlyPressed(Keys.Escape)
+                     ||
+                    InputManager.GamePad.NewlyPressed(Buttons.B);
+            }
+        }
+
+        public Gestures RotateGroup
+        {
+            get
+            {
+                return InputManager.GamePad.NewGesture;
             }
         }
     }
