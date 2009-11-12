@@ -93,7 +93,7 @@
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\Terrain.cs" />
     <Compile Include="InputManagement\Handlers\GamePadHandler.cs" />
-    <Compile Include="InputManagement\Handlers\Gesture.cs" />
+    <Compile Include="InputManagement\Gesture.cs" />
     <Compile Include="InputManagement\InputHandler.cs" />
     <Compile Include="InputManagement\InputManager.cs" />
     <Compile Include="InputManagement\Input.cs" />
@@ -114,8 +114,8 @@
     <Compile Include="ScreenManagement\Screens\GameScreen.cs" />
     <Compile Include="ScreenManagement\Screens\LoadingScreen.cs" />
     <Compile Include="ScreenManagement\Screens\MainMenuScreen.cs" />
-    <Compile Include="ScreenManagement\Screens\MenuEntry.cs" />
-    <Compile Include="ScreenManagement\Screens\MenuScreen.cs" />
+    <Compile Include="ScreenManagement\MenuEntry.cs" />
+    <Compile Include="ScreenManagement\MenuScreen.cs" />
     <Compile Include="ScreenManagement\Screens\MessageBoxScreen.cs" />
   </ItemGroup>
   <ItemGroup>

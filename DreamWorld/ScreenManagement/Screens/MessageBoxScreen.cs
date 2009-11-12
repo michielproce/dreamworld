@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using DreamWorld.InputManagement.Types;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;

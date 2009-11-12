@@ -1,7 +1,8 @@
-﻿using System;
+using System;
+using DreamWorld.InputManagement.Handlers;
 using Microsoft.Xna.Framework;
 
-namespace DreamWorld.InputManagement.Handlers
+namespace DreamWorld.InputManagement
 {
     public enum Gestures
     {

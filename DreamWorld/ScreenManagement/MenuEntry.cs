@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace DreamWorld.ScreenManagement.Screens
+namespace DreamWorld.ScreenManagement
 {
 
     class MenuEntry

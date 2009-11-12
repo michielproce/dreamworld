@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using DreamWorld.InputManagement.Types;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace DreamWorld.ScreenManagement.Screens
+namespace DreamWorld.ScreenManagement
 {
 
     abstract class MenuScreen : Screen
