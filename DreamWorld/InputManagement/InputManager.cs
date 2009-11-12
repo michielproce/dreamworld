@@ -36,9 +36,9 @@ namespace DreamWorld.InputManagement
 
         public override void Update(GameTime gameTime)
         {
-            GamePad.HandleInput();
-            Keyboard.HandleInput();
-            Mouse.HandleInput();
+            GamePad.Update(gameTime);
+            Keyboard.Update(gameTime);
+            Mouse.Update(gameTime);
             base.Update(gameTime);
         }
     } 
