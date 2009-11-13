@@ -10,10 +10,9 @@ namespace DreamWorld.Entities
 {
     public abstract class Entity
     {
-        public GameScreen Screen { protected get; set; }
-        public Camera Camera { protected get; set; }
+        public DreamWorldGame Game { protected get; set; }
+        public GameScreen GameScreen { protected get; set; }
         public Level Level { protected get; set; }
-        public Effect Effect { protected get; set; }
         
         public Vector3 Position { get; set; }
         public Vector3 Rotation { get; protected set; }
@@ -22,14 +21,12 @@ namespace DreamWorld.Entities
         
         public BoundingSphere[] BoundingSpheres { get; protected set; }
         public Matrix World { get; private set; }
-
-        private Dictionary<ModelMeshPart, Effect> originalEffects;
+        
         private Matrix[] transforms;
 
         protected Entity()
         {
             Scale = Vector3.One;
-            originalEffects = new Dictionary<ModelMeshPart, Effect>();
         }
 
         public virtual void Initialize()
@@ -41,16 +38,21 @@ namespace DreamWorld.Entities
         {
             if (Model == null)
                 throw new InvalidOperationException("Tried to create an entity without a Model.");
-            
+
             foreach (ModelMesh mesh in Model.Meshes)
             {
                 foreach (ModelMeshPart part in mesh.MeshParts)
                 {
-                    originalEffects.Add(part, part.Effect);
+                    if(part.Effect is BasicEffect)
+                    {
+                        Effect newEffect = GameScreen.Content.Load<Effect>(@"Effects\Default").Clone(Game.GraphicsDevice);
+                        newEffect.Parameters["Texture"].SetValue(((BasicEffect) part.Effect).Texture);
+                        part.Effect = newEffect;
+                    }   
                 }
             }
-            transforms = new Matrix[Model.Bones.Count];
-            Model.CopyAbsoluteBoneTransformsTo(transforms);            
+
+            transforms = new Matrix[Model.Bones.Count];            
         }
 
         public virtual void Update(GameTime gameTime)
@@ -61,16 +63,15 @@ namespace DreamWorld.Entities
         }
 
         public void Draw(GameTime gameTime)
-        {            
+        {
+            Model.CopyAbsoluteBoneTransformsTo(transforms);
             foreach (ModelMesh mesh in Model.Meshes)
             {
-                foreach (ModelMeshPart part in mesh.MeshParts)
+                foreach(Effect effect in mesh.Effects)
                 {
-                    part.Effect = Effect;
-                    part.Effect.Parameters["world"].SetValue(transforms[mesh.ParentBone.Index] * World);
-                    part.Effect.Parameters["view"].SetValue(Camera.View);
-                    part.Effect.Parameters["projection"].SetValue(Camera.Projection);
-                    part.Effect.Parameters["Texture"].SetValue(((BasicEffect)originalEffects[part]).Texture);
+                    effect.Parameters["world"].SetValue(transforms[mesh.ParentBone.Index] * World);
+                    effect.Parameters["view"].SetValue(GameScreen.CurrentCamera.View);
+                    effect.Parameters["projection"].SetValue(GameScreen.CurrentCamera.Projection);
                 }
                 mesh.Draw();
             }

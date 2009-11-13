@@ -16,7 +16,7 @@ namespace DreamWorld.Entities
 
         protected override void LoadContent()
         {
-            Model = Screen.Content.Load<Model>(@"Models\Test\Ball");
+            Model = GameScreen.Content.Load<Model>(@"Models\Test\Ball");
             PutOnTerrain();
             
             base.LoadContent();

@@ -24,9 +24,8 @@ namespace DreamWorld.Levels
         protected void AddEntity(Entity entity)
         {
             entity.Level = this;
-            entity.Camera = GameScreen.CurrentCamera;
-            entity.Screen = GameScreen;
-            entity.Effect = GameScreen.DefaultEffect;            
+            entity.GameScreen = GameScreen;
+            entity.Game = GameScreen.ScreenManager.Game as DreamWorldGame;
             entities.Add(entity);
         }
 

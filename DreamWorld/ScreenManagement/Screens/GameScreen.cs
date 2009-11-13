@@ -14,7 +14,6 @@ namespace DreamWorld.ScreenManagement.Screens
         public ContentManager Content { get; private set; }
         public Camera CurrentCamera { get; private set; }
         public Level CurrentLevel { get; private set; }
-        public Effect DefaultEffect { get; private set; }
 
         public GameScreen()
         {
@@ -41,11 +40,6 @@ namespace DreamWorld.ScreenManagement.Screens
             CurrentCamera.Initialize();
 
             LoadingScreen.Loaded = true;
-        }
-
-        protected override void LoadContent()
-        {
-            DefaultEffect = Content.Load<Effect>(@"Effects\Default");
         }
 
         public override void UnloadContent()
