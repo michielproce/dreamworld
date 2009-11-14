@@ -14,12 +14,12 @@ namespace DreamWorld.InputManagement.Types
             {
                 return new Vector3
                     {
-                        X = (Keyboard.GetState().IsKeyDown(Keys.A) ? -MovementSpeed : 0) +
-                            (Keyboard.GetState().IsKeyDown(Keys.D) ? MovementSpeed : 0),
-                        Y = (Keyboard.GetState().IsKeyDown(Keys.LeftControl) ? -MovementSpeed : 0) +
-                            (Keyboard.GetState().IsKeyDown(Keys.Space) ? MovementSpeed : 0),
-                        Z = (Keyboard.GetState().IsKeyDown(Keys.W) ? -MovementSpeed : 0) +
-                            (Keyboard.GetState().IsKeyDown(Keys.S) ? MovementSpeed : 0)
+                        X = (InputManager.Keyboard.State.IsKeyDown(Keys.A) ? -MovementSpeed : 0) +
+                            (InputManager.Keyboard.State.IsKeyDown(Keys.D) ? MovementSpeed : 0),
+                        Y = (InputManager.Keyboard.State.IsKeyDown(Keys.LeftControl) ? -MovementSpeed : 0) +
+                            (InputManager.Keyboard.State.IsKeyDown(Keys.Space) ? MovementSpeed : 0),
+                        Z = (InputManager.Keyboard.State.IsKeyDown(Keys.W) ? -MovementSpeed : 0) +
+                            (InputManager.Keyboard.State.IsKeyDown(Keys.S) ? MovementSpeed : 0)
                     };
             }
         }

@@ -62,7 +62,7 @@ namespace DreamWorld.ScreenManagement
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             ContentManager content = Game.Content;
-            font = content.Load<SpriteFont>(@"Fonts/Test/menufont");
+            font = content.Load<SpriteFont>(@"Fonts/menufont");
             blankTexture = content.Load<Texture2D>(@"Textures/blank");
         }
 

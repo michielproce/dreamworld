@@ -9,17 +9,18 @@ namespace DreamWorld.ScreenManagement.Screens
         {
             MenuEntry newGameGameMenuEntry = new MenuEntry("New game");
             MenuEntry loadGameGameMenuEntry = new MenuEntry("Load game");
-            MenuEntry optionsMenuEntry = new MenuEntry("Settings");
+            MenuEntry settingsMenuEntry = new MenuEntry("Settings");
             MenuEntry creditsMenuEntry = new MenuEntry("Credits");
             MenuEntry exitMenuEntry = new MenuEntry("Exit");
 
             newGameGameMenuEntry.Selected += PlayGameMenuEntrySelected;
-            loadGameGameMenuEntry.Selected += PlayGameMenuEntrySelected;
+            loadGameGameMenuEntry.Selected += LoadGameMenuEntrySelected;
+            settingsMenuEntry.Selected += SettingsEntrySelected;
             exitMenuEntry.Selected += OnCancel;
 
             MenuEntries.Add(newGameGameMenuEntry);
             MenuEntries.Add(loadGameGameMenuEntry);
-            MenuEntries.Add(optionsMenuEntry);
+            MenuEntries.Add(settingsMenuEntry);
             MenuEntries.Add(creditsMenuEntry);
             MenuEntries.Add(exitMenuEntry);
         }
@@ -27,6 +28,18 @@ namespace DreamWorld.ScreenManagement.Screens
         void PlayGameMenuEntrySelected(object sender, EventArgs e)
         {
             ScreenManager.AddScreen(new GameScreen());
+            ExitScreen();
+        }
+
+        void LoadGameMenuEntrySelected(object sender, EventArgs e)
+        {
+            ScreenManager.AddScreen(new GameScreen());
+            ExitScreen();
+        }
+
+        void SettingsEntrySelected(object sender, EventArgs e)
+        {
+            ScreenManager.AddScreen(new SettingsMenuScreen());
             ExitScreen();
         }
 

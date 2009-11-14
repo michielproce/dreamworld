@@ -15,6 +15,9 @@ namespace DreamWorld
         public DreamWorldGame()
         {
             GraphicsDeviceManager = new GraphicsDeviceManager(this);
+            GraphicsDeviceManager.PreferredBackBufferWidth = 800;
+            GraphicsDeviceManager.PreferredBackBufferHeight = 600;
+
             Content.RootDirectory = "Content";
             
             ScreenManager = new ScreenManager(this);
