@@ -9,12 +9,12 @@ namespace DreamWorld.Cameras
         private bool camOnFloor;
 
         private const float minDistance = 3f;
-        private const float maxDistance = 30f;
+        private const float maxDistance = 100f;
         private float distance = 10f;
 
         private const float minVerticalRotation = -MathHelper.PiOver2 * .99f;
         private const float maxVerticalRotation = -minVerticalRotation;
-        private float verticalRotation = -MathHelper.PiOver4;
+        private float verticalRotation = -MathHelper.ToRadians(20);
         
 
         public override void Initialize()

@@ -89,6 +89,7 @@
     <Compile Include="Cameras\Camera.cs" />
     <Compile Include="Cameras\DebugCamera.cs" />
     <Compile Include="Cameras\ThirdPersonCamera.cs" />
+    <Compile Include="Entities\Animation.cs" />
     <Compile Include="Entities\HeightMapInfo.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\Terrain.cs" />
@@ -155,6 +156,12 @@
       <ProductName>Microsoft XNA Framework Redistributable 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DreamWorldBase\DreamWorldBase.csproj">
+      <Project>{C1D4A9F4-71C3-465B-838B-5678DF94BA13}</Project>
+      <Name>DreamWorldBase</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

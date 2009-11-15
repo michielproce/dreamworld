@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using DreamWorld.Cameras;
 using DreamWorld.Levels;
 using DreamWorld.ScreenManagement.Screens;
+using DreamWorldBase;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -22,11 +21,14 @@ namespace DreamWorld.Entities
         public BoundingSphere[] BoundingSpheres { get; protected set; }
         public Matrix World { get; private set; }
         
+        public Animation Animation { get; private set; }
+        
         private Matrix[] transforms;
 
         protected Entity()
         {
             Scale = Vector3.One;
+            Animation = new Animation();            
         }
 
         public virtual void Initialize()
@@ -52,14 +54,20 @@ namespace DreamWorld.Entities
                 }
             }
 
+            SkinningData sd = Model.Tag as SkinningData;
+            if (sd != null)
+                Animation.Load(sd);
+
             transforms = new Matrix[Model.Bones.Count];            
         }
 
         public virtual void Update(GameTime gameTime)
         {
-            World = Matrix.CreateFromYawPitchRoll(Rotation.Y, Rotation.X, Rotation.Z) *
-                Matrix.CreateTranslation(Position) *                 
-                Matrix.CreateScale(Scale);
+            World = Matrix.CreateScale(Scale)*
+                    Matrix.CreateFromYawPitchRoll(Rotation.Y, Rotation.X, Rotation.Z)*
+                    Matrix.CreateTranslation(Position);
+             
+           Animation.AdvanceAnimation(gameTime);
         }
 
         public void Draw(GameTime gameTime)
@@ -71,7 +79,10 @@ namespace DreamWorld.Entities
                 {
                     effect.Parameters["world"].SetValue(transforms[mesh.ParentBone.Index] * World);
                     effect.Parameters["view"].SetValue(GameScreen.CurrentCamera.View);
-                    effect.Parameters["projection"].SetValue(GameScreen.CurrentCamera.Projection);
+                    effect.Parameters["projection"].SetValue(GameScreen.CurrentCamera.Projection);                    
+                    if(Animation.Loaded)                    
+                        effect.Parameters["Bones"].SetValue(Animation.SkinTransforms);
+                    
                 }
                 mesh.Draw();
             }

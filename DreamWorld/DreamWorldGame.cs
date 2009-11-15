@@ -25,7 +25,7 @@ namespace DreamWorld
             Components.Add(ScreenManager);
             Components.Add(InputManager);
 
-            ScreenManager.AddScreen(new MainMenuScreen());
+            ScreenManager.AddScreen(new GameScreen());
         }     
     }
 }
