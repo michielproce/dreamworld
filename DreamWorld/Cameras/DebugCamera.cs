@@ -6,8 +6,7 @@ namespace DreamWorld.Cameras
     class DebugCamera : Camera
     {
         public const float MaxPitch = MathHelper.PiOver2 * .99f; // Matrix.createLookAt gets confused with maxPitch > 90 degrees
-
-        private Vector3 position;
+       
         private float yaw;
         private float pitch;
 
@@ -29,8 +28,8 @@ namespace DreamWorld.Cameras
             Rotate(InputManager.Debug.Rotation.X, InputManager.Debug.Rotation.Y);
 
             View = Matrix.CreateLookAt(
-                    position,
-                    position + RotatedDirection(Vector3.Forward),
+                    Position,
+                    Position + RotatedDirection(Vector3.Forward),
                     Vector3.Up);
 
             base.Update(gameTime);
@@ -38,7 +37,7 @@ namespace DreamWorld.Cameras
 
         private void Move(Vector3 direction)
         {
-             position += RotatedDirection(direction);
+             Position += RotatedDirection(direction);
         }
 
         private void Rotate(float yaw, float pitch)

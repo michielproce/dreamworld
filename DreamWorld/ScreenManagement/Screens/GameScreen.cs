@@ -70,16 +70,18 @@ namespace DreamWorld.ScreenManagement.Screens
                             {
                                 Level = CurrentLevel,
                                 GraphicsDevice = ScreenManager.Game.GraphicsDevice,
-                                InputManager = ((DreamWorldGame)ScreenManager.Game).InputManager
+                                InputManager = ((DreamWorldGame)ScreenManager.Game).InputManager,
+                                Position = CurrentCamera.Position
                             };
                         }
                         CurrentCamera.Initialize();
                     }
                 #endif
-
+                
                 CurrentLevel.Update(gameTime);
                 CurrentCamera.Update(gameTime);
-                
+                if (CurrentLevel.Skybox != null)
+                    CurrentLevel.Skybox.Update(gameTime); // TODO: This updates the skybox second time around, but we don't want the camera delay.
             }
             base.Update(gameTime);
         }

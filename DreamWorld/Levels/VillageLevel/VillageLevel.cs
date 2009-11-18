@@ -6,6 +6,8 @@ namespace DreamWorld.Levels.VillageLevel
     {
         public override void Initialize()
         {
+            Skybox = new VillageSkybox();
+            AddEntity(Skybox);
             Terrain = new VillageTerrain();
             AddEntity(Terrain);
             base.Initialize();

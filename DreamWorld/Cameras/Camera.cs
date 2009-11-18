@@ -15,7 +15,8 @@ namespace DreamWorld.Cameras
         public Matrix View { get; protected set; }
         public Matrix Projection { get; protected set; }
         public BoundingFrustum Frustrum { get; protected set; }
-        
+        public Vector3 Position { get; set; }
+
         public virtual void Initialize() { }
         public virtual void Update(GameTime gameTime) { }
     }

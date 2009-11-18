@@ -92,6 +92,7 @@
     <Compile Include="Entities\Animation.cs" />
     <Compile Include="Entities\HeightMapInfo.cs" />
     <Compile Include="Entities\Player.cs" />
+    <Compile Include="Entities\Skybox.cs" />
     <Compile Include="Entities\Terrain.cs" />
     <Compile Include="InputManagement\Handlers\GamePadHandler.cs" />
     <Compile Include="InputManagement\Gesture.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="InputManagement\Types\MenuInput.cs" />
     <Compile Include="InputManagement\Types\PlayerInput.cs" />
     <Compile Include="Levels\Level.cs" />
+    <Compile Include="Levels\VillageLevel\Entities\VillageSkybox.cs" />
     <Compile Include="Levels\VillageLevel\Entities\VillageTerrain.cs" />
     <Compile Include="Levels\VillageLevel\VillageLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

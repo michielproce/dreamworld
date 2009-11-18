@@ -47,7 +47,7 @@ namespace DreamWorld.Cameras
             if (verticalRotation > maxVerticalRotation)
                 verticalRotation = maxVerticalRotation;
             
-            Vector3 cameraPosition = playerPosition - 
+            Position = playerPosition - 
                 Vector3.Transform(
                     Vector3.Transform(
                         new Vector3(0, 0, -distance),
@@ -56,11 +56,11 @@ namespace DreamWorld.Cameras
 
             if(Level.Terrain != null)
             {
-                float cameraHeight = Level.Terrain.HeightMapInfo.GetHeight(cameraPosition) + minCameraHeight;
-                if (cameraPosition.Y < cameraHeight)
+                float cameraHeight = Level.Terrain.HeightMapInfo.GetHeight(Position) + minCameraHeight;
+                if (Position.Y < cameraHeight)
                 {
                     camOnFloor = true;
-                    cameraPosition.Y = cameraHeight;
+                    Position = new Vector3(Position.X, cameraHeight, Position.Z);
                 }
                 else
                 {
@@ -69,7 +69,7 @@ namespace DreamWorld.Cameras
             }
 
             View = Matrix.CreateLookAt(
-                    cameraPosition,
+                    Position,
                     playerPosition,
                     Vector3.Up);
 

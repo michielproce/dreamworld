@@ -10,6 +10,7 @@ namespace DreamWorld.Levels
     {
         public GameScreen GameScreen { get; set; }
         public Terrain Terrain { get; protected set; }
+        public Skybox Skybox { get; protected set; }
 
         public Player Player { get; private set; }
         

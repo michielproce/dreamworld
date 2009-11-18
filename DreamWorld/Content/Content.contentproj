@@ -111,6 +111,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Skyboxes\Village.x">
+      <Name>Village</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Fonts\Test\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

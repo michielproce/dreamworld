@@ -70,7 +70,7 @@ namespace DreamWorld.Entities
            Animation.AdvanceAnimation(gameTime);
         }
 
-        public void Draw(GameTime gameTime)
+        public virtual void Draw(GameTime gameTime)
         {
             Model.CopyAbsoluteBoneTransformsTo(transforms);
             foreach (ModelMesh mesh in Model.Meshes)
