@@ -1,4 +1,5 @@
 ﻿using System;
+using DreamWorld.Cameras;
 using DreamWorld.InputManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -30,6 +31,11 @@ namespace DreamWorld.Entities
 
         public override void Update(GameTime gameTime)
         {            
+#if(DEBUG)
+            if(GameScreen.CurrentCamera is DebugCamera)
+                return;
+#endif   
+            
             Rotation += new Vector3(Rotation.X, InputManager.Player.HorizontalRotation, Rotation.Z);  
           
             Vector3 movement = Vector3.Transform(InputManager.Player.Movement, Matrix.CreateRotationY(Rotation.Y));

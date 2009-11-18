@@ -52,28 +52,30 @@ namespace DreamWorld.ScreenManagement.Screens
         {
             if (!OtherScreenHasFocus)
             {
-                if (((DreamWorldGame)ScreenManager.Game).InputManager.Debug.ToggleDebugCamera)
-                {
-                    if (CurrentCamera is DebugCamera)
+                #if (DEBUG)
+                    if (((DreamWorldGame)ScreenManager.Game).InputManager.Debug.ToggleDebugCamera)
                     {
-                        CurrentCamera = new ThirdPersonCamera
+                        if (CurrentCamera is DebugCamera)
                         {
-                            Level = CurrentLevel,
-                            GraphicsDevice = ScreenManager.Game.GraphicsDevice,
-                            InputManager = ((DreamWorldGame)ScreenManager.Game).InputManager
-                        };
-                    }
-                    else
-                    {
-                        CurrentCamera = new DebugCamera
+                            CurrentCamera = new ThirdPersonCamera
+                            {
+                                Level = CurrentLevel,
+                                GraphicsDevice = ScreenManager.Game.GraphicsDevice,
+                                InputManager = ((DreamWorldGame)ScreenManager.Game).InputManager
+                            };
+                        }
+                        else
                         {
-                            Level = CurrentLevel,
-                            GraphicsDevice = ScreenManager.Game.GraphicsDevice,
-                            InputManager = ((DreamWorldGame)ScreenManager.Game).InputManager
-                        };
+                            CurrentCamera = new DebugCamera
+                            {
+                                Level = CurrentLevel,
+                                GraphicsDevice = ScreenManager.Game.GraphicsDevice,
+                                InputManager = ((DreamWorldGame)ScreenManager.Game).InputManager
+                            };
+                        }
+                        CurrentCamera.Initialize();
                     }
-                    CurrentCamera.Initialize();
-                }
+                #endif
 
                 CurrentLevel.Update(gameTime);
                 CurrentCamera.Update(gameTime);
