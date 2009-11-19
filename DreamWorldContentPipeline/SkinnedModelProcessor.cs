@@ -271,7 +271,7 @@ namespace DreamWorldContentPipeline
             EffectMaterialContent effectMaterial = new EffectMaterialContent();
 
             // Store a reference to our skinned mesh effect.
-            string effectPath = Path.GetFullPath(@"Effects\Skinned.fx");
+            string effectPath = Path.GetFullPath(@"Effects\Default.fx");
 
             effectMaterial.Effect = new ExternalReference<EffectContent>(effectPath);
 
@@ -279,6 +279,8 @@ namespace DreamWorldContentPipeline
             // BasicMaterialContent over to our new material.
             if (basicMaterial.Texture != null)
                 effectMaterial.Textures.Add("Texture", basicMaterial.Texture);
+
+            effectMaterial.OpaqueData.Add("Skinned", true);
 
             // Chain to the base ModelProcessor converter.
             return base.ConvertMaterial(effectMaterial, context);

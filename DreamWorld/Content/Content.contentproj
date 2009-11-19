@@ -104,13 +104,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Effects\Skinned.fx">
-      <Name>Skinned</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Models\Skyboxes\Village.x">
       <Name>Village</Name>
       <Importer>XImporter</Importer>
