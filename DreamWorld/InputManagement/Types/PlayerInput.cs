@@ -25,11 +25,28 @@ namespace DreamWorld.InputManagement.Types
             }
         }
 
+        public float Rotation
+        {
+            get
+            {
+                return Mouse.GetState().LeftButton == ButtonState.Released ? InputManager.Mouse.Movement.X * HorizontalRotationSpeed : 0;
+            }
+        }
+
         public float HorizontalRotation
         {
             get
             {
-                return InputManager.Mouse.Movement.X * HorizontalRotationSpeed;
+
+                return Mouse.GetState().LeftButton == ButtonState.Pressed ? InputManager.Mouse.Movement.X * HorizontalRotationSpeed : 0;
+            }
+        }
+
+        public bool ResetHorizontalRotation
+        {
+            get
+            {
+                return InputManager.Mouse.NewlyReleased(MouseHandler.Buttons.LeftButton);
             }
         }
 

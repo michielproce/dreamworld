@@ -36,7 +36,7 @@ namespace DreamWorld.Entities
                 return;
 #endif   
             
-            Rotation += new Vector3(Rotation.X, InputManager.Player.HorizontalRotation, Rotation.Z);  
+            Rotation += new Vector3(Rotation.X, InputManager.Player.Rotation, Rotation.Z);  
           
             Vector3 movement = Vector3.Transform(InputManager.Player.Movement, Matrix.CreateRotationY(Rotation.Y));
             Position += movement;

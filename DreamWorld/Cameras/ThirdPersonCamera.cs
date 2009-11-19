@@ -1,4 +1,5 @@
 ﻿using System;
+using DreamWorld.InputManagement.Handlers;
 using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Cameras
@@ -15,6 +16,8 @@ namespace DreamWorld.Cameras
         private const float minVerticalRotation = -MathHelper.PiOver2 * .99f;
         private const float maxVerticalRotation = -minVerticalRotation;
         private float verticalRotation = -MathHelper.ToRadians(20);
+
+        private float horizontalRotation;
         
 
         public override void Initialize()
@@ -46,13 +49,16 @@ namespace DreamWorld.Cameras
                 verticalRotation = minVerticalRotation;
             if (verticalRotation > maxVerticalRotation)
                 verticalRotation = maxVerticalRotation;
-            
+
+            if (InputManager.Player.ResetHorizontalRotation)
+                horizontalRotation = 0;
+            horizontalRotation += InputManager.Player.HorizontalRotation;
             Position = playerPosition - 
                 Vector3.Transform(
                     Vector3.Transform(
                         new Vector3(0, 0, -distance),
                         Matrix.CreateRotationX(verticalRotation)),
-                    Matrix.CreateRotationY(Level.Player.Rotation.Y));    
+                    Matrix.CreateRotationY(Level.Player.Rotation.Y + horizontalRotation));    
 
             if(Level.Terrain != null)
             {

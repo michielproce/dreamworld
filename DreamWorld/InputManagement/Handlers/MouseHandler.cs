@@ -6,6 +6,12 @@ namespace DreamWorld.InputManagement.Handlers
 {
     public class MouseHandler : InputHandler
     {
+        public enum Buttons
+        {
+            LeftButton,
+            RightButton
+        }
+
         public MouseState PreviousState { get; private set; }
         public Vector2 Movement { get; private set; }
         private Point center;
@@ -40,6 +46,32 @@ namespace DreamWorld.InputManagement.Handlers
             get
             {
                 return Mouse.GetState().ScrollWheelValue - PreviousState.ScrollWheelValue;
+            }
+        }
+
+        public bool NewlyPressed(Buttons button)
+        {
+            switch (button)
+            {               
+                case Buttons.LeftButton:
+                    return Mouse.GetState().LeftButton == ButtonState.Pressed && PreviousState.LeftButton == ButtonState.Released;                    
+                case Buttons.RightButton:
+                    return Mouse.GetState().RightButton == ButtonState.Pressed && PreviousState.RightButton == ButtonState.Released;
+                default:
+                    throw new InvalidOperationException("Unknown Button");
+            }           
+        }
+
+        public bool NewlyReleased(Buttons button)
+        {
+            switch (button)
+            {
+                case Buttons.LeftButton:
+                    return Mouse.GetState().LeftButton == ButtonState.Released && PreviousState.LeftButton == ButtonState.Pressed;
+                case Buttons.RightButton:
+                    return Mouse.GetState().RightButton == ButtonState.Released && PreviousState.RightButton == ButtonState.Pressed;
+                default:
+                    throw new InvalidOperationException("Unknown Button");
             }
         }
 
