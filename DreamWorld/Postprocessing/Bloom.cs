@@ -6,7 +6,7 @@ namespace DreamWorld.Postprocessing
 {
     public class Bloom : PostProcessor
     {
-        private const float bloomThreshold  = .5f;
+        private const float bloomThreshold  = .3f;
         private const float blurAmount      = 4f;
         private const float bloomIntensity  = 1f;
         private const float baseIntensity   = 1f;

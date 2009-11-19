@@ -9,6 +9,11 @@ float4x4 world;
 float4x4 view;
 float4x4 projection;
 
+float Ambient = .3;
+bool IgnoreSun;
+float3 Sun = float3(.5, -.5, 0);
+
+
 bool Skinned;
 float4x4 Bones[MaxBones];
 
@@ -67,7 +72,7 @@ struct VS_OUTPUT
 {
 	float4 Position : POSITION;
 	float2 TexCoords : TEXCOORD0;
-
+	float SunFactor : TEXCOORD1;
 };
 
 VS_OUTPUT DefaultVertexShader(VS_INPUT input)
@@ -75,6 +80,13 @@ VS_OUTPUT DefaultVertexShader(VS_INPUT input)
 	VS_OUTPUT output;
 			
 	output.Position = TransformPosition(input.Position, input.BoneIndices, input.BoneWeights); 
+	
+	float3 Normal = normalize(mul(normalize(input.Normal), world));
+	
+	if(IgnoreSun)
+		output.SunFactor = 1;
+	else
+		output.SunFactor = saturate(dot(Normal, -Sun));
 	
 	output.TexCoords = input.TexCoords;
 	
@@ -92,9 +104,7 @@ NormalDepthVertexShaderOutput NormalDepthVertexShader(VS_INPUT input, uniform bo
 {
     NormalDepthVertexShaderOutput output;
     
-    output.Position = TransformPosition(input.Position, input.BoneIndices, input.BoneWeights); 
-	
-	float3 worldNormal = mul(input.Normal, world);
+    output.Position = TransformPosition(input.Position, input.BoneIndices, input.BoneWeights); 	
 	
 	if(ignore)
 	{
@@ -102,6 +112,7 @@ NormalDepthVertexShaderOutput NormalDepthVertexShader(VS_INPUT input, uniform bo
 	}
 	else 
 	{
+		float3 worldNormal = mul(input.Normal, world);
 		output.Color.rgb = (worldNormal + 1) / 2;	
 		output.Color.a = output.Position.z / output.Position.w;
 	}	
@@ -120,12 +131,15 @@ NormalDepthVertexShaderOutput NormalDepthVertexShader(VS_INPUT input, uniform bo
 struct PS_INPUT
 {
      float2 TexCoords : TEXCOORD0;
+     float SunFactor: TEXCOORD1;
+
 };
 
 float4 DefaultPixelShader(PS_INPUT input) : COLOR0
 {
     float4 color = tex2D(Sampler, input.TexCoords);
-    
+    color.rgb *= saturate(input.SunFactor + Ambient);
+
     return color;
 }
 

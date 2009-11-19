@@ -1,4 +1,4 @@
-float EdgeWidth = 1;
+float EdgeWidth = .2;
 float EdgeIntensity = 1;
 
 float NormalThreshold = 0.5;
