@@ -15,7 +15,7 @@ namespace DreamWorld
         public DreamWorldGame()
         {
             GraphicsDeviceManager = new GraphicsDeviceManager(this);
-            GraphicsDeviceManager.PreferMultiSampling = true;
+//            GraphicsDeviceManager.PreferMultiSampling = true;
             GraphicsDeviceManager.PreferredBackBufferWidth = 800;
             GraphicsDeviceManager.PreferredBackBufferHeight = 600;
 

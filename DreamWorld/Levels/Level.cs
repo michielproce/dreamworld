@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DreamWorld.Entities;
+using DreamWorld.Postprocessing;
 using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,14 +19,9 @@ namespace DreamWorld.Levels
         
         private List<Entity> entities;
 
-        // Postprocessing
-        public static bool DrawNormalDepth { get; private set; }
-        public static BasicEffect BasicEffect { get; private set; }
-        public static Effect NormalDepthEffect { get; private set; }
-        private Effect postprocessEffect;
-        private RenderTarget2D sceneRenderTarget;
-        private RenderTarget2D normalDepthRenderTarget;
         private SpriteBatch spriteBatch;
+        private Bloom bloom;
+        private EdgeDetection edgeDetection;
 
         protected Level()
         {
@@ -53,23 +49,11 @@ namespace DreamWorld.Levels
             foreach (Entity entity in entities)
                 entity.Initialize();
 
-           // postprocessing
             spriteBatch = new SpriteBatch(Game.GraphicsDevice);
-            postprocessEffect = Game.Content.Load<Effect>("Effects\\Postprocess");
+            bloom = new Bloom(GameScreen.ScreenManager.Game, spriteBatch);
+            edgeDetection = new EdgeDetection(GameScreen.ScreenManager.Game, spriteBatch);
 
-            PresentationParameters pp = Game.GraphicsDevice.PresentationParameters;
-
-            sceneRenderTarget = new RenderTarget2D(GameScreen.ScreenManager.Game.GraphicsDevice,
-                pp.BackBufferWidth, pp.BackBufferHeight, 1,
-                pp.BackBufferFormat, pp.MultiSampleType, pp.MultiSampleQuality);
-
-            normalDepthRenderTarget = new RenderTarget2D(Game.GraphicsDevice,
-                pp.BackBufferWidth, pp.BackBufferHeight, 1,
-                pp.BackBufferFormat, pp.MultiSampleType, pp.MultiSampleQuality);
         }
-
-
-
 
 
         public virtual void Update(GameTime gameTime)
@@ -81,62 +65,20 @@ namespace DreamWorld.Levels
 
         public virtual void Draw(GameTime gameTime)
         {
-            RenderState renderState = Game.GraphicsDevice.RenderState;
-            renderState.AlphaBlendEnable = false;
-            renderState.AlphaTestEnable = false;
-            renderState.DepthBufferEnable = true;
-
-            // NormalDepth
-            Game.GraphicsDevice.SetRenderTarget(0, normalDepthRenderTarget);
-            Game.GraphicsDevice.Clear(Color.Black);
+            edgeDetection.PrepareDraw();
+            edgeDetection.PrepareDrawNormalDepth();
             foreach (Entity entity in entities)
-            {
-                if(!entity.IgnoreEdgeDetection)
-                    entity.Draw(gameTime, "NormalDepth");
-            }
-            // Default
-            Game.GraphicsDevice.SetRenderTarget(0, sceneRenderTarget);
-            Game.GraphicsDevice.Clear(Color.CornflowerBlue);
-            foreach (Entity entity in entities)
-                entity.Draw(gameTime, "Default");
-            
-            Game.GraphicsDevice.SetRenderTarget(0, null);
+                entity.Draw(gameTime, !entity.IgnoreEdgeDetection ? "NormalDepth" : "IgnoreNormalDepth");
 
-            ApplyPostprocess();
+            edgeDetection.PrepareDrawDefault();
+            foreach (Entity entity in entities)
+                entity.Draw(gameTime, "Default");          
+
+            edgeDetection.Draw(gameTime);
+            bloom.Draw(gameTime);
         }
 
 
-        private void ApplyPostprocess()
-        {
-            EffectParameterCollection parameters = postprocessEffect.Parameters;
 
-            Vector2 resolution = new Vector2(sceneRenderTarget.Width,
-                                                sceneRenderTarget.Height);
-
-            Texture2D normalDepthTexture = normalDepthRenderTarget.GetTexture();
-
-            parameters["EdgeWidth"].SetValue(1f);
-            parameters["EdgeIntensity"].SetValue(1f);
-            parameters["ScreenResolution"].SetValue(resolution);
-            parameters["NormalDepthTexture"].SetValue(normalDepthTexture);
-
-            postprocessEffect.CurrentTechnique =
-                                   postprocessEffect.Techniques["EdgeDetect"];
-
-            spriteBatch.Begin(SpriteBlendMode.None,
-                              SpriteSortMode.Immediate,
-                              SaveStateMode.None);
-
-            postprocessEffect.Begin();
-            postprocessEffect.CurrentTechnique.Passes[0].Begin();
-
-            spriteBatch.Draw(sceneRenderTarget.GetTexture(), Vector2.Zero, Color.White);
-
-            spriteBatch.End();
-
-            postprocessEffect.CurrentTechnique.Passes[0].End();
-            postprocessEffect.End();
-
-        }
     }
 }

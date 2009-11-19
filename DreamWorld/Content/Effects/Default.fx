@@ -9,17 +9,10 @@ float4x4 world;
 float4x4 view;
 float4x4 projection;
 
-texture Texture;
-
 bool Skinned;
 float4x4 Bones[MaxBones];
 
-
-/*
- * ====
- * MISC
- * ====
- */
+texture Texture;
 sampler Sampler = sampler_state
 {
 	Texture = (Texture);
@@ -28,6 +21,32 @@ sampler Sampler = sampler_state
 	MagFilter = Linear;
 	MipFilter = Linear;
 };
+
+
+
+/*
+ * =========
+ * FUNCTIONS 
+ * =========
+ */
+float4 TransformPosition(float4 position, float4 indices, float4 weights ) 
+{
+	if(Skinned)
+	{		
+		float4x4 skinTransform = 0;    
+		
+		skinTransform += Bones[indices.x] * weights.x;
+		skinTransform += Bones[indices.y] * weights.y;
+		skinTransform += Bones[indices.z] * weights.z;
+		skinTransform += Bones[indices.w] * weights.w;
+		
+		position = mul(position, skinTransform);
+	}
+	
+	return mul(mul(mul(position, world), view), projection);
+}
+ 
+
 
 /*
  * ==============
@@ -55,18 +74,7 @@ VS_OUTPUT DefaultVertexShader(VS_INPUT input)
 {
 	VS_OUTPUT output;
 			
-	float4 position = input.Position;
-	
-	if(Skinned) {
-		float4x4 skinTransform = 0;    
-		skinTransform += Bones[input.BoneIndices.x] * input.BoneWeights.x;
-		skinTransform += Bones[input.BoneIndices.y] * input.BoneWeights.y;
-		skinTransform += Bones[input.BoneIndices.z] * input.BoneWeights.z;
-		skinTransform += Bones[input.BoneIndices.w] * input.BoneWeights.w;
-		position = mul(position, skinTransform);
-	}
-	
-	output.Position = mul(mul(mul(position, world), view), projection);	
+	output.Position = TransformPosition(input.Position, input.BoneIndices, input.BoneWeights); 
 	
 	output.TexCoords = input.TexCoords;
 	
@@ -80,28 +88,23 @@ struct NormalDepthVertexShaderOutput
     float4 Color : COLOR0;
 };
 
-NormalDepthVertexShaderOutput NormalDepthVertexShader(VS_INPUT input)
+NormalDepthVertexShaderOutput NormalDepthVertexShader(VS_INPUT input, uniform bool ignore)
 {
     NormalDepthVertexShaderOutput output;
     
-    float4 position = input.Position;
-	
-	if(Skinned) {
-		float4x4 skinTransform = 0;    
-		skinTransform += Bones[input.BoneIndices.x] * input.BoneWeights.x;
-		skinTransform += Bones[input.BoneIndices.y] * input.BoneWeights.y;
-		skinTransform += Bones[input.BoneIndices.z] * input.BoneWeights.z;
-		skinTransform += Bones[input.BoneIndices.w] * input.BoneWeights.w;
-		position = mul(position, skinTransform);
-	}
-	
-	output.Position = mul(mul(mul(position, world), view), projection);	
+    output.Position = TransformPosition(input.Position, input.BoneIndices, input.BoneWeights); 
 	
 	float3 worldNormal = mul(input.Normal, world);
 	
-	output.Color.rgb = (worldNormal + 1) / 2;
-	
-	output.Color.a = output.Position.z / output.Position.w;
+	if(ignore)
+	{
+		output.Color = 0;
+	}
+	else 
+	{
+		output.Color.rgb = (worldNormal + 1) / 2;	
+		output.Color.a = output.Position.z / output.Position.w;
+	}	
 	
     return output;    
 }
@@ -153,7 +156,16 @@ technique NormalDepth
 {
 	pass P0
 	{
-		VertexShader = compile vs_2_0 NormalDepthVertexShader();
+		VertexShader = compile vs_2_0 NormalDepthVertexShader(false);
+        PixelShader = compile ps_2_0 NormalDepthPixelShader();
+	}
+}
+
+technique IgnoreNormalDepth
+{
+	pass P0
+	{
+		VertexShader = compile vs_2_0 NormalDepthVertexShader(true);
         PixelShader = compile ps_2_0 NormalDepthPixelShader();
 	}
 }
