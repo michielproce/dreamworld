@@ -27,7 +27,11 @@ namespace DreamWorld.ScreenManagement.Screens
 
             base.Initialize();
 
-            CurrentLevel = new VillageLevel { GameScreen = this };
+            CurrentLevel = new VillageLevel
+                               {
+                                   GameScreen = this,
+                                   Game = (DreamWorldGame) ScreenManager.Game
+                               };
 
             CurrentCamera = new ThirdPersonCamera
             {

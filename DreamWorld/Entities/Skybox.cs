@@ -11,6 +11,7 @@ namespace DreamWorld.Entities
         public Skybox(string skybox)
         {
             this.skybox = skybox;
+            IgnoreEdgeDetection = true;
         }
 
         protected override void LoadContent()
@@ -25,12 +26,12 @@ namespace DreamWorld.Entities
             base.Update(gameTime);
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime, string technique)
         {           
             Game.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Clamp;
             Game.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Clamp;
             Game.GraphicsDevice.RenderState.DepthBufferWriteEnable = false;
-            base.Draw(gameTime);
+            base.Draw(gameTime, technique);
             Game.GraphicsDevice.RenderState.DepthBufferWriteEnable = true;
             Game.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
             Game.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;

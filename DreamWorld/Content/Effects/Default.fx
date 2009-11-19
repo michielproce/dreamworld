@@ -1,3 +1,8 @@
+/*
+ * ==========
+ * PARAMETERS
+ * ==========
+ */
 #define MaxBones 59
 
 float4x4 world;
@@ -10,7 +15,11 @@ bool Skinned;
 float4x4 Bones[MaxBones];
 
 
-
+/*
+ * ====
+ * MISC
+ * ====
+ */
 sampler Sampler = sampler_state
 {
 	Texture = (Texture);
@@ -20,10 +29,15 @@ sampler Sampler = sampler_state
 	MipFilter = Linear;
 };
 
-
+/*
+ * ==============
+ * VERTEX SHADERS 
+ * ==============
+ */
 struct VS_INPUT
 {
 	float4 Position : POSITION0;
+	float3 Normal : NORMAL0;
 	float2 TexCoords : TEXCOORD0;
 	float4 BoneIndices : BLENDINDICES0;
     float4 BoneWeights : BLENDWEIGHT0;
@@ -60,6 +74,46 @@ VS_OUTPUT DefaultVertexShader(VS_INPUT input)
 }
 
 
+struct NormalDepthVertexShaderOutput
+{
+    float4 Position : POSITION0;
+    float4 Color : COLOR0;
+};
+
+NormalDepthVertexShaderOutput NormalDepthVertexShader(VS_INPUT input)
+{
+    NormalDepthVertexShaderOutput output;
+    
+    float4 position = input.Position;
+	
+	if(Skinned) {
+		float4x4 skinTransform = 0;    
+		skinTransform += Bones[input.BoneIndices.x] * input.BoneWeights.x;
+		skinTransform += Bones[input.BoneIndices.y] * input.BoneWeights.y;
+		skinTransform += Bones[input.BoneIndices.z] * input.BoneWeights.z;
+		skinTransform += Bones[input.BoneIndices.w] * input.BoneWeights.w;
+		position = mul(position, skinTransform);
+	}
+	
+	output.Position = mul(mul(mul(position, world), view), projection);	
+	
+	float3 worldNormal = mul(input.Normal, world);
+	
+	output.Color.rgb = (worldNormal + 1) / 2;
+	
+	output.Color.a = output.Position.z / output.Position.w;
+	
+    return output;    
+}
+
+
+
+/*
+ * =============
+ * PIXEL SHADERS 
+ * =============
+ */
+ 
 struct PS_INPUT
 {
      float2 TexCoords : TEXCOORD0;
@@ -73,6 +127,19 @@ float4 DefaultPixelShader(PS_INPUT input) : COLOR0
 }
 
 
+float4 NormalDepthPixelShader(float4 color : COLOR0) : COLOR0
+{
+    return color;
+}
+
+
+
+
+/*
+ * ==========
+ * TECHNIQUES
+ * ==========
+ */
 technique Default
 {
     pass P0
@@ -80,4 +147,13 @@ technique Default
         VertexShader = compile vs_2_0 DefaultVertexShader();
         PixelShader = compile ps_2_0 DefaultPixelShader();
     }
+}
+
+technique NormalDepth
+{
+	pass P0
+	{
+		VertexShader = compile vs_2_0 NormalDepthVertexShader();
+        PixelShader = compile ps_2_0 NormalDepthPixelShader();
+	}
 }

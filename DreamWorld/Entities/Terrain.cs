@@ -11,6 +11,7 @@ namespace DreamWorld.Entities
         public Terrain(string terrain)
         {
             this.terrain = terrain;
+            IgnoreEdgeDetection = true;
         }
 
         protected override void LoadContent()

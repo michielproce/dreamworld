@@ -22,6 +22,8 @@ namespace DreamWorld.Entities
         public Matrix World { get; private set; }
         
         public Animation Animation { get; private set; }
+
+        public bool IgnoreEdgeDetection { get; protected set; }
         
         private Matrix[] transforms;
 
@@ -70,13 +72,14 @@ namespace DreamWorld.Entities
            Animation.AdvanceAnimation(gameTime);
         }
 
-        public virtual void Draw(GameTime gameTime)
+        public virtual void Draw(GameTime gameTime, string technique)
         {
             Model.CopyAbsoluteBoneTransformsTo(transforms);
             foreach (ModelMesh mesh in Model.Meshes)
             {
                 foreach(Effect effect in mesh.Effects)
                 {
+                    effect.CurrentTechnique = effect.Techniques[technique];
                     effect.Parameters["world"].SetValue(transforms[mesh.ParentBone.Index] * World);
                     effect.Parameters["view"].SetValue(GameScreen.CurrentCamera.View);
                     effect.Parameters["projection"].SetValue(GameScreen.CurrentCamera.Projection);                    
