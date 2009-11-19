@@ -41,18 +41,18 @@ namespace DreamWorld.Entities
             if (Model == null)
                 throw new InvalidOperationException("Tried to create an entity without a Model.");
 
+            #if (DEBUG)
             foreach (ModelMesh mesh in Model.Meshes)
             {
                 foreach (ModelMeshPart part in mesh.MeshParts)
                 {
                     if(part.Effect is BasicEffect)
                     {
-                        Effect newEffect = GameScreen.Content.Load<Effect>(@"Effects\Default").Clone(Game.GraphicsDevice);
-                        newEffect.Parameters["Texture"].SetValue(((BasicEffect) part.Effect).Texture);
-                        part.Effect = newEffect;
+                        throw new InvalidOperationException("Found BasicEffect, are you using the Default Model Processor?");
                     }   
                 }
             }
+            #endif
 
             SkinningData sd = Model.Tag as SkinningData;
             if (sd != null)

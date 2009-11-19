@@ -14,7 +14,7 @@ namespace DreamWorldContentPipeline
     /// adding animation support.
     /// </summary>
     [ContentProcessor(DisplayName = "Skinned Model Processor")]
-    public class SkinnedModelProcessor : ModelProcessor
+    public class SkinnedModelProcessor : DefaultModelProcessor
     {
         // Maximum number of bone matrices we can render using shader 2.0
         // in a single pass. If you change this, update SkinnedModelfx to match.
@@ -252,38 +252,12 @@ namespace DreamWorldContentPipeline
             }
         }
 
-
-        /// <summary>
-        /// Changes all the materials to use our skinned model effect.
-        /// </summary>
         protected override MaterialContent ConvertMaterial(MaterialContent material,
                                                         ContentProcessorContext context)
         {
-            BasicMaterialContent basicMaterial = material as BasicMaterialContent;
-
-            if (basicMaterial == null)
-            {
-                throw new InvalidContentException(string.Format(
-                    "SkinnedModelProcessor only supports BasicMaterialContent, " +
-                    "but input mesh uses {0}.", material.GetType()));
-            }
-
-            EffectMaterialContent effectMaterial = new EffectMaterialContent();
-
-            // Store a reference to our skinned mesh effect.
-            string effectPath = Path.GetFullPath(@"Effects\Default.fx");
-
-            effectMaterial.Effect = new ExternalReference<EffectContent>(effectPath);
-
-            // Copy texture settings from the input
-            // BasicMaterialContent over to our new material.
-            if (basicMaterial.Texture != null)
-                effectMaterial.Textures.Add("Texture", basicMaterial.Texture);
-
-            effectMaterial.OpaqueData.Add("Skinned", true);
-
-            // Chain to the base ModelProcessor converter.
-            return base.ConvertMaterial(effectMaterial, context);
+            MaterialContent defaultMaterial = base.ConvertMaterial(material, context);
+            defaultMaterial.OpaqueData.Add("Skinned", true);
+            return defaultMaterial;
         }
     }
 }

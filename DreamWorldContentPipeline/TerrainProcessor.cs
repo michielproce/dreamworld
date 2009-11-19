@@ -78,13 +78,14 @@ namespace DreamWorldContentPipeline
                 }
             }
 
-            BasicMaterialContent material = new BasicMaterialContent();
-            material.SpecularColor = new Vector3(.4f, .4f, .4f);
+            EffectMaterialContent material = new EffectMaterialContent();
+
+            string effectPath = Path.GetFullPath(@"Effects\Default.fx");
+            material.Effect = new ExternalReference<EffectContent>(effectPath);
 
             string directory = Path.GetDirectoryName(input.Identity.SourceFilename);
             string texture = Path.Combine(directory, terrainTextureFilename);
-
-            material.Texture = new ExternalReference<TextureContent>(texture);
+            material.Textures.Add("Texture", new ExternalReference<TextureContent>(texture));
 
             builder.SetMaterial(material);
 
