@@ -32,7 +32,6 @@ namespace DreamWorld.Entities.Global
             foreach (ModelMesh mesh in Model.Meshes)
             {
                 String name = mesh.Name.ToLower();
-                Console.WriteLine(name);
                 if(mesh.Name.ToLower().Contains("propellor"))
                     propellors.Add(mesh);
                 if (mesh.Name.ToLower().Contains("cog01"))
