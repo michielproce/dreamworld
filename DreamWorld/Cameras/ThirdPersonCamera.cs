@@ -15,7 +15,7 @@ namespace DreamWorld.Cameras
 
         private const float minVerticalRotation = -MathHelper.PiOver2 * .99f;
         private const float maxVerticalRotation = -minVerticalRotation;
-        private float verticalRotation = -MathHelper.ToRadians(20);
+        private float verticalRotation = -MathHelper.ToRadians(0);
 
         private float horizontalRotation;
         

@@ -17,6 +17,8 @@ float3 Sun = float3(.5, -.5, 0);
 bool Skinned;
 float4x4 Bones[MaxBones];
 
+float4 DiffuseColor;
+bool TextureEnabled;
 texture Texture;
 sampler Sampler = sampler_state
 {
@@ -137,7 +139,12 @@ struct PS_INPUT
 
 float4 DefaultPixelShader(PS_INPUT input) : COLOR0
 {
-    float4 color = tex2D(Sampler, input.TexCoords);
+	float4 color;
+	if(TextureEnabled)
+		color = tex2D(Sampler, input.TexCoords);
+	else 
+		color = DiffuseColor;
+		
     color.rgb *= saturate(input.SunFactor + Ambient);
 
     return color;

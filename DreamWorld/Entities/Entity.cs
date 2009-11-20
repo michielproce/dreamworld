@@ -19,7 +19,7 @@ namespace DreamWorld.Entities
         public Model Model { get; protected set; }
         
         public BoundingSphere[] BoundingSpheres { get; protected set; }
-        public Matrix World { get; private set; }
+        public Matrix World { get; protected set; }
         
         public Animation Animation { get; private set; }
 

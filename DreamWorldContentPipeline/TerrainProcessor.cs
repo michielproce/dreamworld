@@ -83,8 +83,9 @@ namespace DreamWorldContentPipeline
             string effectPath = Path.GetFullPath(@"Effects\Default.fx");
             material.Effect = new ExternalReference<EffectContent>(effectPath);
 
+            material.OpaqueData.Add("TextureEnabled", true);
             string directory = Path.GetDirectoryName(input.Identity.SourceFilename);
-            string texture = Path.Combine(directory, terrainTextureFilename);
+            string texture = Path.Combine(directory, terrainTextureFilename);            
             material.Textures.Add("Texture", new ExternalReference<TextureContent>(texture));
 
             builder.SetMaterial(material);

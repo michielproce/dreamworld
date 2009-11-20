@@ -38,9 +38,17 @@ namespace DreamWorldContentPipeline
             // Copy texture settings from the input
             // BasicMaterialContent over to our new material.
             if (basicMaterial.Texture != null)
+            {
+                effectMaterial.OpaqueData.Add("TextureEnabled", true);
                 effectMaterial.Textures.Add("Texture", basicMaterial.Texture);
+            }
+            else
+            {
+                effectMaterial.OpaqueData.Add("TextureEnabled", false);
+                effectMaterial.OpaqueData.Add("DiffuseColor", basicMaterial.DiffuseColor);
+            }
 
-            // Chain to the base ModelProcessor converter.
+            // Chain to the base ModelProcessor converter.)
             return base.ConvertMaterial(effectMaterial, context);
         }
     }

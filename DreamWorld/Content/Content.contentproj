@@ -130,6 +130,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Global\Zeppelin.x">
+      <Name>Zeppelin</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Audio\Effects\" />
     <Folder Include="Audio\Music\" />
     <Folder Include="Fonts\Test\" />
