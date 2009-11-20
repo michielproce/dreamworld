@@ -3,7 +3,7 @@ using DreamWorld.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace DreamWorld.Postprocessing
+namespace DreamWorld.Rendering.Postprocessing
 {
     public class EdgeDetection : PostProcessor
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace DreamWorld.Postprocessing
+namespace DreamWorld.Rendering.Postprocessing
 {
     public abstract class PostProcessor
     {

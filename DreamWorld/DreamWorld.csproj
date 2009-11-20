@@ -109,9 +109,10 @@
     <Compile Include="Levels\VillageLevel\Entities\VillageSkybox.cs" />
     <Compile Include="Levels\VillageLevel\Entities\VillageTerrain.cs" />
     <Compile Include="Levels\VillageLevel\VillageLevel.cs" />
-    <Compile Include="Postprocessing\Bloom.cs" />
-    <Compile Include="Postprocessing\EdgeDetection.cs" />
-    <Compile Include="Postprocessing\PostProcessor.cs" />
+    <Compile Include="Rendering\Postprocessing\Bloom.cs" />
+    <Compile Include="Rendering\Postprocessing\EdgeDetection.cs" />
+    <Compile Include="Rendering\Postprocessing\PostProcessor.cs" />
+    <Compile Include="Rendering\Postprocessing\ShadowMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="DreamWorldGame.cs" />

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DreamWorld.Entities;
-using DreamWorld.Postprocessing;
+using DreamWorld.Rendering.Postprocessing;
 using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
