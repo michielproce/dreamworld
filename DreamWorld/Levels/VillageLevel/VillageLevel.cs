@@ -1,4 +1,5 @@
 ﻿using DreamWorld.Levels.VillageLevel.Entities;
+using Microsoft.Xna.Framework.Media;
 
 namespace DreamWorld.Levels.VillageLevel
 {
@@ -10,6 +11,9 @@ namespace DreamWorld.Levels.VillageLevel
             AddEntity(Skybox);
             Terrain = new VillageTerrain();
             AddEntity(Terrain);
+            Song ambient = Game.Content.Load<Song>(@"Audio\Ambient\Village");
+            MediaPlayer.Play(ambient);
+            MediaPlayer.IsRepeating = true;
             base.Initialize();
         }
     }

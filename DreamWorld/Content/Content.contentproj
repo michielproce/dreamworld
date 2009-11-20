@@ -123,6 +123,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audio\Ambient\Village.mp3">
+      <Name>Village</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Audio\Effects\" />
+    <Folder Include="Audio\Music\" />
     <Folder Include="Fonts\Test\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
