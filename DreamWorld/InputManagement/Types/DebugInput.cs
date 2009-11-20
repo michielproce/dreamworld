@@ -5,7 +5,7 @@ namespace DreamWorld.InputManagement.Types
 {
     public class DebugInput : Input
     {
-        public const float MovementSpeed = .5f;
+        public const float MovementSpeed = 3f;
         public const float RotationSpeed = MathHelper.Pi / 2000f;
 
         public Vector3 Movement

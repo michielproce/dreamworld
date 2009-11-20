@@ -130,7 +130,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Global\Zeppelin.x">
+    <Compile Include="Models\Global\Zeppelin\Zeppelin.x">
       <Name>Zeppelin</Name>
       <Importer>XImporter</Importer>
       <Processor>DefaultModelProcessor</Processor>
