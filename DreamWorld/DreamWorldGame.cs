@@ -3,6 +3,7 @@ using DreamWorld.InputManagement;
 using DreamWorld.ScreenManagement;
 using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld
 {
@@ -15,7 +16,10 @@ namespace DreamWorld
         public DreamWorldGame()
         {
             GraphicsDeviceManager = new GraphicsDeviceManager(this);
-//            GraphicsDeviceManager.PreferMultiSampling = true;
+
+            GraphicsDeviceManager.MinimumPixelShaderProfile = ShaderProfile.PS_2_0;
+            GraphicsDeviceManager.MinimumVertexShaderProfile = ShaderProfile.VS_2_0;
+
             GraphicsDeviceManager.PreferredBackBufferWidth = 1024;
             GraphicsDeviceManager.PreferredBackBufferHeight = 768;
 
