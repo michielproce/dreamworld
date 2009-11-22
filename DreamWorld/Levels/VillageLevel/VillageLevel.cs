@@ -1,5 +1,6 @@
 ﻿using DreamWorld.Entities;
 using DreamWorld.Entities.Global;
+using DreamWorld.Levels.VillageLevel.Entities;
 using DreamWorld.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Media;
@@ -14,6 +15,8 @@ namespace DreamWorld.Levels.VillageLevel
             AddEntity("skybox", Skybox);
             Terrain = new Terrain("Village");
             AddEntity("terrain", Terrain);
+
+            AddEntity("test", new TestEntity());
 
             Curve3D zeppelinPath = new Curve3D(CurveLoopType.Cycle);            
             zeppelinPath.AddPoint(new Vector3(0, -350, -300));

@@ -38,13 +38,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Test\Ball.x">
-      <Name>Ball</Name>
-      <Importer>XImporter</Importer>
-      <Processor>DefaultModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Effects\EdgeDetection.fx">
       <Name>EdgeDetection</Name>
       <Importer>EffectImporter</Importer>
@@ -132,6 +125,13 @@
   <ItemGroup>
     <Compile Include="Models\Global\Zeppelin\Zeppelin.x">
       <Name>Zeppelin</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Test\Test.x">
+      <Name>Test</Name>
       <Importer>XImporter</Importer>
       <Processor>DefaultModelProcessor</Processor>
     </Compile>

@@ -108,6 +108,7 @@
     <Compile Include="InputManagement\Types\MenuInput.cs" />
     <Compile Include="InputManagement\Types\PlayerInput.cs" />
     <Compile Include="Levels\Level.cs" />
+    <Compile Include="Levels\VillageLevel\Entities\TestEntity.cs" />
     <Compile Include="Levels\VillageLevel\VillageLevel.cs" />
     <Compile Include="Rendering\Postprocessing\Bloom.cs" />
     <Compile Include="Rendering\Postprocessing\EdgeDetection.cs" />
@@ -168,9 +169,6 @@
       <Project>{C1D4A9F4-71C3-465B-838B-5678DF94BA13}</Project>
       <Name>DreamWorldBase</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Levels\VillageLevel\Entities\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
