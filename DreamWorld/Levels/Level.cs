@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DreamWorld.Entities;
+using DreamWorld.Helpers.Renderers;
 using DreamWorld.Rendering.Postprocessing;
 using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
@@ -16,8 +17,9 @@ namespace DreamWorld.Levels
         public Skybox Skybox { get; protected set; }
 
         public Player Player { get; private set; }
+
+        private Dictionary<string, Entity> entities;
         
-        private List<Entity> entities;
 
         private SpriteBatch spriteBatch;
         private Bloom bloom;
@@ -25,19 +27,25 @@ namespace DreamWorld.Levels
 
         protected Level()
         {
-            entities = new List<Entity>();
+            entities = new Dictionary<string, Entity>();
             
         }
 
 
-        protected void AddEntity(Entity entity)
+        protected void AddEntity(string name, Entity entity)
         {
+            if(entities.ContainsKey(name))
+                throw new InvalidOperationException("Entity " + name + " already exists");
             entity.Level = this;
             entity.GameScreen = GameScreen;
             entity.Game = GameScreen.ScreenManager.Game as DreamWorldGame;
-            entities.Add(entity);
+            entities.Add(name, entity);
         }
 
+        public Entity FindEntity(string name)
+        {
+            return entities[name];
+        }
 
         public virtual void Initialize()
         {
@@ -45,20 +53,19 @@ namespace DreamWorld.Levels
                          {
                              InputManager = ((DreamWorldGame) GameScreen.ScreenManager.Game).InputManager
                          };
-            AddEntity(Player);
-            foreach (Entity entity in entities)
+            AddEntity("player", Player);
+            foreach (Entity entity in entities.Values)
                 entity.Initialize();
-
+            
             spriteBatch = new SpriteBatch(Game.GraphicsDevice);
             bloom = new Bloom(GameScreen.ScreenManager.Game, spriteBatch);
             edgeDetection = new EdgeDetection(GameScreen.ScreenManager.Game, spriteBatch);
-
         }
 
 
         public virtual void Update(GameTime gameTime)
         {
-            foreach (Entity entity in entities)
+            foreach (Entity entity in entities.Values)
                 entity.Update(gameTime);
         }
 
@@ -67,15 +74,19 @@ namespace DreamWorld.Levels
         {
             edgeDetection.PrepareDraw();
             edgeDetection.PrepareDrawNormalDepth();
-            foreach (Entity entity in entities)
+            foreach (Entity entity in entities.Values)
                 entity.Draw(gameTime, !entity.IgnoreEdgeDetection ? "NormalDepth" : "IgnoreNormalDepth");
 
             edgeDetection.PrepareDrawDefault();
-            foreach (Entity entity in entities)
+            foreach (Entity entity in entities.Values)
                 entity.Draw(gameTime, "Default");          
 
             edgeDetection.Draw(gameTime);
             bloom.Draw(gameTime);
+
+            #if (DEBUG)
+            LineRenderer.Render(GameScreen.CurrentCamera, Game.GraphicsDevice);
+            #endif
         }
 
 

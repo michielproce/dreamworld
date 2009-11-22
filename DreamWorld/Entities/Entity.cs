@@ -69,7 +69,7 @@ namespace DreamWorld.Entities
                     Matrix.CreateFromYawPitchRoll(Rotation.Y, Rotation.X, Rotation.Z)*
                     Matrix.CreateTranslation(Position);
              
-           Animation.AdvanceAnimation(gameTime);
+           Animation.Update(gameTime);
         }
 
         public virtual void Draw(GameTime gameTime, string technique)

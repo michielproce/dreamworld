@@ -95,6 +95,7 @@
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\Skybox.cs" />
     <Compile Include="Entities\Terrain.cs" />
+    <Compile Include="Helpers\Renderers\LineRenderer.cs" />
     <Compile Include="InputManagement\Handlers\GamePadHandler.cs" />
     <Compile Include="InputManagement\Gesture.cs" />
     <Compile Include="InputManagement\InputHandler.cs" />

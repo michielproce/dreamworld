@@ -11,9 +11,9 @@ namespace DreamWorld.Levels.VillageLevel
         public override void Initialize()
         {
             Skybox = new Skybox("Village");
-            AddEntity(Skybox);
+            AddEntity("skybox", Skybox);
             Terrain = new Terrain("Village");
-            AddEntity(Terrain);
+            AddEntity("terrain", Terrain);
 
             Curve3D zeppelinPath = new Curve3D(CurveLoopType.Cycle);            
             zeppelinPath.AddPoint(new Vector3(0, -350, -300));
@@ -28,7 +28,7 @@ namespace DreamWorld.Levels.VillageLevel
                                         Path = zeppelinPath,
                                         Speed = .0005f
                                     };
-            AddEntity(zeppelin);
+            AddEntity("zeppelin", zeppelin);
             Song ambient = Game.Content.Load<Song>(@"Audio\Ambient\Village");
             MediaPlayer.Play(ambient);
             MediaPlayer.IsRepeating = true;
