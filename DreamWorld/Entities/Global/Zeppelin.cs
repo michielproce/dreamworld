@@ -26,7 +26,7 @@ namespace DreamWorld.Entities.Global
 
         protected override void LoadContent()
         {
-            Model = Game.Content.Load<Model>(@"Models\Global\Zeppelin\Zeppelin");
+            Model = GameScreen.Content.Load<Model>(@"Models\Global\Zeppelin\Zeppelin");
            
             
             foreach (ModelMesh mesh in Model.Meshes)

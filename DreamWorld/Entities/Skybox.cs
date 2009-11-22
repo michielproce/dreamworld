@@ -16,7 +16,7 @@ namespace DreamWorld.Entities
 
         protected override void LoadContent()
         {
-            Model = Game.Content.Load<Model>(@"Models\Skyboxes\" + skybox);
+            Model = GameScreen.Content.Load<Model>(@"Models\Skyboxes\" + skybox);
             foreach (ModelMesh mesh in Model.Meshes)
             {
                 foreach (Effect effect in mesh.Effects)
