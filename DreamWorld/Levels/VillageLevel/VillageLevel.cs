@@ -32,7 +32,7 @@ namespace DreamWorld.Levels.VillageLevel
                                         Speed = .0005f
                                     };
             AddEntity("zeppelin", zeppelin);
-            Song ambient = Game.Content.Load<Song>(@"Audio\Ambient\Village");
+            Song ambient = GameScreen.Content.Load<Song>(@"Audio\Ambient\Village");
             MediaPlayer.Play(ambient);
             MediaPlayer.IsRepeating = true;
             base.Initialize();

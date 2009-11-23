@@ -1,5 +1,6 @@
 using System.Threading;
 using DreamWorld.InputManagement;
+using DreamWorld.Levels.VillageLevel;
 using DreamWorld.ScreenManagement;
 using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
@@ -30,7 +31,7 @@ namespace DreamWorld
             Components.Add(ScreenManager);
             Components.Add(InputManager);
 
-            ScreenManager.AddScreen(new GameScreen());
+            ScreenManager.AddScreen(new GameScreen(new VillageLevel()));
         }     
     }
 }
