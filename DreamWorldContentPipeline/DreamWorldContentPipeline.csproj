@@ -107,6 +107,7 @@
   <ItemGroup>
     <Compile Include="DefaultModelProcessor.cs" />
     <Compile Include="HeightMapInfoContent.cs" />
+    <Compile Include="ParticleProcessor.cs" />
     <Compile Include="SkinnedModelProcessor.cs" />
     <Compile Include="TerrainProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

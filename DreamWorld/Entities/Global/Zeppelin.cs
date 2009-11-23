@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using DreamWorld.Helpers.Renderers;
+using DreamWorld.Rendering.Particles.Systems;
 using DreamWorld.Util;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Entities.Global
 {
     class Zeppelin : Entity
     {        
+        private ZeppelinSmokeParticleSystem smokeParticleSystem;
+
         private float propellorRotation;
         private List<ModelMesh> propellors;
         private ModelMesh[] cogs;
@@ -22,6 +27,14 @@ namespace DreamWorld.Entities.Global
         {
             propellors = new List<ModelMesh>();
             cogs = new ModelMesh[4];
+            smokeParticleSystem = new ZeppelinSmokeParticleSystem();
+            
+        }
+
+        public override void Initialize()
+        {
+            Level.AddParticleSystem("zeppelinSmoke", smokeParticleSystem);            
+            base.Initialize();
         }
 
         protected override void LoadContent()
@@ -67,7 +80,17 @@ namespace DreamWorld.Entities.Global
             cogs[1].ParentBone.Transform = Matrix.CreateRotationY(propellorRotation * .4f); // Small, left
             cogs[2].ParentBone.Transform = Matrix.CreateRotationY(-propellorRotation * .15f); // Big, right
             cogs[3].ParentBone.Transform = Matrix.CreateRotationY(-propellorRotation * .4f); // Small, right
-            
+
+            // Smoke particles
+            Vector3 rightPropellor = Position + Vector3.Transform(new Vector3(-68, 55, -60), rotation);
+            Vector3 leftPropellor = Position + Vector3.Transform(new Vector3(68, 55, -60), rotation);
+            smokeParticleSystem.AddParticle(rightPropellor, Vector3.Zero);
+            smokeParticleSystem.AddParticle(leftPropellor, Vector3.Zero);
+                        
+            Vector3 gravity = Vector3.Transform(Vector3.Backward, rotation);
+            gravity.Y = 0;
+            smokeParticleSystem.Settings.Gravity = gravity;                
+
             World = Matrix.CreateScale(Scale) *
                     rotation * 
                     Matrix.CreateTranslation(Position);         
