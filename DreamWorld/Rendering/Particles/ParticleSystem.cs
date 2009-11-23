@@ -1,5 +1,4 @@
 ﻿using System;
-using DreamWorld.Cameras;
 using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -10,14 +9,13 @@ namespace DreamWorld.Rendering.Particles
     public abstract class ParticleSystem
     {
         public ParticleSettings Settings { get; private set; }
+        
+        private GameScreen gameScreen;
+        private ContentManager content;
+        private GraphicsDevice device;
+        
 
-        public ContentManager Content { private get; set; }
-        public GraphicsDevice GraphicsDevice { private get; set; }
-        public GameScreen GameScreen { private get; set; }
-
-        private static Random random = new Random();
-
-               
+        private static Random random = new Random();               
 
         private Effect particleEffect;
         EffectParameter effectViewParameter;
@@ -37,6 +35,12 @@ namespace DreamWorld.Rendering.Particles
         float currentTime;
         int drawCounter;
 
+        protected ParticleSystem()
+        {
+            gameScreen = GameScreen.Instance;
+            content = gameScreen.Content;
+            device = gameScreen.GraphicsDevice;
+        }
 
         protected abstract void InitializeSettings(ParticleSettings settings);
 
@@ -50,7 +54,7 @@ namespace DreamWorld.Rendering.Particles
 
         private void LoadContent()
         {
-            particleEffect = Content.Load<Effect>(@"Effects\Particle").Clone(GraphicsDevice);
+            particleEffect = content.Load<Effect>(@"Effects\Particle").Clone(device);
 
             EffectParameterCollection parameters = particleEffect.Parameters;
 
@@ -78,7 +82,7 @@ namespace DreamWorld.Rendering.Particles
                 new Vector2(Settings.MinEndSize, Settings.MaxEndSize));
 
             // Load the particle texture, and set it onto the effect.
-            Texture2D texture = Content.Load<Texture2D>(@"Textures\Particles\" + Settings.TextureName);
+            Texture2D texture = content.Load<Texture2D>(@"Textures\Particles\" + Settings.TextureName);
 
             parameters["Texture"].SetValue(texture);
 
@@ -94,20 +98,20 @@ namespace DreamWorld.Rendering.Particles
             particleEffect.CurrentTechnique = particleEffect.Techniques[techniqueName];
 
 
-            vertexDeclaration = new VertexDeclaration(GraphicsDevice,
+            vertexDeclaration = new VertexDeclaration(device,
                                                       ParticleVertex.VertexElements);
             
             int size = ParticleVertex.SizeInBytes * particles.Length;
 
-            vertexBuffer = new DynamicVertexBuffer(GraphicsDevice, size,
+            vertexBuffer = new DynamicVertexBuffer(device, size,
                                                    BufferUsage.WriteOnly |
                                                    BufferUsage.Points);
         }
 
         public void Update(GameTime gameTime)
         {
-            effectViewParameter.SetValue(GameScreen.CurrentCamera.View);
-            effectProjectionParameter.SetValue(GameScreen.CurrentCamera.Projection);
+            effectViewParameter.SetValue(gameScreen.Camera.View);
+            effectProjectionParameter.SetValue(gameScreen.Camera.Projection);
 
             currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -192,7 +196,7 @@ namespace DreamWorld.Rendering.Particles
 
         public void Draw(GameTime gameTime)
         {
-            GraphicsDevice device = GraphicsDevice;
+            GraphicsDevice device = this.device;
 
             // Restore the vertex buffer contents if the graphics device was lost.
             if (vertexBuffer.IsContentLost)

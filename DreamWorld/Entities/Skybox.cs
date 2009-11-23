@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Entities
@@ -29,19 +28,19 @@ namespace DreamWorld.Entities
 
         public override void Update(GameTime gameTime)
         {
-            Position = GameScreen.CurrentCamera.Position;
+            Position = GameScreen.Camera.Position;
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime, string technique)
         {           
-            Game.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Clamp;
-            Game.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Clamp;
-            Game.GraphicsDevice.RenderState.DepthBufferWriteEnable = false;
+            GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Clamp;
+            GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Clamp;
+            GraphicsDevice.RenderState.DepthBufferWriteEnable = false;
             base.Draw(gameTime, technique);
-            Game.GraphicsDevice.RenderState.DepthBufferWriteEnable = true;
-            Game.GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
-            Game.GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
+            GraphicsDevice.RenderState.DepthBufferWriteEnable = true;
+            GraphicsDevice.SamplerStates[0].AddressU = TextureAddressMode.Wrap;
+            GraphicsDevice.SamplerStates[0].AddressV = TextureAddressMode.Wrap;
         }
     }
 }

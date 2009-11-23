@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Cameras
 {
@@ -21,7 +20,7 @@ namespace DreamWorld.Cameras
         public override Vector3 CameraDirection { 
             get
             {
-                return Vector3.Normalize(Level.Player.Position - Position);
+                return Vector3.Normalize(level.Player.Position - Position);
             }
         }
 
@@ -29,7 +28,7 @@ namespace DreamWorld.Cameras
         {
             Projection = Matrix.CreatePerspectiveFieldOfView(
                MathHelper.ToRadians(45.0f),
-               GraphicsDevice.Viewport.AspectRatio,
+               device.Viewport.AspectRatio,
                1.0f,
                10000.0f);
 
@@ -38,15 +37,15 @@ namespace DreamWorld.Cameras
 
         public override void Update(GameTime gameTime)
         {
-            Vector3 playerPosition = Level.Player.Position + Level.Player.CameraOffset;
+            Vector3 playerPosition = level.Player.Position + level.Player.CameraOffset;
 
-            distance -= InputManager.Player.Zoom;
+            distance -= inputManager.Player.Zoom;
             if (distance < minDistance)
                 distance = minDistance;
             if (distance > maxDistance)
                 distance = maxDistance;
 
-            float verticalRotationInput = InputManager.Player.VerticalRotation;
+            float verticalRotationInput = inputManager.Player.VerticalRotation;
             if (camOnFloor && verticalRotationInput < 0)
                 verticalRotationInput = 0;
             verticalRotation -= verticalRotationInput;
@@ -55,19 +54,19 @@ namespace DreamWorld.Cameras
             if (verticalRotation > maxVerticalRotation)
                 verticalRotation = maxVerticalRotation;
 
-            if (InputManager.Player.ResetHorizontalRotation)
+            if (inputManager.Player.ResetHorizontalRotation)
                 horizontalRotation = 0;
-            horizontalRotation += InputManager.Player.HorizontalRotation;
+            horizontalRotation += inputManager.Player.HorizontalRotation;
             Position = playerPosition - 
                 Vector3.Transform(
                     Vector3.Transform(
                         new Vector3(0, 0, -distance),
                         Matrix.CreateRotationX(verticalRotation)),
-                    Matrix.CreateRotationY(Level.Player.Rotation.Y + horizontalRotation));    
+                    Matrix.CreateRotationY(level.Player.Rotation.Y + horizontalRotation));    
 
-            if(Level.Terrain != null)
+            if(level.Terrain != null)
             {
-                float cameraHeight = Level.Terrain.HeightMapInfo.GetHeight(Position) + minCameraHeight;
+                float cameraHeight = level.Terrain.HeightMapInfo.GetHeight(Position) + minCameraHeight;
                 if (Position.Y < cameraHeight)
                 {
                     camOnFloor = true;

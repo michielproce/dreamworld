@@ -7,7 +7,7 @@ namespace DreamWorld.Levels.TestPuzzleLevel.Entities
     {
         protected override void LoadContent()
         {
-            Model = Game.Content.Load<Model>(@"Models\Global\Zeppelin\Zeppelin");
+            Model = Content.Load<Model>(@"Models\Global\Zeppelin\Zeppelin");
 
             base.LoadContent();
         }

@@ -1,6 +1,4 @@
-﻿using System;
-using DreamWorld.Entities;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Rendering.Postprocessing

@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Threading;
 using DreamWorld.InputManagement;
-using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;

@@ -1,5 +1,4 @@
 ﻿using System;
-using DreamWorld.InputManagement;
 using DreamWorld.InputManagement.Types;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

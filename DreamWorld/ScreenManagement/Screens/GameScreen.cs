@@ -1,5 +1,6 @@
 using System;
 using DreamWorld.Cameras;
+using DreamWorld.InputManagement;
 using DreamWorld.InputManagement.Types;
 using DreamWorld.Levels;
 using Microsoft.Xna.Framework;
@@ -10,34 +11,35 @@ namespace DreamWorld.ScreenManagement.Screens
 {
     public class GameScreen : Screen
     {
+        public static GameScreen Instance { get; private set; }
         public ContentManager Content { get; private set; }
-        public Camera CurrentCamera { get; private set; }
-        public Level CurrentLevel { get; private set; }
+        public Camera Camera { get; private set; }
+        public Level Level { get; private set; }
+        public InputManager InputManager { get; private set; }
+        public GraphicsDevice GraphicsDevice { get; private set; }
 
         public GameScreen(Level level)
         {
+            Instance = this;            
             LoadingScreen = new LoadingScreen(@"Textures/Test/gradient");
             ScreenState = ScreenState.Hidden;
 
-            CurrentLevel = level;
-            CurrentLevel.GameScreen = this;
+            Level = level;
+            Level.GameScreen = this;
         }
 
         public override void Initialize()
         {
             Content = new ContentManager(ScreenManager.Game.Services) {RootDirectory = "Content"};
+            InputManager = ((DreamWorldGame) ScreenManager.Game).InputManager;
+            GraphicsDevice = ScreenManager.Game.GraphicsDevice;
 
             base.Initialize();
 
-            CurrentCamera = new ThirdPersonCamera
-            {
-                Level = CurrentLevel,
-                GraphicsDevice = ScreenManager.Game.GraphicsDevice,
-                InputManager = ((DreamWorldGame)ScreenManager.Game).InputManager
-            };
+            Camera = new ThirdPersonCamera();
             
-            CurrentLevel.Initialize();
-            CurrentCamera.Initialize();
+            Level.Initialize();
+            Camera.Initialize();
 
             LoadingScreen.Loaded = true;
         }
@@ -55,33 +57,18 @@ namespace DreamWorld.ScreenManagement.Screens
                 #if (DEBUG)
                     if (((DreamWorldGame)ScreenManager.Game).InputManager.Debug.ToggleDebugCamera)
                     {
-                        if (CurrentCamera is DebugCamera)
-                        {
-                            CurrentCamera = new ThirdPersonCamera
-                            {
-                                Level = CurrentLevel,
-                                GraphicsDevice = ScreenManager.Game.GraphicsDevice,
-                                InputManager = ((DreamWorldGame)ScreenManager.Game).InputManager
-                            };
-                        }
+                        if (Camera is DebugCamera)
+                            Camera = new ThirdPersonCamera();
                         else
-                        {
-                            CurrentCamera = new DebugCamera
-                            {
-                                Level = CurrentLevel,
-                                GraphicsDevice = ScreenManager.Game.GraphicsDevice,
-                                InputManager = ((DreamWorldGame)ScreenManager.Game).InputManager,
-                                Position = CurrentCamera.Position
-                            };
-                        }
-                        CurrentCamera.Initialize();
+                            Camera = new DebugCamera { Position = Camera.Position};
+                        Camera.Initialize();
                     }
                 #endif
                 
-                CurrentLevel.Update(gameTime);
-                CurrentCamera.Update(gameTime);
-                if (CurrentLevel.Skybox != null)
-                    CurrentLevel.Skybox.Update(gameTime); // TODO: This updates the skybox second time around, but we don't want the camera delay.
+                Level.Update(gameTime);
+                Camera.Update(gameTime);
+                if (Level.Skybox != null)
+                    Level.Skybox.Update(gameTime); // TODO: This updates the skybox second time around, but we don't want the camera delay.
             }
             base.Update(gameTime);
         }
@@ -109,7 +96,7 @@ namespace DreamWorld.ScreenManagement.Screens
         public override void Draw(GameTime gameTime)
         {
             ScreenManager.GraphicsDevice.Clear(Color.CornflowerBlue);
-            CurrentLevel.Draw(gameTime);
+            Level.Draw(gameTime);
             base.Draw(gameTime);
         }
     }

@@ -8,10 +8,18 @@ namespace DreamWorld.Cameras
 {
     public abstract class Camera
     {
-        public Level Level { protected get; set; }
-        public GraphicsDevice GraphicsDevice { protected get; set; }
-        public InputManager InputManager { protected get; set; }
-        
+        protected Level level;
+        protected GraphicsDevice device;
+        protected InputManager inputManager;
+
+        protected Camera()
+        {
+            GameScreen gameScreen = GameScreen.Instance;
+            level = gameScreen.Level;
+            device = gameScreen.GraphicsDevice;
+            inputManager = gameScreen.InputManager;
+        }
+
         public Matrix View { get; protected set; }
         public Matrix Projection { get; protected set; }
         public BoundingFrustum Frustrum { get; protected set; }

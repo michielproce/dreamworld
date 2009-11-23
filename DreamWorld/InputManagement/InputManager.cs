@@ -1,5 +1,4 @@
-﻿using System;
-using DreamWorld.InputManagement.Handlers;
+﻿using DreamWorld.InputManagement.Handlers;
 using DreamWorld.InputManagement.Types;
 using Microsoft.Xna.Framework;
 

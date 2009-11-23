@@ -1,4 +1,3 @@
-using System.Threading;
 using DreamWorld.InputManagement;
 using DreamWorld.Levels.VillageLevel;
 using DreamWorld.ScreenManagement;

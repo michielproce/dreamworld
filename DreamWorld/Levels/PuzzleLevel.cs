@@ -52,7 +52,7 @@ namespace DreamWorld.Levels
                 }
                 else
                 {
-                    Vector3 cameraDirection = GameScreen.CurrentCamera.CameraDirection;
+                    Vector3 cameraDirection = GameScreen.Camera.CameraDirection;
                     float angle = MathHelper.ToDegrees((float) Math.Atan2(cameraDirection.X, cameraDirection.Z));
                     float rotation = 0;
 

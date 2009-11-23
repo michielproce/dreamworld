@@ -1,5 +1,4 @@
-﻿using System;
-using DreamWorld.Cameras;
+﻿using DreamWorld.Cameras;
 using DreamWorld.InputManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,38 +13,49 @@ namespace DreamWorld.Entities
 
         public readonly Vector3 CameraOffset = new Vector3(0,12,0);
 
-        public InputManager InputManager { private get; set; }
+        private InputManager inputManager;
 
-        protected override void LoadContent()
+        public Player()
         {
-            Model = GameScreen.Content.Load<Model>(@"Models\Test\dude");
+            
+        }
+
+        public override void Initialize()
+        {
+            inputManager = GameScreen.InputManager;
             Animation.InitialClip = "Take 001";
             Animation.Paused = true;
             Animation.Speed = 1.8f;
-            
-            Scale = new Vector3(.2f);           
+
+            Scale = new Vector3(.2f);
             PutOnTerrain();
-            
+
+            base.Initialize();
+        }
+
+        protected override void LoadContent()
+        {            
+            Model = GameScreen.Content.Load<Model>(@"Models\Test\dude");                       
             base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
         {            
 #if(DEBUG)
-            if(GameScreen.CurrentCamera is DebugCamera)
+            if(GameScreen.Camera is DebugCamera)
                 return;
 #endif   
             
-            Rotation += new Vector3(Rotation.X, InputManager.Player.Rotation, Rotation.Z);  
+            Rotation += new Vector3(Rotation.X, inputManager.Player.Rotation, Rotation.Z);  
           
-            Vector3 movement = Vector3.Transform(InputManager.Player.Movement, Matrix.CreateRotationY(Rotation.Y));
+            Vector3 movement = Vector3.Transform(inputManager.Player.Movement, Matrix.CreateRotationY(Rotation.Y));
             Position += movement;
             if(movement.Length() != 0)
                 Animation.Paused = false;
             else
                 Animation.Paused = true;
 
-            if (InputManager.Player.Jump && !IsJumping())            
+            if (inputManager.Player.Jump && !IsJumping())            
                 StartJumping();
 
             if (IsJumping())

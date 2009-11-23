@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using DreamWorld.Helpers.Renderers;
 using DreamWorld.Rendering.Particles.Systems;
 using DreamWorld.Util;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Entities.Global
 {
     class Zeppelin : Entity
-    {        
+    {
+        private Matrix rotation;
+
         private ZeppelinSmokeParticleSystem smokeParticleSystem;
 
         private float propellorRotation;
         private List<ModelMesh> propellors;
-        private ModelMesh[] cogs;
-        
+        private ModelMesh[] cogs;        
         
         private float time;
         
@@ -61,7 +60,7 @@ namespace DreamWorld.Entities.Global
 
         public override void Update(GameTime gameTime)
         {
-            Matrix rotation = Matrix.Identity;
+            rotation = Matrix.Identity;
             if(Path != null)
             {
                 time += Speed;
@@ -90,10 +89,15 @@ namespace DreamWorld.Entities.Global
             Vector3 gravity = Vector3.Transform(Vector3.Backward, rotation);
             gravity.Y = 0;
             smokeParticleSystem.Settings.Gravity = gravity;                
+            
+            base.Update(gameTime);  
+        }
 
-            World = Matrix.CreateScale(Scale) *
-                    rotation * 
-                    Matrix.CreateTranslation(Position);         
+        protected override Matrix GenerateWorldMatrix()
+        {
+            return Matrix.CreateScale(Scale) *
+                    rotation *
+                    Matrix.CreateTranslation(Position);       
         }
     }
 }

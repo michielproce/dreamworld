@@ -39,10 +39,9 @@ namespace DreamWorld.Levels
         {
             if(entities.ContainsKey(name))
                 throw new InvalidOperationException("Entity " + name + " already exists");
-            entity.Level = this;
-            entity.GameScreen = GameScreen;
-            entity.Game = GameScreen.ScreenManager.Game as DreamWorldGame;
+            
             entities.Add(name, entity);
+            
             if(initialized)
                 entity.Initialize();            
         }
@@ -51,10 +50,9 @@ namespace DreamWorld.Levels
         {
             if (entities.ContainsKey(name))
                 throw new InvalidOperationException("Particle System " + name + " already exists");
-            particleSystem.GameScreen = GameScreen;
-            particleSystem.Content = GameScreen.Content;
-            particleSystem.GraphicsDevice = Game.GraphicsDevice;
+
             particleSystems.Add(name, particleSystem);
+            
             if(initialized)
                 particleSystem.Initialize();
         }
@@ -67,10 +65,7 @@ namespace DreamWorld.Levels
         public virtual void Initialize()
         {
             Game = (DreamWorldGame) GameScreen.ScreenManager.Game;
-            Player = new Player
-                         {
-                             InputManager = Game.InputManager
-                         };
+            Player = new Player();
             AddEntity("player", Player);
             foreach (Entity entity in entities.Values)
                 entity.Initialize();
@@ -111,8 +106,8 @@ namespace DreamWorld.Levels
             bloom.Draw(gameTime);
             
             #if (DEBUG)
-            LineRenderer.Render(GameScreen.CurrentCamera, Game.GraphicsDevice);
-            BoundingSphereRenderer.Render(GameScreen.CurrentCamera, Game.GraphicsDevice);
+            LineRenderer.Render(GameScreen.Camera, Game.GraphicsDevice);
+            BoundingSphereRenderer.Render(GameScreen.Camera, Game.GraphicsDevice);
             #endif
         }
 

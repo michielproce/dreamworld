@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Cameras
 {
@@ -14,7 +13,7 @@ namespace DreamWorld.Cameras
         {
             Projection = Matrix.CreatePerspectiveFieldOfView(
                MathHelper.ToRadians(45.0f),
-               GraphicsDevice.Viewport.AspectRatio,
+               device.Viewport.AspectRatio,
                1.0f,
                10000.0f);
 
@@ -24,8 +23,8 @@ namespace DreamWorld.Cameras
         public override void Update(GameTime gameTime)
         {
             // Handle Input                       
-            Move(InputManager.Debug.Movement);
-            Rotate(InputManager.Debug.Rotation.X, InputManager.Debug.Rotation.Y);
+            Move(inputManager.Debug.Movement);
+            Rotate(inputManager.Debug.Rotation.X, inputManager.Debug.Rotation.Y);
 
             View = Matrix.CreateLookAt(
                     Position,

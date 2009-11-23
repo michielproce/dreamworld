@@ -20,9 +20,6 @@ namespace DreamWorld.Levels.TestPuzzleLevel
 
             Element element = new TestElement
             {
-                Level = this,
-                GameScreen = GameScreen,
-                Game = GameScreen.ScreenManager.Game as DreamWorldGame,
                 Position = new Vector3(0, -20, 0),
             };
             Groups[0].AddElement(element);

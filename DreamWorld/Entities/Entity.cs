@@ -4,19 +4,21 @@ using DreamWorld.Levels;
 using DreamWorld.ScreenManagement.Screens;
 using DreamWorldBase;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Entities
 {
     public abstract class Entity
     {
-        public DreamWorldGame Game { protected get; set; }
-        public GameScreen GameScreen { protected get; set; }
-        public Level Level { protected get; set; }
-        
+        protected GameScreen GameScreen {get; private set; }
+        protected ContentManager Content { get; private set; }
+        protected GraphicsDevice GraphicsDevice { get; private set; }        
+        protected Level Level { get; private set; }
+                
         public Vector3 Position { get; set; }
-        public Vector3 Rotation { get; protected set; }
-        public Vector3 Scale { get; protected set; }
+        public Vector3 Rotation { get; set; }
+        public Vector3 Scale { get; set; }
         
         public Matrix World { get; protected set; }
         
@@ -32,7 +34,12 @@ namespace DreamWorld.Entities
         protected Matrix[] transforms;
 
         protected Entity()
-        {
+        {            
+            GameScreen = GameScreen.Instance;
+            Level = GameScreen.Level;
+            Content = GameScreen.Content;
+            GraphicsDevice = GameScreen.GraphicsDevice;
+
             Scale = Vector3.One;
             Animation = new Animation();
             World = Matrix.Identity;
@@ -96,8 +103,8 @@ namespace DreamWorld.Entities
                 {
                     effect.CurrentTechnique = effect.Techniques[technique];
                     effect.Parameters["world"].SetValue(transforms[mesh.ParentBone.Index] * World);
-                    effect.Parameters["view"].SetValue(GameScreen.CurrentCamera.View);
-                    effect.Parameters["projection"].SetValue(GameScreen.CurrentCamera.Projection);                    
+                    effect.Parameters["view"].SetValue(GameScreen.Camera.View);
+                    effect.Parameters["projection"].SetValue(GameScreen.Camera.Projection);                    
                     if(Animation.Loaded)                    
                         effect.Parameters["Bones"].SetValue(Animation.SkinTransforms);
                     
