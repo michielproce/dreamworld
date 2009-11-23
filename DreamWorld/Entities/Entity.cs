@@ -1,4 +1,5 @@
 ﻿using System;
+using DreamWorld.Helpers.Renderers;
 using DreamWorld.Levels;
 using DreamWorld.ScreenManagement.Screens;
 using DreamWorldBase;
@@ -16,21 +17,25 @@ namespace DreamWorld.Entities
         public Vector3 Position { get; set; }
         public Vector3 Rotation { get; protected set; }
         public Vector3 Scale { get; protected set; }
-        public Model Model { get; protected set; }
         
-        public BoundingSphere[] BoundingSpheres { get; protected set; }
         public Matrix World { get; protected set; }
         
+        public Model Model { get; protected set; }
+        
+        public BoundingSphere BoundingSphere { get; protected set; }
+
         public Animation Animation { get; private set; }
 
         public bool IgnoreEdgeDetection { get; protected set; }
+        public bool RenderSpheres { get; protected set; }
         
-        private Matrix[] transforms;
+        protected Matrix[] transforms;
 
         protected Entity()
         {
             Scale = Vector3.One;
-            Animation = new Animation();            
+            Animation = new Animation();
+            World = Matrix.Identity;
         }
 
         public virtual void Initialize()
@@ -55,6 +60,11 @@ namespace DreamWorld.Entities
                 }
             }
             #endif
+            
+            foreach (ModelMesh mesh in Model.Meshes)
+            {
+                BoundingSphere = BoundingSphere.CreateMerged(BoundingSphere, mesh.BoundingSphere);
+            }
 
             SkinningData sd = Model.Tag as SkinningData;
             if (sd != null)
@@ -65,11 +75,16 @@ namespace DreamWorld.Entities
 
         public virtual void Update(GameTime gameTime)
         {
-            World = Matrix.CreateScale(Scale)*
-                    Matrix.CreateFromYawPitchRoll(Rotation.Y, Rotation.X, Rotation.Z)*
-                    Matrix.CreateTranslation(Position);
+           World = GenerateWorldMatrix();
              
            Animation.Update(gameTime);
+        }
+
+        protected virtual Matrix GenerateWorldMatrix()
+        {
+            return  Matrix.CreateScale(Scale) *
+                    Matrix.CreateFromYawPitchRoll(Rotation.Y, Rotation.X, Rotation.Z) *
+                    Matrix.CreateTranslation(Position);
         }
 
         public virtual void Draw(GameTime gameTime, string technique)
@@ -88,7 +103,17 @@ namespace DreamWorld.Entities
                     
                 }
                 mesh.Draw();
+                
+                #if (DEBUG)
+                if (RenderSpheres)
+                    BoundingSphereRenderer.AddSphere(mesh.BoundingSphere, (transforms[mesh.ParentBone.Index] * World), Color.Yellow);
+                #endif
             }
+
+            #if (DEBUG)
+            if (RenderSpheres)
+                BoundingSphereRenderer.AddSphere(BoundingSphere, World, Color.BlueViolet);
+            #endif
         }
     }
 }

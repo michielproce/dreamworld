@@ -1,5 +1,4 @@
 ﻿using System;
-using DreamWorld.InputManagement.Handlers;
 using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Cameras
@@ -19,6 +18,12 @@ namespace DreamWorld.Cameras
 
         private float horizontalRotation;
         
+        public override Vector3 CameraDirection { 
+            get
+            {
+                return Vector3.Normalize(Level.Player.Position - Position);
+            }
+        }
 
         public override void Initialize()
         {

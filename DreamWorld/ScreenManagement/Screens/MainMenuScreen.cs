@@ -1,4 +1,6 @@
 using System;
+using DreamWorld.Levels.TestPuzzleLevel;
+using DreamWorld.Levels.VillageLevel;
 
 namespace DreamWorld.ScreenManagement.Screens
 {
@@ -7,8 +9,8 @@ namespace DreamWorld.ScreenManagement.Screens
         public MainMenuScreen()
             : base("Mainmenu")
         {
-            MenuEntry newGameGameMenuEntry = new MenuEntry("New game");
-            MenuEntry loadGameGameMenuEntry = new MenuEntry("Load game");
+            MenuEntry newGameGameMenuEntry = new MenuEntry("VillageLevel");
+            MenuEntry loadGameGameMenuEntry = new MenuEntry("PuzzleLevel");
             MenuEntry settingsMenuEntry = new MenuEntry("Settings");
             MenuEntry creditsMenuEntry = new MenuEntry("Credits");
             MenuEntry exitMenuEntry = new MenuEntry("Exit");
@@ -27,13 +29,13 @@ namespace DreamWorld.ScreenManagement.Screens
 
         void PlayGameMenuEntrySelected(object sender, EventArgs e)
         {
-            ScreenManager.AddScreen(new GameScreen());
+            ScreenManager.AddScreen(new GameScreen(new VillageLevel()));
             ExitScreen();
         }
 
         void LoadGameMenuEntrySelected(object sender, EventArgs e)
         {
-            ScreenManager.AddScreen(new GameScreen());
+            ScreenManager.AddScreen(new GameScreen(new TestPuzzleLevel()));
             ExitScreen();
         }
 

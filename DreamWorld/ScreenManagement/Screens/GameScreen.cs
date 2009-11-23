@@ -2,7 +2,6 @@ using System;
 using DreamWorld.Cameras;
 using DreamWorld.InputManagement.Types;
 using DreamWorld.Levels;
-using DreamWorld.Levels.VillageLevel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,10 +14,13 @@ namespace DreamWorld.ScreenManagement.Screens
         public Camera CurrentCamera { get; private set; }
         public Level CurrentLevel { get; private set; }
 
-        public GameScreen()
+        public GameScreen(Level level)
         {
             LoadingScreen = new LoadingScreen(@"Textures/Test/gradient");
             ScreenState = ScreenState.Hidden;
+
+            CurrentLevel = level;
+            CurrentLevel.GameScreen = this;
         }
 
         public override void Initialize()
@@ -26,12 +28,6 @@ namespace DreamWorld.ScreenManagement.Screens
             Content = new ContentManager(ScreenManager.Game.Services) {RootDirectory = "Content"};
 
             base.Initialize();
-
-            CurrentLevel = new VillageLevel
-                               {
-                                   GameScreen = this,
-                                   Game = (DreamWorldGame) ScreenManager.Game
-                               };
 
             CurrentCamera = new ThirdPersonCamera
             {
@@ -54,6 +50,29 @@ namespace DreamWorld.ScreenManagement.Screens
 
         public override void Update(GameTime gameTime)
         {
+            if(((DreamWorldGame) ScreenManager.Game).InputManager.Debug.ToggleDebugCamera)
+            {
+                if(CurrentCamera is DebugCamera)
+                {
+                    CurrentCamera = new ThirdPersonCamera
+                    {
+                        Level = CurrentLevel,
+                        GraphicsDevice = ScreenManager.Game.GraphicsDevice,
+                        InputManager = ((DreamWorldGame)ScreenManager.Game).InputManager
+                    };
+                }
+                else
+                {
+                    CurrentCamera = new DebugCamera
+                    {
+                        Level = CurrentLevel,
+                        GraphicsDevice = ScreenManager.Game.GraphicsDevice,
+                        InputManager = ((DreamWorldGame)ScreenManager.Game).InputManager
+                    };
+                }
+                CurrentCamera.Initialize();
+            }
+
             if (!OtherScreenHasFocus)
             {
                 #if (DEBUG)

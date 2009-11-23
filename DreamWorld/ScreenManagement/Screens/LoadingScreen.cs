@@ -34,7 +34,9 @@ namespace DreamWorld.ScreenManagement.Screens
         {
             MenuInput menuInput = ScreenManager.InputManager.Menu;
 
-            if (loaded)
+            if (loaded 
+//                && (menuInput.Select || menuInput.Cancel)
+                )
             {
                 ExitScreen();
             }

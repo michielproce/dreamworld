@@ -19,14 +19,14 @@ namespace DreamWorld.Levels
 
         public Player Player { get; private set; }
 
-        private Dictionary<string, Entity> entities;
+        protected Dictionary<string, Entity> entities;
         private Dictionary<string, ParticleSystem> particleSystems;
 
         private bool initialized;
 
         private SpriteBatch spriteBatch;
-        private Bloom bloom;
-        private EdgeDetection edgeDetection;
+        protected Bloom bloom;
+        protected EdgeDetection edgeDetection;
 
         protected Level()
         {
@@ -66,9 +66,10 @@ namespace DreamWorld.Levels
 
         public virtual void Initialize()
         {
+            Game = (DreamWorldGame) GameScreen.ScreenManager.Game;
             Player = new Player
                          {
-                             InputManager = ((DreamWorldGame) GameScreen.ScreenManager.Game).InputManager
+                             InputManager = Game.InputManager
                          };
             AddEntity("player", Player);
             foreach (Entity entity in entities.Values)
@@ -77,8 +78,8 @@ namespace DreamWorld.Levels
                 particleSystem.Initialize();
             
             spriteBatch = new SpriteBatch(Game.GraphicsDevice);
-            bloom = new Bloom(GameScreen.ScreenManager.Game, spriteBatch);
-            edgeDetection = new EdgeDetection(GameScreen.ScreenManager.Game, spriteBatch);
+            bloom = new Bloom(Game, spriteBatch);
+            edgeDetection = new EdgeDetection(Game, spriteBatch);
             initialized = true;
         }
 
@@ -111,6 +112,7 @@ namespace DreamWorld.Levels
             
             #if (DEBUG)
             LineRenderer.Render(GameScreen.CurrentCamera, Game.GraphicsDevice);
+            BoundingSphereRenderer.Render(GameScreen.CurrentCamera, Game.GraphicsDevice);
             #endif
         }
 

@@ -19,5 +19,7 @@ namespace DreamWorld.Cameras
 
         public virtual void Initialize() { }
         public virtual void Update(GameTime gameTime) { }
+
+        public virtual Vector3 CameraDirection { get; set; }
     }
 }
