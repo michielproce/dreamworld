@@ -50,29 +50,6 @@ namespace DreamWorld.ScreenManagement.Screens
 
         public override void Update(GameTime gameTime)
         {
-            if(((DreamWorldGame) ScreenManager.Game).InputManager.Debug.ToggleDebugCamera)
-            {
-                if(CurrentCamera is DebugCamera)
-                {
-                    CurrentCamera = new ThirdPersonCamera
-                    {
-                        Level = CurrentLevel,
-                        GraphicsDevice = ScreenManager.Game.GraphicsDevice,
-                        InputManager = ((DreamWorldGame)ScreenManager.Game).InputManager
-                    };
-                }
-                else
-                {
-                    CurrentCamera = new DebugCamera
-                    {
-                        Level = CurrentLevel,
-                        GraphicsDevice = ScreenManager.Game.GraphicsDevice,
-                        InputManager = ((DreamWorldGame)ScreenManager.Game).InputManager
-                    };
-                }
-                CurrentCamera.Initialize();
-            }
-
             if (!OtherScreenHasFocus)
             {
                 #if (DEBUG)
