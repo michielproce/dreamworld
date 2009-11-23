@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using DreamWorld.Audio;
 using DreamWorld.Helpers.Renderers;
 using DreamWorld.Levels;
 using DreamWorld.ScreenManagement.Screens;
@@ -31,7 +33,11 @@ namespace DreamWorld.Entities
         public bool IgnoreEdgeDetection { get; protected set; }
         public bool RenderSpheres { get; protected set; }
         
+        private List<SoundEffect3D> sounds;
+
         protected Matrix[] transforms;
+
+        private bool initialized;
 
         protected Entity()
         {            
@@ -43,11 +49,16 @@ namespace DreamWorld.Entities
             Scale = Vector3.One;
             Animation = new Animation();
             World = Matrix.Identity;
+            sounds = new List<SoundEffect3D>();
         }
 
         public virtual void Initialize()
         {
+            foreach (SoundEffect3D sound in sounds)
+                sound.Initialize();                
+
             LoadContent();
+            initialized = true;
         }
 
         protected virtual void LoadContent()
@@ -83,8 +94,14 @@ namespace DreamWorld.Entities
         public virtual void Update(GameTime gameTime)
         {
            World = GenerateWorldMatrix();
-             
-           Animation.Update(gameTime);
+
+           foreach (SoundEffect3D sound in sounds)
+           {
+               sound.Emitter.Position = Position;
+               sound.Update(gameTime);
+           }
+
+            Animation.Update(gameTime);
         }
 
         protected virtual Matrix GenerateWorldMatrix()
@@ -121,6 +138,13 @@ namespace DreamWorld.Entities
             if (RenderSpheres)
                 BoundingSphereRenderer.AddSphere(BoundingSphere, World, Color.BlueViolet);
             #endif
+        }
+
+        protected void AddSoundEffect(SoundEffect3D sound)
+        {
+            sounds.Add(sound);
+            if(initialized)
+                sound.Initialize();   
         }
     }
 }

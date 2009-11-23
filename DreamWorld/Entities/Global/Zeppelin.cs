@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DreamWorld.Audio;
 using DreamWorld.Rendering.Particles.Systems;
 using DreamWorld.Util;
 using Microsoft.Xna.Framework;
@@ -32,7 +33,10 @@ namespace DreamWorld.Entities.Global
 
         public override void Initialize()
         {
-            Level.AddParticleSystem("zeppelinSmoke", smokeParticleSystem);            
+            Level.AddParticleSystem("zeppelinSmoke", smokeParticleSystem);
+            SoundEffect3D engine = new SoundEffect3D("Steam Engine");
+            AddSoundEffect(engine);            
+
             base.Initialize();
         }
 

@@ -151,7 +151,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Audio\Effects\" />
+    <Compile Include="Audio\Effects\Steam Engine.wav">
+      <Name>Steam Engine</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Audio\Music\" />
     <Folder Include="Fonts\Test\" />
   </ItemGroup>
