@@ -122,8 +122,7 @@ namespace DreamWorld.Helpers.Renderers
 
         public static void AddSphere(BoundingSphere sphere, Matrix world, Color color)
         {
-            sphere.Center = Vector3.Transform(sphere.Center, world);
-            BoundingSpheres.Add(new DrawableBoundingSphere(sphere, color));
+            BoundingSpheres.Add(new DrawableBoundingSphere(sphere.Transform(world), color));
         }
         
         public static void Render(Camera camera, GraphicsDevice device)
