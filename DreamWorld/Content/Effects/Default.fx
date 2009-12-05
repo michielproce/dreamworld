@@ -110,7 +110,7 @@ NormalDepthVertexShaderOutput NormalDepthVertexShader(VS_INPUT input, uniform bo
 	
 	if(ignore)
 	{
-		output.Color = 0;
+		output.Color = 1;
 	}
 	else 
 	{

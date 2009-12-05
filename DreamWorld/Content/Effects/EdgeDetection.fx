@@ -1,8 +1,8 @@
-float EdgeWidth = .2;
+float EdgeWidth = 0.4;
 float EdgeIntensity = 1;
 
-float NormalThreshold = 0.5;
-float DepthThreshold = 0.1;
+float NormalThreshold = 0.1;
+float DepthThreshold = 0.02;
 
 float NormalSensitivity = 1;
 float DepthSensitivity = 10;
