@@ -10,6 +10,7 @@ namespace DreamWorld
     public class DreamWorldGame : Game
     {
         public GraphicsDeviceManager GraphicsDeviceManager { get; private set; }
+        public Config Config { get; private set; }
         public InputManager InputManager { get; private set; }
         public ScreenManager ScreenManager { get; private set; }
    
@@ -20,12 +21,21 @@ namespace DreamWorld
             GraphicsDeviceManager.MinimumPixelShaderProfile = ShaderProfile.PS_2_0;
             GraphicsDeviceManager.MinimumVertexShaderProfile = ShaderProfile.VS_2_0;
 
-            GraphicsDeviceManager.PreferredBackBufferWidth = 1024;
-            GraphicsDeviceManager.PreferredBackBufferHeight = 768;
+#if (XBOX)
+            GraphicsDeviceManager.PreferredBackBufferWidth = 1280;
+            GraphicsDeviceManager.PreferredBackBufferHeight = 720;
 
-            GraphicsDeviceManager.PreferMultiSampling = false;
-            GraphicsDeviceManager.SynchronizeWithVerticalRetrace = false;
+            GraphicsDeviceManager.PreferMultiSampling = true;
+            GraphicsDeviceManager.SynchronizeWithVerticalRetrace = true;
+#else
+            Config = Config.Load();
 
+            GraphicsDeviceManager.PreferredBackBufferWidth = Config.Width;
+            GraphicsDeviceManager.PreferredBackBufferHeight = Config.Height;
+            GraphicsDeviceManager.IsFullScreen = Config.Fullscreen;
+            GraphicsDeviceManager.PreferMultiSampling = Config.AntiAliasing;
+            GraphicsDeviceManager.SynchronizeWithVerticalRetrace = Config.VerticalSync;
+#endif
             Content.RootDirectory = "Content";
             
             ScreenManager = new ScreenManager(this);

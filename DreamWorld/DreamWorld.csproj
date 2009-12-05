@@ -90,6 +90,7 @@
     <Compile Include="Cameras\Camera.cs" />
     <Compile Include="Cameras\DebugCamera.cs" />
     <Compile Include="Cameras\ThirdPersonCamera.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="Entities\Animation.cs" />
     <Compile Include="Entities\Global\Zeppelin.cs" />
     <Compile Include="Entities\HeightMapInfo.cs" />
