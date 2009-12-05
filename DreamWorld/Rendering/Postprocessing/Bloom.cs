@@ -30,20 +30,20 @@ namespace DreamWorld.Rendering.Postprocessing
             PresentationParameters pp = device.PresentationParameters;
 
             int width = pp.BackBufferWidth;
-            int height = pp.BackBufferHeight;
+            int height = pp.BackBufferHeight;            
 
             SurfaceFormat format = pp.BackBufferFormat;
-
+            
             resolveTarget = new ResolveTexture2D(device, width, height, 1,
                 format);
 
             width /= 2;
             height /= 2;
-
+            
             renderTarget1 = new RenderTarget2D(device, width, height, 1,
-                format);
+                format, pp.MultiSampleType, pp.MultiSampleQuality);
             renderTarget2 = new RenderTarget2D(device, width, height, 1,
-                format);
+                format, pp.MultiSampleType, pp.MultiSampleQuality);
         }
 
         public override void Draw(GameTime gameTime)

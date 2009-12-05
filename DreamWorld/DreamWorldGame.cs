@@ -23,6 +23,9 @@ namespace DreamWorld
             GraphicsDeviceManager.PreferredBackBufferWidth = 1024;
             GraphicsDeviceManager.PreferredBackBufferHeight = 768;
 
+            GraphicsDeviceManager.PreferMultiSampling = false;
+            GraphicsDeviceManager.SynchronizeWithVerticalRetrace = false;
+
             Content.RootDirectory = "Content";
             
             ScreenManager = new ScreenManager(this);
