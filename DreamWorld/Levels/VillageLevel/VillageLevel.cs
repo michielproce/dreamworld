@@ -29,7 +29,7 @@ namespace DreamWorld.Levels.VillageLevel
             Zeppelin zeppelin = new Zeppelin
                                     {
                                         Path = zeppelinPath,
-                                        Speed = .0005f
+                                        Speed = 1f
                                     };
             AddEntity("zeppelin", zeppelin);
             Song ambient = GameScreen.Content.Load<Song>(@"Audio\Ambient\Village");

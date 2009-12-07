@@ -75,7 +75,7 @@ namespace DreamWorld.Entities.Global
                 rotation.Translation = Vector3.Zero;                
             }
 
-            propellorRotation += Speed * 500;
+            propellorRotation += Speed / MathHelper.TwoPi * 1.7f;
             foreach (ModelMesh mesh in propellors)            
                 mesh.ParentBone.Transform = Matrix.CreateRotationY(propellorRotation);
 

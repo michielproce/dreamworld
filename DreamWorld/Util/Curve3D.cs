@@ -10,6 +10,7 @@ namespace DreamWorld.Util
         private Curve curveZ;
 
         private float length;
+        private Vector3? lastPoint;
 
         public Curve3D(CurveLoopType loopType)
             : this(loopType, loopType)
@@ -33,16 +34,17 @@ namespace DreamWorld.Util
 
         public void AddPoint(Vector3 point)
         {
-            AddPoint(point, length++);
+            if(lastPoint.HasValue)
+                length += Vector3.Distance(point, (Vector3)lastPoint);
+            AddPoint(point, length);
         }
 
         public void AddPoint(Vector3 point, float time)
         {
             curveX.Keys.Add(new CurveKey(time, point.X));
             curveY.Keys.Add(new CurveKey(time, point.Y));
-            curveZ.Keys.Add(new CurveKey(time, point.Z));
-            if(time > length)
-                length = time;
+            curveZ.Keys.Add(new CurveKey(time, point.Z));    
+            lastPoint = point;
         }
        
 
