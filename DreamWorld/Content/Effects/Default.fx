@@ -150,6 +150,19 @@ float4 DefaultPixelShader(PS_INPUT input) : COLOR0
     return color;
 }
 
+float4 DebugHighlightPixelShader(PS_INPUT input) : COLOR0
+{
+	float4 color;
+	if(TextureEnabled)
+		color = tex2D(Sampler, input.TexCoords);
+	else 
+		color = DiffuseColor;
+		
+    color.rgb *= saturate(input.SunFactor + Ambient) * 5;
+
+    return color;
+}
+
 
 float4 NormalDepthPixelShader(float4 color : COLOR0) : COLOR0
 {
@@ -189,4 +202,13 @@ technique IgnoreNormalDepth
 		VertexShader = compile vs_2_0 NormalDepthVertexShader(true);
         PixelShader = compile ps_2_0 NormalDepthPixelShader();
 	}
+}
+
+technique DebugHighlight
+{
+	pass P0
+    {
+        VertexShader = compile vs_2_0 DefaultVertexShader();
+        PixelShader = compile ps_2_0 DebugHighlightPixelShader();
+    }
 }

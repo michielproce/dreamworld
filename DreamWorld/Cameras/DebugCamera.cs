@@ -1,11 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Cameras
 {
     class DebugCamera : Camera
     {
         public const float MaxPitch = MathHelper.PiOver2 * .99f; // Matrix.createLookAt gets confused with maxPitch > 90 degrees
-       
+
+        private Vector3 lookAt;
+
         private float yaw;
         private float pitch;
 
@@ -26,9 +29,10 @@ namespace DreamWorld.Cameras
             Move(inputManager.Debug.Movement);
             Rotate(inputManager.Debug.Rotation.X, inputManager.Debug.Rotation.Y);
 
+            lookAt = Position + RotatedDirection(Vector3.Forward);
             View = Matrix.CreateLookAt(
                     Position,
-                    Position + RotatedDirection(Vector3.Forward),
+                    lookAt,
                     Vector3.Up);
 
             base.Update(gameTime);
@@ -53,6 +57,14 @@ namespace DreamWorld.Cameras
         private Vector3 RotatedDirection(Vector3 direction)
         {            
             return Vector3.Transform(direction, Quaternion.CreateFromYawPitchRoll(yaw, pitch, 0));
+        }
+
+        public override Vector3 Direction
+        {
+            get
+            {
+                return Vector3.Normalize(lookAt - Position);
+            }
         }
     }
 }

@@ -41,6 +41,6 @@ namespace DreamWorld.Cameras
         }
 
 
-        public virtual Vector3 CameraDirection { get; set; }
+        public abstract Vector3 Direction { get; }
     }
 }

@@ -39,6 +39,10 @@ namespace DreamWorld.Entities
 
         private bool initialized;
 
+        #if (DEBUG)
+        public bool IgnoreDebugHighlight { get; protected set; }
+        #endif
+
         protected Entity()
         {            
             GameScreen = GameScreen.Instance;

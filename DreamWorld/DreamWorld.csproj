@@ -97,6 +97,8 @@
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\Skybox.cs" />
     <Compile Include="Entities\Terrain.cs" />
+    <Compile Include="Helpers\Debug\Collision.cs" />
+    <Compile Include="Helpers\Debug\TriangleFinder.cs" />
     <Compile Include="Helpers\Renderers\BoundingSphereRenderer.cs" />
     <Compile Include="Helpers\Renderers\LineRenderer.cs" />
     <Compile Include="InputManagement\Handlers\GamePadHandler.cs" />
@@ -110,6 +112,7 @@
     <Compile Include="InputManagement\Types\DebugInput.cs" />
     <Compile Include="InputManagement\Types\MenuInput.cs" />
     <Compile Include="InputManagement\Types\PlayerInput.cs" />
+    <Compile Include="Interface\DebugHUD.cs" />
     <Compile Include="Levels\Level.cs" />
     <Compile Include="Levels\VillageLevel\Entities\TestEntity.cs" />
     <Compile Include="Levels\PuzzleLevel.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DreamWorld.Cameras;
 using DreamWorld.Entities;
 using DreamWorld.Helpers.Renderers;
 using DreamWorld.Rendering.Particles;
@@ -19,7 +20,7 @@ namespace DreamWorld.Levels
 
         public Player Player { get; private set; }
 
-        protected Dictionary<string, Entity> entities;
+        public Dictionary<string, Entity> Entities { get; private set; }
         private Dictionary<string, ParticleSystem> particleSystems;
 
         private bool initialized;
@@ -30,17 +31,17 @@ namespace DreamWorld.Levels
 
         protected Level()
         {
-            entities = new Dictionary<string, Entity>();
+            Entities = new Dictionary<string, Entity>();
             particleSystems = new Dictionary<string, ParticleSystem>();
         }
 
 
         public void AddEntity(string name, Entity entity)
         {
-            if(entities.ContainsKey(name))
+            if(Entities.ContainsKey(name))
                 throw new InvalidOperationException("Entity " + name + " already exists");
             
-            entities.Add(name, entity);
+            Entities.Add(name, entity);
             
             if(initialized)
                 entity.Initialize();            
@@ -48,7 +49,7 @@ namespace DreamWorld.Levels
 
         public void AddParticleSystem(string name, ParticleSystem particleSystem)
         {
-            if (entities.ContainsKey(name))
+            if (Entities.ContainsKey(name))
                 throw new InvalidOperationException("Particle System " + name + " already exists");
 
             particleSystems.Add(name, particleSystem);
@@ -57,17 +58,19 @@ namespace DreamWorld.Levels
                 particleSystem.Initialize();
         }
 
+
         public Entity FindEntity(string name)
-        {
-            return entities[name];
-        }
+        {            
+            return Entities[name];
+        }               
+
 
         public virtual void Initialize()
         {
             Game = (DreamWorldGame) GameScreen.ScreenManager.Game;
             Player = new Player();
             AddEntity("player", Player);
-            foreach (Entity entity in entities.Values)
+            foreach (Entity entity in Entities.Values)
                 entity.Initialize();
             foreach (ParticleSystem particleSystem in particleSystems.Values)
                 particleSystem.Initialize();
@@ -81,7 +84,7 @@ namespace DreamWorld.Levels
 
         public virtual void Update(GameTime gameTime)
         {
-            foreach (Entity entity in entities.Values)
+            foreach (Entity entity in Entities.Values)
                 entity.Update(gameTime);
             foreach (ParticleSystem particleSystem in particleSystems.Values)
                 particleSystem.Update(gameTime);
@@ -92,14 +95,23 @@ namespace DreamWorld.Levels
         {           
             edgeDetection.PrepareDraw();
             edgeDetection.PrepareDrawNormalDepth();
-            foreach (Entity entity in entities.Values)
+            foreach (Entity entity in Entities.Values)
                 entity.Draw(gameTime, !entity.IgnoreEdgeDetection ? "NormalDepth" : "IgnoreNormalDepth");
 
-            edgeDetection.PrepareDrawDefault();            
-            
-            foreach (Entity entity in entities.Values)
+            edgeDetection.PrepareDrawDefault();
+
+            foreach (Entity entity in Entities.Values)
+            {
+                #if (DEBUG)
+                if(GameScreen.Camera is DebugCamera && entity == GameScreen.SelectedEntity)
+                    entity.Draw(gameTime, "DebugHighlight");
+                else
+                    entity.Draw(gameTime, "Default");
+                #else
                 entity.Draw(gameTime, "Default");
-            
+                #endif
+            }
+
             edgeDetection.Draw(gameTime);
             foreach (ParticleSystem particleSystem in particleSystems.Values)
                 particleSystem.Draw(gameTime);

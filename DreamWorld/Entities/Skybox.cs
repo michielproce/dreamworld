@@ -11,6 +11,9 @@ namespace DreamWorld.Entities
         {
             this.skybox = skybox;
             IgnoreEdgeDetection = true;
+            #if (DEBUG)
+            IgnoreDebugHighlight = true;
+            #endif
         }
 
         protected override void LoadContent()

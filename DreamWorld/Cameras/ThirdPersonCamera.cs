@@ -17,7 +17,7 @@ namespace DreamWorld.Cameras
 
         private float horizontalRotation;
         
-        public override Vector3 CameraDirection { 
+        public override Vector3 Direction { 
             get
             {
                 return Vector3.Normalize(level.Player.Position - Position);
