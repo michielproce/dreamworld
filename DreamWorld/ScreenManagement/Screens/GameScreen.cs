@@ -87,7 +87,6 @@ namespace DreamWorld.ScreenManagement.Screens
                             float distance;
                             bool collisionDetected = false;
                             Ray cameraRay = new Ray(Camera.Position, Camera.Direction);
-                            BoundingSphere bs;
                             foreach (KeyValuePair<string, Entity> pair in Level.Entities)
                             {
                                 if (collisionDetected)

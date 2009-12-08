@@ -52,5 +52,13 @@ namespace DreamWorld.InputManagement.Types
                 return InputManager.Mouse.NewlyPressed(MouseHandler.Buttons.LeftButton);
             }
         }
+
+        public bool ToggleMouseLook
+        {
+            get
+            {
+                return InputManager.Mouse.NewlyPressed(MouseHandler.Buttons.RightButton);
+            }
+        }
     }
 }

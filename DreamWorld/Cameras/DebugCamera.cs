@@ -8,6 +8,8 @@ namespace DreamWorld.Cameras
         public const float MaxPitch = MathHelper.PiOver2 * .99f; // Matrix.createLookAt gets confused with maxPitch > 90 degrees
 
         private Vector3 lookAt;
+        
+        private bool mouseLook = true;
 
         private float yaw;
         private float pitch;
@@ -25,16 +27,24 @@ namespace DreamWorld.Cameras
 
         public override void Update(GameTime gameTime)
         {
-            // Handle Input                       
-            Move(inputManager.Debug.Movement);
-            Rotate(inputManager.Debug.Rotation.X, inputManager.Debug.Rotation.Y);
+            if (inputManager.Debug.ToggleMouseLook)
+            {
+                mouseLook = !mouseLook;
+                inputManager.Game.IsMouseVisible = !mouseLook;
+                inputManager.Mouse.IgnoreReset = !mouseLook;
+            }
 
-            lookAt = Position + RotatedDirection(Vector3.Forward);
-            View = Matrix.CreateLookAt(
-                    Position,
-                    lookAt,
-                    Vector3.Up);
-
+            if (mouseLook)
+            {                
+                Move(inputManager.Debug.Movement);
+                Rotate(inputManager.Debug.Rotation.X, inputManager.Debug.Rotation.Y);
+                lookAt = Position + RotatedDirection(Vector3.Forward);
+                View = Matrix.CreateLookAt(
+                        Position,
+                        lookAt,
+                        Vector3.Up);     
+            }                                     
+           
             base.Update(gameTime);
         }
 

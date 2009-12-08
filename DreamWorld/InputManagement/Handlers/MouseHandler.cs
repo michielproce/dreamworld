@@ -14,6 +14,7 @@ namespace DreamWorld.InputManagement.Handlers
 
         public MouseState PreviousState { get; private set; }
         public Vector2 Movement { get; private set; }
+        public bool IgnoreReset { get; set; }
         private Point center;
 
         public MouseHandler()
@@ -77,7 +78,8 @@ namespace DreamWorld.InputManagement.Handlers
 
         private void ResetMouse()
         {
-            Mouse.SetPosition(center.X, center.Y);
+            if(!IgnoreReset)
+                Mouse.SetPosition(center.X, center.Y);
         }
     }
 }
