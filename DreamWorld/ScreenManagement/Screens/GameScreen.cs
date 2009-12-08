@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
 using DreamWorld.Cameras;
 using DreamWorld.Entities;
-using DreamWorld.Helpers.Debug;
 using DreamWorld.InputManagement;
 using DreamWorld.InputManagement.Types;
-using DreamWorld.Interface;
 using DreamWorld.Levels;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -22,12 +19,6 @@ namespace DreamWorld.ScreenManagement.Screens
         public InputManager InputManager { get; private set; }
         public GraphicsDevice GraphicsDevice { get; private set; }
 
-        #if (DEBUG)
-        public DebugHUD DebugHUD { get; private set; }        
-        public Entity SelectedEntity { get; private set; }
-        public string SelectedEntityName { get; private set; }
-        #endif
-
         public GameScreen(Level level)
         {
             Instance = this;            
@@ -36,10 +27,7 @@ namespace DreamWorld.ScreenManagement.Screens
             
             
             Level = level;
-            Level.GameScreen = this;
-            #if (DEBUG)
-            DebugHUD = new DebugHUD();
-            #endif
+            Level.GameScreen = this;            
         }
 
         public override void Initialize()
@@ -53,10 +41,6 @@ namespace DreamWorld.ScreenManagement.Screens
             Camera = new ThirdPersonCamera();
             Level.Initialize();
             Camera.Initialize();
-            
-            #if (DEBUG)
-            DebugHUD.Initialize();
-            #endif
 
             LoadingScreen.Loaded = true;
         }
@@ -79,41 +63,6 @@ namespace DreamWorld.ScreenManagement.Screens
                         else
                             Camera = new DebugCamera { Position = Camera.Position};
                         Camera.Initialize();
-                    }
-                    if (Camera is DebugCamera)
-                    {
-                        if (InputManager.Debug.SelectEntity)
-                        {
-                            float distance;
-                            bool collisionDetected = false;
-                            Ray cameraRay = new Ray(Camera.Position, Camera.Direction);
-                            foreach (KeyValuePair<string, Entity> pair in Level.Entities)
-                            {
-                                if (collisionDetected)
-                                    break;
-                                if (pair.Value.IgnoreDebugHighlight)
-                                    continue;
-                                foreach (ModelMesh mesh in pair.Value.Model.Meshes)
-                                {
-                                    List<Vector3[]> triangles = TriangleFinder.find(mesh, pair.Value.World);
-                                    foreach (Vector3[] triangle in triangles)
-                                    {
-                                        if (Collision.RayTriangleIntersect(cameraRay, triangle, out distance))
-                                        {
-                                            SelectedEntityName = pair.Key;
-                                            SelectedEntity = pair.Value;
-                                            collisionDetected = true;
-                                        }
-                                    }
-                                }
-                            }
-                            if (!collisionDetected)
-                            {
-                                SelectedEntityName = null;
-                                SelectedEntity = null;
-                            }                            
-                        }
-                        DebugHUD.Update(gameTime);
                     }
                 #endif
                 
@@ -148,13 +97,12 @@ namespace DreamWorld.ScreenManagement.Screens
         public override void Draw(GameTime gameTime)
         {
             ScreenManager.GraphicsDevice.Clear(Color.CornflowerBlue);
-            Level.Draw(gameTime);
-            
+            Level.Draw(gameTime);           
             #if (DEBUG)
-            if (Camera is DebugCamera)
-                    DebugHUD.Draw(gameTime);
+            DebugCamera debugCamera = Camera as DebugCamera;
+            if(debugCamera != null)
+                debugCamera.DrawReticle();
             #endif
-
             base.Draw(gameTime);
         }
     }

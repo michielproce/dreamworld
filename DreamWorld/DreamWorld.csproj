@@ -112,7 +112,6 @@
     <Compile Include="InputManagement\Types\DebugInput.cs" />
     <Compile Include="InputManagement\Types\MenuInput.cs" />
     <Compile Include="InputManagement\Types\PlayerInput.cs" />
-    <Compile Include="Interface\DebugHUD.cs" />
     <Compile Include="Levels\Level.cs" />
     <Compile Include="Levels\VillageLevel\Entities\TestEntity.cs" />
     <Compile Include="Levels\PuzzleLevel.cs" />

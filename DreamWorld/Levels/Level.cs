@@ -103,7 +103,8 @@ namespace DreamWorld.Levels
             foreach (Entity entity in Entities.Values)
             {
                 #if (DEBUG)
-                if(GameScreen.Camera is DebugCamera && entity == GameScreen.SelectedEntity)
+                DebugCamera debugCamera = GameScreen.Camera as DebugCamera;
+                if(debugCamera != null && entity == debugCamera.SelectedEntity)
                     entity.Draw(gameTime, "DebugHighlight");
                 else
                     entity.Draw(gameTime, "Default");

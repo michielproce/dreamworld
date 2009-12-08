@@ -158,20 +158,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fonts\DebugHUDFont.spritefont">
-      <Name>DebugHUDFont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Textures\Debug\DebugHUDInfoBackground.jpg">
-      <Name>DebugHUDInfoBackground</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Textures\Debug\Reticle.png">
       <Name>Reticle</Name>
       <Importer>TextureImporter</Importer>
