@@ -82,34 +82,37 @@ namespace DreamWorld.ScreenManagement.Screens
                     }
                     if (Camera is DebugCamera)
                     {
-                        float distance;
-                        bool collisionDetected = false;
-                        Ray cameraRay = new Ray(Camera.Position, Camera.Direction);
-                        BoundingSphere bs;
-                        foreach (KeyValuePair<string, Entity> pair in Level.Entities)
+                        if (InputManager.Debug.SelectEntity)
                         {
-                            if(collisionDetected)
-                                break;
-                            if(pair.Value.IgnoreDebugHighlight)
-                                continue;
-                            foreach (ModelMesh mesh in pair.Value.Model.Meshes)
+                            float distance;
+                            bool collisionDetected = false;
+                            Ray cameraRay = new Ray(Camera.Position, Camera.Direction);
+                            BoundingSphere bs;
+                            foreach (KeyValuePair<string, Entity> pair in Level.Entities)
                             {
-                                List<Vector3[]> triangles = TriangleFinder.find(mesh, pair.Value.World);
-                                foreach (Vector3[] triangle in triangles)
-                                {                                    
-                                    if(Collision.RayTriangleIntersect(cameraRay, triangle, out distance))
+                                if (collisionDetected)
+                                    break;
+                                if (pair.Value.IgnoreDebugHighlight)
+                                    continue;
+                                foreach (ModelMesh mesh in pair.Value.Model.Meshes)
+                                {
+                                    List<Vector3[]> triangles = TriangleFinder.find(mesh, pair.Value.World);
+                                    foreach (Vector3[] triangle in triangles)
                                     {
-                                        SelectedEntityName = pair.Key;
-                                        SelectedEntity = pair.Value;
-                                        collisionDetected = true;
+                                        if (Collision.RayTriangleIntersect(cameraRay, triangle, out distance))
+                                        {
+                                            SelectedEntityName = pair.Key;
+                                            SelectedEntity = pair.Value;
+                                            collisionDetected = true;
+                                        }
                                     }
                                 }
                             }
-                        }
-                        if(!collisionDetected)
-                        {
-                            SelectedEntityName = null;
-                            SelectedEntity = null;
+                            if (!collisionDetected)
+                            {
+                                SelectedEntityName = null;
+                                SelectedEntity = null;
+                            }                            
                         }
                         DebugHUD.Update(gameTime);
                     }

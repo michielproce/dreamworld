@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using DreamWorld.InputManagement.Handlers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace DreamWorld.InputManagement.Types
@@ -41,6 +42,14 @@ namespace DreamWorld.InputManagement.Types
             get
             {
                 return InputManager.Keyboard.NewlyPressed(Keys.Tab);
+            }
+        }
+
+        public bool SelectEntity 
+        {
+            get
+            {
+                return InputManager.Mouse.NewlyPressed(MouseHandler.Buttons.LeftButton);
             }
         }
     }
