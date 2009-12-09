@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Entities
 {
-    class Group : Entity
+    public class Group : Entity
     {
         private List<Element> Elements { get; set; }
 

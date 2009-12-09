@@ -144,8 +144,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Test\Test.x">
-      <Name>Test</Name>
+    <Compile Include="Models\Debug\PlaceHolder.x">
+      <Name>PlaceHolder</Name>
       <Importer>XImporter</Importer>
       <Processor>DefaultModelProcessor</Processor>
     </Compile>
@@ -165,7 +165,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Test\Test.x">
+      <Name>Test</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Audio\Music\" />
+    <Folder Include="Levels\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

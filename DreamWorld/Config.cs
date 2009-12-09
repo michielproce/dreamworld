@@ -18,8 +18,8 @@ namespace DreamWorld
         public Config()
         {
             // Default values
-            Width = 1024;
-            Height = 768;
+            Width = 800;
+            Height = 600;
             Fullscreen = false;
             AntiAliasing = false;
             VerticalSync = false;

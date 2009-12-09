@@ -12,6 +12,7 @@ namespace DreamWorld.InputManagement.Handlers
             RightButton
         }
 
+        public Point Position { get; private set; }
         public MouseState PreviousState { get; private set; }
         public Vector2 Movement { get; private set; }
         public bool IgnoreReset { get; set; }
@@ -31,7 +32,9 @@ namespace DreamWorld.InputManagement.Handlers
         public override void HandleInput()
         {
             MouseState state = Mouse.GetState();
-
+            
+            Position = new Point(state.X, state.Y);
+            
             Movement = new Vector2
                {
                    X =  center.X - state.X,

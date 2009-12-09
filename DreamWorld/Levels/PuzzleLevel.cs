@@ -5,8 +5,8 @@ using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Levels
 {
-    class PuzzleLevel : Level
-    {
+    public abstract class PuzzleLevel : Level
+    {        
         private int SelectedGroup;
         protected Group[] Groups;
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DreamWorld.Cameras;
 using DreamWorld.Entities;
 using DreamWorld.Helpers.Renderers;
+using DreamWorld.Levels.VillageLevel.Entities;
 using DreamWorld.Rendering.Particles;
 using DreamWorld.Rendering.Postprocessing;
 using DreamWorld.ScreenManagement.Screens;
@@ -22,6 +23,8 @@ namespace DreamWorld.Levels
 
         public Dictionary<string, Entity> Entities { get; private set; }
         private Dictionary<string, ParticleSystem> particleSystems;
+
+        public LevelInformation LevelInformation { get; private set; }
 
         private bool initialized;
 
@@ -64,12 +67,45 @@ namespace DreamWorld.Levels
             return Entities[name];
         }               
 
+        public void RenameEntity(string oldName, string newName)
+        {
+            if (!Entities.ContainsKey(oldName))
+                throw new InvalidOperationException("Entity " + oldName + " doesn't exist");
+            if (Entities.ContainsKey(newName))
+                throw new InvalidOperationException("Entity " + newName + " already exists");
+
+            Entity entity = Entities[oldName];
+            Entities.Remove(oldName);
+            Entities.Add(newName, entity);
+        }
+
+        public void RemoveEntity(string name)
+        {
+            if (!Entities.ContainsKey(name))
+                throw new InvalidOperationException("Entity " + name + " doesn't exist");
+            Entities.Remove(name);
+        }
+
+        public bool EntityNameExists(string name)
+        {
+            return Entities.ContainsKey(name);
+        }       
 
         public virtual void Initialize()
         {
             Game = (DreamWorldGame) GameScreen.ScreenManager.Game;
+
+            LevelInformation = LevelInformation.Load(LevelInformationFileName);
+            
+            foreach (SpawnInformation spawn in LevelInformation.Spawns)
+            {
+                CreateEntity(spawn);               
+            }
+            InitializeSpecialEntities();
+
             Player = new Player();
-            AddEntity("player", Player);
+            AddEntity("player", Player); 
+            
             foreach (Entity entity in Entities.Values)
                 entity.Initialize();
             foreach (ParticleSystem particleSystem in particleSystems.Values)
@@ -104,7 +140,7 @@ namespace DreamWorld.Levels
             {
                 #if (DEBUG)
                 DebugCamera debugCamera = GameScreen.Camera as DebugCamera;
-                if(debugCamera != null && entity == debugCamera.SelectedEntity)
+                if(debugCamera != null && entity == debugCamera.Form.Entity)
                     entity.Draw(gameTime, "DebugHighlight");
                 else
                     entity.Draw(gameTime, "Default");
@@ -124,7 +160,15 @@ namespace DreamWorld.Levels
             #endif
         }
 
+        public abstract string LevelInformationFileName { get; }
+        protected virtual void InitializeSpecialEntities() {  }
 
-
+        public void CreateEntity(SpawnInformation spawn)
+        {
+            Type t = Type.GetType(spawn.TypeName);
+            Entity entity = (Entity)Activator.CreateInstance(t);
+            entity.SpawnInformation = spawn;
+            AddEntity(spawn.Name, entity);                     
+        }
     }
 }

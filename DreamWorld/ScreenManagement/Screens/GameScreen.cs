@@ -59,9 +59,12 @@ namespace DreamWorld.ScreenManagement.Screens
                     if (((DreamWorldGame)ScreenManager.Game).InputManager.Debug.ToggleDebugCamera)
                     {
                         if (Camera is DebugCamera)
-                            Camera = new ThirdPersonCamera();
+                        {
+                            ((DebugCamera)Camera).DisposeForm();
+                            Camera = new ThirdPersonCamera();                            
+                        }
                         else
-                            Camera = new DebugCamera { Position = Camera.Position};
+                            Camera = new DebugCamera { Position = Camera.Position };
                         Camera.Initialize();
                     }
                 #endif

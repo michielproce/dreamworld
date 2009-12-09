@@ -53,7 +53,7 @@ namespace DreamWorld.InputManagement.Types
             }
         }
 
-        public bool ToggleMouseLook
+        public bool NewEntity
         {
             get
             {

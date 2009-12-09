@@ -1,4 +1,5 @@
-﻿using DreamWorld.Entities;
+﻿using System;
+using DreamWorld.Entities;
 using DreamWorld.Levels.TestPuzzleLevel.Entities;
 using Microsoft.Xna.Framework;
 
@@ -6,7 +7,6 @@ namespace DreamWorld.Levels.TestPuzzleLevel
 {
     class TestPuzzleLevel : PuzzleLevel
     {
-
         public override void Initialize()
         {
             Groups = new Group[3];
@@ -25,6 +25,11 @@ namespace DreamWorld.Levels.TestPuzzleLevel
             Groups[0].AddElement(element);
 
             base.Initialize();
+        }
+
+        public override string LevelInformationFileName
+        {
+            get { return "testpuzzellevel.xml"; } // Doesn't exist (yet), results in empty LevelInformation
         }
     }
 }

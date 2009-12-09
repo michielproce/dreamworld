@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using DreamWorld.Entities;
+using DreamWorld.Entities.Global;
 using DreamWorld.Helpers.Debug;
-using DreamWorld.InputManagement;
+using DreamWorld.Interface.Debug.Forms;
 using DreamWorld.Levels;
 using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
@@ -10,26 +11,28 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Cameras
 {
-    class DebugCamera : Camera
+    public class DebugCamera : Camera
     {        
-        public Entity SelectedEntity { get; private set; }
-        public string SelectedEntityName { get; private set; }
-     
-        public const float MaxPitch = MathHelper.PiOver2 * .99f; // Matrix.createLookAt gets confused with maxPitch > 90 degrees
 
-        private Vector3 lookAt;
-        
-        private bool mouseLook = true;
-
-        private SpriteBatch spriteBatch;        
+        private SpriteBatch spriteBatch;
         private Texture2D reticleTexture;
         private Vector2 reticlePosition;
+        private bool mouseLook = true;
 
+        public const float MaxPitch = MathHelper.PiOver2 * .99f; // Matrix.createLookAt gets confused with maxPitch > 90 degrees
+        private Vector3 lookAt;       
         private float yaw;
         private float pitch;
 
-        public override void Initialize()
+        public EntityForm Form { get; private set;}
+
+        public DebugCamera()
         {
+            Form = new EntityForm();            
+        }
+
+        public override void Initialize()
+        {            
             Projection = Matrix.CreatePerspectiveFieldOfView(
                MathHelper.ToRadians(45.0f),
                device.Viewport.AspectRatio,
@@ -40,19 +43,13 @@ namespace DreamWorld.Cameras
             reticleTexture = GameScreen.Instance.Content.Load<Texture2D>(@"Textures\Debug\Reticle");
             reticlePosition = new Vector2(inputManager.Game.GraphicsDevice.Viewport.Width / 2 - reticleTexture.Width / 2, 
                 inputManager.Game.GraphicsDevice.Viewport.Height / 2 - reticleTexture.Height / 2);
-            
+
             base.Initialize();
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (inputManager.Debug.ToggleMouseLook)
-            {
-                mouseLook = !mouseLook;
-                inputManager.Game.IsMouseVisible = !mouseLook;
-                inputManager.Mouse.IgnoreReset = !mouseLook;
-            }
-
+            // Look around with the mouse
             if (mouseLook)
             {                
                 Move(inputManager.Debug.Movement);
@@ -63,39 +60,83 @@ namespace DreamWorld.Cameras
                         lookAt,
                         Vector3.Up);     
             }
-
+            
+           
             if (inputManager.Debug.SelectEntity)
             {
-                float distance;
-                bool collisionDetected = false;
-                Ray cameraRay = new Ray(Position, Direction);
-                foreach (KeyValuePair<string, Entity> pair in GameScreen.Instance.Level.Entities)
+                if (mouseLook)
                 {
-                    if (collisionDetected)
-                        break;
-                    if (pair.Value.IgnoreDebugHighlight)
-                        continue;
-                    foreach (ModelMesh mesh in pair.Value.Model.Meshes)
+                    float distance;
+                    bool collisionDetected = false;
+                    Entity selectedEntity = null;
+                    Ray cameraRay = new Ray(Position, Direction);
+                    foreach (KeyValuePair<string, Entity> pair in GameScreen.Instance.Level.Entities)
                     {
-                        List<Vector3[]> triangles = TriangleFinder.find(mesh, pair.Value.World);
-                        foreach (Vector3[] triangle in triangles)
+                        if (collisionDetected)
+                            break;
+                        if (pair.Value.SpawnInformation == null) // No spawninfo == special object
+                            continue;
+                        foreach (ModelMesh mesh in pair.Value.Model.Meshes)
                         {
-                            if (Collision.RayTriangleIntersect(cameraRay, triangle, out distance))
+                            List<Vector3[]> triangles = TriangleFinder.find(mesh, pair.Value.World);
+                            foreach (Vector3[] triangle in triangles)
                             {
-                                SelectedEntityName = pair.Key;
-                                SelectedEntity = pair.Value;
-                                collisionDetected = true;
+                                if (Collision.RayTriangleIntersect(cameraRay, triangle, out distance))
+                                {
+                                    selectedEntity = pair.Value;
+                                    collisionDetected = true;
+                                    
+                                }
                             }
                         }
                     }
+                    if(collisionDetected)
+                        ShowForm(selectedEntity);                                               
                 }
-                if (!collisionDetected)
+                else
                 {
-                    SelectedEntityName = null;
-                    SelectedEntity = null;
+                    // Only accept click within the viewport
+                    // TODO: One problem remains: if the form is over the viewport mouselook will be toggled.
+                    Point mPos = inputManager.Mouse.Position;
+                    Viewport vp = inputManager.Game.GraphicsDevice.Viewport;
+                    if (mPos.X >= 0 && mPos.Y >= 0 && mPos.X < vp.Width && mPos.Y < vp.Height)
+                    {
+                        Form.Hide();
+                        ToggleMouseLook(true);
+                    }
+                    
                 }
             }
-           
+
+            if(inputManager.Debug.NewEntity)
+            {
+                String name = "entity" + level.Entities.Count;
+                Vector3 spawnPosition = Position + RotatedDirection(new Vector3(0, 0, -50));                
+                spawnPosition.X = (float)Math.Round(spawnPosition.X);
+                spawnPosition.Y = (float)Math.Round(spawnPosition.Y);
+                spawnPosition.Z = (float)Math.Round(spawnPosition.Z);
+                SpawnInformation spawn = new SpawnInformation
+                     {
+                         Name = name,
+                         TypeName =
+                             typeof (PlaceHolder).Namespace + "." + typeof (PlaceHolder).Name,
+                         Position = spawnPosition
+                     };
+
+                PlaceHolder placeHolder = new PlaceHolder {
+                    SpawnInformation = spawn
+                };
+                level.AddEntity(name, placeHolder);
+                level.LevelInformation.Spawns.Add(spawn);
+                LevelInformation.Save(level.LevelInformation,
+                                      level.LevelInformationFileName);
+                ShowForm(placeHolder);
+            }
+
+            // Update the form                        
+            Form.UpdateEntity();                
+             
+
             base.Update(gameTime);
         }
 
@@ -120,6 +161,25 @@ namespace DreamWorld.Cameras
             return Vector3.Transform(direction, Quaternion.CreateFromYawPitchRoll(yaw, pitch, 0));
         }
 
+        private void ShowForm(Entity entity)
+        {
+            if (Form.IsDisposed)
+                Form = new EntityForm();
+            Form.Entity = entity;
+            Form.Level = GameScreen.Instance.Level;
+            Form.DebugCamera = this;
+            Form.UpdateForm();            
+            Form.Show();
+            ToggleMouseLook(false);
+        }
+
+        public void ToggleMouseLook(bool enabled)
+        {            
+            mouseLook = enabled;
+            inputManager.Game.IsMouseVisible = !mouseLook;
+            inputManager.Mouse.IgnoreReset = !mouseLook;
+        }
+
         public override Vector3 Direction
         {
             get
@@ -133,6 +193,12 @@ namespace DreamWorld.Cameras
             spriteBatch.Begin();
             spriteBatch.Draw(reticleTexture, reticlePosition, Color.White);
             spriteBatch.End();
+        }
+
+        public void DisposeForm()
+        {
+            ToggleMouseLook(true);
+            Form.Dispose();
         }
     }
 }

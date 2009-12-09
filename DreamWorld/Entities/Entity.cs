@@ -17,7 +17,8 @@ namespace DreamWorld.Entities
         protected ContentManager Content { get; private set; }
         protected GraphicsDevice GraphicsDevice { get; private set; }        
         protected Level Level { get; private set; }
-                
+
+        public SpawnInformation SpawnInformation { get; set; }
         public Vector3 Position { get; set; }
         public Vector3 Rotation { get; set; }
         public Vector3 Scale { get; set; }
@@ -39,10 +40,6 @@ namespace DreamWorld.Entities
 
         private bool initialized;
 
-        #if (DEBUG)
-        public bool IgnoreDebugHighlight { get; protected set; }
-        #endif
-
         protected Entity()
         {            
             GameScreen = GameScreen.Instance;
@@ -59,7 +56,9 @@ namespace DreamWorld.Entities
         public virtual void Initialize()
         {
             foreach (SoundEffect3D sound in sounds)
-                sound.Initialize();                
+                sound.Initialize();
+
+            Spawn();
 
             LoadContent();
             initialized = true;
@@ -149,6 +148,16 @@ namespace DreamWorld.Entities
             sounds.Add(sound);
             if(initialized)
                 sound.Initialize();   
+        }
+        
+        public void Spawn()
+        {
+            if (SpawnInformation != null)
+            {
+                Position = SpawnInformation.Position;
+                Rotation = new Vector3(MathHelper.ToRadians(SpawnInformation.Rotation.X), MathHelper.ToRadians(SpawnInformation.Rotation.Y), MathHelper.ToRadians(SpawnInformation.Rotation.Z));
+                Scale = SpawnInformation.Scale;
+            }
         }
     }
 }

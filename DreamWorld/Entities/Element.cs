@@ -2,7 +2,7 @@
 
 namespace DreamWorld.Entities
 {
-    class Element : Entity
+    public class Element : Entity
     {
         public Group Group { get; internal set; }
 

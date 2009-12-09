@@ -158,7 +158,7 @@ float4 DebugHighlightPixelShader(PS_INPUT input) : COLOR0
 	else 
 		color = DiffuseColor;
 		
-    color.rgb *= saturate(input.SunFactor + Ambient) * 5;
+    color.rgb *= saturate(input.SunFactor + Ambient) * 10;
 
     return color;
 }

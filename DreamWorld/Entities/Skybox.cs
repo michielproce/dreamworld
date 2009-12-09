@@ -10,10 +10,7 @@ namespace DreamWorld.Entities
         public Skybox(string skybox)
         {
             this.skybox = skybox;
-            IgnoreEdgeDetection = true;
-            #if (DEBUG)
-            IgnoreDebugHighlight = true;
-            #endif
+            IgnoreEdgeDetection = true;            
         }
 
         protected override void LoadContent()
