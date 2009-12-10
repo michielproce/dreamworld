@@ -14,6 +14,9 @@ namespace DreamWorld
         public bool Fullscreen { get; set; }
         public bool AntiAliasing { get; set; }
         public bool VerticalSync { get; set; }
+        public bool Bloom { get; set; }
+        public bool EdgeDetect { get; set; }
+        public bool Particles { get; set; }
 
         public Config()
         {
@@ -23,6 +26,9 @@ namespace DreamWorld
             Fullscreen = false;
             AntiAliasing = false;
             VerticalSync = false;
+            Bloom = true;
+            EdgeDetect = true;
+            Particles = true;
         }
 
         public static Config Load()

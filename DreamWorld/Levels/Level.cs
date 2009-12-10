@@ -111,10 +111,13 @@ namespace DreamWorld.Levels
                 entity.Initialize();
             foreach (ParticleSystem particleSystem in particleSystems.Values)
                 particleSystem.Initialize();
+
             
             spriteBatch = new SpriteBatch(Game.GraphicsDevice);
-            bloom = new Bloom(Game, spriteBatch);
-            edgeDetection = new EdgeDetection(Game, spriteBatch);
+            if(Game.Config.Bloom)
+                bloom = new Bloom(Game, spriteBatch);
+            if(Game.Config.EdgeDetect)
+                edgeDetection = new EdgeDetection(Game, spriteBatch);
             initialized = true;
         }
 
@@ -129,36 +132,51 @@ namespace DreamWorld.Levels
 
 
         public virtual void Draw(GameTime gameTime)
-        {           
-            edgeDetection.PrepareDraw();
-            edgeDetection.PrepareDrawNormalDepth();
-            foreach (Entity entity in Entities.Values)
-                entity.Draw(gameTime, !entity.IgnoreEdgeDetection ? "NormalDepth" : "IgnoreNormalDepth");
-
-            edgeDetection.PrepareDrawDefault();
-
-            foreach (Entity entity in Entities.Values)
+        {
+            if (edgeDetection != null)
             {
-                #if (DEBUG)
-                DebugCamera debugCamera = GameScreen.Camera as DebugCamera;
-                if(debugCamera != null && entity == debugCamera.Form.Entity)
-                    entity.Draw(gameTime, "DebugHighlight");
-                else
-                    entity.Draw(gameTime, "Default");
-                #else
-                entity.Draw(gameTime, "Default");
-                #endif
-            }
+                edgeDetection.PrepareDraw();
+                edgeDetection.PrepareDrawNormalDepth();
+                foreach (Entity entity in Entities.Values)
+                    entity.Draw(gameTime, !entity.IgnoreEdgeDetection ? "NormalDepth" : "IgnoreNormalDepth");
 
-            edgeDetection.Draw(gameTime);
-            foreach (ParticleSystem particleSystem in particleSystems.Values)
-                particleSystem.Draw(gameTime);
-            bloom.Draw(gameTime);
+                edgeDetection.PrepareDrawDefault();
+                               
+                DrawEntities(gameTime);                
+
+                edgeDetection.Draw(gameTime);
+            }
+            else
+            {
+                DrawEntities(gameTime);
+            }
+            if(Game.Config.Particles)
+                foreach (ParticleSystem particleSystem in particleSystems.Values)
+                    particleSystem.Draw(gameTime);
+            
+            if(bloom != null)
+                bloom.Draw(gameTime);
             
             #if (DEBUG)
             LineRenderer.Render(GameScreen.Camera, Game.GraphicsDevice);
             BoundingSphereRenderer.Render(GameScreen.Camera, Game.GraphicsDevice);
             #endif
+        }
+
+        private void DrawEntities(GameTime gameTime)
+        {
+            foreach (Entity entity in Entities.Values)
+            {
+                #if (DEBUG)
+                DebugCamera debugCamera = GameScreen.Camera as DebugCamera;
+                if (debugCamera != null && entity == debugCamera.Form.Entity)
+                    entity.Draw(gameTime, "DebugHighlight");
+                else
+                    entity.Draw(gameTime, "Default");
+                #else
+                    entity.Draw(gameTime, "Default");
+                #endif
+            }
         }
 
         public abstract string LevelInformationFileName { get; }
