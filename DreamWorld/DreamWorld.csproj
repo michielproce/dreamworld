@@ -122,12 +122,15 @@
     <Compile Include="Levels\Level.cs" />
     <Compile Include="Levels\LevelInformation.cs" />
     <Compile Include="Levels\SpawnInformation.cs" />
+    <Compile Include="Levels\VillageLevel\Entities\CasualHouse.cs" />
+    <Compile Include="Levels\VillageLevel\Entities\HouseMorwir.cs" />
     <Compile Include="Levels\VillageLevel\Entities\TestEntity.cs" />
     <Compile Include="Levels\PuzzleLevel.cs" />
     <Compile Include="Entities\Element.cs" />
     <Compile Include="Levels\TestPuzzleLevel\Entities\TestElement.cs" />
     <Compile Include="Entities\Group.cs" />
     <Compile Include="Levels\TestPuzzleLevel\TestPuzzleLevel.cs" />
+    <Compile Include="Levels\VillageLevel\Entities\WallEntrance.cs" />
     <Compile Include="Levels\VillageLevel\VillageLevel.cs" />
     <Compile Include="Rendering\Particles\ParticleSettings.cs" />
     <Compile Include="Rendering\Particles\ParticleSystem.cs" />

@@ -104,8 +104,9 @@ namespace DreamWorld.Levels
             InitializeSpecialEntities();
 
             Player = new Player();
-            AddEntity("player", Player); 
-            
+            AddEntity("player", Player);
+            Player.Position = LevelInformation.PlayerStartPosition;
+
             foreach (Entity entity in Entities.Values)
                 entity.Initialize();
             foreach (ParticleSystem particleSystem in particleSystems.Values)

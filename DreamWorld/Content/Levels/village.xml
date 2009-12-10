@@ -1,13 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LevelInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PlayerStartPosition>
+    <X>0</X>
+    <Y>0</Y>
+    <Z>0</Z>
+  </PlayerStartPosition>
   <Spawns>
     <SpawnInformation>
-      <Name>test</Name>
-      <TypeName>DreamWorld.Levels.VillageLevel.Entities.TestEntity</TypeName>
+      <Name>wwwwtest</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.HouseMorwir</TypeName>
       <Position>
+        <X>630</X>
+        <Y>-550</Y>
+        <Z>50</Z>
+      </Position>
+      <Rotation>
         <X>0</X>
-        <Y>-450</Y>
-        <Z>-100</Z>
+        <Y>-80</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>0.8</X>
+        <Y>0.8</Y>
+        <Z>0.8</Z>
+      </Scale>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>casualHouse1</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.CasualHouse</TypeName>
+      <Position>
+        <X>545</X>
+        <Y>-550</Y>
+        <Z>379</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -15,9 +39,9 @@
         <Z>0</Z>
       </Rotation>
       <Scale>
-        <X>1</X>
-        <Y>1</Y>
-        <Z>1</Z>
+        <X>0.1</X>
+        <Y>0.1</Y>
+        <Z>0.1</Z>
       </Scale>
     </SpawnInformation>
   </Spawns>

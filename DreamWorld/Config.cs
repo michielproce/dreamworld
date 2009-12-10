@@ -35,7 +35,9 @@ namespace DreamWorld
                 reader.Close();
                 return c;    
             }
-            return new Config();
+            Config newConfig = new Config();
+            Save(newConfig);
+            return newConfig;
         }
 
         public static void Save(Config c)

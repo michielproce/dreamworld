@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
+using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Levels
 {
@@ -9,6 +10,8 @@ namespace DreamWorld.Levels
     public class LevelInformation
     {
         public const string CONTENT_LOCATION = @"..\..\..\Content\Levels\";
+
+        public Vector3 PlayerStartPosition { get; set; }
         public List<SpawnInformation> Spawns { get; set; }
 
         public LevelInformation()

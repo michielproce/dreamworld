@@ -68,6 +68,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TerrainProcessor</Processor>
       <ProcessorParameters_TerrainTextureFilename>sand.jpg</ProcessorParameters_TerrainTextureFilename>
+      <ProcessorParameters_TerrainBumpiness>550</ProcessorParameters_TerrainBumpiness>
+      <ProcessorParameters_TerrainScale>7</ProcessorParameters_TerrainScale>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +169,32 @@
   <ItemGroup>
     <Compile Include="Models\Test\Test.x">
       <Name>Test</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Village\HouseMorwir.X">
+      <Name>HouseMorwir</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Village\HouseCasual1.X">
+      <Name>HouseCasual1</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Village\Wall.X">
+      <Name>Wall</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Village\WallEntrance.X">
+      <Name>WallEntrance</Name>
       <Importer>XImporter</Importer>
       <Processor>DefaultModelProcessor</Processor>
     </Compile>
