@@ -103,8 +103,11 @@ namespace DreamWorld.ScreenManagement.Screens
             Level.Draw(gameTime);           
             #if (DEBUG)
             DebugCamera debugCamera = Camera as DebugCamera;
-            if(debugCamera != null)
+            if (debugCamera != null)
+            {
                 debugCamera.DrawReticle();
+                GraphicsDevice.RenderState.DepthBufferEnable = true;
+            }
             #endif
             base.Draw(gameTime);
         }
