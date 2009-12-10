@@ -94,24 +94,24 @@ namespace DreamWorld.Interface.Debug.Forms
             
             bool changed = false;
 
+            if (lastEntityTypeSelected != entityTypes.SelectedIndex)
+            {
+                Entity.SpawnInformation.TypeName = entityTypes.Items[entityTypes.SelectedIndex].ToString();
+
+                Level.RemoveEntity(Entity.SpawnInformation.Name);
+                Entity = Level.CreateEntity(Entity.SpawnInformation);
+                Level.AddEntity(Entity.SpawnInformation.Name, Entity);
+
+                lastEntityTypeSelected = entityTypes.SelectedIndex;
+                changed = true;
+            }
+
             if(!Entity.SpawnInformation.Name.Equals(entityName.Text))
             {
                 Level.RenameEntity(Entity.SpawnInformation.Name, entityName.Text);
                 Entity.SpawnInformation.Name = entityName.Text;
                 changed = true;
             }
-
-            if(lastEntityTypeSelected != entityTypes.SelectedIndex)
-            {             
-                Entity.SpawnInformation.TypeName = entityTypes.Items[entityTypes.SelectedIndex].ToString();
-
-                Level.RemoveEntity(Entity.SpawnInformation.Name);                
-                Level.CreateEntity(Entity.SpawnInformation);
-
-                lastEntityTypeSelected = entityTypes.SelectedIndex;
-                changed = true;
-            }
-             
 
             float x, y, z;
             if (float.TryParse(positionX.Text, out x) &&

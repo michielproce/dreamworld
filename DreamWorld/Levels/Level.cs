@@ -99,7 +99,8 @@ namespace DreamWorld.Levels
             
             foreach (SpawnInformation spawn in LevelInformation.Spawns)
             {
-                CreateEntity(spawn);               
+                Entity entity = CreateEntity(spawn);
+                AddEntity(spawn.Name, entity);
             }
             InitializeSpecialEntities();
 
@@ -186,12 +187,12 @@ namespace DreamWorld.Levels
         public abstract string LevelInformationFileName { get; }
         protected virtual void InitializeSpecialEntities() {  }
 
-        public void CreateEntity(SpawnInformation spawn)
+        public Entity CreateEntity(SpawnInformation spawn)
         {
             Type t = Type.GetType(spawn.TypeName);
             Entity entity = (Entity)Activator.CreateInstance(t);
             entity.SpawnInformation = spawn;
-            AddEntity(spawn.Name, entity);                     
+            return entity;                        
         }
     }
 }
