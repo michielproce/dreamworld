@@ -67,13 +67,12 @@ namespace DreamWorld.Cameras
                 if (mouseLook)
                 {
                     float distance;
+                    float closestDistance = float.MaxValue;
                     bool collisionDetected = false;
                     Entity selectedEntity = null;
                     Ray cameraRay = new Ray(Position, Direction);
                     foreach (KeyValuePair<string, Entity> pair in GameScreen.Instance.Level.Entities)
-                    {
-                        if (collisionDetected)
-                            break;
+                    {                       
                         if (pair.Value.SpawnInformation == null) // No spawninfo == special object
                             continue;
                         foreach (ModelMesh mesh in pair.Value.Model.Meshes)
@@ -83,9 +82,12 @@ namespace DreamWorld.Cameras
                             {
                                 if (Collision.RayTriangleIntersect(cameraRay, triangle, out distance))
                                 {
-                                    selectedEntity = pair.Value;
-                                    collisionDetected = true;
-                                    
+                                    if(distance < closestDistance)
+                                    {
+                                        selectedEntity = pair.Value;
+                                        collisionDetected = true;
+                                        closestDistance = distance;
+                                    }                                                                        
                                 }
                             }
                         }
