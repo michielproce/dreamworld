@@ -12,6 +12,7 @@ namespace DreamWorld.Levels
         public const string CONTENT_LOCATION = @"..\..\..\Content\Levels\";
 
         public Vector3 PlayerStartPosition { get; set; }
+        public Vector3 PlayerStartRotation { get; set; }
         public List<SpawnInformation> Spawns { get; set; }
 
         public LevelInformation()

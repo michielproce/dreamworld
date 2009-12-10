@@ -106,6 +106,10 @@ namespace DreamWorld.Levels
             Player = new Player();
             AddEntity("player", Player);
             Player.Position = LevelInformation.PlayerStartPosition;
+            Player.Rotation = new Vector3(
+                MathHelper.ToRadians(LevelInformation.PlayerStartRotation.X), 
+                MathHelper.ToRadians(LevelInformation.PlayerStartRotation.Y),
+                MathHelper.ToRadians(LevelInformation.PlayerStartRotation.Z));
 
             foreach (Entity entity in Entities.Values)
                 entity.Initialize();
