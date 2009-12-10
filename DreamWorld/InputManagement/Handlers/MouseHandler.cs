@@ -55,6 +55,8 @@ namespace DreamWorld.InputManagement.Handlers
 
         public bool NewlyPressed(Buttons button)
         {
+            if(InputManager.DisableInput)
+                return false;
             switch (button)
             {               
                 case Buttons.LeftButton:
@@ -68,6 +70,8 @@ namespace DreamWorld.InputManagement.Handlers
 
         public bool NewlyReleased(Buttons button)
         {
+            if (InputManager.DisableInput)
+                return false;
             switch (button)
             {
                 case Buttons.LeftButton:
@@ -79,7 +83,7 @@ namespace DreamWorld.InputManagement.Handlers
             }
         }
 
-        private void ResetMouse()
+        public void ResetMouse()
         {
             if(!IgnoreReset)
                 Mouse.SetPosition(center.X, center.Y);

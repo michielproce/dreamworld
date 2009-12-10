@@ -94,20 +94,7 @@ namespace DreamWorld.Cameras
                     }
                     if(collisionDetected)
                         ShowForm(selectedEntity);                                               
-                }
-                else
-                {
-                    // Only accept click within the viewport
-                    // TODO: One problem remains: if the form is over the viewport mouselook will be toggled.
-                    Point mPos = inputManager.Mouse.Position;
-                    Viewport vp = inputManager.Game.GraphicsDevice.Viewport;
-                    if (mPos.X >= 0 && mPos.Y >= 0 && mPos.X < vp.Width && mPos.Y < vp.Height)
-                    {
-                        Form.Hide();
-                        ToggleMouseLook(true);
-                    }
-                    
-                }
+                }                
             }
 
             if(inputManager.Debug.NewEntity)
@@ -165,6 +152,8 @@ namespace DreamWorld.Cameras
 
         private void ShowForm(Entity entity)
         {
+            ToggleMouseLook(false);
+            inputManager.DisableInput = true;
             if (Form.IsDisposed)
                 Form = new EntityForm();
             Form.Entity = entity;
@@ -172,7 +161,6 @@ namespace DreamWorld.Cameras
             Form.DebugCamera = this;
             Form.UpdateForm();            
             Form.Show();
-            ToggleMouseLook(false);
         }
 
         public void ToggleMouseLook(bool enabled)
@@ -180,6 +168,8 @@ namespace DreamWorld.Cameras
             mouseLook = enabled;
             inputManager.Game.IsMouseVisible = !mouseLook;
             inputManager.Mouse.IgnoreReset = !mouseLook;
+            inputManager.Mouse.ResetMouse();
+            inputManager.DisableInput = false;
         }
 
         public override Vector3 Direction
@@ -201,6 +191,6 @@ namespace DreamWorld.Cameras
         {
             ToggleMouseLook(true);
             Form.Dispose();
-        }
+        }        
     }
 }

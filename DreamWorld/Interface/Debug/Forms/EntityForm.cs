@@ -155,8 +155,15 @@ namespace DreamWorld.Interface.Debug.Forms
                 LevelInformation.Save(Level.LevelInformation,
                                       Level.LevelInformationFileName);        
                 DebugCamera.ToggleMouseLook(true);
+                Entity = null;
                 Hide();
             }
+        }
+
+        private void EntityForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Entity = null;
+            DebugCamera.ToggleMouseLook(true);
         }       
     }
 }

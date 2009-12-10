@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace DreamWorld.InputManagement
 {
@@ -9,7 +10,7 @@ namespace DreamWorld.InputManagement
 
         public void Update(GameTime gameTime)
         {
-            if(InputManager.Game.IsActive)                
+            if (InputManager.Game.IsActive && !InputManager.DisableInput)
                 HandleInput();
         }
 

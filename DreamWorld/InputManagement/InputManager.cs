@@ -14,6 +14,8 @@ namespace DreamWorld.InputManagement
         public KeyboardHandler Keyboard { get; private set; }
         public MouseHandler Mouse { get; private set; }
 
+        public bool DisableInput { get; set; }
+
         public InputManager(Game game) : base(game)
         {            
             Player = new PlayerInput    {InputManager = this};
