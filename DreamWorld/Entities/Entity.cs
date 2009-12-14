@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using DreamWorld.Audio;
-using DreamWorld.Helpers.Renderers;
 using DreamWorld.Levels;
 using DreamWorld.ScreenManagement.Screens;
 using DreamWorldBase;
+using JigLibX.Collision;
+using JigLibX.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,26 +20,25 @@ namespace DreamWorld.Entities
         protected Level Level { get; private set; }
 
         public SpawnInformation SpawnInformation { get; set; }
-        public Vector3 Position { get; set; }
-        public Vector3 Rotation { get; set; }
         public Vector3 Scale { get; set; }
+        public Body Body { get; protected set; }
+        public CollisionSkin Skin { get; protected set; }
+        public Vector3 CenterOfMass;
         
         public Matrix World { get; protected set; }
         
         public Model Model { get; protected set; }
-        
-        public BoundingSphere BoundingSphere { get; protected set; }
 
         public Animation Animation { get; private set; }
 
         public bool IgnoreEdgeDetection { get; protected set; }
-        public bool RenderSpheres { get; protected set; }
+        public bool RenderCollisionPrimitives = true;
         
         private List<SoundEffect3D> sounds;
 
         protected Matrix[] transforms;
 
-        private bool initialized;
+        protected bool initialized;
 
         protected Entity()
         {            
@@ -55,6 +55,15 @@ namespace DreamWorld.Entities
 
         public virtual void Initialize()
         {
+            Body body;
+            CollisionSkin skin;
+            Vector3 centerOfMass;
+            GetPhysicsInformation(out body, out skin, out centerOfMass);
+
+            Body = body;
+            Skin = skin;
+            CenterOfMass = centerOfMass;
+
             foreach (SoundEffect3D sound in sounds)
                 sound.Initialize();
 
@@ -81,17 +90,22 @@ namespace DreamWorld.Entities
                 }
             }
             #endif
-            
-            foreach (ModelMesh mesh in Model.Meshes)
-            {
-                BoundingSphere = BoundingSphere.CreateMerged(BoundingSphere, mesh.BoundingSphere);
-            }
 
             SkinningData sd = Model.Tag as SkinningData;
             if (sd != null)
                 Animation.Load(sd);
 
-            transforms = new Matrix[Model.Bones.Count];            
+            transforms = new Matrix[Model.Bones.Count];
+        }
+
+        protected virtual void GetPhysicsInformation(out Body body, out CollisionSkin skin, out Vector3 centerOfMass)
+        {
+            body = new Body();
+            skin = new CollisionSkin(body);
+            body.CollisionSkin = skin;
+            centerOfMass = Vector3.Zero;
+            body.EnableBody();
+            return;
         }
 
         public virtual void Update(GameTime gameTime)
@@ -100,7 +114,7 @@ namespace DreamWorld.Entities
 
            foreach (SoundEffect3D sound in sounds)
            {
-               sound.Emitter.Position = Position;
+               sound.Emitter.Position = Body.Position;
                sound.Update(gameTime);
            }
 
@@ -109,9 +123,11 @@ namespace DreamWorld.Entities
 
         protected virtual Matrix GenerateWorldMatrix()
         {
-            return  Matrix.CreateScale(Scale) *
-                    Matrix.CreateFromYawPitchRoll(Rotation.Y, Rotation.X, Rotation.Z) *
-                    Matrix.CreateTranslation(Position);
+            return
+                Matrix.CreateScale(Scale) *
+                Matrix.CreateTranslation(-CenterOfMass) *
+                Body.Orientation *
+                Matrix.CreateTranslation(Body.Position);
         }
 
         public virtual void Draw(GameTime gameTime, string technique)
@@ -130,16 +146,17 @@ namespace DreamWorld.Entities
                     
                 }
                 mesh.Draw();
-                
-                #if (DEBUG)
-                if (RenderSpheres)
-                    BoundingSphereRenderer.AddSphere(mesh.BoundingSphere, (transforms[mesh.ParentBone.Index] * World), Color.Yellow);
-                #endif
             }
 
             #if (DEBUG)
-            if (RenderSpheres)
-                BoundingSphereRenderer.AddSphere(BoundingSphere, World, Color.BlueViolet);
+                if (RenderCollisionPrimitives && GameScreen.debugDrawer.Enabled && Skin.NumPrimitives > 0) 
+                {
+                    VertexPositionColor[] wf = Skin.GetLocalSkinWireframe();
+                    if (Body.CollisionSkin != null)
+                        Body.TransformWireframe(wf);
+
+                    GameScreen.debugDrawer.DrawShape(wf);
+                }
             #endif
         }
 
@@ -154,8 +171,10 @@ namespace DreamWorld.Entities
         {
             if (SpawnInformation != null)
             {
-                Position = SpawnInformation.Position;
-                Rotation = new Vector3(MathHelper.ToRadians(SpawnInformation.Rotation.X), MathHelper.ToRadians(SpawnInformation.Rotation.Y), MathHelper.ToRadians(SpawnInformation.Rotation.Z));
+                Body.Position = SpawnInformation.Position;
+                Body.Orientation = Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(SpawnInformation.Rotation.Y),
+                                                                 MathHelper.ToRadians(SpawnInformation.Rotation.X),
+                                                                 MathHelper.ToRadians(SpawnInformation.Rotation.Z));
                 Scale = SpawnInformation.Scale;
             }
         }

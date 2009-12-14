@@ -13,6 +13,13 @@ namespace DreamWorld.Entities
             IgnoreEdgeDetection = true;            
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            Body.DisableBody();
+        }
+
         protected override void LoadContent()
         {
             Model = GameScreen.Content.Load<Model>(@"Models\Skyboxes\" + skybox);
@@ -26,9 +33,14 @@ namespace DreamWorld.Entities
             base.LoadContent();
         }
 
+        protected override Matrix GenerateWorldMatrix()
+        {
+            return Matrix.CreateTranslation(Body.Position);
+        }
+
         public override void Update(GameTime gameTime)
         {
-            Position = GameScreen.Camera.Position;
+            Body.Position = GameScreen.Camera.Position;
             base.Update(gameTime);
         }
 

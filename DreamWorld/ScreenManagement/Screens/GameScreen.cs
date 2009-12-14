@@ -1,9 +1,11 @@
 using System;
 using DreamWorld.Cameras;
-using DreamWorld.Entities;
+using DreamWorld.Helpers.Renderers;
 using DreamWorld.InputManagement;
 using DreamWorld.InputManagement.Types;
 using DreamWorld.Levels;
+using JigLibX.Collision;
+using JigLibX.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,6 +20,10 @@ namespace DreamWorld.ScreenManagement.Screens
         public Level Level { get; private set; }
         public InputManager InputManager { get; private set; }
         public GraphicsDevice GraphicsDevice { get; private set; }
+
+        public DebugDrawer debugDrawer;
+
+        public DreamWorldPhysicsSystem PhysicsSystem { get; private set; }
 
         public GameScreen(Level level)
         {
@@ -36,7 +42,13 @@ namespace DreamWorld.ScreenManagement.Screens
             InputManager = ((DreamWorldGame) ScreenManager.Game).InputManager;
             GraphicsDevice = ScreenManager.Game.GraphicsDevice;
 
+            PhysicsSystem = new DreamWorldPhysicsSystem {CollisionSystem = new CollisionSystemSAP()};
+
             base.Initialize();
+
+            debugDrawer = new DebugDrawer(ScreenManager.Game, this);
+            debugDrawer.Initialize();
+            debugDrawer.Enabled = true;
 
             Camera = new ThirdPersonCamera();
             Level.Initialize();
@@ -68,6 +80,9 @@ namespace DreamWorld.ScreenManagement.Screens
                         Camera.Initialize();
                     }
                 #endif
+
+                float timeStep = (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
+                DreamWorldPhysicsSystem.CurrentPhysicsSystem.Integrate(timeStep);
                 
                 Level.Update(gameTime);
                 Camera.Update(gameTime);
@@ -108,6 +123,7 @@ namespace DreamWorld.ScreenManagement.Screens
                 debugCamera.DrawReticle();
                 GraphicsDevice.RenderState.DepthBufferEnable = true;
             }
+                debugDrawer.Draw(gameTime);
             #endif
             base.Draw(gameTime);
         }

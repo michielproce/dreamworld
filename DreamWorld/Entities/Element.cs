@@ -6,9 +6,19 @@ namespace DreamWorld.Entities
     {
         public Group Group { get; internal set; }
 
-        protected override Matrix GenerateWorldMatrix()
+        public void Update(GameTime gameTime)
         {
-            return base.GenerateWorldMatrix() * Group.World;
+            base.Update(gameTime);
+
+            // Move the element's origin to the world's origin
+            Body.Position -= Group.Body.Position;
+
+            // Rotate the element (around the world's origin)
+            Body.Orientation *= Matrix.CreateFromQuaternion(Group.RotationSinceLastUpdate);
+            Body.Position = Vector3.Transform(Body.Position, Group.RotationSinceLastUpdate);
+
+            // Move the element's origin back
+            Body.Position += Group.Body.Position;
         }
     }
 }

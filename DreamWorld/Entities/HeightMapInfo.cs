@@ -25,8 +25,8 @@ namespace DreamWorld.Entities
             heightmapWidth = (heights.GetLength(0) - 1) * terrainScale;
             heightmapHeight = (heights.GetLength(1) - 1) * terrainScale;
 
-            heightmapPosition.X = -(heights.GetLength(0) - 1) / 2 * terrainScale;
-            heightmapPosition.Z = -(heights.GetLength(1) - 1) / 2 * terrainScale;
+            heightmapPosition.X = -(heights.GetLength(0) - 1) * terrainScale / 2;
+            heightmapPosition.Z = -(heights.GetLength(1) - 1) * terrainScale / 2;
         }
 
         public bool IsOnHeightmap(Vector3 position)

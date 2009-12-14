@@ -98,10 +98,9 @@
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\Skybox.cs" />
     <Compile Include="Entities\Terrain.cs" />
+    <Compile Include="Helpers\Renderers\DebugDrawer.cs" />
     <Compile Include="Helpers\Debug\Collision.cs" />
     <Compile Include="Helpers\Debug\TriangleFinder.cs" />
-    <Compile Include="Helpers\Renderers\BoundingSphereRenderer.cs" />
-    <Compile Include="Helpers\Renderers\LineRenderer.cs" />
     <Compile Include="InputManagement\Handlers\GamePadHandler.cs" />
     <Compile Include="InputManagement\Gesture.cs" />
     <Compile Include="InputManagement\InputHandler.cs" />
@@ -194,6 +193,10 @@
     <ProjectReference Include="..\DreamWorldBase\DreamWorldBase.csproj">
       <Project>{C1D4A9F4-71C3-465B-838B-5678DF94BA13}</Project>
       <Name>DreamWorldBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JigLibX\JigLibX.csproj">
+      <Project>{8A7CEF45-3501-491D-AEDA-0164060F5348}</Project>
+      <Name>JigLibX</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

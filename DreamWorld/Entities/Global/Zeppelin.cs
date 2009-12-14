@@ -35,7 +35,7 @@ namespace DreamWorld.Entities.Global
         {
             Level.AddParticleSystem("zeppelinSmoke", smokeParticleSystem);
             SoundEffect3D engine = new SoundEffect3D("Steam Engine");
-            AddSoundEffect(engine);            
+            AddSoundEffect(engine);
 
             base.Initialize();
         }
@@ -43,7 +43,6 @@ namespace DreamWorld.Entities.Global
         protected override void LoadContent()
         {
             Model = GameScreen.Content.Load<Model>(@"Models\Global\Zeppelin\Zeppelin");
-           
             
             foreach (ModelMesh mesh in Model.Meshes)
             {
@@ -68,10 +67,10 @@ namespace DreamWorld.Entities.Global
             if(Path != null)
             {
                 time += Speed;
-                Position = Path.GetPointOnCurve(time);
+                Body.Position = Path.GetPointOnCurve(time);
                 
                 // TODO: The way rotation is handled could be better.
-                rotation = Matrix.Invert(Matrix.CreateLookAt(Position, Path.GetPointOnCurve(time + Speed), Vector3.Up)) * Matrix.CreateRotationY(MathHelper.Pi); // Note: 180 degrees turn maybe not necessary in the future
+                rotation = Matrix.Invert(Matrix.CreateLookAt(Body.Position, Path.GetPointOnCurve(time + Speed), Vector3.Up)) * Matrix.CreateRotationY(MathHelper.Pi); // Note: 180 degrees turn maybe not necessary in the future
                 rotation.Translation = Vector3.Zero;                
             }
 
@@ -85,8 +84,8 @@ namespace DreamWorld.Entities.Global
             cogs[3].ParentBone.Transform = Matrix.CreateRotationY(-propellorRotation * .4f); // Small, right
 
             // Smoke particles
-            Vector3 rightPropellor = Position + Vector3.Transform(new Vector3(-68, 55, -60), rotation);
-            Vector3 leftPropellor = Position + Vector3.Transform(new Vector3(68, 55, -60), rotation);
+            Vector3 rightPropellor = Body.Position + Vector3.Transform(new Vector3(-68, 55, -60), rotation);
+            Vector3 leftPropellor = Body.Position + Vector3.Transform(new Vector3(68, 55, -60), rotation);
             smokeParticleSystem.AddParticle(rightPropellor, Vector3.Zero);
             smokeParticleSystem.AddParticle(leftPropellor, Vector3.Zero);
                         
@@ -101,7 +100,7 @@ namespace DreamWorld.Entities.Global
         {
             return Matrix.CreateScale(Scale) *
                     rotation *
-                    Matrix.CreateTranslation(Position);       
+                    Matrix.CreateTranslation(Body.Position);       
         }
     }
 }

@@ -106,17 +106,17 @@ namespace DreamWorld.Levels
 
             Player = new Player();
             AddEntity("player", Player);
-            Player.Position = LevelInformation.PlayerStartPosition;
-            Player.Rotation = new Vector3(
-                MathHelper.ToRadians(LevelInformation.PlayerStartRotation.X), 
-                MathHelper.ToRadians(LevelInformation.PlayerStartRotation.Y),
-                MathHelper.ToRadians(LevelInformation.PlayerStartRotation.Z));
 
             foreach (Entity entity in Entities.Values)
                 entity.Initialize();
             foreach (ParticleSystem particleSystem in particleSystems.Values)
                 particleSystem.Initialize();
 
+            Player.Body.MoveTo(
+                LevelInformation.PlayerStartPosition, 
+                Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(LevelInformation.PlayerStartRotation.Y),
+                                              MathHelper.ToRadians(LevelInformation.PlayerStartRotation.X),
+                                              MathHelper.ToRadians(LevelInformation.PlayerStartRotation.Z)));
             
             spriteBatch = new SpriteBatch(Game.GraphicsDevice);
             if(Game.Config.Bloom)
@@ -155,17 +155,13 @@ namespace DreamWorld.Levels
             {
                 DrawEntities(gameTime);
             }
+
             if(Game.Config.Particles)
                 foreach (ParticleSystem particleSystem in particleSystems.Values)
                     particleSystem.Draw(gameTime);
             
             if(bloom != null)
                 bloom.Draw(gameTime);
-            
-            #if (DEBUG)
-            LineRenderer.Render(GameScreen.Camera, Game.GraphicsDevice);
-            BoundingSphereRenderer.Render(GameScreen.Camera, Game.GraphicsDevice);
-            #endif
         }
 
         private void DrawEntities(GameTime gameTime)

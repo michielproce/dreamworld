@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Cameras
 {
@@ -20,7 +21,7 @@ namespace DreamWorld.Cameras
         public override Vector3 Direction { 
             get
             {
-                return Vector3.Normalize(level.Player.Position - Position);
+                return Vector3.Normalize(level.Player.Body.Position - Position);
             }
         }
 
@@ -37,7 +38,9 @@ namespace DreamWorld.Cameras
 
         public override void Update(GameTime gameTime)
         {
-            Vector3 playerPosition = level.Player.Position + level.Player.CameraOffset;
+            Vector3 playerPosition = level.Player.Body.Position + level.Player.CameraOffset;
+            Vector3 playerDirection = Vector3.Transform(Vector3.Forward, level.Player.Body.Orientation);
+            float playerRotation = MathHelper.Pi + (float)Math.Atan2(playerDirection.X, playerDirection.Z);
 
             distance -= inputManager.Player.Zoom;
             if (distance < minDistance)
@@ -57,12 +60,13 @@ namespace DreamWorld.Cameras
             if (inputManager.Player.ResetHorizontalRotation)
                 horizontalRotation = 0;
             horizontalRotation += inputManager.Player.HorizontalRotation;
-            Position = playerPosition - 
+
+            Position = playerPosition + 
                 Vector3.Transform(
                     Vector3.Transform(
-                        new Vector3(0, 0, -distance),
+                        new Vector3(0, 0, distance),
                         Matrix.CreateRotationX(verticalRotation)),
-                    Matrix.CreateRotationY(level.Player.Rotation.Y + horizontalRotation));    
+                    Matrix.CreateRotationY(playerRotation + horizontalRotation));
 
             if(level.Terrain != null)
             {

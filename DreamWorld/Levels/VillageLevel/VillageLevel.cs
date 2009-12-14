@@ -25,15 +25,15 @@ namespace DreamWorld.Levels.VillageLevel
             MediaPlayer.IsRepeating = true;
 
             base.Initialize();
-
         }
 
         protected override void InitializeSpecialEntities()
-        {            
+        {
+
             Terrain = new Terrain("Village");
             AddEntity("terrain", Terrain);
 
-            Curve3D zeppelinPath = new Curve3D(CurveLoopType.Cycle);
+            Curve3D zeppelinPath = new Curve3D(CurveLoopType.Cycle);            
             zeppelinPath.AddPoint(new Vector3(0, -350, -300));
             zeppelinPath.AddPoint(new Vector3(500, -350, -900));
             zeppelinPath.AddPoint(new Vector3(-500, -350, -600));
@@ -46,7 +46,7 @@ namespace DreamWorld.Levels.VillageLevel
                 Path = zeppelinPath,
                 Speed = 1f
             };
-            AddEntity("zeppelin", zeppelin);                 
+            AddEntity("zeppelin", zeppelin);
         }
     }
 }

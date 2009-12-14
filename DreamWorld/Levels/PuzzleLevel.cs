@@ -17,6 +17,11 @@ namespace DreamWorld.Levels
                 AddEntity("Group"+i, Groups[i]);
             }
             base.Initialize();
+
+            for (int i = 0; i < Groups.Length; i++)
+            {
+                Groups[i].ignoreCollisionSkins.Add(GameScreen.Level.Player.Skin);
+            }
         }
 
         public override void Update(GameTime gameTime)

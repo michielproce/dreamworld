@@ -1,5 +1,7 @@
-﻿using DreamWorld.Cameras;
+﻿using System;
+using DreamWorld.Cameras;
 using DreamWorld.InputManagement;
+using JigLibX.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -7,30 +9,37 @@ namespace DreamWorld.Entities
 {
     public class Player : Entity
     {
-        private const float jumpStart = 2f;
+        enum PlayerState
+        {
+            OnTerrain,
+            OnPlatform,
+            Jumping
+        }
+
+        private const float jumpStart = 1.5f;
         private const float jumpGravity = .05f;
         private float jumpVelocity;
 
-        public readonly Vector3 CameraOffset = new Vector3(0,12,0);
+        private PlayerState playerState = PlayerState.OnTerrain;
+
+        public readonly Vector3 CameraOffset = new Vector3(0,6,0);
 
         private InputManager inputManager;
 
-        public Player()
-        {
-            
-        }
-
         public override void Initialize()
         {
+            RenderCollisionPrimitives = true;
+
             inputManager = GameScreen.InputManager;
             Animation.InitialClip = "Take 001";
             Animation.Paused = true;
             Animation.Speed = 1.8f;
 
             Scale = new Vector3(.2f);
-            PutOnTerrain();
 
             base.Initialize();
+
+            PutOnTerrain();
         }
 
         protected override void LoadContent()
@@ -40,67 +49,148 @@ namespace DreamWorld.Entities
         }
 
         public override void Update(GameTime gameTime)
-        {            
-#if(DEBUG)
-            if(GameScreen.Camera is DebugCamera)
-                return;
-#endif   
-            
-            Rotation += new Vector3(Rotation.X, inputManager.Player.Rotation, Rotation.Z);  
-          
-            Vector3 movement = Vector3.Transform(inputManager.Player.Movement, Matrix.CreateRotationY(Rotation.Y));
-            Position += movement;
-            if(movement.Length() != 0)
+        {
+            #if(DEBUG)
+                if (GameScreen.Camera is DebugCamera)
+                    return;
+            #endif
+
+            Body.Orientation *= Matrix.CreateRotationY(inputManager.Player.Rotation);
+
+            Vector3 movement = Vector3.Transform(inputManager.Player.Movement, Body.Orientation);
+
+            if (IsOnTerrain())
+            {
+                PutOnTerrain();
+            } 
+            else if (IsOnPlatform())
+            {
+                playerState = PlayerState.OnPlatform;
+                jumpVelocity = 0;
+            }
+            else
+            {
+                playerState = PlayerState.Jumping;
+            }
+
+            if (inputManager.Player.Jump && playerState != PlayerState.Jumping)
+                StartJumping();
+
+            if (playerState == PlayerState.Jumping)
+            {
+                jumpVelocity -= jumpGravity;
+                movement.Y = jumpVelocity;
+            }
+
+            for (int i = 0; i <= Skin.Collisions.Count - 1; i++)
+            {
+                float dot = Vector3.Dot(movement, Skin.Collisions[i].DirToBody0);
+                if (dot < 0)
+                    movement -= Skin.Collisions[i].DirToBody0 * dot;
+            }
+
+            jumpVelocity = movement.Y;
+
+            Body.Position += movement;
+
+            if (inputManager.Player.Movement.Length() != 0)
                 Animation.Paused = false;
             else
                 Animation.Paused = true;
-
-            if (inputManager.Player.Jump && !IsJumping())            
-                StartJumping();
-
-            if (IsJumping())
-            {
-                Position += new Vector3(0, jumpVelocity, 0);
-                jumpVelocity -= jumpGravity;
-                if (IsOnTerrain())
-                {
-                    StopJumping();
-                    PutOnTerrain();
-                }
-            }
-            else
-            {
-                PutOnTerrain();
-            }
 
             base.Update(gameTime);
         }
 
         private void StartJumping()
         {
+            playerState = PlayerState.Jumping;
             jumpVelocity = jumpStart;
-        }
-
-        private bool IsJumping()
-        {
-            return jumpVelocity != 0;
-        }
-
-        private void StopJumping()
-        {
-            jumpVelocity = 0;
         }
 
         private bool IsOnTerrain()
         {
             return Level.Terrain != null &&
-                   Position.Y - Level.Terrain.HeightMapInfo.GetHeight(Position) <= 0;
+                   Body.Position.Y - CenterOfMass.Y - Level.Terrain.HeightMapInfo.GetHeight(Body.Position + CenterOfMass) <= 0;
+        }
+
+        private bool IsOnPlatform()
+        {
+            for (int i = 0; i <= Skin.Collisions.Count - 1; i++)
+            {
+                if (Skin.Collisions[i].DirToBody0.Y > .4f)
+                    return true;
+            }
+            return false;
         }
         
         private void PutOnTerrain()
         {
             if (Level.Terrain != null)
-                Position = new Vector3(Position.X, Level.Terrain.HeightMapInfo.GetHeight(Position), Position.Z);
+            {
+                Body.Position = new Vector3(Body.Position.X, Level.Terrain.HeightMapInfo.GetHeight(Body.Position+CenterOfMass) + CenterOfMass.Y, Body.Position.Z);
+                jumpVelocity = 0;
+                playerState = PlayerState.OnTerrain;
+            }
+        }
+
+        protected override void GetPhysicsInformation(out JigLibX.Physics.Body body, out JigLibX.Collision.CollisionSkin skin, out Vector3 centerOfMass)
+        {
+            #region Header
+            // Variables
+            JigLibX.Collision.MaterialProperties materialProperties;
+            JigLibX.Geometry.PrimitiveProperties primitiveProperties;
+            JigLibX.Geometry.Capsule capsule;
+
+            #region Mass Variables
+            float mass;
+            Matrix inertiaTensor;
+            Matrix inertiaTensorCoM;
+            #endregion
+
+            // Create Skin & Body
+            body = new JigLibX.Physics.Body();
+            skin = new JigLibX.Collision.CollisionSkin(body);
+            body.CollisionSkin = skin;
+            #endregion
+
+            #region Primitive Properties
+            primitiveProperties = new JigLibX.Geometry.PrimitiveProperties();
+            primitiveProperties.MassDistribution = JigLibX.Geometry.PrimitiveProperties.MassDistributionEnum.Solid;
+            primitiveProperties.MassType = JigLibX.Geometry.PrimitiveProperties.MassTypeEnum.Mass;
+            primitiveProperties.MassOrDensity = 0.001f;
+            #endregion
+
+            #region Primitive 0
+            // MaterialProperties:
+            materialProperties = new JigLibX.Collision.MaterialProperties();
+            materialProperties.StaticRoughness = 0.5f;
+            materialProperties.DynamicRoughness = 0.35f;
+            materialProperties.Elasticity = 0.0025f;
+
+            // Primitive:
+            capsule = new JigLibX.Geometry.Capsule(new Vector3(0, 11, 0),
+                Matrix.CreateRotationX(MathHelper.PiOver2),
+                4,
+                7f);
+
+            skin.AddPrimitive(capsule, materialProperties);
+            #endregion
+
+            #region Footer
+            // Extract Mass Properties
+            skin.GetMassProperties(primitiveProperties, out mass, out centerOfMass, out inertiaTensor, out inertiaTensorCoM);
+
+            // Set Mass Properties
+            body.BodyInertia = inertiaTensorCoM;
+            body.Mass = mass;
+
+            // Sync Body & Skin
+            body.MoveTo(Vector3.Zero, Matrix.Identity);
+            skin.ApplyLocalTransform(new JigLibX.Math.Transform(-centerOfMass, Matrix.Identity));
+
+            // Enable Body
+            body.EnableBody();
+            #endregion
         }
     }
 }
