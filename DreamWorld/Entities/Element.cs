@@ -6,7 +6,7 @@ namespace DreamWorld.Entities
     {
         public Group Group { get; internal set; }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 

@@ -23,7 +23,7 @@ namespace JigLibX.Physics
         private bool hingeEnabled;
         private bool broken;
         private float damping;
-        private float extraTorque; // allow extra torque applied per update
+        private float extraTorque = 0; // allow extra torque applied per update
 
         private ConstraintPoint mMidPointConstraint;
         private ConstraintMaxDistance[] mSidePointConstraints;
