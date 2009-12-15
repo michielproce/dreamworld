@@ -28,8 +28,6 @@ namespace DreamWorld.Entities
 
         public override void Initialize()
         {
-            RenderCollisionPrimitives = true;
-
             inputManager = GameScreen.InputManager;
             Animation.InitialClip = "Take 001";
             Animation.Paused = true;

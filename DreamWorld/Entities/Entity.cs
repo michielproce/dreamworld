@@ -32,7 +32,7 @@ namespace DreamWorld.Entities
         public Animation Animation { get; private set; }
 
         public bool IgnoreEdgeDetection { get; protected set; }
-        public bool RenderCollisionPrimitives = true;
+        public bool RenderCollisionPrimitives { get; protected set; }
         
         private List<SoundEffect3D> sounds;
 

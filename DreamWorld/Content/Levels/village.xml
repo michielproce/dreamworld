@@ -2,7 +2,7 @@
 <LevelInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <PlayerStartPosition>
     <X>350</X>
-    <Y>0</Y>
+    <Y>-550</Y>
     <Z>150</Z>
   </PlayerStartPosition>
   <PlayerStartRotation>
