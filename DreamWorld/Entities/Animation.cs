@@ -15,6 +15,7 @@ namespace DreamWorld.Entities
         public string InitialClip { get; set; }
         public float Speed { get; set; }
         public bool Paused { get; set; }
+        public string CurrentClip { get; private set; }
 
         private Dictionary<string, Matrix> additionalBoneTransforms;
         
@@ -41,8 +42,12 @@ namespace DreamWorld.Entities
         }
 
         public void StartClip(string clip)
-        {            
-            animationPlayer.StartClip(skinningData.AnimationClips[clip]);
+        {
+            if (!clip.Equals(CurrentClip))
+            {
+                animationPlayer.StartClip(skinningData.AnimationClips[clip]);
+                CurrentClip = clip;
+            }
         }
 
         public Matrix[] SkinTransforms
@@ -60,6 +65,11 @@ namespace DreamWorld.Entities
 
             TimeSpan ts = gameTime.ElapsedGameTime;
             ts = ts.Add(new TimeSpan((long) (ts.Ticks * Speed) - ts.Ticks));            
+            
+            // TODO: This if-statement is a hack for the less-then-one-second bug in kwxport
+            if ("Run".Equals(CurrentClip) && animationPlayer.CurrentTime.Milliseconds > 750)
+                    AdvanceAnimation(new TimeSpan(0, 0, 0, 0, 250));
+
             AdvanceAnimation(ts);
         }
 

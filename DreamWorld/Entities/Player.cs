@@ -22,18 +22,16 @@ namespace DreamWorld.Entities
 
         private PlayerState playerState = PlayerState.OnTerrain;
 
-        public readonly Vector3 CameraOffset = new Vector3(0,6,0);
+        public readonly Vector3 CameraOffset = new Vector3(0,3,0);
 
         private InputManager inputManager;
 
         public override void Initialize()
         {
             inputManager = GameScreen.InputManager;
-            Animation.InitialClip = "Take 001";
-            Animation.Paused = true;
-            Animation.Speed = 1.8f;
-
-            Scale = new Vector3(.2f);
+            Animation.InitialClip = "Idle";
+            Animation.Speed = 1.0f;
+            Scale = new Vector3(.15f);
 
             base.Initialize();
 
@@ -42,7 +40,7 @@ namespace DreamWorld.Entities
 
         protected override void LoadContent()
         {            
-            Model = GameScreen.Content.Load<Model>(@"Models\Test\dude");                       
+            Model = GameScreen.Content.Load<Model>(@"Models\Global\Player");                       
             base.LoadContent();
         }
 
@@ -91,16 +89,21 @@ namespace DreamWorld.Entities
 
             Body.Position += movement;
 
-            if (inputManager.Player.Movement.Length() != 0)
-                Animation.Paused = false;
-            else
-                Animation.Paused = true;
+            if (playerState != PlayerState.Jumping)
+            {
+                if (inputManager.Player.Movement.Length() != 0)
+                    Animation.StartClip("Run");
+                else
+                    Animation.StartClip("Idle");
+            }
+
 
             base.Update(gameTime);
         }
 
         private void StartJumping()
         {
+            Animation.StartClip("Jump");
             playerState = PlayerState.Jumping;
             jumpVelocity = jumpStart;
         }
@@ -189,6 +192,18 @@ namespace DreamWorld.Entities
             // Enable Body
             body.EnableBody();
             #endregion
+        }
+
+
+        // TODO: This is a hack for the rotated player model.
+        // When the model is correct you can remove this entire method.
+        protected override Matrix GenerateWorldMatrix()
+        {
+            return
+                Matrix.CreateScale(Scale) *
+                Matrix.CreateTranslation(-CenterOfMass) *
+                Body.Orientation * Matrix.CreateRotationY(-MathHelper.PiOver2)*
+                Matrix.CreateTranslation(Body.Position);            
         }
     }
 }
