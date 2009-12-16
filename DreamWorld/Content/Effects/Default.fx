@@ -9,7 +9,7 @@ float4x4 world;
 float4x4 view;
 float4x4 projection;
 
-float Ambient = .3;
+float3 Ambient = .3;
 bool IgnoreSun;
 float3 Sun = float3(.5, -.5, 0);
 
