@@ -17,6 +17,7 @@ namespace DreamWorld
         public bool Bloom { get; set; }
         public bool EdgeDetect { get; set; }
         public bool Particles { get; set; }
+        public bool Shadows { get; set; }
 
         public Config()
         {
@@ -29,6 +30,7 @@ namespace DreamWorld
             Bloom = true;
             EdgeDetect = true;
             Particles = true;
+            Shadows = true;
         }
 
         public static Config Load()
