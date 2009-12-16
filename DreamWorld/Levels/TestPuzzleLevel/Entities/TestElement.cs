@@ -6,6 +6,8 @@ namespace DreamWorld.Levels.TestPuzzleLevel.Entities
 {
     class TestElement : Element
     {
+        public static bool ListInEditor = true;
+
         protected override void LoadContent()
         {
             Model = GameScreen.Content.Load<Model>(@"Models\Test\Test");

@@ -34,7 +34,7 @@ namespace DreamWorld.Levels.TestPuzzleLevel
 
         public override string LevelInformationFileName
         {
-            get { return "testpuzzellevel.xml"; } // Doesn't exist (yet), results in empty LevelInformation
+            get { return "TestPuzzel.xml"; }
         }
     }
 }

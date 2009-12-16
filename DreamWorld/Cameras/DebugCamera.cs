@@ -28,7 +28,7 @@ namespace DreamWorld.Cameras
 
         public DebugCamera()
         {
-            Form = new EntityForm();            
+            Form = new EntityForm(GameScreen.Instance.Level is PuzzleLevel);            
         }
 
         public override void Initialize()
@@ -120,11 +120,7 @@ namespace DreamWorld.Cameras
                 LevelInformation.Save(level.LevelInformation,
                                       level.LevelInformationFileName);
                 ShowForm(placeHolder);
-            }
-
-            // Update the form                        
-            Form.UpdateEntity();                
-             
+            }             
 
             base.Update(gameTime);
         }
@@ -155,7 +151,7 @@ namespace DreamWorld.Cameras
             ToggleMouseLook(false);
             inputManager.DisableInput = true;
             if (Form.IsDisposed)
-                Form = new EntityForm();
+                Form = new EntityForm(GameScreen.Instance.Level is PuzzleLevel);
             Form.Entity = entity;
             Form.Level = GameScreen.Instance.Level;
             Form.DebugCamera = this;

@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using DreamWorld.Cameras;
 using DreamWorld.Entities;
+using DreamWorld.Entities.Global;
 using DreamWorld.Levels;
 using Microsoft.Xna.Framework;
 
@@ -17,21 +18,27 @@ namespace DreamWorld.Interface.Debug.Forms
 
         private bool updating;
         private int lastEntityTypeSelected;
-        public EntityForm()
+        
+        private bool isPuzzleLevel;
+
+        public EntityForm(bool isPuzzleLevel)
         {
             InitializeComponent();
-            
+
+            this.isPuzzleLevel = isPuzzleLevel;
+
+            if (isPuzzleLevel)
+            {
+                groupLabel.Visible = true;
+                group.Visible = true;
+            }
+
             foreach (string entityTypeName in findEntityTypeNames())
                 entityTypes.Items.Add(entityTypeName);
         }
-        
-        public void UpdateEntity()
-        {
-            
-        }
 
         public void UpdateForm()
-        {
+        {            
             updating = true;
             Text = "Entity: " + Entity.SpawnInformation.Name;
 
@@ -70,13 +77,18 @@ namespace DreamWorld.Interface.Debug.Forms
                 Type subType = type;
                 while (subType != typeof(object))
                 {
-                    if (subType == typeof(Entity) && type.GetField("ListInEditor") != null)
+                    if (subType == (isPuzzleLevel ? typeof(Element) : typeof(Entity)) && type.GetField("ListInEditor") != null)
                     {                                                                       
                         entityTypeNames.Add(type.Namespace + "." + type.Name);
                         break;
                     }
                     subType = subType.BaseType;
                 }
+            }                
+            if(isPuzzleLevel)
+            {
+                entityTypeNames.Add(typeof(PlaceHolder).Namespace + "." + typeof(PlaceHolder).Name);
+                // TODO: Add GroupCenter class to types.
             }
             return entityTypeNames;
         }
@@ -135,7 +147,14 @@ namespace DreamWorld.Interface.Debug.Forms
                 Entity.SpawnInformation.Scale = new Vector3(x, y, z);
                 changed = true;
             }
-
+            
+            int groupID;
+            if(int.TryParse(group.Text, out groupID))
+            {
+                Entity.SpawnInformation.Group = groupID;
+                changed = true;
+            }
+            
             if (changed)
             {
                 Entity.Spawn();

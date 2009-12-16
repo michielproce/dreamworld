@@ -55,6 +55,8 @@
             this.RemoveButton = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
             this.entityTypes = new System.Windows.Forms.ComboBox();
+            this.groupLabel = new System.Windows.Forms.Label();
+            this.group = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -174,7 +176,7 @@
             // ApplyButton
             // 
             this.ApplyButton.AutoSize = true;
-            this.ApplyButton.Location = new System.Drawing.Point(150, 143);
+            this.ApplyButton.Location = new System.Drawing.Point(150, 162);
             this.ApplyButton.Name = "ApplyButton";
             this.ApplyButton.Size = new System.Drawing.Size(75, 23);
             this.ApplyButton.TabIndex = 12;
@@ -258,7 +260,7 @@
             // RemoveButton
             // 
             this.RemoveButton.AutoSize = true;
-            this.RemoveButton.Location = new System.Drawing.Point(231, 143);
+            this.RemoveButton.Location = new System.Drawing.Point(231, 162);
             this.RemoveButton.Name = "RemoveButton";
             this.RemoveButton.Size = new System.Drawing.Size(91, 23);
             this.RemoveButton.TabIndex = 13;
@@ -286,12 +288,33 @@
             this.entityTypes.TabIndex = 2;
             this.entityTypes.SelectedIndexChanged += new System.EventHandler(this.OKButton_Click);
             // 
+            // groupLabel
+            // 
+            this.groupLabel.AutoSize = true;
+            this.groupLabel.Location = new System.Drawing.Point(41, 141);
+            this.groupLabel.Name = "groupLabel";
+            this.groupLabel.Size = new System.Drawing.Size(105, 13);
+            this.groupLabel.TabIndex = 14;
+            this.groupLabel.Text = "Group ID (0 = static):";
+            this.groupLabel.Visible = false;
+            // 
+            // group
+            // 
+            this.group.Location = new System.Drawing.Point(155, 138);
+            this.group.Name = "group";
+            this.group.Size = new System.Drawing.Size(219, 20);
+            this.group.TabIndex = 15;
+            this.group.Text = "0";
+            this.group.Visible = false;
+            // 
             // EntityForm
             // 
             this.AcceptButton = this.ApplyButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(432, 171);
+            this.ClientSize = new System.Drawing.Size(432, 196);
+            this.Controls.Add(this.group);
+            this.Controls.Add(this.groupLabel);
             this.Controls.Add(this.entityTypes);
             this.Controls.Add(this.RemoveButton);
             this.Controls.Add(this.label9);
@@ -361,5 +384,7 @@
         private System.Windows.Forms.Button RemoveButton;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ComboBox entityTypes;
+        private System.Windows.Forms.Label groupLabel;
+        private System.Windows.Forms.TextBox group;
     }
 }

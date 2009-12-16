@@ -12,7 +12,7 @@ namespace DreamWorld.Levels.VillageLevel
     {
         public override string LevelInformationFileName
         {
-            get { return "village.xml"; }
+            get { return "Village.xml"; }
         }
 
         public override void Initialize()
