@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Entities.Global
 {
-    class Zeppelin : Entity
+    public abstract class Zeppelin : Entity
     {
         private Matrix rotation;
 
@@ -20,20 +20,19 @@ namespace DreamWorld.Entities.Global
         
         private float time;
         
-        public float Speed { get; set; }
-        public Curve3D Path { get; set; }        
+        protected abstract float Speed { get; }
+        protected abstract Curve3D Path { get; }
 
-        public Zeppelin()
+        protected Zeppelin()
         {
             propellors = new List<ModelMesh>();
             cogs = new ModelMesh[4];
-            smokeParticleSystem = new ZeppelinSmokeParticleSystem();
-            
+            smokeParticleSystem = new ZeppelinSmokeParticleSystem();            
         }
 
         public override void Initialize()
         {
-            Level.AddParticleSystem("zeppelinSmoke", smokeParticleSystem);
+            Level.AddParticleSystem(SpawnInformation.Name + "_smoke", smokeParticleSystem);
             SoundEffect3D engine = new SoundEffect3D("Steam Engine");
             AddSoundEffect(engine);
 
@@ -67,10 +66,12 @@ namespace DreamWorld.Entities.Global
             if(Path != null)
             {
                 time += Speed;
-                Body.Position = Path.GetPointOnCurve(time);
+                Body.Position = SpawnInformation.Position + Path.GetPointOnCurve(time);
                 
                 // TODO: The way rotation is handled could be better.
-                rotation = Matrix.Invert(Matrix.CreateLookAt(Body.Position, Path.GetPointOnCurve(time + Speed), Vector3.Up)) * Matrix.CreateRotationY(MathHelper.Pi); // Note: 180 degrees turn maybe not necessary in the future
+                Vector3 lookAt = SpawnInformation.Position + Path.GetPointOnCurve(time + Speed);
+                lookAt.Y = Body.Position.Y;
+                rotation = Matrix.Invert(Matrix.CreateLookAt(Body.Position, lookAt, Vector3.Up)) * Matrix.CreateRotationY(MathHelper.Pi); // Note: 180 degrees turn maybe not necessary in the future
                 rotation.Translation = Vector3.Zero;                
             }
 

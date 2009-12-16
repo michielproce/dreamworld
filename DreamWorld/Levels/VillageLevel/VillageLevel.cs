@@ -32,21 +32,6 @@ namespace DreamWorld.Levels.VillageLevel
 
             Terrain = new Terrain("Village");
             AddEntity("terrain", Terrain);
-
-            Curve3D zeppelinPath = new Curve3D(CurveLoopType.Cycle);            
-            zeppelinPath.AddPoint(new Vector3(0, -350, -300));
-            zeppelinPath.AddPoint(new Vector3(500, -350, -900));
-            zeppelinPath.AddPoint(new Vector3(-500, -350, -600));
-            zeppelinPath.AddPoint(new Vector3(-300, -350, 0));
-            zeppelinPath.AddPoint(new Vector3(0, -350, -300));
-            zeppelinPath.SetTangents();
-
-            Zeppelin zeppelin = new Zeppelin
-            {
-                Path = zeppelinPath,
-                Speed = 1f
-            };
-            AddEntity("zeppelin", zeppelin);
         }
     }
 }

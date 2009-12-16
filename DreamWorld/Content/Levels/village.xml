@@ -29,6 +29,7 @@
         <Y>0.8</Y>
         <Z>0.8</Z>
       </Scale>
+      <Group>0</Group>
     </SpawnInformation>
     <SpawnInformation>
       <Name>casualHouse1</Name>
@@ -48,6 +49,27 @@
         <Y>0.1</Y>
         <Z>0.1</Z>
       </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity5</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.VillageZeppelin</TypeName>
+      <Position>
+        <X>142</X>
+        <Y>-374</Y>
+        <Z>1114</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+        <Z>1</Z>
+      </Scale>
+      <Group>0</Group>
     </SpawnInformation>
   </Spawns>
 </LevelInformation>

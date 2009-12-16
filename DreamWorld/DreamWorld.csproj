@@ -130,6 +130,7 @@
     <Compile Include="Levels\TestPuzzleLevel\Entities\TestElement.cs" />
     <Compile Include="Entities\Group.cs" />
     <Compile Include="Levels\TestPuzzleLevel\TestPuzzleLevel.cs" />
+    <Compile Include="Levels\VillageLevel\Entities\VillageZeppelin.cs" />
     <Compile Include="Levels\VillageLevel\Entities\WallEntrance.cs" />
     <Compile Include="Levels\VillageLevel\VillageLevel.cs" />
     <Compile Include="Rendering\Particles\ParticleSettings.cs" />
