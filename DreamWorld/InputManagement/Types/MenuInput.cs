@@ -41,7 +41,9 @@ namespace DreamWorld.InputManagement.Types
             {
                 return InputManager.Keyboard.NewlyPressed(Keys.Escape)
                      ||
-                    InputManager.GamePad.NewlyPressed(Buttons.B);
+                    InputManager.GamePad.NewlyPressed(Buttons.B)
+                     ||
+                    InputManager.GamePad.NewlyPressed(Buttons.Back);
             }
         }
 

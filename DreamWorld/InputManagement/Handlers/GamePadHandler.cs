@@ -6,7 +6,7 @@ namespace DreamWorld.InputManagement.Handlers
     public class GamePadHandler : InputHandler
     {
         public GamePadState State { get; private set; }
-        public GamePadState PreviousState { get; private set; }
+        private GamePadState PreviousState { get; set; }
 
         private Gesture Gesture;
 

@@ -18,10 +18,6 @@ namespace DreamWorld.InputManagement.Handlers
         public bool IgnoreReset { get; set; }
         private Point center;
 
-        public MouseHandler()
-        {
-        }
-
         public override void Initialize()
         {
             InputManager.Game.IsMouseVisible = false;
