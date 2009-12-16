@@ -174,15 +174,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Village\HouseMorwir.X">
-      <Name>HouseMorwir</Name>
+    <Compile Include="Models\Village\MorwirsHouse.X">
+      <Name>MorwirsHouse</Name>
       <Importer>XImporter</Importer>
       <Processor>DefaultModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Village\HouseCasual1.X">
-      <Name>HouseCasual1</Name>
+    <Compile Include="Models\Village\CasualHouse1.X">
+      <Name>CasualHouse1</Name>
       <Importer>XImporter</Importer>
       <Processor>DefaultModelProcessor</Processor>
     </Compile>
@@ -195,6 +195,13 @@
     </Compile>
     <Compile Include="Models\Village\WallEntrance.X">
       <Name>WallEntrance</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Village\CasualHouse2.X">
+      <Name>CasualHouse2</Name>
       <Importer>XImporter</Importer>
       <Processor>DefaultModelProcessor</Processor>
     </Compile>
