@@ -15,13 +15,13 @@
       <Name>morwirHouse</Name>
       <TypeName>DreamWorld.Levels.VillageLevel.Entities.MorwirsHouse</TypeName>
       <Position>
-        <X>400</X>
+        <X>300</X>
         <Y>-550</Y>
-        <Z>150</Z>
+        <Z>0</Z>
       </Position>
       <Rotation>
         <X>0</X>
-        <Y>-80</Y>
+        <Y>0</Y>
         <Z>0</Z>
       </Rotation>
       <Scale>
@@ -128,26 +128,6 @@
         <X>0.7</X>
         <Y>0.7</Y>
         <Z>0.7</Z>
-      </Scale>
-      <Group>0</Group>
-    </SpawnInformation>
-    <SpawnInformation>
-      <Name>entity9</Name>
-      <TypeName>DreamWorld.Levels.VillageLevel.Entities.CasualHouse2</TypeName>
-      <Position>
-        <X>-79</X>
-        <Y>-180</Y>
-        <Z>126</Z>
-      </Position>
-      <Rotation>
-        <X>0</X>
-        <Y>0</Y>
-        <Z>0</Z>
-      </Rotation>
-      <Scale>
-        <X>1</X>
-        <Y>1</Y>
-        <Z>1</Z>
       </Scale>
       <Group>0</Group>
     </SpawnInformation>
