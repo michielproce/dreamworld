@@ -99,7 +99,7 @@ namespace DreamWorld.Cameras
 
             if(inputManager.Debug.NewEntity)
             {
-                String name = "entity" + level.Entities.Count;
+                String name = "entity" + DateTime.Now.Ticks;
                 Vector3 spawnPosition = Position + RotatedDirection(new Vector3(0, 0, -50));                
                 spawnPosition.X = (float)Math.Round(spawnPosition.X);
                 spawnPosition.Y = (float)Math.Round(spawnPosition.Y);

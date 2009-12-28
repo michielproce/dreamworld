@@ -67,9 +67,10 @@
       <Name>village</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TerrainProcessor</Processor>
-      <ProcessorParameters_TerrainTextureFilename>sand.jpg</ProcessorParameters_TerrainTextureFilename>
+      <ProcessorParameters_TerrainTextureFilename>sand.png</ProcessorParameters_TerrainTextureFilename>
       <ProcessorParameters_TerrainBumpiness>550</ProcessorParameters_TerrainBumpiness>
       <ProcessorParameters_TerrainScale>7</ProcessorParameters_TerrainScale>
+      <ProcessorParameters_TexCoordScale>0.5</ProcessorParameters_TexCoordScale>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -221,6 +222,11 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="Models\Village\Well.X">
+      <Name>Well</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
     <Compile Include="Models\Global\Player.x">
       <Name>Player</Name>
       <Importer>XImporter</Importer>

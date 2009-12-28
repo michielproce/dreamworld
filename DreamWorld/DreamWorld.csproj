@@ -132,6 +132,7 @@
     <Compile Include="Levels\TestPuzzleLevel\TestPuzzleLevel.cs" />
     <Compile Include="Levels\VillageLevel\Entities\VillageZeppelin.cs" />
     <Compile Include="Levels\VillageLevel\Entities\WallEntrance.cs" />
+    <Compile Include="Levels\VillageLevel\Entities\Well.cs" />
     <Compile Include="Levels\VillageLevel\VillageLevel.cs" />
     <Compile Include="Rendering\Particles\ParticleSettings.cs" />
     <Compile Include="Rendering\Particles\ParticleSystem.cs" />
