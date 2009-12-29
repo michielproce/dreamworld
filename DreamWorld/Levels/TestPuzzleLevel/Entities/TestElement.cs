@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Levels.TestPuzzleLevel.Entities
 {
-    class TestElement : Element
+    class TestElement : Entity
     {
         public static bool ListInEditor = true;
 
@@ -14,6 +14,7 @@ namespace DreamWorld.Levels.TestPuzzleLevel.Entities
 
             base.LoadContent();
         }
+
         /// <summary>
         /// Creates all needed object information for the JigLibX physics simulator.
         /// </summary>

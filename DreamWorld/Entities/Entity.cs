@@ -14,18 +14,35 @@ namespace DreamWorld.Entities
 {
     public abstract class Entity
     {
+        public Group Group
+        {
+            get { return _group; }
+            internal set
+            {
+                if (_group != null)
+                    _group.RemoveEntity(Name);
+
+                _group = value;
+                if (_group != null)
+                    _group.AddEntity(Name, this);
+            }
+        }
+
+        private Group _group;
+
         protected GameScreen GameScreen {get; private set; }
-        protected ContentManager Content { get; private set; }
+        private ContentManager Content { get; set; }
         protected GraphicsDevice GraphicsDevice { get; private set; }        
         protected Level Level { get; private set; }
 
         public SpawnInformation SpawnInformation { get; set; }
+        public string Name { get; set; }
         public Vector3 Scale { get; set; }
-        public Body Body { get; protected set; }
-        public CollisionSkin Skin { get; protected set; }
+        public Body Body { get; private set; }
+        public CollisionSkin Skin { get; private set; }
         public Vector3 CenterOfMass;
         
-        public Matrix World { get; protected set; }
+        public Matrix World { get; private set; }
         
         public Model Model { get; protected set; }
 
@@ -41,7 +58,7 @@ namespace DreamWorld.Entities
         protected bool initialized;
 
         protected Entity()
-        {            
+        {
             GameScreen = GameScreen.Instance;
             Level = GameScreen.Level;
             Content = GameScreen.Content;
@@ -53,8 +70,21 @@ namespace DreamWorld.Entities
             sounds = new List<SoundEffect3D>();
         }
 
+        ~Entity()
+        {
+            DisablePhysics();
+        } 
+
+        public void DisablePhysics()
+        {
+            DreamWorldPhysicsSystem.CurrentPhysicsSystem.RemoveBody(Body);
+        }
+
         public virtual void Initialize()
         {
+            if (SpawnInformation != null)
+                Scale = SpawnInformation.Scale;
+
             Body body;
             CollisionSkin skin;
             Vector3 centerOfMass;
@@ -67,10 +97,24 @@ namespace DreamWorld.Entities
             foreach (SoundEffect3D sound in sounds)
                 sound.Initialize();
 
-            Spawn();
+            if (SpawnInformation != null)
+            {
+                Body.Position = SpawnInformation.Position;
+                Body.Orientation = Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(SpawnInformation.Rotation.Y),
+                                                                 MathHelper.ToRadians(SpawnInformation.Rotation.X),
+                                                                 MathHelper.ToRadians(SpawnInformation.Rotation.Z));
+            }
 
             LoadContent();
             initialized = true;
+        }
+
+        public void Spawn()
+        {
+            Group = Level.GetGroup(SpawnInformation != null ? SpawnInformation.Group : 0);
+
+            if (this is GroupCenter)
+                Group.Center = this as GroupCenter;
         }
 
         protected virtual void LoadContent()
@@ -118,7 +162,21 @@ namespace DreamWorld.Entities
                sound.Update(gameTime);
            }
 
-            Animation.Update(gameTime);
+           Animation.Update(gameTime);
+
+           if (!Group.AllowedRotations.Equals(Vector3.Zero) && Group.Center != null)
+           {
+               // Move the entity's origin to the world's origin
+               Vector3 groupOffset = Group.Center.Body.Position;
+               Body.Position -= groupOffset;
+
+               // Rotate the entity (around the world's origin)
+               Body.Orientation *= Matrix.CreateFromQuaternion(Group.RotationSinceLastUpdate);
+               Body.Position = Vector3.Transform(Body.Position, Group.RotationSinceLastUpdate);
+
+               // Move the entity's origin back
+               Body.Position += groupOffset;
+           }
         }
 
         protected virtual Matrix GenerateWorldMatrix()
@@ -164,19 +222,16 @@ namespace DreamWorld.Entities
         {
             sounds.Add(sound);
             if(initialized)
-                sound.Initialize();   
+                sound.Initialize();
         }
-        
-        public void Spawn()
+
+        public static Entity CreateFromSpawnInfo(SpawnInformation spawn)
         {
-            if (SpawnInformation != null)
-            {
-                Body.Position = SpawnInformation.Position;
-                Body.Orientation = Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(SpawnInformation.Rotation.Y),
-                                                                 MathHelper.ToRadians(SpawnInformation.Rotation.X),
-                                                                 MathHelper.ToRadians(SpawnInformation.Rotation.Z));
-                Scale = SpawnInformation.Scale;
-            }
+            Type t = Type.GetType(spawn.TypeName);
+            Entity entity = (Entity)Activator.CreateInstance(t);
+            entity.SpawnInformation = spawn;
+            entity.Name = spawn.Name;
+            return entity;
         }
     }
 }

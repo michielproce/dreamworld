@@ -94,6 +94,7 @@
     <Compile Include="Entities\Animation.cs" />
     <Compile Include="Entities\Global\PlaceHolder.cs" />
     <Compile Include="Entities\Global\Zeppelin.cs" />
+    <Compile Include="Entities\GroupCenter.cs" />
     <Compile Include="Entities\HeightMapInfo.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\Skybox.cs" />
@@ -126,7 +127,6 @@
     <Compile Include="Levels\VillageLevel\Entities\MorwirsHouse.cs" />
     <Compile Include="Levels\VillageLevel\Entities\TestEntity.cs" />
     <Compile Include="Levels\PuzzleLevel.cs" />
-    <Compile Include="Entities\Element.cs" />
     <Compile Include="Levels\TestPuzzleLevel\Entities\TestElement.cs" />
     <Compile Include="Entities\Group.cs" />
     <Compile Include="Levels\TestPuzzleLevel\TestPuzzleLevel.cs" />

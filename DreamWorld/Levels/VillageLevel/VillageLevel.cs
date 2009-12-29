@@ -1,9 +1,4 @@
-﻿using System;
-using DreamWorld.Entities;
-using DreamWorld.Entities.Global;
-using DreamWorld.Levels.VillageLevel.Entities;
-using DreamWorld.Util;
-using Microsoft.Xna.Framework;
+﻿using DreamWorld.Entities;
 using Microsoft.Xna.Framework.Media;
 
 namespace DreamWorld.Levels.VillageLevel
@@ -17,8 +12,7 @@ namespace DreamWorld.Levels.VillageLevel
 
         public override void Initialize()
         {
-            Skybox = new Skybox("Village");
-            AddEntity("skybox", Skybox);
+            Skybox = new Skybox("Village") { Name = "Skybox" };
 
             Song ambient = GameScreen.Content.Load<Song>(@"Audio\Ambient\Village");
             MediaPlayer.Play(ambient);
@@ -29,9 +23,8 @@ namespace DreamWorld.Levels.VillageLevel
 
         protected override void InitializeSpecialEntities()
         {
-
-            Terrain = new Terrain("Village");
-            AddEntity("terrain", Terrain);
+            Terrain = new Terrain("Village") { Name = "Terrain" };
+            Terrain.Spawn();
         }
     }
 }

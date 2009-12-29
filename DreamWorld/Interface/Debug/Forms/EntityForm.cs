@@ -53,6 +53,7 @@ namespace DreamWorld.Interface.Debug.Forms
             }
 
             entityName.Text = Entity.SpawnInformation.Name;
+            group.Text = Entity.SpawnInformation.Group.ToString();
 
             positionX.Text = Entity.SpawnInformation.Position.X.ToString();
             positionY.Text = Entity.SpawnInformation.Position.Y.ToString();
@@ -77,7 +78,7 @@ namespace DreamWorld.Interface.Debug.Forms
                 Type subType = type;
                 while (subType != typeof(object))
                 {
-                    if (subType == (isPuzzleLevel ? typeof(Element) : typeof(Entity)) && type.GetField("ListInEditor") != null)
+                    if (subType == typeof(Entity) && type.GetField("ListInEditor") != null)
                     {                                                                       
                         entityTypeNames.Add(type.Namespace + "." + type.Name);
                         break;
@@ -109,18 +110,12 @@ namespace DreamWorld.Interface.Debug.Forms
             if (lastEntityTypeSelected != entityTypes.SelectedIndex)
             {
                 Entity.SpawnInformation.TypeName = entityTypes.Items[entityTypes.SelectedIndex].ToString();
-
-                Level.RemoveEntity(Entity.SpawnInformation.Name);
-                Entity = Level.CreateEntity(Entity.SpawnInformation);
-                Level.AddEntity(Entity.SpawnInformation.Name, Entity);
-
                 lastEntityTypeSelected = entityTypes.SelectedIndex;
                 changed = true;
             }
 
             if(!Entity.SpawnInformation.Name.Equals(entityName.Text))
             {
-                Level.RenameEntity(Entity.SpawnInformation.Name, entityName.Text);
                 Entity.SpawnInformation.Name = entityName.Text;
                 changed = true;
             }
@@ -157,7 +152,12 @@ namespace DreamWorld.Interface.Debug.Forms
             
             if (changed)
             {
+                // TODO: update it in stead of removing + adding
+                Entity.Group = null; // Remove it from the group's list
+                Entity = Entity.CreateFromSpawnInfo(Entity.SpawnInformation);
+                Entity.Initialize();
                 Entity.Spawn();
+
                 LevelInformation.Save(Level.LevelInformation,
                                      Level.LevelInformationFileName);        
             }            
@@ -169,7 +169,7 @@ namespace DreamWorld.Interface.Debug.Forms
         {
             if (MessageBox.Show("Are you sure?", "Confirm delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                Level.RemoveEntity(Entity.SpawnInformation.Name);
+                Entity.Group = null; // Remove it from the group's list
                 Level.LevelInformation.Remove(Entity.SpawnInformation.Name);
                 LevelInformation.Save(Level.LevelInformation,
                                       Level.LevelInformationFileName);        

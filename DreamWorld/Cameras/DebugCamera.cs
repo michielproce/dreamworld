@@ -71,23 +71,27 @@ namespace DreamWorld.Cameras
                     bool collisionDetected = false;
                     Entity selectedEntity = null;
                     Ray cameraRay = new Ray(Position, Direction);
-                    foreach (KeyValuePair<string, Entity> pair in GameScreen.Instance.Level.Entities)
-                    {                       
-                        if (pair.Value.SpawnInformation == null) // No spawninfo == special object
-                            continue;
-                        foreach (ModelMesh mesh in pair.Value.Model.Meshes)
+                    foreach (Group group in GameScreen.Instance.Level.Groups.Values)
+                    {
+                        foreach (Entity entity in group.Entities.Values)
                         {
-                            List<Vector3[]> triangles = TriangleFinder.find(mesh, pair.Value.World);
-                            foreach (Vector3[] triangle in triangles)
+                            if (entity.SpawnInformation == null) // No spawninfo == special object
+                                continue;
+
+                            foreach (ModelMesh mesh in entity.Model.Meshes)
                             {
-                                if (Collision.RayTriangleIntersect(cameraRay, triangle, out distance))
+                                List<Vector3[]> triangles = TriangleFinder.find(mesh, entity.World);
+                                foreach (Vector3[] triangle in triangles)
                                 {
-                                    if(distance < closestDistance)
+                                    if (Collision.RayTriangleIntersect(cameraRay, triangle, out distance))
                                     {
-                                        selectedEntity = pair.Value;
-                                        collisionDetected = true;
-                                        closestDistance = distance;
-                                    }                                                                        
+                                        if(distance < closestDistance)
+                                        {
+                                            selectedEntity = entity;
+                                            collisionDetected = true;
+                                            closestDistance = distance;
+                                        }                                                                        
+                                    }
                                 }
                             }
                         }
@@ -112,10 +116,9 @@ namespace DreamWorld.Cameras
                          Position = spawnPosition
                      };
 
-                PlaceHolder placeHolder = new PlaceHolder {
-                    SpawnInformation = spawn
-                };
-                level.AddEntity(name, placeHolder);
+                Entity placeHolder = Entity.CreateFromSpawnInfo(spawn);
+                placeHolder.Initialize();
+                placeHolder.Spawn();
                 level.LevelInformation.Spawns.Add(spawn);
                 LevelInformation.Save(level.LevelInformation,
                                       level.LevelInformationFileName);

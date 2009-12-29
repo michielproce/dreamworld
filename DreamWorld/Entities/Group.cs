@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using DreamWorld.ScreenManagement.Screens;
 using JigLibX.Collision;
 using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Entities
 {
-    public class Group : Entity
+    public class Group 
     {
-        private List<Element> Elements { get; set; }
-        internal List<CollisionSkin> ignoreCollisionSkins;
+        private GameScreen GameScreen;
+
+        public Dictionary<string, Entity> Entities { get; private set; }
+        public GroupCenter Center;
+        public Vector3 AllowedRotations;
+        internal List<CollisionSkin> IgnoreCollisionSkins;
 
         private float AmountRotated;
         private Quaternion OriginalRotation { get; set; }
@@ -31,50 +36,58 @@ namespace DreamWorld.Entities
             }
         }
 
+        public bool IsColliding
+        {
+            get
+            {
+                foreach (Entity entity in Entities.Values)
+                {
+                    for (int i = 0; i <= entity.Skin.Collisions.Count - 1; i++)
+                    {
+                        if (!IgnoreCollisionSkins.Contains(entity.Skin.Collisions[i].SkinInfo.Skin0) || !IgnoreCollisionSkins.Contains(entity.Skin.Collisions[i].SkinInfo.Skin1))
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        }
+
         public Quaternion RotationSinceLastUpdate { get; private set; }
 
-        internal const float RotationSpeed = 0.05f;
-
+        private const float RotationSpeed = 0.05f;
 
         public Group()
         {
-            Elements = new List<Element>();
-            ignoreCollisionSkins = new List<CollisionSkin>();
+            GameScreen = GameScreen.Instance;
+            Entities = new Dictionary<string, Entity>();
+            IgnoreCollisionSkins = new List<CollisionSkin> {GameScreen.Level.Player.Skin};
             OriginalRotation = Quaternion.Identity;
             TargetRotation = Quaternion.Identity;
+            AllowedRotations = Vector3.One;
         }
 
-        public override void Initialize()
+        public void Initialize()
         {
-
-            foreach (Element element in Elements)
+            foreach (Entity entity in Entities.Values)
             {
-                element.Initialize();
+                entity.Initialize();
 
-                if (element.Skin != null)
-                    ignoreCollisionSkins.Add(element.Skin);
+                if (entity.Skin != null && !IgnoreCollisionSkins.Contains(entity.Skin))
+                    IgnoreCollisionSkins.Add(entity.Skin);
             }
-
-            base.Initialize();
         }
 
-        protected override void LoadContent()
-        {
-
-        }
-
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             Quaternion oldRotation = Rotation;
 
             if (IsRotating)
             {
-                if (isColliding())
+                if (IsColliding)
                 {
-                    Quaternion temp = OriginalRotation;
-                    OriginalRotation = TargetRotation;
-                    TargetRotation = temp;
-                    AmountRotated = 1 - AmountRotated;
+                    CancelRotation();
                 }
 
                 AmountRotated += RotationSpeed;
@@ -88,68 +101,91 @@ namespace DreamWorld.Entities
 
             RotationSinceLastUpdate = Quaternion.Concatenate(Quaternion.Inverse(oldRotation), Rotation);
 
-            foreach (Element element in Elements)
+            foreach (Entity entity in Entities.Values)
             {
-                element.Update(gameTime);
+                entity.Update(gameTime);
             }
-
-            base.Update(gameTime);
         }
 
-        private bool isColliding()
+        public void Draw(GameTime gameTime, string technique)
         {
-            foreach (Element element in Elements)
-            {
-                for (int i = 0; i <= element.Skin.Collisions.Count - 1; i++)
-                {
-                    if (!ignoreCollisionSkins.Contains(element.Skin.Collisions[i].SkinInfo.Skin0) || !ignoreCollisionSkins.Contains(element.Skin.Collisions[i].SkinInfo.Skin1))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        public override void Draw(GameTime gameTime, string technique)
-        {
-            foreach (Element element in Elements)
+            foreach (Entity entity in Entities.Values)
             {
                 if(technique == "EdgeDetection")
                 {
-                    element.Draw(gameTime, !element.IgnoreEdgeDetection ? "NormalDepth" : "IgnoreNormalDepth");
+                    entity.Draw(gameTime, !entity.IgnoreEdgeDetection ? "NormalDepth" : "IgnoreNormalDepth");
                 } 
                 else
                 {
-                    element.Draw(gameTime, technique);
+                    entity.Draw(gameTime, technique);
                 }
             }
         }
 
-        public void AddElement(Element element)
+        /// <summary>
+        /// This function will be called by Entity
+        /// Simply set Entity.Group to change the group.
+        /// </summary>
+        public void AddEntity(string name, Entity entity)
         {
-            element.Group = this;
-            Elements.Add(element);
-            if (initialized && element.Skin != null)
-                ignoreCollisionSkins.Add(element.Skin);
+            if (Entities.ContainsKey(name))
+                throw new InvalidOperationException("Entity " + name + " already exists");
+
+            Entities.Add(name, entity);
+
+            if (entity.Skin != null)
+                IgnoreCollisionSkins.Add(entity.Skin);
+        }
+
+        /// <summary>
+        /// This function will be called by Entity
+        /// Simply set Entity.Group to null to remove it
+        /// </summary>
+        public void RemoveEntity(string name)
+        {
+            if (!Entities.ContainsKey(name))
+                throw new InvalidOperationException("Entity " + name + " doesn't exist");
+            Entities[name].DisablePhysics();
+            Entities.Remove(name);
         }
 
         public void Rotate(Vector3 direction)
         {
-            if(!IsRotating)
-            {
-                direction = Vector3.Normalize(direction) * MathHelper.PiOver2;
+            if (IsRotating) 
+                return;
 
-                if (IsRotating)
-                {
-                    OriginalRotation = Quaternion.Lerp(OriginalRotation, TargetRotation, AmountRotated);
-                    AmountRotated = 0;
-                }
+            direction = Vector3.Normalize(direction) * MathHelper.PiOver2;
 
-                TargetRotation = Quaternion.Concatenate(
-                    TargetRotation,
-                    Quaternion.CreateFromYawPitchRoll(direction.Y, direction.X, direction.Z));
-            }
+//            TODO: multiple rotations at the same time
+//            if (IsRotating)
+//            {
+//                OriginalRotation = Quaternion.Lerp(OriginalRotation, TargetRotation, AmountRotated);
+//                AmountRotated = 0;
+//            }
+
+            TargetRotation = Quaternion.Concatenate(
+                TargetRotation,
+                Quaternion.CreateFromYawPitchRoll(direction.Y, direction.X, direction.Z));
+        }
+
+        public void CancelRotation()
+        {
+            Quaternion temp = OriginalRotation;
+            OriginalRotation = TargetRotation;
+            TargetRotation = temp;
+            AmountRotated = 1 - AmountRotated;
+        }
+
+        public bool EntityNameExists(string name)
+        {
+            return Entities.ContainsKey(name);
+        }
+
+        public Entity FindEntity(string name)
+        {
+            if (!EntityNameExists(name))
+                throw new InvalidOperationException("Entity " + name + " doesn't exist");
+            return Entities[name];
         }
     }
 }

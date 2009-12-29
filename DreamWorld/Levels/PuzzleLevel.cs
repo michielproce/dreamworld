@@ -8,21 +8,6 @@ namespace DreamWorld.Levels
     public abstract class PuzzleLevel : Level
     {        
         private int SelectedGroup;
-        protected Group[] Groups;
-
-        public override void Initialize()
-        {
-            for (int i = 0; i < Groups.Length; i++)
-            {
-                AddEntity("Group"+i, Groups[i]);
-            }
-            base.Initialize();
-
-            for (int i = 0; i < Groups.Length; i++)
-            {
-                Groups[i].ignoreCollisionSkins.Add(GameScreen.Level.Player.Skin);
-            }
-        }
 
         public override void Update(GameTime gameTime)
         {
@@ -36,14 +21,25 @@ namespace DreamWorld.Levels
 
         private void HandleGroupSelection(int selection)
         {
-            SelectedGroup += selection;
-            if (SelectedGroup >= Groups.Length)
-            {
-                SelectedGroup -= Groups.Length;
-            }
-            else if (SelectedGroup < 0)
-            {
-                SelectedGroup += Groups.Length;
+            int[] keys = new int[Groups.Count];
+            Groups.Keys.CopyTo(keys, 0);
+
+            for (int tries = 0; tries < Groups.Count; tries++ )
+            {   // Keep looping untill we have found a group that is allowed to rotate
+                SelectedGroup += selection;
+                if (SelectedGroup >= keys.Length)
+                {
+                    SelectedGroup -= keys.Length;
+                }
+                else if (SelectedGroup < 0)
+                {
+                    SelectedGroup += keys.Length;
+                }
+
+                if (!Groups[keys[SelectedGroup]].AllowedRotations.Equals(Vector3.Zero))
+                {
+                    break;   
+                }
             }
         }
 
@@ -51,9 +47,13 @@ namespace DreamWorld.Levels
         {
             if (direction != Vector3.Zero)
             {
+                int[] keys = new int[Groups.Count];
+                Groups.Keys.CopyTo(keys, 0);
+                Group targetGroup = Groups[keys[SelectedGroup]];
+
                 if (direction.X == 0 && direction.Z == 0)
                 {
-                    Groups[0].Rotate(direction);
+                    targetGroup.Rotate(direction);
                 }
                 else
                 {
@@ -74,7 +74,7 @@ namespace DreamWorld.Levels
                         rotation = MathHelper.Pi;
                     }
 
-                    Groups[SelectedGroup].Rotate(Vector3.Transform(direction, Matrix.CreateRotationY(rotation)));
+                    targetGroup.Rotate(Vector3.Transform(direction, Matrix.CreateRotationY(rotation)));
                 }
             }
         }

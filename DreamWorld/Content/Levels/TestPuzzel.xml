@@ -2,7 +2,7 @@
 <LevelInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <PlayerStartPosition>
     <X>0</X>
-    <Y>0</Y>
+    <Y>50</Y>
     <Z>0</Z>
   </PlayerStartPosition>
   <PlayerStartRotation>
@@ -10,5 +10,106 @@
     <Y>0</Y>
     <Z>0</Z>
   </PlayerStartRotation>
-  <Spawns />
+  <Spawns>
+    <SpawnInformation>
+      <Name>ground</Name>
+      <TypeName>DreamWorld.Levels.TestPuzzleLevel.Entities.TestElement</TypeName>
+      <Position>
+        <X>0</X>
+        <Y>-45</Y>
+        <Z>0</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>100</X>
+        <Y>10</Y>
+        <Z>100</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity3</Name>
+      <TypeName>DreamWorld.Entities.GroupCenter</TypeName>
+      <Position>
+        <X>21</X>
+        <Y>14</Y>
+        <Z>-25</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+        <Z>1</Z>
+      </Scale>
+      <Group>1</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity1</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.TestEntity</TypeName>
+      <Position>
+        <X>1</X>
+        <Y>20</Y>
+        <Z>4</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+        <Z>1</Z>
+      </Scale>
+      <Group>1</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity2</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.TestEntity</TypeName>
+      <Position>
+        <X>0</X>
+        <Y>40</Y>
+        <Z>2</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+        <Z>1</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity4</Name>
+      <TypeName>DreamWorld.Entities.Global.PlaceHolder</TypeName>
+      <Position>
+        <X>5</X>
+        <Y>37</Y>
+        <Z>-7</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+        <Z>1</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+  </Spawns>
 </LevelInformation>
