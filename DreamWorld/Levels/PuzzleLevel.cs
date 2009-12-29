@@ -9,6 +9,12 @@ namespace DreamWorld.Levels
     {        
         private int SelectedGroup;
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            HandleGroupSelection(1);
+        }
+
         public override void Update(GameTime gameTime)
         {
             PlayerInput input = Game.InputManager.Player;
