@@ -27,6 +27,9 @@ namespace DreamWorld.Levels
 
         private void HandleGroupSelection(int selection)
         {
+            if(selection == 0)
+                return;
+
             int[] keys = new int[Groups.Count];
             Groups.Keys.CopyTo(keys, 0);
 

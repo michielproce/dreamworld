@@ -149,12 +149,24 @@ namespace DreamWorld.Entities
             Entities.Remove(name);
         }
 
+        /// <summary>
+        /// Returns true if this group is allowed to rotate in this direction
+        /// </summary>
+        public bool IsRotationAllowed(Vector3 direction)
+        {
+            return ((direction.X == 0 || AllowedRotations.X != 0) && (direction.Y == 0 || AllowedRotations.Y != 0)) && (direction.Z == 0 || AllowedRotations.Z != 0);
+        }
+
         public void Rotate(Vector3 direction)
         {
-            if (IsRotating) 
-                return;
-
+            // Clean up direction
+            direction.X = (direction.X < 0.1 && direction.X > -0.1 ? 0 : direction.X);
+            direction.Y = (direction.Y < 0.1 && direction.Y > -0.1 ? 0 : direction.Y);
+            direction.Z = (direction.Z < 0.1 && direction.Z > -0.1 ? 0 : direction.Z);
             direction = Vector3.Normalize(direction) * MathHelper.PiOver2;
+
+            if (IsRotating || !IsRotationAllowed(direction)) 
+                return;
 
 //            TODO: multiple rotations at the same time
 //            if (IsRotating)
