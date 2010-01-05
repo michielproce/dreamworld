@@ -22,14 +22,7 @@ namespace DreamWorld.Entities
 
         protected override void LoadContent()
         {
-            Model = GameScreen.Content.Load<Model>(@"Models\Skyboxes\" + skybox);
-            foreach (ModelMesh mesh in Model.Meshes)
-            {
-                foreach (Effect effect in mesh.Effects)
-                {
-                    effect.Parameters["IgnoreSun"].SetValue(true);
-                }
-            }
+            Model = GameScreen.Content.Load<Model>(@"Models\Skyboxes\" + skybox);     
             base.LoadContent();
         }
 

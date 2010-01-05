@@ -13,18 +13,13 @@ namespace DreamWorld.Levels.VillageLevel
         public override void Initialize()
         {
             Skybox = new Skybox("Village") { Name = "Skybox" };
+            Terrain = new Terrain("Village") { Name = "Terrain" };
 
             Song ambient = GameScreen.Content.Load<Song>(@"Audio\Ambient\Village");
             MediaPlayer.Play(ambient);
             MediaPlayer.IsRepeating = true;
 
             base.Initialize();
-        }
-
-        protected override void InitializeSpecialEntities()
-        {
-            Terrain = new Terrain("Village") { Name = "Terrain" };
-            Terrain.Spawn();
         }
     }
 }

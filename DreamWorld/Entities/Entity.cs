@@ -164,7 +164,7 @@ namespace DreamWorld.Entities
 
            Animation.Update(gameTime);
 
-           if (!Group.AllowedRotations.Equals(Vector3.Zero) && Group.Center != null)
+           if (Group != null && !Group.AllowedRotations.Equals(Vector3.Zero) && Group.Center != null)
            {
                // Move the entity's origin to the world's origin
                Vector3 groupOffset = Group.Center.Body.Position;

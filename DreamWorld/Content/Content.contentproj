@@ -67,10 +67,13 @@
       <Name>village</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TerrainProcessor</Processor>
-      <ProcessorParameters_TerrainTextureFilename>sand.png</ProcessorParameters_TerrainTextureFilename>
       <ProcessorParameters_TerrainBumpiness>550</ProcessorParameters_TerrainBumpiness>
       <ProcessorParameters_TerrainScale>7</ProcessorParameters_TerrainScale>
       <ProcessorParameters_TexCoordScale>0.5</ProcessorParameters_TexCoordScale>
+      <ProcessorParameters_TerrainTextureFilename1>village_primary.png</ProcessorParameters_TerrainTextureFilename1>
+      <ProcessorParameters_TerrainTextureFilename2>village_secondary.png</ProcessorParameters_TerrainTextureFilename2>
+      <ProcessorParameters_WeightTexture2>1</ProcessorParameters_WeightTexture2>
+      <ProcessorParameters_WeightTexture1>2</ProcessorParameters_WeightTexture1>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +102,7 @@
       <Name>Village</Name>
       <Importer>XImporter</Importer>
       <Processor>DefaultModelProcessor</Processor>
+      <ProcessorParameters_EffectFile>Skybox.fx</ProcessorParameters_EffectFile>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -216,6 +220,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Effects\Terrain.fx">
+      <Name>Terrain</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Effects\Skybox.fx">
+      <Name>Skybox</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+    </Compile>
     <None Include="Levels\TestPuzzel.xml">
       <Name>TestPuzzel</Name>
       <Importer>XmlImporter</Importer>

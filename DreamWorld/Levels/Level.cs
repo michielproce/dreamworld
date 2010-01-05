@@ -43,6 +43,12 @@ namespace DreamWorld.Levels
             LevelInformation = LevelInformation.Load(LevelInformationFileName);
 
             Player = new Player { Name = "Player" };
+
+            if (Terrain != null)
+                Terrain.Initialize();
+            if (Skybox != null)
+                Skybox.Initialize();
+
             Player.Initialize();
             Player.Body.MoveTo(
                 LevelInformation.PlayerStartPosition, 
@@ -52,15 +58,11 @@ namespace DreamWorld.Levels
 
             GetGroup(0).AllowedRotations = Vector3.Zero;
 
-            if (Skybox != null) // This needs to be drawn first
-                Skybox.Spawn();
-
             foreach (SpawnInformation spawn in LevelInformation.Spawns)
             {
                 Entity entity = Entity.CreateFromSpawnInfo(spawn);
                 entity.Spawn();
             }
-            InitializeSpecialEntities();
 
             foreach (Group group in Groups.Values)
                 group.Initialize();
@@ -121,6 +123,7 @@ namespace DreamWorld.Levels
 
         public virtual void Update(GameTime gameTime)
         {
+           
             foreach (Group group in Groups.Values)
                 group.Update(gameTime);
             foreach (ParticleSystem particleSystem in particleSystems.Values)
@@ -129,10 +132,18 @@ namespace DreamWorld.Levels
 
         public void Draw(GameTime gameTime)
         {
+            
             if (edgeDetection != null)
             {
                 edgeDetection.PrepareDraw();
                 edgeDetection.PrepareDrawNormalDepth();
+                
+                if (Skybox != null)
+                    Skybox.Draw(gameTime, "IgnoreNormalDepth");
+
+                if(Terrain != null)
+                    Terrain.Draw(gameTime, "IgnoreNormalDepth");
+                
                 foreach (Group group in Groups.Values)
                 {
                     foreach(Entity entity in group.Entities.Values)
@@ -141,8 +152,8 @@ namespace DreamWorld.Levels
                     }
                 }
 
-                edgeDetection.PrepareDrawDefault();
-                               
+                edgeDetection.PrepareDrawDefault();                
+
                 DrawEntities(gameTime);                
 
                 edgeDetection.Draw(gameTime);
@@ -151,6 +162,7 @@ namespace DreamWorld.Levels
             {
                 DrawEntities(gameTime);
             }
+            
 
             if(Game.Config.Particles)
                 foreach (ParticleSystem particleSystem in particleSystems.Values)
@@ -162,6 +174,10 @@ namespace DreamWorld.Levels
 
         private void DrawEntities(GameTime gameTime)
         {
+            if (Skybox != null)
+                Skybox.Draw(gameTime, "Skybox");
+            if (Terrain != null)
+                Terrain.Draw(gameTime, "Terrain");            
 
             foreach (Group group in Groups.Values)
             {
@@ -180,7 +196,6 @@ namespace DreamWorld.Levels
             }
         }
 
-        public abstract string LevelInformationFileName { get; }
-        protected virtual void InitializeSpecialEntities() {  }
+        public abstract string LevelInformationFileName { get; }        
     }
 }

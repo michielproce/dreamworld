@@ -40,14 +40,44 @@ namespace DreamWorldContentPipeline
             set { texCoordScale = value; }
         }
 
-        private string terrainTextureFilename = "rocks.bmp";
-        [DisplayName("Terrain Texture")]
-        [DefaultValue("rocks.bmp")]
-        [Description("The name of the terrain texture.")]
-        public string TerrainTextureFilename
+        private string terrainTextureFilename1 = "primary.bmp";
+        [DisplayName("Terrain Texture #1")]
+        [DefaultValue("primary.bmp")]
+        [Description("The name of the primary terrain texture.")]
+        public string TerrainTextureFilename1
         {
-            get { return terrainTextureFilename; }
-            set { terrainTextureFilename = value; }
+            get { return terrainTextureFilename1; }
+            set { terrainTextureFilename1 = value; }
+        }
+
+        private float weightTexture1 = 0.1f;
+        [DisplayName("Weight Texture #1")]
+        [DefaultValue(0.5f)]
+        [Description("The weight of the primary terrain texture.")]
+        public float WeightTexture1
+        {
+            get { return weightTexture1; }
+            set { weightTexture1 = value; }
+        }
+
+        private string terrainTextureFilename2 = "secondary.bmp";
+        [DisplayName("Terrain Texture #2")]
+        [DefaultValue("secondary.bmp")]
+        [Description("The name of the secondary terrain texture.")]
+        public string TerrainTextureFilename2
+        {
+            get { return terrainTextureFilename2; }
+            set { terrainTextureFilename2 = value; }
+        }
+
+        private float weightTexture2 = 0.1f;
+        [DisplayName("Weight Texture #2")]
+        [DefaultValue(0.5f)]
+        [Description("The weight of the secondary terrain texture.")]
+        public float WeightTexture2
+        {
+            get { return weightTexture2; }
+            set { weightTexture2 = value; }
         }
 
         public override ModelContent Process(Texture2DContent input,
@@ -80,13 +110,20 @@ namespace DreamWorldContentPipeline
 
             EffectMaterialContent material = new EffectMaterialContent();
 
-            string effectPath = Path.GetFullPath(@"Effects\Default.fx");
+            string effectPath = Path.GetFullPath(@"Effects\Terrain.fx");
             material.Effect = new ExternalReference<EffectContent>(effectPath);
 
-            material.OpaqueData.Add("TextureEnabled", true);
             string directory = Path.GetDirectoryName(input.Identity.SourceFilename);
-            string texture = Path.Combine(directory, terrainTextureFilename);            
-            material.Textures.Add("Texture", new ExternalReference<TextureContent>(texture));
+
+            float weightTotal = weightTexture1 + weightTexture2;
+
+            string texture1 = Path.Combine(directory, terrainTextureFilename1);            
+            material.Textures.Add("Texture1", new ExternalReference<TextureContent>(texture1));
+            material.OpaqueData.Add("WeightTexture1", weightTexture1 / weightTotal);
+
+            string texture2 = Path.Combine(directory, terrainTextureFilename2);
+            material.Textures.Add("Texture2", new ExternalReference<TextureContent>(texture2));
+            material.OpaqueData.Add("WeightTexture2", weightTexture2 / weightTotal);
 
             builder.SetMaterial(material);
 

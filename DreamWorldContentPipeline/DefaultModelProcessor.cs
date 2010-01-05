@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.IO;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
@@ -8,6 +9,16 @@ namespace DreamWorldContentPipeline
     [ContentProcessor(DisplayName = "Default Model Processor")]
     public class DefaultModelProcessor :ModelProcessor
     {
+        private string effectFile = "Default.fx";
+        [DisplayName("Effect File")]
+        [DefaultValue("Default.fx")]
+        [Description("The effect file to apply to this model.")]
+        public string EffectFile
+        {
+            get { return effectFile; }
+            set { effectFile = value; }
+        }
+
         public override ModelContent Process(NodeContent input,
                                      ContentProcessorContext context)
         {
@@ -24,14 +35,14 @@ namespace DreamWorldContentPipeline
             if (basicMaterial == null)
             {
                 throw new InvalidContentException(string.Format(
-                    "SkinnedModelProcessor only supports BasicMaterialContent, " +
+                    "DefaultModelProcessor only supports BasicMaterialContent, " +
                     "but input mesh uses {0}.", material.GetType()));
             }
 
             EffectMaterialContent effectMaterial = new EffectMaterialContent();
 
             // Store a reference to our skinned mesh effect.
-            string effectPath = Path.GetFullPath(@"Effects\Default.fx");
+            string effectPath = Path.GetFullPath(@"Effects\" + effectFile);
 
             effectMaterial.Effect = new ExternalReference<EffectContent>(effectPath);
 
