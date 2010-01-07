@@ -229,6 +229,21 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="Models\Puzzle\Level1\Platform.X">
+      <Name>Platform</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Puzzle\GroupCenter.X">
+      <Name>GroupCenter</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Puzzle\Level1\Stairs.X">
+      <Name>Stairs</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
     <Compile Include="Models\Village\Well.X">
       <Name>Well</Name>
       <Importer>XImporter</Importer>
@@ -239,6 +254,14 @@
       <Importer>XImporter</Importer>
       <Processor>SkinnedModelProcessor</Processor>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Levels\PuzzleLevel1.xml">
+      <Name>PuzzleLevel1</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Audio\Music\" />

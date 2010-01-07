@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DreamWorld.ScreenManagement.Screens;
 using JigLibX.Collision;
+using JigLibX.Physics;
 using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Entities
@@ -44,7 +45,8 @@ namespace DreamWorld.Entities
                 {
                     for (int i = 0; i <= entity.Skin.Collisions.Count - 1; i++)
                     {
-                        if (!IgnoreCollisionSkins.Contains(entity.Skin.Collisions[i].SkinInfo.Skin0) || !IgnoreCollisionSkins.Contains(entity.Skin.Collisions[i].SkinInfo.Skin1))
+                        if ((!IgnoreCollisionSkins.Contains(entity.Skin.Collisions[i].SkinInfo.Skin0) && entity.Skin.Collisions[i].SkinInfo.Skin0.Owner.Immovable) || 
+                            (!IgnoreCollisionSkins.Contains(entity.Skin.Collisions[i].SkinInfo.Skin1) && entity.Skin.Collisions[i].SkinInfo.Skin1.Owner.Immovable))
                         {
                             return true;
                         }
@@ -54,15 +56,13 @@ namespace DreamWorld.Entities
             }
         }
 
-        public Quaternion RotationSinceLastUpdate { get; private set; }
-
-        private const float RotationSpeed = 0.05f;
+        private const float RotationSpeed = 0.01f;
 
         public Group()
         {
             GameScreen = GameScreen.Instance;
             Entities = new Dictionary<string, Entity>();
-            IgnoreCollisionSkins = new List<CollisionSkin> {GameScreen.Level.Player.Skin};
+            IgnoreCollisionSkins = new List<CollisionSkin>();
             OriginalRotation = Quaternion.Identity;
             TargetRotation = Quaternion.Identity;
             AllowedRotations = Vector3.One;
@@ -97,14 +97,49 @@ namespace DreamWorld.Entities
                     OriginalRotation = TargetRotation;
                     AmountRotated = 0;
                 }
-            }
 
-            RotationSinceLastUpdate = Quaternion.Concatenate(Quaternion.Inverse(oldRotation), Rotation);
+                Quaternion rotationSinceLastUpdate = Quaternion.Concatenate(Quaternion.Inverse(oldRotation), Rotation);
+
+                if (Center != null && rotationSinceLastUpdate != Quaternion.Identity)
+                {
+                    foreach (Entity entity in Entities.Values)
+                    {
+                        RotateBody(entity.Body, rotationSinceLastUpdate, Center.Body.Position, true);
+
+                        // Rotate bodies that collide with this entity and are movable
+                        for (int i = 0; i <= entity.Skin.Collisions.Count - 1; i++)
+                        {
+                            CollisionSkin skin;
+                            if (entity.Skin == entity.Skin.Collisions[i].SkinInfo.Skin0)
+                                skin = entity.Skin.Collisions[i].SkinInfo.Skin1;
+                            else
+                                skin = entity.Skin.Collisions[i].SkinInfo.Skin0;
+
+                            if (!IgnoreCollisionSkins.Contains(skin) && !skin.Owner.Immovable)
+                                RotateBody(skin.Owner, rotationSinceLastUpdate, Center.Body.Position, false);
+                        }
+                    }
+                }
+            }
 
             foreach (Entity entity in Entities.Values)
             {
                 entity.Update(gameTime);
             }
+        }
+
+        private static void RotateBody(Body body, Quaternion rotation, Vector3 origin, bool changeOrientation)
+        {
+            // Move the group's origin to the world's origin
+            body.Position -= origin;
+
+            // Rotate the entity (around the world's origin)
+            if (changeOrientation)
+                body.Orientation *= Matrix.CreateFromQuaternion(rotation);
+            body.Position = Vector3.Transform(body.Position, rotation);
+
+            // Move the entity's origin back
+            body.Position += origin;
         }
 
         public void Draw(GameTime gameTime, string technique)

@@ -1,5 +1,5 @@
 using System;
-using DreamWorld.Levels.TestPuzzleLevel;
+using DreamWorld.Levels.PuzzleLevel1;
 using DreamWorld.Levels.VillageLevel;
 
 namespace DreamWorld.ScreenManagement.Screens
@@ -35,7 +35,7 @@ namespace DreamWorld.ScreenManagement.Screens
 
         void LoadGameMenuEntrySelected(object sender, EventArgs e)
         {
-            ScreenManager.AddScreen(new GameScreen(new TestPuzzleLevel()));
+            ScreenManager.AddScreen(new GameScreen(new PuzzleLevel1()));
             ExitScreen();
         }
 

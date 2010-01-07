@@ -35,6 +35,8 @@ namespace DreamWorld.Entities
 
             base.Initialize();
 
+            Body.Immovable = false;
+
             PutOnTerrain();
         }
 

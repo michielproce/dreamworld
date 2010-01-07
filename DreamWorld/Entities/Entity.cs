@@ -105,13 +105,15 @@ namespace DreamWorld.Entities
                                                                  MathHelper.ToRadians(SpawnInformation.Rotation.Z));
             }
 
+            Body.Immovable = true;
+
             LoadContent();
             initialized = true;
         }
 
         public void Spawn()
         {
-            Group = Level.GetGroup(SpawnInformation != null ? SpawnInformation.Group : 0);
+            Group = Level.GetGroup(SpawnInformation == null ? 0 : SpawnInformation.Group);
 
             if (this is GroupCenter)
                 Group.Center = this as GroupCenter;
@@ -154,8 +156,6 @@ namespace DreamWorld.Entities
 
         public virtual void Update(GameTime gameTime)
         {
-           World = GenerateWorldMatrix();
-
            foreach (SoundEffect3D sound in sounds)
            {
                sound.Emitter.Position = Body.Position;
@@ -163,20 +163,8 @@ namespace DreamWorld.Entities
            }
 
            Animation.Update(gameTime);
-
-           if (Group != null && !Group.AllowedRotations.Equals(Vector3.Zero) && Group.Center != null)
-           {
-               // Move the entity's origin to the world's origin
-               Vector3 groupOffset = Group.Center.Body.Position;
-               Body.Position -= groupOffset;
-
-               // Rotate the entity (around the world's origin)
-               Body.Orientation *= Matrix.CreateFromQuaternion(Group.RotationSinceLastUpdate);
-               Body.Position = Vector3.Transform(Body.Position, Group.RotationSinceLastUpdate);
-
-               // Move the entity's origin back
-               Body.Position += groupOffset;
-           }
+            
+           World = GenerateWorldMatrix();
         }
 
         protected virtual Matrix GenerateWorldMatrix()

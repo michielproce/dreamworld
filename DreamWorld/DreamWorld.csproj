@@ -121,7 +121,11 @@
     </Compile>
     <Compile Include="Levels\Level.cs" />
     <Compile Include="Levels\LevelInformation.cs" />
+    <Compile Include="Levels\PuzzleLevel1\Entities\Stairs.cs" />
+    <Compile Include="Levels\PuzzleLevel1\Entities\Platform.cs" />
+    <Compile Include="Levels\PuzzleLevel1\PuzzleLevel1.cs" />
     <Compile Include="Levels\SpawnInformation.cs" />
+    <Compile Include="Levels\PuzzleLevel1\Entities\Cow.cs" />
     <Compile Include="Levels\VillageLevel\Entities\CasualHouse1.cs" />
     <Compile Include="Levels\VillageLevel\Entities\CasualHouse2.cs" />
     <Compile Include="Levels\VillageLevel\Entities\MorwirsHouse.cs" />

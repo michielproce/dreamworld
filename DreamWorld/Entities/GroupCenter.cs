@@ -8,7 +8,9 @@ namespace DreamWorld.Entities
 
         protected override void LoadContent()
         {
-            Model = GameScreen.Content.Load<Model>(@"Models\Test\Test");
+            // Don't load a model if a deriving class already loaded one
+            if(Model == null)
+                Model = GameScreen.Content.Load<Model>(@"Models\Puzzle\GroupCenter");
 
             base.LoadContent();
         }
