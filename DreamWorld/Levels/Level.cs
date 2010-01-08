@@ -186,7 +186,7 @@ namespace DreamWorld.Levels
                     #if (DEBUG)
                     DebugCamera debugCamera = GameScreen.Camera as DebugCamera;
                     if (debugCamera != null && entity == debugCamera.Form.Entity)
-                        entity.Draw(gameTime, "DebugHighlight");
+                        entity.Draw(gameTime, "Highlight");
                     else
                         entity.Draw(gameTime, "Default");
                     #else
