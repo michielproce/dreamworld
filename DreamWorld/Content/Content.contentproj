@@ -264,6 +264,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Textures\Intro\FloatingKoalaGames.png">
+      <Name>FloatingKoalaGames</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Audio\Music\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
