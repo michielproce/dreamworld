@@ -1,66 +1,58 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.ScreenManagement.Screens
 {
-    public struct Resolution
+    internal class SettingsMenuScreen : MenuScreen
     {
-        public int Width;
-        public int Height;
-        public bool FullScreen;
+        private readonly MenuEntry antiAliasingEntry;
+        private readonly Config config;
+        private readonly MenuEntry exitMenuEntry;
 
-        public Resolution(int width, int height, bool fullScreen)
-        {
-            Width = width;
-            Height = height;
-            FullScreen = fullScreen;
-        }
-    }
-
-    class SettingsMenuScreen : MenuScreen
-    {
-        MenuEntry resolutionEntry;
-        MenuEntry exitMenuEntry;
-
-        private Resolution[] Resolutions;
-        private int selectedResolution;
+        private readonly MenuEntry fullscreenEntry;
+        private readonly MenuEntry resolutionEntry;
+        private readonly MenuEntry saveMenuEntry;
+        private readonly MenuEntry shadowsEntry;
+        private readonly MenuEntry verticalSyncEntry;
 
         public SettingsMenuScreen()
             : base("Settings")
         {
+            config = Config.Load();
 
             resolutionEntry = new MenuEntry("");
-            exitMenuEntry = new MenuEntry("Back");
+            fullscreenEntry = new MenuEntry("");
+            antiAliasingEntry = new MenuEntry("");
+            verticalSyncEntry = new MenuEntry("");
+            shadowsEntry = new MenuEntry("");
+            saveMenuEntry = new MenuEntry("Save");
+            exitMenuEntry = new MenuEntry("Cancel");
 
             resolutionEntry.Selected += ResolutionMenuEntrySelected;
+            fullscreenEntry.Selected += FullscreenMenuEntrySelected;
+            antiAliasingEntry.Selected += AntiAliasingMenuEntrySelected;
+            verticalSyncEntry.Selected += VerticalSyncMenuEntrySelected;
+            shadowsEntry.Selected += ShadowMenuEntrySelected;
+            saveMenuEntry.Selected += SaveMenuEntrySelected;
             exitMenuEntry.Selected += OnCancel;
 
             MenuEntries.Add(resolutionEntry);
+            MenuEntries.Add(fullscreenEntry);
+            MenuEntries.Add(antiAliasingEntry);
+            MenuEntries.Add(verticalSyncEntry);
+            MenuEntries.Add(shadowsEntry);
+            MenuEntries.Add(saveMenuEntry);
             MenuEntries.Add(exitMenuEntry);
         }
 
         public override void Initialize()
         {
-            Resolutions = new Resolution[]
-                              {
-                                  new Resolution(800, 600, false), 
-                                  new Resolution(800, 600, true), 
-                                  new Resolution(1024, 600, true), 
-                                  new Resolution(1024, 720, true), 
-                                  new Resolution(1280, 720, true), 
-                                  new Resolution(1280, 760, true), 
-                                  new Resolution(1280, 800, true)
-                              };
-
-            GraphicsDeviceManager GraphicsDeviceManager = ((DreamWorldGame)ScreenManager.Game).GraphicsDeviceManager;
-            
-            for (int i = 0; i < Resolutions.Length; i++ )
+            foreach (DisplayMode mode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
             {
-                if (Resolutions[i].Width == GraphicsDeviceManager.PreferredBackBufferWidth &&
-                    Resolutions[i].Height == GraphicsDeviceManager.PreferredBackBufferHeight &&
-                    Resolutions[i].FullScreen == GraphicsDeviceManager.IsFullScreen)
+                if (mode.Width == config.Width && mode.Height == config.Height)
                 {
-                    selectedResolution = i;
+                    config.Width = mode.Width;
+                    config.Height = mode.Height;
                     break;
                 }
             }
@@ -68,40 +60,84 @@ namespace DreamWorld.ScreenManagement.Screens
             SetMenuEntryText();
         }
 
-        void SetMenuEntryText()
+        private void SetMenuEntryText()
         {
-            resolutionEntry.Text = "Resolution: " + (Resolutions[selectedResolution].FullScreen ? "Fullscreen" : "Windowed") +" - "+ Resolutions[selectedResolution].Width + " x " + Resolutions[selectedResolution].Height;
+            resolutionEntry.Text = "Resolution: " + config.Width + " x " + config.Height;
+            fullscreenEntry.Text = config.Fullscreen ? "Fullscreen" : "Windowed";
+            antiAliasingEntry.Text = "Anti-aliasing: " + (config.AntiAliasing ? "On" : "Off");
+            verticalSyncEntry.Text = "Vertical synchronization: " + (config.VerticalSync ? "On" : "Off");
+            shadowsEntry.Text = "Shadows: " + (config.Shadows ? "On" : "Off");
         }
 
-        void ResolutionMenuEntrySelected(object sender, EventArgs e)
+        private void ResolutionMenuEntrySelected(object sender, EventArgs e)
         {
-            selectedResolution++;
-            if (selectedResolution == Resolutions.Length)
+            bool found = false;
+
+            foreach (DisplayMode mode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
             {
-                selectedResolution = 0;
+                if (found && (config.Width != mode.Width || config.Height != mode.Height))
+                {
+                    config.Width = mode.Width;
+                    config.Height = mode.Height;
+                    SetMenuEntryText();
+                    return;
+                }
+
+                if (config.Width == mode.Width && config.Height == mode.Height)
+                    found = true;
             }
 
+            // Not found? Select the first
+            foreach (DisplayMode mode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
+            {
+                config.Width = mode.Width;
+                config.Height = mode.Height;
+                return;
+            }
+        }
+
+        private void FullscreenMenuEntrySelected(object sender, EventArgs e)
+        {
+            config.Fullscreen = !config.Fullscreen;
             SetMenuEntryText();
+        }
+
+        private void AntiAliasingMenuEntrySelected(object sender, EventArgs e)
+        {
+            config.AntiAliasing = !config.AntiAliasing;
+            SetMenuEntryText();
+        }
+
+        private void VerticalSyncMenuEntrySelected(object sender, EventArgs e)
+        {
+            config.VerticalSync = !config.VerticalSync;
+            SetMenuEntryText();
+        }
+
+        private void ShadowMenuEntrySelected(object sender, EventArgs e)
+        {
+            config.Shadows = !config.Shadows;
+            SetMenuEntryText();
+        }
+
+        private void SaveMenuEntrySelected(object sender, EventArgs e)
+        {
+            Config.Save(config);
+
+            ((DreamWorldGame) ScreenManager.Game).ApplyConfig();
+
+            Exit();
         }
 
         protected override void OnCancel()
         {
-             GraphicsDeviceManager graphicsDeviceManager = ((DreamWorldGame)ScreenManager.Game).GraphicsDeviceManager;
-             
-            if (Resolutions[selectedResolution].Width != graphicsDeviceManager.PreferredBackBufferWidth ||
-                Resolutions[selectedResolution].Height != graphicsDeviceManager.PreferredBackBufferHeight ||
-                Resolutions[selectedResolution].FullScreen != graphicsDeviceManager.IsFullScreen)
-            {
-                graphicsDeviceManager.IsFullScreen = Resolutions[selectedResolution].FullScreen;
-                graphicsDeviceManager.PreferredBackBufferWidth = Resolutions[selectedResolution].Width;
-                graphicsDeviceManager.PreferredBackBufferHeight = Resolutions[selectedResolution].Height;
+            Exit();
+        }
 
-                graphicsDeviceManager.ApplyChanges();
-            }
-
+        private void Exit()
+        {
             ScreenManager.AddScreen(new MainMenuScreen());
             ExitScreen();
         }
-
     }
 }

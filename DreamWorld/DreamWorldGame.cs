@@ -1,4 +1,3 @@
-using System;
 using DreamWorld.InputManagement;
 using DreamWorld.Levels.VillageLevel;
 using DreamWorld.ScreenManagement;
@@ -14,7 +13,7 @@ namespace DreamWorld
         public Config Config { get; private set; }
         public InputManager InputManager { get; private set; }
         public ScreenManager ScreenManager { get; private set; }
-   
+
         public DreamWorldGame()
         {
             Content.RootDirectory = "Content";
@@ -36,13 +35,7 @@ namespace DreamWorld
             Config.Shadows = true;
 
             #else
-
-            Config = Config.Load();
-            GraphicsDeviceManager.PreferredBackBufferWidth = Config.Width;
-            GraphicsDeviceManager.PreferredBackBufferHeight = Config.Height;
-            GraphicsDeviceManager.IsFullScreen = Config.Fullscreen;
-            GraphicsDeviceManager.PreferMultiSampling = Config.AntiAliasing;
-            GraphicsDeviceManager.SynchronizeWithVerticalRetrace = Config.VerticalSync;
+            ApplyConfig();
             #endif
 
             ScreenManager = new ScreenManager(this);
@@ -51,6 +44,18 @@ namespace DreamWorld
             Components.Add(InputManager);
 
             ScreenManager.AddScreen(new FloatingKoalaGamesIntroScreen());
+        }
+
+        public void ApplyConfig()
+        {
+            Config = Config.Load();
+            GraphicsDeviceManager.PreferredBackBufferWidth = Config.Width;
+            GraphicsDeviceManager.PreferredBackBufferHeight = Config.Height;
+            GraphicsDeviceManager.IsFullScreen = Config.Fullscreen;
+            GraphicsDeviceManager.PreferMultiSampling = Config.AntiAliasing;
+            GraphicsDeviceManager.SynchronizeWithVerticalRetrace = Config.VerticalSync;
+            
+            GraphicsDeviceManager.ApplyChanges();
         }
     }
 }
