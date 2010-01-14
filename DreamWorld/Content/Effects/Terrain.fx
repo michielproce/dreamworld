@@ -3,12 +3,19 @@
  * PARAMETERS
  * ==========
  */
+#define MaxShadows 2 // Same in Terrain.cs
+#define ShadowIntensity .5 // 0.0-1.0
+
 float4x4 world;
 float4x4 view;
 float4x4 projection;
 
 float3 Ambient = .3;
 float3 Sun = float3(.5, -.5, 0);
+
+int NumberOfShadows = 0;
+float2 ShadowPositions[MaxShadows];
+float ShadowRadii[MaxShadows];
 
 texture Texture1;
 float WeightTexture1;
@@ -52,12 +59,12 @@ struct VS_OUTPUT
 	float4 Position : POSITION;
 	float2 TexCoords : TEXCOORD0;
 	float SunFactor : TEXCOORD1;
+	float2 hPos : TEXCOORD2;
 };
 
 VS_OUTPUT TerrainVertexShader(VS_INPUT input)
 {
-	VS_OUTPUT output;
-	
+	VS_OUTPUT output;	
 			
 	output.Position = mul(mul(mul(input.Position, world), view), projection);
 	
@@ -66,6 +73,8 @@ VS_OUTPUT TerrainVertexShader(VS_INPUT input)
 	output.SunFactor = saturate(dot(Normal, -Sun));
 	
 	output.TexCoords = input.TexCoords;
+
+	output.hPos = input.Position.xz;
 	
 	return output;
 }
@@ -81,7 +90,7 @@ struct PS_INPUT
 {
      float2 TexCoords : TEXCOORD0;
      float SunFactor: TEXCOORD1;
-
+	 float2 hPos : TEXCOORD2;
 };
 
 float4 TerrainPixelShader(PS_INPUT input) : COLOR0
@@ -91,6 +100,28 @@ float4 TerrainPixelShader(PS_INPUT input) : COLOR0
 	color += tex2D(Sampler2, input.TexCoords)  * WeightTexture2;
 			
     color.rgb *= saturate(input.SunFactor + Ambient);
+	
+	for(int i=0; i < NumberOfShadows; i++)
+	{
+		float2 pos = ShadowPositions[i];
+		float rad = ShadowRadii[i];
+		
+		if(abs(input.hPos.x - pos.x) < rad && 
+			abs(input.hPos.y - pos.y) < rad)
+		{
+			float2 dist = input.hPos - pos;
+			float lenSq = dist.x * dist.x + dist.y * dist.y;			
+			float radSq = rad * rad;
+			if(lenSq < radSq)
+			{
+				float weight = lenSq / radSq + (1 - ShadowIntensity);
+				if(weight < 1)
+					color *= weight;
+			}
+		}
+		
+
+	}
 
     return color;
 }

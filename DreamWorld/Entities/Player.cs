@@ -28,6 +28,7 @@ namespace DreamWorld.Entities
 
         public override void Initialize()
         {
+            Level.Terrain.AddShadowedEntity(this);
             inputManager = GameScreen.InputManager;
             Animation.InitialClip = "Idle";
             Animation.Speed = 1.0f;
