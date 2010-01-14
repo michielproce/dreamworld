@@ -50,14 +50,24 @@ namespace DreamWorldContentPipeline
             set { terrainTextureFilename1 = value; }
         }
 
-        private float weightTexture1 = 0.1f;
-        [DisplayName("Weight Texture #1")]
-        [DefaultValue(0.5f)]
-        [Description("The weight of the primary terrain texture.")]
-        public float WeightTexture1
+        private float transitionHeight = -300f;
+        [DisplayName("Transition Height")]
+        [DefaultValue(-300f)]
+        [Description("The height of the transition from primary texture to secondary texture.")]
+        public float TransitionHeight
         {
-            get { return weightTexture1; }
-            set { weightTexture1 = value; }
+            get { return transitionHeight; }
+            set { transitionHeight = value; }
+        }
+
+        private float transitionSmudge = 10f;
+        [DisplayName("Transition Smudge")]
+        [DefaultValue(10f)]
+        [Description("The height of the transition from primary texture to secondary texture")]
+        public float TransitionSmudge
+        {
+            get { return transitionSmudge; }
+            set { transitionSmudge = value; }
         }
 
         private string terrainTextureFilename2 = "secondary.bmp";
@@ -70,15 +80,7 @@ namespace DreamWorldContentPipeline
             set { terrainTextureFilename2 = value; }
         }
 
-        private float weightTexture2 = 0.1f;
-        [DisplayName("Weight Texture #2")]
-        [DefaultValue(0.5f)]
-        [Description("The weight of the secondary terrain texture.")]
-        public float WeightTexture2
-        {
-            get { return weightTexture2; }
-            set { weightTexture2 = value; }
-        }
+        
 
         public override ModelContent Process(Texture2DContent input,
                                              ContentProcessorContext context)
@@ -115,16 +117,16 @@ namespace DreamWorldContentPipeline
 
             string directory = Path.GetDirectoryName(input.Identity.SourceFilename);
 
-            float weightTotal = weightTexture1 + weightTexture2;
+            float weightTotal = transitionHeight + transitionSmudge;
 
-            string texture1 = Path.Combine(directory, terrainTextureFilename1);            
+            string texture1 = Path.Combine(directory, terrainTextureFilename1);
+            material.OpaqueData.Add("TransitionHeight", transitionHeight);
+            material.OpaqueData.Add("TransitionSmudge", transitionSmudge);
+
             material.Textures.Add("Texture1", new ExternalReference<TextureContent>(texture1));
-            material.OpaqueData.Add("WeightTexture1", weightTexture1 / weightTotal);
-
+           
             string texture2 = Path.Combine(directory, terrainTextureFilename2);
             material.Textures.Add("Texture2", new ExternalReference<TextureContent>(texture2));
-            material.OpaqueData.Add("WeightTexture2", weightTexture2 / weightTotal);
-
             builder.SetMaterial(material);
 
             // Create a vertex channel for holding texture coordinates.

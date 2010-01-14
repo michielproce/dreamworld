@@ -17,8 +17,10 @@ int NumberOfShadows = 0;
 float2 ShadowPositions[MaxShadows];
 float ShadowRadii[MaxShadows];
 
+float TransitionHeight;
+float TransitionSmudge;
+
 texture Texture1;
-float WeightTexture1;
 sampler Sampler1 = sampler_state
 {
 	Texture = (Texture1);
@@ -30,7 +32,6 @@ sampler Sampler1 = sampler_state
 };
 
 texture Texture2;
-float WeightTexture2;
 sampler Sampler2 = sampler_state
 {
 	Texture = (Texture2);
@@ -59,7 +60,7 @@ struct VS_OUTPUT
 	float4 Position : POSITION;
 	float2 TexCoords : TEXCOORD0;
 	float SunFactor : TEXCOORD1;
-	float2 hPos : TEXCOORD2;
+	float4 vPos : TEXCOORD2;
 };
 
 VS_OUTPUT TerrainVertexShader(VS_INPUT input)
@@ -74,7 +75,7 @@ VS_OUTPUT TerrainVertexShader(VS_INPUT input)
 	
 	output.TexCoords = input.TexCoords;
 
-	output.hPos = input.Position.xz;
+	output.vPos = input.Position;
 	
 	return output;
 }
@@ -90,14 +91,26 @@ struct PS_INPUT
 {
      float2 TexCoords : TEXCOORD0;
      float SunFactor: TEXCOORD1;
-	 float2 hPos : TEXCOORD2;
+	 float4 vPos : TEXCOORD2;
 };
 
 float4 TerrainPixelShader(PS_INPUT input) : COLOR0
 {
 	float4 color;
-	color = tex2D(Sampler1, input.TexCoords) * WeightTexture1;
-	color += tex2D(Sampler2, input.TexCoords)  * WeightTexture2;
+
+	float bottom = TransitionHeight - TransitionSmudge * .5;
+	float top = TransitionHeight + TransitionSmudge * .5;
+
+	if(input.vPos.y < bottom) 			
+		color = tex2D(Sampler1, input.TexCoords);	
+	else if(input.vPos.y > top) 		
+		color = tex2D(Sampler2, input.TexCoords);
+	else {
+		float weight = (input.vPos.y - bottom) / TransitionSmudge;
+		color = tex2D(Sampler1, input.TexCoords) * (1-weight);
+		color += tex2D(Sampler2, input.TexCoords) * weight; 
+	}
+	
 			
     color.rgb *= saturate(input.SunFactor + Ambient);
 	
@@ -106,10 +119,10 @@ float4 TerrainPixelShader(PS_INPUT input) : COLOR0
 		float2 pos = ShadowPositions[i];
 		float rad = ShadowRadii[i];
 		
-		if(abs(input.hPos.x - pos.x) < rad && 
-			abs(input.hPos.y - pos.y) < rad)
+		if(abs(input.vPos.x - pos.x) < rad && 
+			abs(input.vPos.y - pos.y) < rad)
 		{
-			float2 dist = input.hPos - pos;
+			float2 dist = input.vPos - pos;
 			float lenSq = dist.x * dist.x + dist.y * dist.y;			
 			float radSq = rad * rad;
 			if(lenSq < radSq)
