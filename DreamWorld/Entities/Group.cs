@@ -142,21 +142,6 @@ namespace DreamWorld.Entities
             body.Position += origin;
         }
 
-        public void Draw(GameTime gameTime, string technique)
-        {
-            foreach (Entity entity in Entities.Values)
-            {
-                if(technique == "EdgeDetection")
-                {
-                    entity.Draw(gameTime, !entity.IgnoreEdgeDetection ? "NormalDepth" : "IgnoreNormalDepth");
-                } 
-                else
-                {
-                    entity.Draw(gameTime, technique);
-                }
-            }
-        }
-
         /// <summary>
         /// This function will be called by Entity
         /// Simply set Entity.Group to change the group.

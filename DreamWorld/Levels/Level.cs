@@ -132,7 +132,6 @@ namespace DreamWorld.Levels
 
         public void Draw(GameTime gameTime)
         {
-            
             if (edgeDetection != null)
             {
                 edgeDetection.PrepareDraw();
@@ -187,10 +186,23 @@ namespace DreamWorld.Levels
                     DebugCamera debugCamera = GameScreen.Camera as DebugCamera;
                     if (debugCamera != null && entity == debugCamera.Form.Entity)
                         entity.Draw(gameTime, "Highlight");
-                    else
-                        entity.Draw(gameTime, "Default");
-                    #else
-                        entity.Draw(gameTime, "Default");
+                    else {
+                    #endif
+                        if (this is PuzzleLevel)
+                        {
+                            int[] keys = new int[Groups.Count];
+                            Groups.Keys.CopyTo(keys, 0);
+                            Group targetGroup = Groups[keys[((PuzzleLevel)this).SelectedGroup]];
+                            if (group == targetGroup)
+                                entity.Draw(gameTime, "Highlight");
+                            else
+                                entity.Draw(gameTime, "Default");
+                        }
+                        else {
+                            entity.Draw(gameTime, "Default");
+                        }
+                    #if (DEBUG)
+                    }
                     #endif
                 }
             }
