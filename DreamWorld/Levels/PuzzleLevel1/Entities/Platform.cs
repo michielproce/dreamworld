@@ -56,7 +56,7 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
             materialProperties.Elasticity = 0.25f;
 
             // Primitive:
-            box = new JigLibX.Geometry.Box(Vector3.Transform(new Vector3(0f, 0f, -10f), Matrix.CreateScale(Scale)),
+            box = new JigLibX.Geometry.Box(Vector3.Transform(new Vector3(-5f, 0f, -5f), Matrix.CreateScale(Scale)),
                 Matrix.CreateFromQuaternion(new Quaternion(0f, 0f, 0f, 0.9999999f)),
                 Vector3.Transform(new Vector3(10f, 2f, 10f), Matrix.CreateScale(Scale)));
 
@@ -73,7 +73,7 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
 
             // Sync Body & Skin
             body.MoveTo(Vector3.Zero, Matrix.Identity);
-            skin.ApplyLocalTransform(new JigLibX.Math.Transform(-centerOfMass, Matrix.CreateScale(1, 1, -1)));
+            skin.ApplyLocalTransform(new JigLibX.Math.Transform(Vector3.Zero, Matrix.CreateScale(1, 1, -1)));
 
             // Enable Body
             body.EnableBody();

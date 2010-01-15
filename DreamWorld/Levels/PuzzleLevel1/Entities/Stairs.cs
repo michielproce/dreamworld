@@ -102,7 +102,7 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
 
             // Sync Body & Skin
             body.MoveTo(Vector3.Zero, Matrix.Identity);
-            skin.ApplyLocalTransform(new JigLibX.Math.Transform(-centerOfMass, Matrix.CreateScale(1,1,-1)));
+            skin.ApplyLocalTransform(new JigLibX.Math.Transform(Vector3.Zero, Matrix.CreateScale(1,1,-1)));
 
             // Enable Body
             body.EnableBody();

@@ -78,7 +78,7 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
 
             // Sync Body & Skin
             body.MoveTo(Vector3.Zero, Matrix.Identity);
-            skin.ApplyLocalTransform(new JigLibX.Math.Transform(-centerOfMass, Matrix.Identity));
+            skin.ApplyLocalTransform(new JigLibX.Math.Transform(Vector3.Zero, Matrix.Identity));
 
             // Enable Body
             body.EnableBody();

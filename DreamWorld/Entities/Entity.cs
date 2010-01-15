@@ -171,7 +171,6 @@ namespace DreamWorld.Entities
         {
             return
                 Matrix.CreateScale(Scale) *
-                Matrix.CreateTranslation(-CenterOfMass) *
                 Body.Orientation *
                 Matrix.CreateTranslation(Body.Position);
         }
