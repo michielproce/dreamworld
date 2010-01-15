@@ -118,17 +118,17 @@ template MeshMaterialList {
 
 KeyValuePair {
  "Date";
- "2009-12-08 00:57:29";
+ "2010-01-15 13:21:23";
 }
 
 KeyValuePair {
  "File";
- "D:\\School\\CS4\\Game Design & Development\\Game\\3D frutsels\\Levels\\sphere2-18.max";
+ "C:\\Users\\Martijn\\Documents\\School\\Jaar 4\\Gaming & Simulatie\\Imagine Cup\\Dreamworld\\media\\models\\levelObjects\\puzzle\\GroupCenter.max";
 }
 
 KeyValuePair {
  "User";
- "Tuna";
+ "Martijn";
 }
 
 KeyValuePair {
