@@ -9,7 +9,7 @@ float4x4 world;
 float4x4 view;
 float4x4 projection;
 
-float3 Ambient = .3;
+float3 Ambient = 1;
 bool IgnoreSun;
 float3 Sun = float3(.5, -.5, 0);
 
@@ -145,7 +145,7 @@ float4 DefaultPixelShader(PS_INPUT input) : COLOR0
 	else 
 		color = DiffuseColor;
 		
-    color.rgb *= saturate(input.SunFactor + Ambient);
+    color.rgb *= saturate(input.SunFactor + Ambient * .3);
 
     return color;
 }
