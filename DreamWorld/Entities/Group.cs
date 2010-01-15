@@ -4,6 +4,7 @@ using DreamWorld.ScreenManagement.Screens;
 using JigLibX.Collision;
 using JigLibX.Physics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Entities
 {
@@ -17,6 +18,7 @@ namespace DreamWorld.Entities
         internal List<CollisionSkin> IgnoreCollisionSkins;
 
         private float AmountRotated;
+        public Color Color;
         private Quaternion OriginalRotation { get; set; }
         private Quaternion TargetRotation { get; set; }
         private Quaternion Rotation
@@ -66,6 +68,7 @@ namespace DreamWorld.Entities
             OriginalRotation = Quaternion.Identity;
             TargetRotation = Quaternion.Identity;
             AllowedRotations = Vector3.One;
+            Color = Color.White;
         }
 
         public void Initialize()

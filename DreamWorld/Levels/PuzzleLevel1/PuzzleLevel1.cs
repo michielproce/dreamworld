@@ -16,8 +16,8 @@ namespace DreamWorld.Levels.PuzzleLevel1
         {
             base.Initialize();
 
-            Group group1 = GetGroup(1);
-            Group group2 = GetGroup(2);
+            Group group1 = GetGroup(15);
+            Group group2 = GetGroup(16);
             Cow cow1 = new Cow { Name = "Cow1" };
             Cow cow2 = new Cow { Name = "Cow2" };
             cow1.Initialize();

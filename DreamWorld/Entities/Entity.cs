@@ -185,7 +185,9 @@ namespace DreamWorld.Entities
                     effect.CurrentTechnique = effect.Techniques[technique];
                     effect.Parameters["world"].SetValue(transforms[mesh.ParentBone.Index] * World);
                     effect.Parameters["view"].SetValue(GameScreen.Camera.View);
-                    effect.Parameters["projection"].SetValue(GameScreen.Camera.Projection);                    
+                    effect.Parameters["projection"].SetValue(GameScreen.Camera.Projection);
+                    if (Group != null)
+                        effect.Parameters["Ambient"].SetValue(Group.Color.ToVector3());
                     if(Animation.Loaded)                    
                         effect.Parameters["Bones"].SetValue(Animation.SkinTransforms);
                     

@@ -70,6 +70,11 @@ namespace DreamWorld.Levels
 
             Player.Respawn();
             Player.Group = GetGroup(0);
+
+            foreach(GroupColorInformation colorInfo in LevelInformation.GroupColors)
+            {
+                GetGroup(colorInfo.ID).Color = new Color(colorInfo.R, colorInfo.G, colorInfo.B);
+            }
             
             spriteBatch = new SpriteBatch(Game.GraphicsDevice);
             if(Game.Config.Bloom)
