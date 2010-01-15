@@ -118,17 +118,17 @@ template MeshMaterialList {
 
 KeyValuePair {
  "Date";
- "2010-01-05 16:15:35";
+ "2010-01-15 11:47:28";
 }
 
 KeyValuePair {
  "File";
- "D:\\School\\CS4\\Game Design & Development\\Game\\3D frutsels\\Levels\\platform10-10-2.max";
+ "C:\\Users\\Martijn\\Documents\\School\\Jaar 4\\Gaming & Simulatie\\Imagine Cup\\Dreamworld\\media\\models\\levelObjects\\platforms\\platform10-10-2.max";
 }
 
 KeyValuePair {
  "User";
- "Tuna";
+ "Martijn";
 }
 
 KeyValuePair {
@@ -140,7 +140,7 @@ Frame platform10_10_2 {
  
 
  FrameTransformMatrix relative {
-  1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,5.000000,0.000000,5.000000,1.000000;;
+  1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,0.000000,0.000000,0.000000,1.000000,0.000000,5.000000,0.000000,-5.000000,1.000000;;
  }
 
  ObjectMatrixComment object {
