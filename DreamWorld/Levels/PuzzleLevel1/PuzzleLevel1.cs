@@ -1,4 +1,5 @@
-﻿using DreamWorld.Entities;
+﻿using System;
+using DreamWorld.Entities;
 using DreamWorld.Levels.PuzzleLevel1.Entities;
 using Microsoft.Xna.Framework;
 
@@ -29,6 +30,11 @@ namespace DreamWorld.Levels.PuzzleLevel1
             group2.Center = cow1;
 
             GetGroup(3).AllowedRotations = Vector3.Up;
+        }
+
+        public override bool NeedsRespawn()
+        {
+            return Player.Body.Position.Y < -50;
         }
     }
 }

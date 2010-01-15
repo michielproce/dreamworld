@@ -22,9 +22,12 @@ namespace DreamWorld.Entities
 
         private PlayerState playerState = PlayerState.OnTerrain;
 
-        public readonly Vector3 CameraOffset = new Vector3(0,3,0);
+        public readonly Vector3 CameraOffset = new Vector3(0,10,0);
 
         private InputManager inputManager;
+
+        public Vector3 StartPosition;
+        public Matrix StartOrientation;
 
         public override void Initialize()
         {
@@ -138,6 +141,12 @@ namespace DreamWorld.Entities
             }
         }
 
+        public void Respawn()
+        {
+            jumpVelocity = 0;
+            Body.MoveTo(StartPosition, StartOrientation);
+        }
+
         protected override void GetPhysicsInformation(out JigLibX.Physics.Body body, out JigLibX.Collision.CollisionSkin skin, out Vector3 centerOfMass)
         {
             #region Header
@@ -197,7 +206,6 @@ namespace DreamWorld.Entities
             body.EnableBody();
             #endregion
         }
-
 
         // TODO: This is a hack for the rotated player model.
         // When the model is correct you can remove this entire method.

@@ -49,13 +49,6 @@ namespace DreamWorld.Levels
             if (Skybox != null)
                 Skybox.Initialize();
 
-            Player.Initialize();
-            Player.Body.MoveTo(
-                LevelInformation.PlayerStartPosition, 
-                Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(LevelInformation.PlayerStartRotation.Y),
-                                              MathHelper.ToRadians(LevelInformation.PlayerStartRotation.X),
-                                              MathHelper.ToRadians(LevelInformation.PlayerStartRotation.Z)));
-
             GetGroup(0).AllowedRotations = Vector3.Zero;
 
             foreach (SpawnInformation spawn in LevelInformation.Spawns)
@@ -69,6 +62,13 @@ namespace DreamWorld.Levels
             foreach (ParticleSystem particleSystem in particleSystems.Values)
                 particleSystem.Initialize();
 
+            Player.Initialize();
+            Player.StartPosition = LevelInformation.PlayerStartPosition;
+            Player.StartOrientation = Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(LevelInformation.PlayerStartRotation.Y),
+                                              MathHelper.ToRadians(LevelInformation.PlayerStartRotation.X),
+                                              MathHelper.ToRadians(LevelInformation.PlayerStartRotation.Z));
+
+            Player.Respawn();
             Player.Group = GetGroup(0);
             
             spriteBatch = new SpriteBatch(Game.GraphicsDevice);

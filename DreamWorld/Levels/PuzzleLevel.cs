@@ -22,6 +22,11 @@ namespace DreamWorld.Levels
             HandleGroupSelection(input.SelectGroup);
             HandleGroupRotation(input.RotateGroup);
 
+            if(NeedsRespawn())
+            {
+                Player.Respawn();
+            }
+
             base.Update(gameTime);
         }
 
@@ -86,6 +91,11 @@ namespace DreamWorld.Levels
                     targetGroup.Rotate(Vector3.Transform(direction, Matrix.CreateRotationY(rotation)));
                 }
             }
+        }
+
+        public virtual bool NeedsRespawn()
+        {
+            return false;
         }
     }
 }
