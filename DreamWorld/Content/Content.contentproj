@@ -69,11 +69,11 @@
       <Processor>TerrainProcessor</Processor>
       <ProcessorParameters_TerrainBumpiness>550</ProcessorParameters_TerrainBumpiness>
       <ProcessorParameters_TerrainScale>7</ProcessorParameters_TerrainScale>
-      <ProcessorParameters_TexCoordScale>0.5</ProcessorParameters_TexCoordScale>
       <ProcessorParameters_TerrainTextureFilename1>village_primary.png</ProcessorParameters_TerrainTextureFilename1>
       <ProcessorParameters_TerrainTextureFilename2>village_secondary.png</ProcessorParameters_TerrainTextureFilename2>
       <ProcessorParameters_TransitionHeight>-450</ProcessorParameters_TransitionHeight>
       <ProcessorParameters_TransitionSmudge>50</ProcessorParameters_TransitionSmudge>
+      <ProcessorParameters_TexCoordScale>0.04</ProcessorParameters_TexCoordScale>
     </Compile>
   </ItemGroup>
   <ItemGroup>
