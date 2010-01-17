@@ -186,18 +186,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Village\Wall.X">
-      <Name>Wall</Name>
-      <Importer>XImporter</Importer>
-      <Processor>DefaultModelProcessor</Processor>
-    </Compile>
-    <Compile Include="Models\Village\WallEntrance.X">
-      <Name>WallEntrance</Name>
-      <Importer>XImporter</Importer>
-      <Processor>DefaultModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Models\Village\CasualHouse2.X">
       <Name>CasualHouse2</Name>
       <Importer>XImporter</Importer>
@@ -262,6 +250,16 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="Models\Village\Can.X">
+      <Name>Can</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Village\Gate.X">
+      <Name>Gate</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Textures\Intro\FloatingKoalaGames.png">
