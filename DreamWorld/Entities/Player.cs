@@ -34,9 +34,9 @@ namespace DreamWorld.Entities
             if(Level.Terrain != null)
                 Level.Terrain.AddShadowedEntity(this);
             inputManager = GameScreen.InputManager;
-            Animation.InitialClip = "Idle";
+            Animation.InitialClip = "Standing";
             Animation.Speed = 1.0f;
-            Scale = new Vector3(.15f);
+            Scale = new Vector3(.12f);
 
             base.Initialize();
 
@@ -99,9 +99,9 @@ namespace DreamWorld.Entities
             if (playerState != PlayerState.Jumping)
             {
                 if (inputManager.Player.Movement.Length() != 0)
-                    Animation.StartClip("Run");
+                    Animation.StartClip("Running");
                 else
-                    Animation.StartClip("Idle");
+                    Animation.StartClip("Standing");
             }
 
 
@@ -110,7 +110,7 @@ namespace DreamWorld.Entities
 
         private void StartJumping()
         {
-            Animation.StartClip("Jump");
+            Animation.StartClip("Jumping");
             playerState = PlayerState.Jumping;
             jumpVelocity = jumpStart;
         }
@@ -213,7 +213,7 @@ namespace DreamWorld.Entities
         {
             return
                 Matrix.CreateScale(Scale) *
-                Body.Orientation * Matrix.CreateRotationY(-MathHelper.PiOver2)*
+                Body.Orientation * Matrix.CreateRotationY(MathHelper.Pi)*
                 Matrix.CreateTranslation(Body.Position);            
         }
     }

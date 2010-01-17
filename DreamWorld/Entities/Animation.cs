@@ -64,11 +64,7 @@ namespace DreamWorld.Entities
                 return;
 
             TimeSpan ts = gameTime.ElapsedGameTime;
-            ts = ts.Add(new TimeSpan((long) (ts.Ticks * Speed) - ts.Ticks));            
-            
-            // TODO: This if-statement is a hack for the less-then-one-second bug in kwxport
-            if ("Run".Equals(CurrentClip) && animationPlayer.CurrentTime.Milliseconds > 750)
-                    AdvanceAnimation(new TimeSpan(0, 0, 0, 0, 250));
+            ts = ts.Add(new TimeSpan((long) (ts.Ticks * Speed) - ts.Ticks));                        
 
             AdvanceAnimation(ts);
         }
