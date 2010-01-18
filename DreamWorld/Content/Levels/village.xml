@@ -211,5 +211,26 @@
       </Scale>
       <Group>0</Group>
     </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity633994093219461828</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.TrashCan</TypeName>
+      <Position>
+        <X>195</X>
+        <Y>-542</Y>
+        <Z>32</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+        <Z>1</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
   </Spawns>
+  <GroupColors />
 </LevelInformation>
