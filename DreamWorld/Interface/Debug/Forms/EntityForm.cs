@@ -5,8 +5,10 @@ using System.Windows.Forms;
 using DreamWorld.Cameras;
 using DreamWorld.Entities;
 using DreamWorld.Entities.Global;
+using DreamWorld.Helpers.Debug;
 using DreamWorld.Levels;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Interface.Debug.Forms
 {
@@ -183,6 +185,27 @@ namespace DreamWorld.Interface.Debug.Forms
         {
             Entity = null;
             DebugCamera.ToggleMouseLook(true);
+        }
+
+        private void snapToTerrain_Click(object sender, EventArgs e)
+        {
+            if(Level.Terrain == null)
+                return;
+
+            float min = float.MaxValue;
+            foreach (ModelMesh mesh in Entity.Model.Meshes)
+            {
+                List<Vector3[]> triangles = TriangleFinder.find(mesh, Entity.World);
+                foreach (Vector3[] triangle in triangles)
+                    foreach (Vector3 corner in triangle)
+                        if(corner.Y < min)                        
+                            min = corner.Y;
+            }
+            float diff = Entity.Body.Position.Y - min;            
+            float height = Level.Terrain.HeightMapInfo.GetHeight(Entity.Body.Position);                        
+            height -= diff;
+            positionY.Text = "" + height;
+            OKButton_Click(sender, e);
         }       
     }
 }

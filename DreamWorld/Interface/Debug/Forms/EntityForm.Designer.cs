@@ -57,6 +57,7 @@
             this.entityTypes = new System.Windows.Forms.ComboBox();
             this.groupLabel = new System.Windows.Forms.Label();
             this.group = new System.Windows.Forms.TextBox();
+            this.snapToTerrain = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -176,7 +177,7 @@
             // ApplyButton
             // 
             this.ApplyButton.AutoSize = true;
-            this.ApplyButton.Location = new System.Drawing.Point(150, 162);
+            this.ApplyButton.Location = new System.Drawing.Point(12, 164);
             this.ApplyButton.Name = "ApplyButton";
             this.ApplyButton.Size = new System.Drawing.Size(75, 23);
             this.ApplyButton.TabIndex = 12;
@@ -260,7 +261,7 @@
             // RemoveButton
             // 
             this.RemoveButton.AutoSize = true;
-            this.RemoveButton.Location = new System.Drawing.Point(231, 162);
+            this.RemoveButton.Location = new System.Drawing.Point(93, 164);
             this.RemoveButton.Name = "RemoveButton";
             this.RemoveButton.Size = new System.Drawing.Size(91, 23);
             this.RemoveButton.TabIndex = 13;
@@ -307,12 +308,23 @@
             this.group.Text = "0";
             this.group.Visible = false;
             // 
+            // snapToTerrain
+            // 
+            this.snapToTerrain.Location = new System.Drawing.Point(333, 164);
+            this.snapToTerrain.Name = "snapToTerrain";
+            this.snapToTerrain.Size = new System.Drawing.Size(87, 23);
+            this.snapToTerrain.TabIndex = 16;
+            this.snapToTerrain.Text = "Snap to terrain";
+            this.snapToTerrain.UseVisualStyleBackColor = true;
+            this.snapToTerrain.Click += new System.EventHandler(this.snapToTerrain_Click);
+            // 
             // EntityForm
             // 
             this.AcceptButton = this.ApplyButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(432, 196);
+            this.Controls.Add(this.snapToTerrain);
             this.Controls.Add(this.group);
             this.Controls.Add(this.groupLabel);
             this.Controls.Add(this.entityTypes);
@@ -386,5 +398,6 @@
         private System.Windows.Forms.ComboBox entityTypes;
         private System.Windows.Forms.Label groupLabel;
         private System.Windows.Forms.TextBox group;
+        private System.Windows.Forms.Button snapToTerrain;
     }
 }
