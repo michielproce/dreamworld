@@ -1,30 +1,38 @@
 using System;
 using DreamWorld.Levels.PuzzleLevel1;
 using DreamWorld.Levels.VillageLevel;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.ScreenManagement.Screens
 {
     class MainMenuScreen : MenuScreen
     {
         public MainMenuScreen()
-            : base("Mainmenu")
         {
-            MenuEntry newGameGameMenuEntry = new MenuEntry("VillageLevel");
-            MenuEntry loadGameGameMenuEntry = new MenuEntry("PuzzleLevel");
+            MenuEntry playGameMenuEntry = new MenuEntry("Play game");
             MenuEntry settingsMenuEntry = new MenuEntry("Settings");
             MenuEntry creditsMenuEntry = new MenuEntry("Credits");
-            MenuEntry exitMenuEntry = new MenuEntry("Exit");
+            MenuEntry quitMenuEntry = new MenuEntry("Quit");
+            MenuEntry puzzleLevelMenuEntry = new MenuEntry("PuzzleLevel");
 
-            newGameGameMenuEntry.Selected += PlayGameMenuEntrySelected;
-            loadGameGameMenuEntry.Selected += LoadGameMenuEntrySelected;
+            playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
             settingsMenuEntry.Selected += SettingsEntrySelected;
-            exitMenuEntry.Selected += OnCancel;
+            quitMenuEntry.Selected += OnCancel;
+            puzzleLevelMenuEntry.Selected += LoadGameMenuEntrySelected;
 
-            MenuEntries.Add(newGameGameMenuEntry);
-            MenuEntries.Add(loadGameGameMenuEntry);
+            MenuEntries.Add(playGameMenuEntry);
             MenuEntries.Add(settingsMenuEntry);
             MenuEntries.Add(creditsMenuEntry);
-            MenuEntries.Add(exitMenuEntry);
+            MenuEntries.Add(quitMenuEntry);
+            MenuEntries.Add(puzzleLevelMenuEntry);
+        }
+
+        protected override void LoadContent()
+        {
+            Background = Content.Load<Texture2D>(@"Textures/Menu/mainMenu");
+            Font = Content.Load<SpriteFont>(@"Fonts/mainMenu");
+            Font.Spacing *= 0.9f;
+            base.LoadContent();
         }
 
         void PlayGameMenuEntrySelected(object sender, EventArgs e)

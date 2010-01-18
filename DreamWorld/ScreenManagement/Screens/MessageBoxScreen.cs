@@ -23,8 +23,8 @@ namespace DreamWorld.ScreenManagement.Screens
 
         public MessageBoxScreen(string message, bool includeUsageText)
         {
-            const string usageText = "\nA button, Enter = yes" +
-                                     "\nB button, Esc = no";
+            const string usageText = "\nA button or Enter to accept" +
+                                     "\nB button or Esc to cancel";
 
             if (includeUsageText)
                 this.message = message + usageText;
@@ -70,13 +70,12 @@ namespace DreamWorld.ScreenManagement.Screens
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             SpriteFont font = ScreenManager.Font;
 
-            // Darken down any other screens that were drawn beneath the popup.
             ScreenManager.FadeBackBufferToBlack(TransitionAlpha * 2 / 3);
 
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
-            Vector2 viewportSize = new Vector2(viewport.Width, viewport.Height);
+            Vector2 defaultSize = new Vector2(1280, 800);
             Vector2 textSize = font.MeasureString(message);
-            Vector2 textPosition = (viewportSize - textSize) / 2;
+            Vector2 textPosition = (defaultSize - textSize) / 2;
 
             const int hPad = 32;
             const int vPad = 16;
@@ -88,7 +87,7 @@ namespace DreamWorld.ScreenManagement.Screens
 
             Color color = new Color(255, 255, 255, TransitionAlpha);
 
-            spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState);
+            spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState, Matrix.CreateScale((float)viewport.Width / 1280, (float)viewport.Height / 800, 1));
 
             spriteBatch.Draw(background, backgroundRectangle, color);
 

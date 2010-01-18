@@ -6,32 +6,27 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.ScreenManagement
 {
-
     abstract class MenuScreen : Screen
     {
+        protected Texture2D Background;
+        public SpriteFont Font;
+        public SpriteFont SmallFont;
 
-        List<MenuEntry> menuEntries = new List<MenuEntry>();
-        int selectedEntry = 0;
-        string menuTitle;
+        protected List<MenuEntry> MenuEntries { get; private set; }
+        internal int selectedEntry;
+        protected Vector2 menuPosition;
 
-
-        protected IList<MenuEntry> MenuEntries
+        protected MenuScreen()
         {
-            get { return menuEntries; }
-        }
-
-
-        public MenuScreen(string menuTitle)
-        {
-            this.menuTitle = menuTitle;
-
+            MenuEntries = new List<MenuEntry>();
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
+            menuPosition = new Vector2(100, 250);
         }
 
-        protected virtual void OnSelectEntry(int entryIndex)
+        private void OnSelectEntry()
         {
-            menuEntries[selectedEntry].OnSelectEntry();
+            MenuEntries[selectedEntry].OnSelectEntry();
         }
 
         protected virtual void OnCancel()
@@ -48,17 +43,16 @@ namespace DreamWorld.ScreenManagement
         {
             base.Update(gameTime);
 
-            for (int i = 0; i < menuEntries.Count; i++)
+            for (int i = 0; i < MenuEntries.Count; i++)
             {
                 bool isSelected = IsActive && (i == selectedEntry);
 
-                menuEntries[i].Update(isSelected, gameTime);
+                MenuEntries[i].Update(isSelected, gameTime);
             }
         }
 
         public override void HandleInput()
         {
-
             MenuInput menuInput = ScreenManager.InputManager.Menu;
 
             if (menuInput.Up)
@@ -66,20 +60,20 @@ namespace DreamWorld.ScreenManagement
                 selectedEntry--;
 
                 if (selectedEntry < 0)
-                    selectedEntry = menuEntries.Count - 1;
+                    selectedEntry = MenuEntries.Count - 1;
             }
 
             if (menuInput.Down)
             {
                 selectedEntry++;
 
-                if (selectedEntry >= menuEntries.Count)
+                if (selectedEntry >= MenuEntries.Count)
                     selectedEntry = 0;
             }
 
             if (menuInput.Select)
             {
-                OnSelectEntry(selectedEntry);
+                OnSelectEntry();
             }
             else if (menuInput.Cancel)
             {
@@ -90,9 +84,8 @@ namespace DreamWorld.ScreenManagement
         public override void Draw(GameTime gameTime)
         {
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
-            SpriteFont font = ScreenManager.Font;
-
-            Vector2 position = new Vector2(100, 150);
+            Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
+            Vector2 position = menuPosition;
 
             float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
 
@@ -101,32 +94,26 @@ namespace DreamWorld.ScreenManagement
             else
                 position.X += transitionOffset * 512;
 
-            spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState);
+            spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState, Matrix.CreateScale((float)viewport.Width / 1280, (float)viewport.Height / 800, 1));
 
+            if (Background != null)
+                spriteBatch.Draw(Background, Vector2.Zero, Color.White);
 
-            for (int i = 0; i < menuEntries.Count; i++)
-            {
-                MenuEntry menuEntry = menuEntries[i];
-
-                bool isSelected = IsActive && (i == selectedEntry);
-
-                menuEntry.Draw(this, position, isSelected, gameTime);
-
-                position.Y += menuEntry.GetHeight(this);
-            }
-
-
-            Vector2 titlePosition = new Vector2(((DreamWorldGame)ScreenManager.Game).GraphicsDeviceManager.PreferredBackBufferWidth/2, 80);
-            Vector2 titleOrigin = font.MeasureString(menuTitle) / 2;
-            Color titleColor = new Color(192, 192, 192, TransitionAlpha);
-            float titleScale = 1.25f;
-
-            titlePosition.Y -= transitionOffset * 100;
-
-            spriteBatch.DrawString(font, menuTitle, titlePosition, titleColor, 0,
-                                   titleOrigin, titleScale, SpriteEffects.None, 0);
+            for (int i = 0; i < MenuEntries.Count; i++)
+                DrawMenuEntry(gameTime, i, ref position);
 
             spriteBatch.End();
+        }
+
+        protected virtual void DrawMenuEntry(GameTime gameTime, int key, ref Vector2 position)
+        {
+            MenuEntry menuEntry = MenuEntries[key];
+
+            bool isSelected = IsActive && (key == selectedEntry);
+
+            menuEntry.Draw(gameTime, this, position, isSelected);
+
+            position.Y += menuEntry.GetHeight(this);
         }
 
     }

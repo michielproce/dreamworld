@@ -15,7 +15,6 @@ namespace DreamWorld.ScreenManagement.Screens
     public class GameScreen : Screen
     {
         public static GameScreen Instance { get; private set; }
-        public ContentManager Content { get; private set; }
         public Camera Camera { get; private set; }
         public Level Level { get; private set; }
         public InputManager InputManager { get; private set; }
@@ -38,7 +37,6 @@ namespace DreamWorld.ScreenManagement.Screens
 
         public override void Initialize()
         {
-            Content = new ContentManager(ScreenManager.Game.Services) {RootDirectory = "Content"};
             InputManager = ((DreamWorldGame) ScreenManager.Game).InputManager;
             GraphicsDevice = ScreenManager.Game.GraphicsDevice;
 

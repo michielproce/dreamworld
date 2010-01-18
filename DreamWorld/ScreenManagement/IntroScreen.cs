@@ -10,7 +10,7 @@ namespace DreamWorld.ScreenManagement
         private Rectangle destination;
         private Texture2D texture;
 
-        protected TimeSpan duration;
+        private TimeSpan duration;
         
         
         protected IntroScreen()

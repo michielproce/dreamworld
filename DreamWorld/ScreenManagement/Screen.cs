@@ -1,6 +1,7 @@
 ﻿using System;
 using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace DreamWorld.ScreenManagement
 {
@@ -15,6 +16,7 @@ namespace DreamWorld.ScreenManagement
 
     public abstract class Screen
     {
+        public ContentManager Content { get; private set; }
 
         public LoadingScreen LoadingScreen
         {
@@ -117,6 +119,7 @@ namespace DreamWorld.ScreenManagement
 
         public virtual void Initialize()
         {
+            Content = new ContentManager(ScreenManager.Game.Services) { RootDirectory = "Content" };
             LoadContent();
         }
 

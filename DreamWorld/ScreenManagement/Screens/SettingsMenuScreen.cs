@@ -1,30 +1,31 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.ScreenManagement.Screens
 {
     internal class SettingsMenuScreen : MenuScreen
     {
-        private readonly MenuEntry antiAliasingEntry;
         private readonly Config config;
+
+        private readonly SettingsMenuEntry resolutionEntry;
+        private readonly SettingsMenuEntry fullscreenEntry;
+        private readonly SettingsMenuEntry antiAliasingEntry;
+        private readonly SettingsMenuEntry verticalSyncEntry;
+        private readonly SettingsMenuEntry shadowsEntry;
+
+        private readonly MenuEntry saveMenuEntry;
         private readonly MenuEntry exitMenuEntry;
 
-        private readonly MenuEntry fullscreenEntry;
-        private readonly MenuEntry resolutionEntry;
-        private readonly MenuEntry saveMenuEntry;
-        private readonly MenuEntry shadowsEntry;
-        private readonly MenuEntry verticalSyncEntry;
-
         public SettingsMenuScreen()
-            : base("Settings")
         {
             config = Config.Load();
 
-            resolutionEntry = new MenuEntry("");
-            fullscreenEntry = new MenuEntry("");
-            antiAliasingEntry = new MenuEntry("");
-            verticalSyncEntry = new MenuEntry("");
-            shadowsEntry = new MenuEntry("");
+            resolutionEntry = new SettingsMenuEntry("Resolution", "");
+            fullscreenEntry = new SettingsMenuEntry("Screenmode", "");
+            antiAliasingEntry = new SettingsMenuEntry("Anti-aliasing", "");
+            verticalSyncEntry = new SettingsMenuEntry("Vertical synchronization", "");
+            shadowsEntry = new SettingsMenuEntry("Shadows", "");
             saveMenuEntry = new MenuEntry("Save");
             exitMenuEntry = new MenuEntry("Cancel");
 
@@ -47,6 +48,8 @@ namespace DreamWorld.ScreenManagement.Screens
 
         public override void Initialize()
         {
+            menuPosition = new Vector2(100, 240);
+
             foreach (DisplayMode mode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
             {
                 if (mode.Width == config.Width && mode.Height == config.Height)
@@ -58,15 +61,25 @@ namespace DreamWorld.ScreenManagement.Screens
             }
 
             SetMenuEntryText();
+
+            base.Initialize();
+        }
+
+        protected override void LoadContent()
+        {
+            Background = Content.Load<Texture2D>(@"Textures/Menu/settings");
+            SmallFont = Content.Load<SpriteFont>(@"Fonts/smallSettingsMenu");
+            SmallFont.Spacing *= 0.9f;
+            base.LoadContent();
         }
 
         private void SetMenuEntryText()
         {
-            resolutionEntry.Text = "Resolution: " + config.Width + " x " + config.Height;
-            fullscreenEntry.Text = config.Fullscreen ? "Fullscreen" : "Windowed";
-            antiAliasingEntry.Text = "Anti-aliasing: " + (config.AntiAliasing ? "On" : "Off");
-            verticalSyncEntry.Text = "Vertical synchronization: " + (config.VerticalSync ? "On" : "Off");
-            shadowsEntry.Text = "Shadows: " + (config.Shadows ? "On" : "Off");
+            resolutionEntry.Value =     config.Width + " x " + config.Height;
+            fullscreenEntry.Value =     config.Fullscreen ? "Fullscreen" : "Windowed";
+            antiAliasingEntry.Value =   config.AntiAliasing ? "On" : "Off";
+            verticalSyncEntry.Value =   config.VerticalSync ? "On" : "Off";
+            shadowsEntry.Value =        config.Shadows ? "On" : "Off";
         }
 
         private void ResolutionMenuEntrySelected(object sender, EventArgs e)
@@ -138,6 +151,20 @@ namespace DreamWorld.ScreenManagement.Screens
         {
             ScreenManager.AddScreen(new MainMenuScreen());
             ExitScreen();
+        }
+
+        protected override void DrawMenuEntry(GameTime gameTime, int key, ref Vector2 position)
+        {
+            MenuEntry menuEntry = MenuEntries[key];
+
+            if (saveMenuEntry == menuEntry)
+                position += new Vector2(0, 50);
+
+            bool isSelected = IsActive && (key == selectedEntry);
+
+            menuEntry.Draw(gameTime, this, position, isSelected);
+
+            position.Y += menuEntry.GetHeight(this);
         }
     }
 }

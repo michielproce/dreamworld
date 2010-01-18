@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using DreamWorld.InputManagement;
 using Microsoft.Xna.Framework;
@@ -8,36 +7,19 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.ScreenManagement
 {
-
     public class ScreenManager : DrawableGameComponent
     {
+        private List<Screen> screens = new List<Screen>();
 
-        List<Screen> screens = new List<Screen>();
+        public InputManager InputManager { get; private set; }
 
-        public InputManager InputManager
-        {
-            get { return inputManager; }
-        }
-        InputManager inputManager;
+        public SpriteBatch SpriteBatch { get; private set; }
+        public SpriteFont Font { get; private set; }
+        private Texture2D blankTexture;
 
-        SpriteBatch spriteBatch;
-        SpriteFont font;
-        Texture2D blankTexture;
+        private bool Initialized;
 
-        bool isInitialized;
-
-        public SpriteBatch SpriteBatch
-        {
-            get { return spriteBatch; }
-        }
-
-        public SpriteFont Font
-        {
-            get { return font; }
-        }
-
-        public ScreenManager(Game game)
-            : base(game)
+        public ScreenManager(Game game) : base(game)
         {
         }
 
@@ -45,32 +27,28 @@ namespace DreamWorld.ScreenManagement
         {
             base.Initialize();
 
-            DreamWorldGame dreamWorldGame = (DreamWorldGame)Game;
-            inputManager = dreamWorldGame.InputManager;
+            InputManager = ((DreamWorldGame)Game).InputManager;
 
             foreach (Screen screen in screens)
-            {
                 screen.Initialize();
-            }
 
-            isInitialized = true;
+            Initialized = true;
         }
 
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             ContentManager content = Game.Content;
-            font = content.Load<SpriteFont>(@"Fonts/menufont");
+            Font = content.Load<SpriteFont>(@"Fonts/default");
+            Font.Spacing *= 0.9f;
             blankTexture = content.Load<Texture2D>(@"Textures/blank");
         }
 
         protected override void UnloadContent()
         {
             foreach (Screen screen in screens)
-            {
                 screen.UnloadContent();
-            }
         }
 
         public override void Update(GameTime gameTime)
@@ -97,16 +75,6 @@ namespace DreamWorld.ScreenManagement
             }
         }
 
-        private void TraceScreens()
-        {
-            List<string> screenNames = new List<string>();
-
-            foreach (Screen screen in screens)
-                screenNames.Add(screen.GetType().Name + " " + screen.ScreenState);
-
-            Trace.WriteLine(string.Join(", ", screenNames.ToArray()));
-        }
-
         public override void Draw(GameTime gameTime)
         {
             DreamWorldGame dreamWorldGame = (DreamWorldGame)Game;
@@ -131,13 +99,13 @@ namespace DreamWorld.ScreenManagement
             if (screen.LoadingScreen != null)
             {
                 AddScreen(screen.LoadingScreen);
-                if (isInitialized)
+                if (Initialized)
                 {
                     Thread loadingThread = new Thread(screen.Initialize);
                     loadingThread.Start();
                 }
             }
-            else if (isInitialized)
+            else if (Initialized)
             {
                 screen.Initialize();
             }
@@ -146,30 +114,23 @@ namespace DreamWorld.ScreenManagement
 
         public void RemoveScreen(Screen screen)
         {
-            if (isInitialized)
-            {
+            if (Initialized)
                 screen.UnloadContent();
-            }
 
             screens.Remove(screen);
-        }
-
-        public Screen[] GetScreens()
-        {
-            return screens.ToArray();
         }
 
         public void FadeBackBufferToBlack(int alpha)
         {
             Viewport viewport = GraphicsDevice.Viewport;
 
-            spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState);
+            SpriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState);
 
-            spriteBatch.Draw(blankTexture,
+            SpriteBatch.Draw(blankTexture,
                              new Rectangle(0, 0, viewport.Width, viewport.Height),
                              new Color(0, 0, 0, (byte)alpha));
 
-            spriteBatch.End();
+            SpriteBatch.End();
         }
 
     }
