@@ -260,6 +260,11 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="Models\Village\Wall.X">
+      <Name>Wall</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
     <Compile Include="Models\Village\TrashCan.X">
       <Name>TrashCan</Name>
       <Importer>XImporter</Importer>
