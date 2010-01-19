@@ -1,6 +1,7 @@
 using System;
 using DreamWorld.Levels.PuzzleLevel1;
 using DreamWorld.Levels.VillageLevel;
+using DreamWorld.ScreenManagement.Screens.Cutscenes;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.ScreenManagement.Screens
@@ -37,7 +38,7 @@ namespace DreamWorld.ScreenManagement.Screens
 
         void PlayGameMenuEntrySelected(object sender, EventArgs e)
         {
-            ScreenManager.AddScreen(new GameScreen(new VillageLevel()));
+            ScreenManager.AddScreen(new IntroCutscene());
             ExitScreen();
         }
 

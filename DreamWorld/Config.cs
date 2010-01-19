@@ -18,6 +18,7 @@ namespace DreamWorld
         public bool EdgeDetect { get; set; }
         public bool Particles { get; set; }
         public bool Shadows { get; set; }
+        public bool Subtitles { get; set; }
 
         public Config()
         {
@@ -31,6 +32,7 @@ namespace DreamWorld
             EdgeDetect = true;
             Particles = true;
             Shadows = true;
+            Subtitles = true;
         }
 
         public static Config Load()
