@@ -65,7 +65,7 @@ namespace DreamWorld.ScreenManagement
                 screen.CoveredByOtherScreen = coveredByOtherScreen;
                 screen.Update(gameTime);
 
-                if (screen.ScreenState == ScreenState.TransitionOn || screen.ScreenState == ScreenState.Active)
+                if (screen.State == ScreenState.TransitionOn || screen.State == ScreenState.Active)
                 {
                     otherScreenHasFocus = true;
 
@@ -82,7 +82,7 @@ namespace DreamWorld.ScreenManagement
 
             foreach (Screen screen in screens)
             {
-                if (screen.ScreenState == ScreenState.Hidden)
+                if (screen.State == ScreenState.Hidden)
                     continue;
 
                 screen.Draw(gameTime);

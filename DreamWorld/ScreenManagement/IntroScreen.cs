@@ -32,7 +32,7 @@ namespace DreamWorld.ScreenManagement
 
         public override void Update(GameTime gameTime)
         {
-            if (gameTime.TotalGameTime > duration)
+            if (gameTime.TotalGameTime > duration && !IsExiting)
             {
                 ScreenManager.AddScreen(new MainMenuScreen());
                 ExitScreen();

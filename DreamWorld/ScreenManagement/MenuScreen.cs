@@ -89,15 +89,20 @@ namespace DreamWorld.ScreenManagement
 
             float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
 
-            if (ScreenState == ScreenState.TransitionOn)
+            if (State == ScreenState.TransitionOn)
                 position.X -= transitionOffset * 256;
             else
                 position.X += transitionOffset * 512;
 
             spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState, Matrix.CreateScale((float)viewport.Width / 1280, (float)viewport.Height / 800, 1));
 
+            
             if (Background != null)
-                spriteBatch.Draw(Background, Vector2.Zero, Color.White);
+            {
+                Color color = IsExiting ? Color.White : new Color(255, 255, 255, TransitionAlpha); ;
+                    
+                spriteBatch.Draw(Background, Vector2.Zero, color);
+            }
 
             for (int i = 0; i < MenuEntries.Count; i++)
                 DrawMenuEntry(gameTime, i, ref position);

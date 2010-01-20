@@ -18,104 +18,48 @@ namespace DreamWorld.ScreenManagement
     {
         public ContentManager Content { get; private set; }
 
-        public LoadingScreen LoadingScreen
-        {
-            get { return loadingScreen; }
-            protected set { loadingScreen = value; }
-        }
+        public LoadingScreen LoadingScreen { get; protected set; }
 
-        LoadingScreen loadingScreen;
+        public bool IsPopup { get; protected set; }
 
+        public TimeSpan TransitionOnTime { get; protected set; }
 
-        public bool IsPopup
-        {
-            get { return isPopup; }
-            protected set { isPopup = value; }
-        }
+        public TimeSpan TransitionOffTime { get; protected set; }
 
-        bool isPopup;
-
-
-        public TimeSpan TransitionOnTime
-        {
-            get { return transitionOnTime; }
-            protected set { transitionOnTime = value; }
-        }
-
-        TimeSpan transitionOnTime = TimeSpan.Zero;
-
-
-        public TimeSpan TransitionOffTime
-        {
-            get { return transitionOffTime; }
-            protected set { transitionOffTime = value; }
-        }
-
-        TimeSpan transitionOffTime = TimeSpan.Zero;
-
-
-        public float TransitionPosition
-        {
-            get { return transitionPosition; }
-            protected set { transitionPosition = value; }
-        }
-
-        float transitionPosition = 1;
-
+        public float TransitionPosition { get; protected set; }
 
         public byte TransitionAlpha
         {
             get { return (byte)(255 - TransitionPosition * 255); }
         }
 
+        public ScreenState State { get; protected set; }
 
-        public ScreenState ScreenState
-        {
-            get { return screenState; }
-            protected set { screenState = value; }
-        }
-
-        ScreenState screenState = ScreenState.TransitionOn;
-
-
-        public bool IsExiting
-        {
-            get { return isExiting; }
-            protected internal set { isExiting = value; }
-        }
-
-        bool isExiting;
-
+        public bool IsExiting { get; protected internal set; }
 
         public bool IsActive
         {
             get
             {
-                return !otherScreenHasFocus &&
-                       (screenState == ScreenState.TransitionOn ||
-                        screenState == ScreenState.Active);
+                return !OtherScreenHasFocus &&
+                       (State == ScreenState.TransitionOn ||
+                        State == ScreenState.Active);
             }
         }
 
         public bool CoveredByOtherScreen { get; set; }
 
-        public bool OtherScreenHasFocus
+        public bool OtherScreenHasFocus { get; set; }
+
+        public ScreenManager ScreenManager { get; set; }
+
+        public Screen ()
         {
-            get { return otherScreenHasFocus; }
-            set { otherScreenHasFocus = value; }
+            TransitionOffTime = TimeSpan.Zero;
+            TransitionOnTime = TimeSpan.Zero;
+            State = ScreenState.TransitionOn;
+            TransitionPosition = 1;
         }
-
-        bool otherScreenHasFocus;
-
-
-        public ScreenManager ScreenManager
-        {
-            get { return screenManager; }
-            internal set { screenManager = value; }
-        }
-
-        ScreenManager screenManager;
-
 
         public virtual void Initialize()
         {
@@ -131,35 +75,35 @@ namespace DreamWorld.ScreenManagement
         public virtual void Update(GameTime gameTime)
         {
 
-            if (isExiting)
+            if (IsExiting)
             {
-                screenState = ScreenState.TransitionOff;
+                State = ScreenState.TransitionOff;
 
-                if (!UpdateTransition(gameTime, transitionOffTime, 1))
+                if (!UpdateTransition(gameTime, TransitionOffTime, 1))
                 {
                     ScreenManager.RemoveScreen(this);
                 }
             }
             else if (CoveredByOtherScreen)
             {
-                if (UpdateTransition(gameTime, transitionOffTime, 1))
+                if (UpdateTransition(gameTime, TransitionOffTime, 1))
                 {
-                    screenState = ScreenState.TransitionOff;
+                    State = ScreenState.TransitionOff;
                 }
                 else
                 {
-                    screenState = ScreenState.Hidden;
+                    State = ScreenState.Hidden;
                 }
             }
             else
             {
-                if (UpdateTransition(gameTime, transitionOnTime, -1))
+                if (UpdateTransition(gameTime, TransitionOnTime, -1))
                 {
-                    screenState = ScreenState.TransitionOn;
+                    State = ScreenState.TransitionOn;
                 }
                 else
                 {
-                    screenState = ScreenState.Active;
+                    State = ScreenState.Active;
                 }
             }
             
@@ -179,13 +123,13 @@ namespace DreamWorld.ScreenManagement
                 transitionDelta = (float)(gameTime.ElapsedGameTime.TotalMilliseconds /
                                           time.TotalMilliseconds);
 
-            transitionPosition += transitionDelta * direction;
+            TransitionPosition += transitionDelta * direction;
 
             // Did we reach the end of the transition?
-            if (((direction < 0) && (transitionPosition <= 0)) ||
-                ((direction > 0) && (transitionPosition >= 1)))
+            if (((direction < 0) && (TransitionPosition <= 0)) ||
+                ((direction > 0) && (TransitionPosition >= 1)))
             {
-                transitionPosition = MathHelper.Clamp(transitionPosition, 0, 1);
+                TransitionPosition = MathHelper.Clamp(TransitionPosition, 0, 1);
                 return false;
             }
 
@@ -205,7 +149,7 @@ namespace DreamWorld.ScreenManagement
             }
             else
             {
-                isExiting = true;
+                IsExiting = true;
             }
         }
 
