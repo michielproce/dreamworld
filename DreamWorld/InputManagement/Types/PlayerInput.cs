@@ -17,18 +17,22 @@ namespace DreamWorld.InputManagement.Types
         {
             get
             {
-                return Vector3.Clamp(
-                    new Vector3
-                        ((InputManager.Keyboard.State.IsKeyDown(Keys.A) ? -MovementSpeed : 0) +
-                         (InputManager.Keyboard.State.IsKeyDown(Keys.D) ? MovementSpeed : 0) +
-                         InputManager.GamePad.State.ThumbSticks.Left.X*MovementSpeed,
-                         0,
-                         (InputManager.Keyboard.State.IsKeyDown(Keys.W) ? -MovementSpeed : 0) +
-                         (InputManager.Keyboard.State.IsKeyDown(Keys.S) ? MovementSpeed : 0) +
-                         -InputManager.GamePad.State.ThumbSticks.Left.Y*MovementSpeed
-                        ),
-                    new Vector3(-MovementSpeed),
-                    new Vector3(MovementSpeed));
+                Vector3 movement = new Vector3
+                    ((InputManager.Keyboard.State.IsKeyDown(Keys.A) ? -MovementSpeed : 0) +
+                     (InputManager.Keyboard.State.IsKeyDown(Keys.D) ? MovementSpeed : 0) +
+                     InputManager.GamePad.State.ThumbSticks.Left.X*MovementSpeed,
+                     0,
+                     (InputManager.Keyboard.State.IsKeyDown(Keys.W) ? -MovementSpeed : 0) +
+                     (InputManager.Keyboard.State.IsKeyDown(Keys.S) ? MovementSpeed : 0) +
+                     -InputManager.GamePad.State.ThumbSticks.Left.Y*MovementSpeed
+                    );
+
+                if (movement.Length() > MovementSpeed)
+                {
+                    movement.Normalize();
+                    movement *= MovementSpeed;
+                }
+                return movement;
             }
         }
 
@@ -51,17 +55,17 @@ namespace DreamWorld.InputManagement.Types
             get
             {
                 return (Mouse.GetState().LeftButton == ButtonState.Pressed
-                           ? InputManager.Mouse.Movement.X*HorizontalMouseRotationSpeed
-                           : 0) +
-                           (InputManager.GamePad.State.IsButtonDown(Buttons.LeftTrigger)
-                           ? InputManager.GamePad.State.ThumbSticks.Right.X * HorizontalGamePadRotationSpeed
-                           : 0);
+                            ? InputManager.Mouse.Movement.X*HorizontalMouseRotationSpeed
+                            : 0) +
+                       (InputManager.GamePad.State.IsButtonDown(Buttons.LeftTrigger)
+                            ? InputManager.GamePad.State.ThumbSticks.Right.X*HorizontalGamePadRotationSpeed
+                            : 0);
             }
         }
 
         public bool ResetHorizontalRotation
         {
-            get 
+            get
             {
                 return InputManager.Mouse.NewlyReleased(MouseHandler.Buttons.LeftButton) ||
                        InputManager.GamePad.NewlyReleased(Buttons.LeftTrigger);
@@ -82,12 +86,12 @@ namespace DreamWorld.InputManagement.Types
 
         public float Zoom
         {
-            get 
-            { 
+            get
+            {
                 return InputManager.Mouse.ScrollWheel/100f +
-                    (InputManager.GamePad.State.IsButtonDown(Buttons.LeftTrigger) 
-                    ? InputManager.GamePad.State.ThumbSticks.Right.Y 
-                    : 0); 
+                       (InputManager.GamePad.State.IsButtonDown(Buttons.LeftTrigger)
+                            ? InputManager.GamePad.State.ThumbSticks.Right.Y
+                            : 0);
             }
         }
 
