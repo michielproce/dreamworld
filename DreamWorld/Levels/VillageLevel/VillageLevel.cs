@@ -5,6 +5,8 @@ namespace DreamWorld.Levels.VillageLevel
 {
     public class VillageLevel : Level
     {
+        public float maximumWalkingHeight { get; private set; }
+
         public override string LevelInformationFileName
         {
             get { return "Village.xml"; }
@@ -12,6 +14,7 @@ namespace DreamWorld.Levels.VillageLevel
 
         public override void Initialize()
         {
+            maximumWalkingHeight = -525;
             Skybox = new Skybox("Village") { Name = "Skybox" };
             Terrain = new Terrain("Village") { Name = "Terrain" };
 

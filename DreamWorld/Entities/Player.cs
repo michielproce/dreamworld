@@ -1,6 +1,7 @@
 ﻿using System;
 using DreamWorld.Cameras;
 using DreamWorld.InputManagement;
+using DreamWorld.Levels.VillageLevel;
 using JigLibX.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -89,7 +90,24 @@ namespace DreamWorld.Entities
             {
                 float dot = Vector3.Dot(movement, Skin.Collisions[i].DirToBody0);
                 if (dot < 0)
+                {
                     movement -= Skin.Collisions[i].DirToBody0 * dot;
+                    
+                    // Check if this conflicts with other collisionskins
+                    // TODO: do mathmatical magic to calculate a direction that doesn't conflict with any skin
+                    for (int j = i-1; j >= 0; j--)
+                        if(Vector3.Dot(movement, Skin.Collisions[j].DirToBody0) < 0)
+                            movement = Vector3.Zero;
+
+                }
+            }
+
+            if(Level is VillageLevel)
+            {
+                float currentHeight = Level.Terrain.HeightMapInfo.GetHeight(Body.Position);
+                float nextHeight = Level.Terrain.HeightMapInfo.GetHeight(Body.Position + movement);
+                if (Body.Position.Y > ((VillageLevel)Level).maximumWalkingHeight && currentHeight < nextHeight)
+                    movement = new Vector3(0, movement.Y, 0);
             }
 
             jumpVelocity = movement.Y;
@@ -98,7 +116,7 @@ namespace DreamWorld.Entities
 
             if (playerState != PlayerState.Jumping)
             {
-                if (inputManager.Player.Movement.Length() != 0)
+                if (movement.Length() != 0)
                     Animation.StartClip("Running");
                 else
                     Animation.StartClip("Standing");
