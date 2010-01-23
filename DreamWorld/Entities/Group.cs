@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DreamWorld.Levels;
 using DreamWorld.ScreenManagement.Screens;
 using JigLibX.Collision;
 using JigLibX.Physics;
@@ -8,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Entities
 {
-    public class Group 
+    public class Group
     {
         private GameScreen GameScreen;
 
@@ -21,6 +22,7 @@ namespace DreamWorld.Entities
         public Color Color;
         private Quaternion OriginalRotation { get; set; }
         private Quaternion TargetRotation { get; set; }
+
         private Quaternion Rotation
         {
             get
@@ -33,13 +35,10 @@ namespace DreamWorld.Entities
 
         public bool IsRotating
         {
-            get
-            {
-                return OriginalRotation != TargetRotation;
-            }
+            get { return OriginalRotation != TargetRotation; }
         }
 
-        public bool IsColliding
+        public virtual bool IsColliding
         {
             get
             {
@@ -47,14 +46,28 @@ namespace DreamWorld.Entities
                 {
                     for (int i = 0; i <= entity.Skin.Collisions.Count - 1; i++)
                     {
-                        if ((!IgnoreCollisionSkins.Contains(entity.Skin.Collisions[i].SkinInfo.Skin0) && entity.Skin.Collisions[i].SkinInfo.Skin0.Owner.Immovable) || 
-                            (!IgnoreCollisionSkins.Contains(entity.Skin.Collisions[i].SkinInfo.Skin1) && entity.Skin.Collisions[i].SkinInfo.Skin1.Owner.Immovable))
+                        if ((!IgnoreCollisionSkins.Contains(entity.Skin.Collisions[i].SkinInfo.Skin0) &&
+                             entity.Skin.Collisions[i].SkinInfo.Skin0.Owner.Immovable) ||
+                            (!IgnoreCollisionSkins.Contains(entity.Skin.Collisions[i].SkinInfo.Skin1) &&
+                             entity.Skin.Collisions[i].SkinInfo.Skin1.Owner.Immovable))
                         {
                             return true;
                         }
                     }
                 }
                 return false;
+            }
+        }
+
+        public bool IsInRange
+        {
+            get
+            {
+                if (!(GameScreen.Level is PuzzleLevel))
+                    return false;
+                return Center != null &&
+                       Vector3.Distance(Center.Body.Position, GameScreen.Level.Player.Body.Position) <
+                       ((PuzzleLevel) GameScreen.Level).selectionRadius;
             }
         }
 
@@ -177,7 +190,8 @@ namespace DreamWorld.Entities
         /// </summary>
         public bool IsRotationAllowed(Vector3 direction)
         {
-            return ((direction.X == 0 || AllowedRotations.X != 0) && (direction.Y == 0 || AllowedRotations.Y != 0)) && (direction.Z == 0 || AllowedRotations.Z != 0);
+            return ((direction.X == 0 || AllowedRotations.X != 0) && (direction.Y == 0 || AllowedRotations.Y != 0)) &&
+                   (direction.Z == 0 || AllowedRotations.Z != 0);
         }
 
         public void Rotate(Vector3 direction)
@@ -186,9 +200,9 @@ namespace DreamWorld.Entities
             direction.X = (direction.X < 0.1 && direction.X > -0.1 ? 0 : direction.X);
             direction.Y = (direction.Y < 0.1 && direction.Y > -0.1 ? 0 : direction.Y);
             direction.Z = (direction.Z < 0.1 && direction.Z > -0.1 ? 0 : direction.Z);
-            direction = Vector3.Normalize(direction) * MathHelper.PiOver2;
+            direction = Vector3.Normalize(direction)*MathHelper.PiOver2;
 
-            if (IsRotating || !IsRotationAllowed(direction)) 
+            if (IsRotating || !IsRotationAllowed(direction))
                 return;
 
 //            TODO: multiple rotations at the same time

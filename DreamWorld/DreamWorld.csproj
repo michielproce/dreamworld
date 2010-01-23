@@ -122,6 +122,7 @@
     <Compile Include="Levels\GroupColorInformation.cs" />
     <Compile Include="Levels\Level.cs" />
     <Compile Include="Levels\LevelInformation.cs" />
+    <Compile Include="Levels\PuzzleLevel1\Entities\CowGroup.cs" />
     <Compile Include="Levels\PuzzleLevel1\Entities\Stairs.cs" />
     <Compile Include="Levels\PuzzleLevel1\Entities\Platform.cs" />
     <Compile Include="Levels\PuzzleLevel1\PuzzleLevel1.cs" />

@@ -1,18 +1,26 @@
 ﻿using System;
 using DreamWorld.Entities;
 using DreamWorld.InputManagement.Types;
+using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Levels
 {
     public abstract class PuzzleLevel : Level
     {
-        protected internal int SelectedGroup;
+        protected internal float selectionRadius = 100;
+        private int selectedGroup;
 
-        public override void Initialize()
+        public Group GetSelectedGroup()
         {
-            base.Initialize();
-            HandleGroupSelection(1);
+            int[] keys = new int[Groups.Count];
+            Groups.Keys.CopyTo(keys, 0);
+            Group group = Groups[keys[selectedGroup]];
+
+            if (!group.AllowedRotations.Equals(Vector3.Zero) && group.IsInRange)
+                return group;
+
+            return null;
         }
 
         public override void Update(GameTime gameTime)
@@ -22,10 +30,11 @@ namespace DreamWorld.Levels
             HandleGroupSelection(input.SelectGroup);
             HandleGroupRotation(input.RotateGroup);
 
-            if(NeedsRespawn())
-            {
-                Player.Respawn();
-            }
+            if(GameIsLost())
+                LossEventHandler();
+
+            if(GameIsWon())
+                VictoryEventHandler();
 
             base.Update(gameTime);
         }
@@ -39,35 +48,33 @@ namespace DreamWorld.Levels
             Groups.Keys.CopyTo(keys, 0);
 
             for (int tries = 0; tries < Groups.Count; tries++ )
-            {   // Keep looping untill we have found a group that is allowed to rotate
-                SelectedGroup += selection;
-                if (SelectedGroup >= keys.Length)
+            {
+                // Keep looping untill we have found a group that is allowed to rotate
+                selectedGroup += selection;
+                if (selectedGroup >= keys.Length)
                 {
-                    SelectedGroup -= keys.Length;
+                    selectedGroup -= keys.Length;
                 }
-                else if (SelectedGroup < 0)
+                else if (selectedGroup < 0)
                 {
-                    SelectedGroup += keys.Length;
+                    selectedGroup += keys.Length;
                 }
 
-                if (!Groups[keys[SelectedGroup]].AllowedRotations.Equals(Vector3.Zero))
-                {
-                    break;   
-                }
+                if (!Groups[keys[selectedGroup]].AllowedRotations.Equals(Vector3.Zero) && Groups[keys[selectedGroup]].IsInRange)
+                    break;
             }
         }
 
         private void HandleGroupRotation(Vector3 direction)
         {
-            if (direction != Vector3.Zero)
-            {
-                int[] keys = new int[Groups.Count];
-                Groups.Keys.CopyTo(keys, 0);
-                Group targetGroup = Groups[keys[SelectedGroup]];
+            Group targetGroup = GetSelectedGroup();
 
+            if (direction != Vector3.Zero && targetGroup != null)
+            {
                 if (direction.X == 0 && direction.Z == 0)
                 {
-                    targetGroup.Rotate(direction);
+                    direction.Normalize();
+                    targetGroup.Rotate(direction * MathHelper.PiOver2);
                 }
                 else
                 {
@@ -93,9 +100,28 @@ namespace DreamWorld.Levels
             }
         }
 
-        public virtual bool NeedsRespawn()
+        protected virtual bool GameIsWon()
         {
             return false;
+        }
+
+        protected virtual void VictoryEventHandler()
+        {
+            if(!GameScreen.IsExiting)
+            {
+                GameScreen.ScreenManager.AddScreen(new MainMenuScreen());
+                GameScreen.ExitScreen();
+            }
+        }
+
+        protected virtual bool GameIsLost()
+        {
+            return false;
+        }
+
+        protected virtual void LossEventHandler()
+        {
+            Player.Respawn();
         }
     }
 }

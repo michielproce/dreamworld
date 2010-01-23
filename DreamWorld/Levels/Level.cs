@@ -95,6 +95,12 @@ namespace DreamWorld.Levels
             return group;
         }
 
+        public void SetGroup(Group group, int groupId)
+        {
+            // In case of a class that derive from Group, add it manually.
+            Groups.Add(groupId, group);
+        }
+
         public bool EntityNameExists(string name)
         {
             foreach (Group group in Groups.Values)
@@ -181,7 +187,10 @@ namespace DreamWorld.Levels
             if (Skybox != null)
                 Skybox.Draw(gameTime, "Skybox");
             if (Terrain != null)
-                Terrain.Draw(gameTime, "Terrain");            
+                Terrain.Draw(gameTime, "Terrain");
+
+            int[] keys = new int[Groups.Count];
+            Groups.Keys.CopyTo(keys, 0);
 
             foreach (Group group in Groups.Values)
             {
@@ -193,12 +202,11 @@ namespace DreamWorld.Levels
                         entity.Draw(gameTime, "Highlight");
                     else {
                     #endif
+
                         if (this is PuzzleLevel)
                         {
-                            int[] keys = new int[Groups.Count];
-                            Groups.Keys.CopyTo(keys, 0);
-                            Group targetGroup = Groups[keys[((PuzzleLevel)this).SelectedGroup]];
-                            if (group == targetGroup)
+                            Group selectedGroup = ((PuzzleLevel)this).GetSelectedGroup();
+                            if (group == selectedGroup)
                                 entity.Draw(gameTime, "Highlight");
                             else
                                 entity.Draw(gameTime, "Default");
@@ -206,6 +214,7 @@ namespace DreamWorld.Levels
                         else {
                             entity.Draw(gameTime, "Default");
                         }
+
                     #if (DEBUG)
                     }
                     #endif

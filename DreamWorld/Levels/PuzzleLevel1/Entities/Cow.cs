@@ -6,6 +6,9 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
 {
     class Cow : GroupCenter
     {
+        private const float gravity = .05f;
+        private float velocity;
+
         protected override void LoadContent()
         {
             Model = GameScreen.Content.Load<Model>(@"Models\Test\Test");
@@ -18,6 +21,32 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
             base.Initialize();
 
             Body.Immovable = false;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            float distance = Vector3.Distance(Body.Position, Group.Center.Body.Position);
+            if(distance > 60.1 || distance < 59.9)
+            {
+                Vector3 direction = (Group.Center.Body.Position - Body.Position);
+                direction.Normalize();
+                Vector3 offset = direction * (distance - 60) / 2;
+
+                Body.Position += offset;
+                Group.Center.Body.Position -= offset;
+            }
+
+            if (!Group.IsRotating && !Group.IsColliding)
+            {
+                velocity -= gravity;
+                Body.Position += new Vector3(0, velocity, 0);
+            }
+            else
+            {
+                velocity = 0;
+            }
         }
 
         /// <summary>

@@ -7,7 +7,7 @@
   </PlayerStartPosition>
   <PlayerStartRotation>
     <X>0</X>
-    <Y>0</Y>
+    <Y>270</Y>
     <Z>0</Z>
   </PlayerStartRotation>
   <Spawns>
@@ -809,7 +809,7 @@
         <Y>2</Y>
         <Z>1.8</Z>
       </Scale>
-      <Group>0</Group>
+      <Group>12</Group>
     </SpawnInformation>
     <SpawnInformation>
       <Name>entity633991645252274991</Name>
