@@ -146,6 +146,7 @@
     <Compile Include="Rendering\Particles\ParticleSettings.cs" />
     <Compile Include="Rendering\Particles\ParticleSystem.cs" />
     <Compile Include="Rendering\Particles\ParticleVertex.cs" />
+    <Compile Include="Rendering\Particles\Systems\HouseSmokeParticleSystem.cs" />
     <Compile Include="Rendering\Particles\Systems\ZeppelinSmokeParticleSystem.cs" />
     <Compile Include="Rendering\Postprocessing\Bloom.cs" />
     <Compile Include="Rendering\Postprocessing\EdgeDetection.cs" />

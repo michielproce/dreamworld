@@ -43,7 +43,8 @@ namespace DreamWorld
             Components.Add(ScreenManager);
             Components.Add(InputManager);
 
-            ScreenManager.AddScreen(new FloatingKoalaGamesIntroScreen());
+//            ScreenManager.AddScreen(new FloatingKoalaGamesIntroScreen());
+            ScreenManager.AddScreen(new GameScreen(new VillageLevel()));
         }
 
         public void ApplyConfig()

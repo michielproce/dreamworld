@@ -134,11 +134,10 @@ namespace DreamWorld.Levels
 
         public virtual void Update(GameTime gameTime)
         {
-           
-            foreach (Group group in Groups.Values)
-                group.Update(gameTime);
             foreach (ParticleSystem particleSystem in particleSystems.Values)
                 particleSystem.Update(gameTime);
+            foreach (Group group in Groups.Values)
+                group.Update(gameTime);
         }
 
         public void Draw(GameTime gameTime)

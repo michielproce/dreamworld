@@ -1,5 +1,6 @@
 ﻿using System;
 using DreamWorld.Entities;
+using DreamWorld.Rendering.Particles.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -8,10 +9,30 @@ namespace DreamWorld.Levels.VillageLevel.Entities
     public class MorwirsHouse : Entity
     {
         public static bool ListInEditor = true;
+        private int frames;
+        private Vector3 chimney;
+        
+        private HouseSmokeParticleSystem smokeParticleSystem;
+
+        public override void Initialize()
+        {
+            smokeParticleSystem = new HouseSmokeParticleSystem();            
+            Level.AddParticleSystem(SpawnInformation.Name + "_smoke", smokeParticleSystem);
+            base.Initialize();
+        }
+
         protected override void LoadContent()
         {
             Model = GameScreen.Content.Load<Model>(@"Models\Village\MorwirsHouse");
             base.LoadContent();
+            chimney = Body.Position + new Vector3(-11, 65, -20);
+        }
+
+        public override void Update(GameTime gameTime)
+        {             
+            if(frames++ % 10 == 0)
+                smokeParticleSystem.AddParticle(chimney, Vector3.Zero);
+            base.Update(gameTime);
         }
 
         /// <summary>
