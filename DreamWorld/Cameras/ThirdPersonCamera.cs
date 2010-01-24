@@ -1,4 +1,5 @@
 ﻿using System;
+using DreamWorld.Entities;
 using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Cameras
@@ -8,13 +9,13 @@ namespace DreamWorld.Cameras
         private const float minCameraHeight = 2f;
         private bool camOnFloor;
 
-        private const float minDistance = 3f;
+        private const float minDistance = 5f;
         private const float maxDistance = 100f;
         private float distance = 30f;
 
         private const float minVerticalRotation = -MathHelper.PiOver2 * .99f;
         private const float maxVerticalRotation = -minVerticalRotation;
-        private float verticalRotation = -MathHelper.ToRadians(0);
+        private float verticalRotation = MathHelper.ToRadians(-15);
 
         private float horizontalRotation;
         

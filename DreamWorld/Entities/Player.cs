@@ -23,7 +23,7 @@ namespace DreamWorld.Entities
 
         private PlayerState playerState = PlayerState.OnTerrain;
 
-        public readonly Vector3 CameraOffset = new Vector3(0,10,0);
+        public readonly Vector3 CameraOffset = new Vector3(0,12,0);
 
         private InputManager inputManager;
 
