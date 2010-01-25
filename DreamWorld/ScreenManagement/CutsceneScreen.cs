@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DreamWorld.Levels.VillageLevel;
 using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.ScreenManagement
@@ -14,8 +15,8 @@ namespace DreamWorld.ScreenManagement
         private int currentTexture;
         private int currentLine;
 
-        private List<CutsceneTexture> textures;
-        private List<CutsceneLine> lines;
+        protected List<CutsceneTexture> textures;
+        protected List<CutsceneLine> lines;
 
         private Vector2 textPosition;
         private SpriteFont font;
@@ -28,9 +29,11 @@ namespace DreamWorld.ScreenManagement
 
         protected override void LoadContent()
         {
-            font = Content.Load<SpriteFont>(@"Fonts\default");
-            textures = LoadTextures();
-            lines = LoadLines();
+            font = Content.Load<SpriteFont>(@"Fonts\subtitle");
+            textures = new List<CutsceneTexture>();
+            lines = new List<CutsceneLine>();
+            LoadCutscene();
+            
         }
 
         public override void Update(GameTime gameTime)
@@ -78,11 +81,28 @@ namespace DreamWorld.ScreenManagement
         }
         private void PlayCurrentLine()
         {
-            text = lines[currentLine].Text;
+            text = CutLine(lines[currentLine].Text, 50);
             Vector2 textSize = font.MeasureString(text);
             Viewport vp = ScreenManager.GraphicsDevice.Viewport;
+            
             textPosition = new Vector2(vp.Width / 2f - textSize.X / 2f, vp.Height - textSize.Y - 100f);
             lines[currentLine].Audio.Play();
+        }
+
+        private static string CutLine(string line, int max)
+        {
+            for (int i = 0; i < line.Length; i += max)
+            {
+                for (int j = i; j > 0; j--)
+                {
+                    if (line[j] == ' ')
+                    {
+                        line = line.Remove(j, 1).Insert(j, "\n");
+                        break;
+                    }
+                }
+            }
+            return line;
         }
 
         public override void Draw(GameTime gameTime)
@@ -91,15 +111,16 @@ namespace DreamWorld.ScreenManagement
             spriteBatch.Begin();
             spriteBatch.Draw(ScreenManager.BlankTexture, ScreenManager.FullscreenDestination, Color.Black);
             spriteBatch.Draw(textures[currentTexture].Texture, ScreenManager.GraphicsDevice.Viewport.TitleSafeArea, Color.White);
-            if(((DreamWorldGame)ScreenManager.Game).Config.Subtitles)
+            if (((DreamWorldGame)ScreenManager.Game).Config.Subtitles)
+            {
+                spriteBatch.DrawString(font, text, textPosition + new Vector2(2), Color.Black);
                 spriteBatch.DrawString(font, text, textPosition, Color.White);
+            }
             spriteBatch.End();
         }
 
 
-        protected abstract List<CutsceneTexture> LoadTextures();
-        protected abstract List<CutsceneLine> LoadLines();
         protected abstract Screen LoadNextScreen();
-        
+        protected abstract void LoadCutscene();        
     }
 }

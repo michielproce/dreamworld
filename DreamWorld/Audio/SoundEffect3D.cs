@@ -33,9 +33,9 @@ namespace DreamWorld.Audio
         protected void LoadContent()
         {
             Sound = GameScreen.Instance.Content.Load<SoundEffect>(@"Audio\Effects\" + soundEffect).CreateInstance();            
-            Apply3D();
-            Sound.IsLooped = true;
-            Sound.Play();
+//            Apply3D();
+//            Sound.IsLooped = true;
+//            Sound.Play();
         }        
 
         public void Update(GameTime gameTime)

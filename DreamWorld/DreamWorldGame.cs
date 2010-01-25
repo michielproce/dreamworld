@@ -2,6 +2,7 @@ using DreamWorld.InputManagement;
 using DreamWorld.Levels.VillageLevel;
 using DreamWorld.ScreenManagement;
 using DreamWorld.ScreenManagement.Screens;
+using DreamWorld.ScreenManagement.Screens.Cutscenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -43,7 +44,9 @@ namespace DreamWorld
             Components.Add(ScreenManager);
             Components.Add(InputManager);
 
-            ScreenManager.AddScreen(new FloatingKoalaGamesIntroScreen());
+//            ScreenManager.AddScreen(new FloatingKoalaGamesIntroScreen());
+            ScreenManager.AddScreen(new GameScreen(new VillageLevel()));
+            ScreenManager.AddScreen(new IntroCutscene());
         }
 
         public void ApplyConfig()

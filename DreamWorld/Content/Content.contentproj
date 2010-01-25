@@ -254,6 +254,11 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
+    <Compile Include="Fonts\subtitle.spritefont">
+      <Name>subtitle</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
     <None Include="Levels\PuzzleLevel1.xml">
       <Name>PuzzleLevel1</Name>
       <Importer>XmlImporter</Importer>
