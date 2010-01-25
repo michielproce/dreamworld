@@ -476,7 +476,7 @@
       <TypeName>DreamWorld.Levels.VillageLevel.Entities.Wall</TypeName>
       <Position>
         <X>100</X>
-        <Y>-550</Y>
+        <Y>-555</Y>
         <Z>-170</Z>
       </Position>
       <Rotation>
@@ -496,7 +496,7 @@
       <TypeName>DreamWorld.Levels.VillageLevel.Entities.Gate</TypeName>
       <Position>
         <X>53</X>
-        <Y>-550</Y>
+        <Y>-552</Y>
         <Z>10</Z>
       </Position>
       <Rotation>
@@ -516,7 +516,7 @@
       <TypeName>DreamWorld.Levels.VillageLevel.Entities.Wall</TypeName>
       <Position>
         <X>0</X>
-        <Y>-550</Y>
+        <Y>-555</Y>
         <Z>215</Z>
       </Position>
       <Rotation>
