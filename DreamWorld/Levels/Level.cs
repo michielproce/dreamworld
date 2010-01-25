@@ -163,7 +163,10 @@ namespace DreamWorld.Levels
 
                 edgeDetection.PrepareDrawDefault();                
 
-                DrawEntities(gameTime);                
+                DrawEntities(gameTime);
+                if (Game.Config.Particles)
+                    foreach (ParticleSystem particleSystem in particleSystems.Values)
+                        particleSystem.Draw(gameTime);
 
                 edgeDetection.Draw(gameTime);
             }
@@ -173,9 +176,7 @@ namespace DreamWorld.Levels
             }
             
 
-            if(Game.Config.Particles)
-                foreach (ParticleSystem particleSystem in particleSystems.Values)
-                    particleSystem.Draw(gameTime);
+            
             
             if(bloom != null)
                 bloom.Draw(gameTime);
