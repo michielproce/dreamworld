@@ -156,7 +156,6 @@
     <Compile Include="DreamWorldGame.cs" />
     <Compile Include="ScreenManagement\CutsceneLine.cs" />
     <Compile Include="ScreenManagement\CutsceneScreen.cs" />
-    <Compile Include="ScreenManagement\CutsceneTexture.cs" />
     <Compile Include="ScreenManagement\IntroScreen.cs" />
     <Compile Include="ScreenManagement\Screen.cs" />
     <Compile Include="ScreenManagement\ScreenManager.cs" />

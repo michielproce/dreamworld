@@ -5,6 +5,7 @@ using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 namespace DreamWorld.ScreenManagement
 {
@@ -12,11 +13,15 @@ namespace DreamWorld.ScreenManagement
     {
         private TimeSpan? startTime;
 
-        private int currentTexture;
         private int currentLine;
+        private bool started;
 
-        protected List<CutsceneTexture> textures;
+        protected Texture2D texture;
         protected List<CutsceneLine> lines;
+
+        protected TimeSpan delay = TimeSpan.Zero;
+        protected Song song;
+        protected float volume = 1;
 
         private Vector2 textPosition;
         private SpriteFont font;
@@ -24,16 +29,23 @@ namespace DreamWorld.ScreenManagement
 
         protected CutsceneScreen()
         {
+            
             text = "";
         }
 
         protected override void LoadContent()
         {
             font = Content.Load<SpriteFont>(@"Fonts\subtitle");
-            textures = new List<CutsceneTexture>();
+            
             lines = new List<CutsceneLine>();
             LoadCutscene();
-            
+            if (song != null)
+            {
+                MediaPlayer.Play(song);
+                MediaPlayer.Volume = volume;
+            }
+
+            base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
@@ -42,19 +54,22 @@ namespace DreamWorld.ScreenManagement
                 Stop();
             if (!startTime.HasValue)
             {
-                startTime = gameTime.TotalGameTime;
-                PlayCurrentLine(); 
-            }
+                startTime = gameTime.TotalGameTime;                
+            }            
             TimeSpan total = gameTime.TotalGameTime - (TimeSpan) startTime;
-
-            TimeSpan totalTextureDuration = TimeSpan.Zero;
-            for(int i=0; i<=currentTexture; i++)            
-                totalTextureDuration += textures[i].Duration;
-            if (totalTextureDuration < total)
-                currentTexture++;
-            if(currentTexture >= textures.Count)
-                Stop();
-
+            if (total < delay)
+            {
+                base.Update(gameTime);
+                return;
+            }
+            if(!started)
+            {
+                PlayCurrentLine();
+                startTime = gameTime.TotalGameTime;
+                started = true;
+            }
+            if (currentLine == lines.Count - 1)
+                MediaPlayer.Volume *= .99f;
             if (currentLine < lines.Count)
             {
                 TimeSpan totalLineDuration = TimeSpan.Zero;
@@ -72,19 +87,28 @@ namespace DreamWorld.ScreenManagement
                         PlayCurrentLine();   
                     }
                 }
+            } else
+            {
+                Stop();
             }
+
+            base.Update(gameTime);
         }
         private void Stop()
         {
+            MediaPlayer.Stop();            
+            ExitScreen();            
             ScreenManager.AddScreen(LoadNextScreen());
-            ExitScreen();
         }
+
+
         private void PlayCurrentLine()
         {
+            if (lines[currentLine].Texture != null)
+                texture = lines[currentLine].Texture;
             text = CutLine(lines[currentLine].Text, 50);
             Vector2 textSize = font.MeasureString(text);
-            Viewport vp = ScreenManager.GraphicsDevice.Viewport;
-            
+            Viewport vp = ScreenManager.GraphicsDevice.Viewport;           
             textPosition = new Vector2(vp.Width / 2f - textSize.X / 2f, vp.Height - textSize.Y - 100f);
             lines[currentLine].Audio.Play();
         }
@@ -110,13 +134,16 @@ namespace DreamWorld.ScreenManagement
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             spriteBatch.Begin();
             spriteBatch.Draw(ScreenManager.BlankTexture, ScreenManager.FullscreenDestination, Color.Black);
-            spriteBatch.Draw(textures[currentTexture].Texture, ScreenManager.GraphicsDevice.Viewport.TitleSafeArea, Color.White);
+            spriteBatch.Draw(texture, ScreenManager.GraphicsDevice.Viewport.TitleSafeArea, new Color(255, 255, 255, TransitionAlpha));
+
             if (((DreamWorldGame)ScreenManager.Game).Config.Subtitles)
             {
                 spriteBatch.DrawString(font, text, textPosition + new Vector2(2), Color.Black);
                 spriteBatch.DrawString(font, text, textPosition, Color.White);
             }
             spriteBatch.End();
+
+            base.Draw(gameTime);
         }
 
 
