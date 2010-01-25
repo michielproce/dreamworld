@@ -303,39 +303,323 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\Cutscenes\test1.png">
-      <Name>test1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Cutscenes\test2.png">
-      <Name>test2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\Cutscenes\test3.png">
-      <Name>test3</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Audio\Voice\test1.wav">
-      <Name>test1</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\Voice\test2.wav">
-      <Name>test2</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Textures\Intro\Credits.png">
       <Name>Credits</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Cutscenes\Intro\shot1.png">
+      <Name>shot1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Cutscenes\Intro\shot2.png">
+      <Name>shot2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Cutscenes\Intro\shot3.png">
+      <Name>shot3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Cutscenes\Intro\shot4.png">
+      <Name>shot4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Cutscenes\Intro\shot5.png">
+      <Name>shot5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Cutscenes\Intro\shot6.png">
+      <Name>shot6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Cutscenes\Intro\shot7.png">
+      <Name>shot7</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Cutscenes\Intro\shot8.png">
+      <Name>shot8</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\Voice\Intro\01 once_upon.mp3">
+      <Name>01 once_upon</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\02 kowaalaa%27s.mp3">
+      <Name>02 kowaalaa%27s</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\03 planet_Diamonds.mp3">
+      <Name>03 planet_Diamonds</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\04 fierce_Competition.mp3">
+      <Name>04 fierce_Competition</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\05 planet_Ordr.mp3">
+      <Name>05 planet_Ordr</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\06 wealth_prosperity.mp3">
+      <Name>06 wealth_prosperity</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\07 TDMC.mp3">
+      <Name>07 TDMC</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\08 looking_good.mp3">
+      <Name>08 looking_good</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\09 tdmc_ruthless.mp3">
+      <Name>09 tdmc_ruthless</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\10 mines_wages.mp3">
+      <Name>10 mines_wages</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\11 many_few.mp3">
+      <Name>11 many_few</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\12 villages_ghostlike.mp3">
+      <Name>12 villages_ghostlike</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\13 children_fathers.mp3">
+      <Name>13 children_fathers</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\14 mothers_children.mp3">
+      <Name>14 mothers_children</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\15 city_education.mp3">
+      <Name>15 city_education</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\16 school_travelling.mp3">
+      <Name>16 school_travelling</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\17 villages_deserted.mp3">
+      <Name>17 villages_deserted</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\18 help_villages.mp3">
+      <Name>18 help_villages</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\19 WVHO.mp3">
+      <Name>19 WVHO</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\20 food_resources.mp3">
+      <Name>20 food_resources</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\21 wise_men.mp3">
+      <Name>21 wise_men</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\22 magic_potions.mp3">
+      <Name>22 magic_potions</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\23 council_succeed.mp3">
+      <Name>23 council_succeed</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\24 WVHO_villages.mp3">
+      <Name>24 WVHO_villages</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\25 uncombinable_pair.mp3">
+      <Name>25 uncombinable_pair</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\26 man_woman_son.mp3">
+      <Name>26 man_woman_son</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\27 world_mansion.mp3">
+      <Name>27 world_mansion</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\28 adventurous_boy.mp3">
+      <Name>28 adventurous_boy</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\29 exploring_landscapes.mp3">
+      <Name>29 exploring_landscapes</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\30 wanted_more.mp3">
+      <Name>30 wanted_more</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\31 devised_plan.mp3">
+      <Name>31 devised_plan</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\31 hidden_ship.mp3">
+      <Name>31 hidden_ship</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\32 departed_sleep.mp3">
+      <Name>32 departed_sleep</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\33 awoken_violent.mp3">
+      <Name>33 awoken_violent</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\34 thunderstorms_hold.mp3">
+      <Name>34 thunderstorms_hold</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\35 floor_fallen.mp3">
+      <Name>35 floor_fallen</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\36 fallen_crates.mp3">
+      <Name>36 fallen_crates</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\37 sky_ground.mp3">
+      <Name>37 sky_ground</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Intro\38 confused_village.mp3">
+      <Name>38 confused_village</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\Voice\Morwir\39 awake_morwir.mp3">
+      <Name>39 awake_morwir</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Morwir\40 i_am_morwir.mp3">
+      <Name>40 i_am_morwir</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Morwir\41 old_mans_poverty.mp3">
+      <Name>41 old_mans_poverty</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Morwir\42 morwir_knows.mp3">
+      <Name>42 morwir_knows</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Morwir\43 not_kidnapped.mp3">
+      <Name>43 not_kidnapped</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Morwir\44 why_here.mp3">
+      <Name>44 why_here</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Morwir\45 big_kettle.mp3">
+      <Name>45 big_kettle</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Morwir\46 kettle_potion.mp3">
+      <Name>46 kettle_potion</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Morwir\47 dimension_dreamworld.mp3">
+      <Name>47 dimension_dreamworld</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Morwir\48 use_mind.mp3">
+      <Name>48 use_mind</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Morwir\49 tubbles_dreamworld.mp3">
+      <Name>49 tubbles_dreamworld</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Morwir\50 weak_old.mp3">
+      <Name>50 weak_old</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Voice\Morwir\51 potion_help.mp3">
+      <Name>51 potion_help</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\Voice\52 done_better.mp3">
+      <Name>52 done_better</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>

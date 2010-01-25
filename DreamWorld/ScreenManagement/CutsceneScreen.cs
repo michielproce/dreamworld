@@ -26,13 +26,6 @@ namespace DreamWorld.ScreenManagement
             text = "";
         }
 
-        public override void Initialize()
-        {
-            Viewport vp = ScreenManager.Game.GraphicsDevice.Viewport;
-
-            base.Initialize();
-        }
-
         protected override void LoadContent()
         {
             font = Content.Load<SpriteFont>(@"Fonts\default");
