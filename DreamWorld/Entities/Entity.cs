@@ -195,7 +195,7 @@ namespace DreamWorld.Entities
                 mesh.Draw();
             }
 
-            #if (DEBUG)
+            #if (DEBUG && !XBOX)
                 if (RenderCollisionPrimitives && GameScreen.debugDrawer.Enabled && Skin.NumPrimitives > 0) 
                 {
                     VertexPositionColor[] wf = Skin.GetLocalSkinWireframe();

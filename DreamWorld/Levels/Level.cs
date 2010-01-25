@@ -195,7 +195,7 @@ namespace DreamWorld.Levels
             {
                 foreach (Entity entity in group.Entities.Values)
                 {
-                    #if (DEBUG)
+                    #if (DEBUG && !XBOX)
                     DebugCamera debugCamera = GameScreen.Camera as DebugCamera;
                     if (debugCamera != null && entity == debugCamera.Form.Entity)
                         entity.Draw(gameTime, "Highlight");
@@ -214,9 +214,9 @@ namespace DreamWorld.Levels
                             entity.Draw(gameTime, "Default");
                         }
 
-                    #if (DEBUG)
+                #if (DEBUG&& !XBOX)
                     }
-                    #endif
+                #endif
                 }
             }
         }

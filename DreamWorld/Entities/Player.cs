@@ -54,7 +54,7 @@ namespace DreamWorld.Entities
 
         public override void Update(GameTime gameTime)
         {
-            #if(DEBUG)
+            #if(DEBUG && !XBOX)
                 if (GameScreen.Camera is DebugCamera)
                     return;
             #endif

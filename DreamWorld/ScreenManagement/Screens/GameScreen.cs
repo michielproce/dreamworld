@@ -40,7 +40,7 @@ namespace DreamWorld.ScreenManagement.Screens
             InputManager = ((DreamWorldGame) ScreenManager.Game).InputManager;
             GraphicsDevice = ScreenManager.Game.GraphicsDevice;
 
-            PhysicsSystem = new DreamWorldPhysicsSystem {CollisionSystem = new CollisionSystemSAP()};
+            PhysicsSystem = new DreamWorldPhysicsSystem {CollisionSystem = new CollisionSystemBrute()};
 
             base.Initialize();
 
@@ -65,7 +65,7 @@ namespace DreamWorld.ScreenManagement.Screens
         {
             if (!OtherScreenHasFocus)
             {
-                #if (DEBUG)
+                #if (DEBUG && !XBOX)
                     if (((DreamWorldGame)ScreenManager.Game).InputManager.Debug.ToggleDebugCamera)
                     {
                         if (Camera is DebugCamera)
@@ -114,7 +114,7 @@ namespace DreamWorld.ScreenManagement.Screens
         {
             ScreenManager.GraphicsDevice.Clear(Color.CornflowerBlue);
             Level.Draw(gameTime);           
-            #if (DEBUG)
+            #if (DEBUG && !XBOX)
             DebugCamera debugCamera = Camera as DebugCamera;
             if (debugCamera != null)
             {

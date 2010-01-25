@@ -24,8 +24,8 @@ namespace DreamWorld
 
             #if (XBOX)
             Config = new Config();
-            GraphicsDeviceManager.PreferredBackBufferWidth = 1280;
-            GraphicsDeviceManager.PreferredBackBufferHeight = 720;
+            GraphicsDeviceManager.PreferredBackBufferWidth = 768;
+            GraphicsDeviceManager.PreferredBackBufferHeight = 576;
             GraphicsDeviceManager.PreferMultiSampling = true;
             GraphicsDeviceManager.SynchronizeWithVerticalRetrace = true;
 
