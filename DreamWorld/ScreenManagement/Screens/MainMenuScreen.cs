@@ -18,6 +18,7 @@ namespace DreamWorld.ScreenManagement.Screens
 
             playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
             settingsMenuEntry.Selected += SettingsEntrySelected;
+            creditsMenuEntry.Selected += CreditsEntrySelected;
             quitMenuEntry.Selected += OnCancel;
             puzzleLevelMenuEntry.Selected += LoadGameMenuEntrySelected;
 
@@ -53,6 +54,13 @@ namespace DreamWorld.ScreenManagement.Screens
             ScreenManager.AddScreen(new SettingsMenuScreen());
             ExitScreen();
         }
+
+        void CreditsEntrySelected(object sender, EventArgs e)
+        {
+            ScreenManager.AddScreen(new CreditsScreen());
+            ExitScreen();
+        }
+         
 
         protected override void OnCancel()
         {
