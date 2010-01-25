@@ -48,7 +48,7 @@ namespace DreamWorld.ScreenManagement.Screens
 
             string text = (loaded ? "Loaded!" : "Loading...");
 
-            Vector2 textPosition = new Vector2(100, 60);
+            Vector2 textPosition = new Vector2(80, 60);
 
             spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState);
             

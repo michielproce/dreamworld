@@ -11,22 +11,28 @@ namespace DreamWorld.ScreenManagement.Screens
         public MainMenuScreen()
         {
             MenuEntry playGameMenuEntry = new MenuEntry("Play game");
-            MenuEntry settingsMenuEntry = new MenuEntry("Settings");
-            MenuEntry creditsMenuEntry = new MenuEntry("Credits");
-            MenuEntry quitMenuEntry = new MenuEntry("Quit");
-            MenuEntry puzzleLevelMenuEntry = new MenuEntry("PuzzleLevel");
-
             playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
-            settingsMenuEntry.Selected += SettingsEntrySelected;
-            creditsMenuEntry.Selected += CreditsEntrySelected;
-            quitMenuEntry.Selected += OnCancel;
-            puzzleLevelMenuEntry.Selected += LoadGameMenuEntrySelected;
-
             MenuEntries.Add(playGameMenuEntry);
+
+            #if (DEBUG && !XBOX)
+            MenuEntry settingsMenuEntry = new MenuEntry("Settings");
+            settingsMenuEntry.Selected += SettingsEntrySelected;
             MenuEntries.Add(settingsMenuEntry);
+            #endif
+
+            MenuEntry creditsMenuEntry = new MenuEntry("Credits");
             MenuEntries.Add(creditsMenuEntry);
+            creditsMenuEntry.Selected += CreditsEntrySelected;
+
+            MenuEntry quitMenuEntry = new MenuEntry("Quit");
+            quitMenuEntry.Selected += OnCancel;
             MenuEntries.Add(quitMenuEntry);
+
+            #if (DEBUG && !XBOX)
+            MenuEntry puzzleLevelMenuEntry = new MenuEntry("PuzzleLevel");
+            puzzleLevelMenuEntry.Selected += LoadGameMenuEntrySelected;
             MenuEntries.Add(puzzleLevelMenuEntry);
+            #endif
         }
 
         protected override void LoadContent()

@@ -11,7 +11,11 @@ namespace DreamWorld.InputManagement.Types
                 return
                     InputManager.Keyboard.NewlyPressed(Keys.Up)
                      ||
-                    InputManager.GamePad.NewlyPressed(Buttons.RightThumbstickUp);
+                    InputManager.GamePad.NewlyPressed(Buttons.RightThumbstickUp)
+                     ||
+                    InputManager.GamePad.NewlyPressed(Buttons.LeftThumbstickUp)
+                     ||
+                    InputManager.GamePad.NewlyPressed(Buttons.DPadUp);
             }
         }
 
@@ -21,7 +25,11 @@ namespace DreamWorld.InputManagement.Types
             {
                 return InputManager.Keyboard.NewlyPressed(Keys.Down)
                      ||
-                    InputManager.GamePad.NewlyPressed(Buttons.RightThumbstickDown);
+                    InputManager.GamePad.NewlyPressed(Buttons.RightThumbstickDown)
+                     ||
+                    InputManager.GamePad.NewlyPressed(Buttons.LeftThumbstickDown)
+                     ||
+                    InputManager.GamePad.NewlyPressed(Buttons.DPadDown);
             }
         }
 
