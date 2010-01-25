@@ -48,13 +48,12 @@ namespace DreamWorld.ScreenManagement.Screens
 
             string text = (loaded ? "Loaded!" : "Loading...");
 
-            Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
-            Rectangle fullscreen = new Rectangle(0, 0, viewport.Width, viewport.Height);
-            Vector2 textPosition = new Vector2(10, 10);
+            Vector2 textPosition = new Vector2(100, 60);
 
             spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState);
-
-            spriteBatch.Draw(backgroundTexture, fullscreen, new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha, TransitionAlpha));
+            
+            spriteBatch.Draw(ScreenManager.BlankTexture, ScreenManager.FullscreenDestination, Color.Black);
+            spriteBatch.Draw(backgroundTexture, ScreenManager.GraphicsDevice.Viewport.TitleSafeArea, new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha, TransitionAlpha));
             spriteBatch.DrawString(font, text, textPosition, new Color(0f, 0f, 0f, TransitionAlpha));
 
             spriteBatch.End();

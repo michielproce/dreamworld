@@ -10,7 +10,6 @@ namespace DreamWorld.ScreenManagement
     public abstract class CutsceneScreen : Screen
     {
         private TimeSpan? startTime;
-        private Rectangle destination;
 
         private int currentTexture;
         private int currentLine;
@@ -30,7 +29,6 @@ namespace DreamWorld.ScreenManagement
         public override void Initialize()
         {
             Viewport vp = ScreenManager.Game.GraphicsDevice.Viewport;
-            destination = new Rectangle(0, 0, vp.Width, vp.Height);
 
             base.Initialize();
         }
@@ -44,6 +42,8 @@ namespace DreamWorld.ScreenManagement
 
         public override void Update(GameTime gameTime)
         {
+            if(ScreenManager.InputManager.Menu.Select || ScreenManager.InputManager.Menu.Cancel)
+                Stop();
             if (!startTime.HasValue)
             {
                 startTime = gameTime.TotalGameTime;
@@ -57,10 +57,7 @@ namespace DreamWorld.ScreenManagement
             if (totalTextureDuration < total)
                 currentTexture++;
             if(currentTexture >= textures.Count)
-            {
-                ScreenManager.AddScreen(LoadNextScreen());
-                ExitScreen();
-            }
+                Stop();
 
             if (currentLine < lines.Count)
             {
@@ -81,13 +78,17 @@ namespace DreamWorld.ScreenManagement
                 }
             }
         }
-
+        private void Stop()
+        {
+            ScreenManager.AddScreen(LoadNextScreen());
+            ExitScreen();
+        }
         private void PlayCurrentLine()
         {
             text = lines[currentLine].Text;
             Vector2 textSize = font.MeasureString(text);
-            Viewport vp = ScreenManager.Game.GraphicsDevice.Viewport;
-            textPosition = new Vector2(vp.Width / 2f - textSize.X / 2f, vp.Height - textSize.Y - 50f);
+            Viewport vp = ScreenManager.GraphicsDevice.Viewport;
+            textPosition = new Vector2(vp.Width / 2f - textSize.X / 2f, vp.Height - textSize.Y - 100f);
             lines[currentLine].Audio.Play();
         }
 
@@ -95,12 +96,13 @@ namespace DreamWorld.ScreenManagement
         {
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             spriteBatch.Begin();
-            spriteBatch.Draw(textures[currentTexture].Texture, destination, Color.White);
+            spriteBatch.Draw(ScreenManager.BlankTexture, ScreenManager.FullscreenDestination, Color.Black);
+            spriteBatch.Draw(textures[currentTexture].Texture, ScreenManager.GraphicsDevice.Viewport.TitleSafeArea, Color.White);
             if(((DreamWorldGame)ScreenManager.Game).Config.Subtitles)
                 spriteBatch.DrawString(font, text, textPosition, Color.White);
             spriteBatch.End();
-
         }
+
 
         protected abstract List<CutsceneTexture> LoadTextures();
         protected abstract List<CutsceneLine> LoadLines();

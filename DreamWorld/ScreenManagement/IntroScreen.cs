@@ -7,7 +7,6 @@ namespace DreamWorld.ScreenManagement
 {
     public abstract class IntroScreen : Screen
     {
-        private Rectangle destination;
         private Texture2D texture;
 
         private TimeSpan duration;
@@ -23,8 +22,6 @@ namespace DreamWorld.ScreenManagement
         protected override void LoadContent()
         {
             texture = ScreenManager.Game.Content.Load<Texture2D>(@"Textures\Intro\" + TextureName);
-            Viewport vp = ScreenManager.Game.GraphicsDevice.Viewport;
-            destination = new Rectangle(0, 0, vp.Width, vp.Height);     
         }
 
         protected abstract string TextureName { get; }
@@ -45,7 +42,7 @@ namespace DreamWorld.ScreenManagement
         {
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             spriteBatch.Begin();
-            spriteBatch.Draw(texture, destination, new Color(255, 255, 255, TransitionAlpha));
+            spriteBatch.Draw(texture, ScreenManager.Game.GraphicsDevice.Viewport.TitleSafeArea, new Color(255, 255, 255, TransitionAlpha));
             spriteBatch.End();
         }    
     }

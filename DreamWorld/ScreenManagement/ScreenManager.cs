@@ -15,8 +15,8 @@ namespace DreamWorld.ScreenManagement
 
         public SpriteBatch SpriteBatch { get; private set; }
         public SpriteFont Font { get; private set; }
-        private Texture2D blankTexture;
-
+        public Texture2D BlankTexture { get; private set; }
+        public Rectangle FullscreenDestination { get; private set; }
         private bool Initialized;
 
         public ScreenManager(Game game) : base(game)
@@ -31,7 +31,7 @@ namespace DreamWorld.ScreenManagement
 
             foreach (Screen screen in screens)
                 screen.Initialize();
-
+            FullscreenDestination = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             Initialized = true;
         }
 
@@ -42,7 +42,7 @@ namespace DreamWorld.ScreenManagement
             ContentManager content = Game.Content;
             Font = content.Load<SpriteFont>(@"Fonts/default");
             Font.Spacing *= 0.9f;
-            blankTexture = content.Load<Texture2D>(@"Textures/blank");
+            BlankTexture = content.Load<Texture2D>(@"Textures/blank");
         }
 
         protected override void UnloadContent()
@@ -126,7 +126,7 @@ namespace DreamWorld.ScreenManagement
 
             SpriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState);
 
-            SpriteBatch.Draw(blankTexture,
+            SpriteBatch.Draw(BlankTexture,
                              new Rectangle(0, 0, viewport.Width, viewport.Height),
                              new Color(0, 0, 0, (byte)alpha));
 
