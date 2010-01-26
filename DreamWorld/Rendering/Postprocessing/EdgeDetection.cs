@@ -45,7 +45,7 @@ namespace DreamWorld.Rendering.Postprocessing
         public void PrepareDrawDefault()
         {
             device.SetRenderTarget(0, sceneRenderTarget);
-            device.Clear(Color.CornflowerBlue);
+            device.Clear(Color.White);
         }
 
 

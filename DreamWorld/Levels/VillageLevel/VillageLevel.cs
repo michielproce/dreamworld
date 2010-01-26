@@ -1,5 +1,6 @@
 ﻿using System;
 using DreamWorld.Entities;
+using DreamWorld.Rendering.Postprocessing;
 using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Media;
@@ -15,6 +16,16 @@ namespace DreamWorld.Levels.VillageLevel
         public override string LevelInformationFileName
         {
             get { return "Village.xml"; }
+        }
+
+        public override void InitBloom(ref Bloom bloom)
+        {
+            bloom.BloomThreshold = .3f;
+            bloom.BlurAmount = 4f;
+            bloom.BloomIntensity = 1f;
+            bloom.BaseIntensity = 1f;
+            bloom.BloomSaturation = 1f;
+            bloom.BaseSaturation = 1f;
         }
 
         public override void Initialize()

@@ -136,9 +136,7 @@
     <Compile Include="Levels\VillageLevel\Entities\MorwirsHouse.cs" />
     <Compile Include="Levels\VillageLevel\Entities\TestEntity.cs" />
     <Compile Include="Levels\PuzzleLevel.cs" />
-    <Compile Include="Levels\TestPuzzleLevel\Entities\TestElement.cs" />
     <Compile Include="Entities\Group.cs" />
-    <Compile Include="Levels\TestPuzzleLevel\TestPuzzleLevel.cs" />
     <Compile Include="Levels\VillageLevel\Entities\TrashCan.cs" />
     <Compile Include="Levels\VillageLevel\Entities\VillageZeppelin.cs" />
     <Compile Include="Levels\VillageLevel\Entities\Wall.cs" />

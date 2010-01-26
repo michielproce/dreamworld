@@ -6,12 +6,12 @@ namespace DreamWorld.Rendering.Postprocessing
 {
     public class Bloom : PostProcessor
     {
-        private const float bloomThreshold  = .3f;
-        private const float blurAmount      = 4f;
-        private const float bloomIntensity  = 1f;
-        private const float baseIntensity   = 1f;
-        private const float bloomSaturation = 1f;
-        private const float baseSaturation  = 1f;
+        public float BloomThreshold { get; set; }
+        public float BlurAmount { get; set; }
+        public float BloomIntensity { get; set; }
+        public float BaseIntensity { get; set; }
+        public float BloomSaturation { get; set; }
+        public float BaseSaturation { get; set; }
 
         Effect bloomExtractEffect;
         Effect bloomCombineEffect;
@@ -22,7 +22,7 @@ namespace DreamWorld.Rendering.Postprocessing
         RenderTarget2D renderTarget2;
 
         public Bloom(Game game, SpriteBatch spriteBatch) : base(game, spriteBatch)
-        {            
+        {                  
             bloomExtractEffect = game.Content.Load<Effect>(@"Effects\BloomExtract");
             bloomCombineEffect = game.Content.Load<Effect>(@"Effects\BloomCombine");
             gaussianBlurEffect = game.Content.Load<Effect>(@"Effects\GaussianBlur");
@@ -51,7 +51,7 @@ namespace DreamWorld.Rendering.Postprocessing
             device.ResolveBackBuffer(resolveTarget);
             
             // Pass 1: Extract bloom
-            bloomExtractEffect.Parameters["BloomThreshold"].SetValue(bloomThreshold);
+            bloomExtractEffect.Parameters["BloomThreshold"].SetValue(BloomThreshold);
             DrawFullscreenQuad(resolveTarget, renderTarget1, bloomExtractEffect);
 
             // Pass 2: Horizontal Blur
@@ -67,10 +67,10 @@ namespace DreamWorld.Rendering.Postprocessing
 
             EffectParameterCollection parameters = bloomCombineEffect.Parameters;
 
-            parameters["BloomIntensity"].SetValue(bloomIntensity);
-            parameters["BaseIntensity"].SetValue(baseIntensity);
-            parameters["BloomSaturation"].SetValue(bloomSaturation);
-            parameters["BaseSaturation"].SetValue(baseSaturation);
+            parameters["BloomIntensity"].SetValue(BloomIntensity);
+            parameters["BaseIntensity"].SetValue(BaseIntensity);
+            parameters["BloomSaturation"].SetValue(BloomSaturation);
+            parameters["BaseSaturation"].SetValue(BaseSaturation);
 
             device.Textures[1] = resolveTarget;
 
@@ -153,7 +153,7 @@ namespace DreamWorld.Rendering.Postprocessing
 
         private float ComputeGaussian(float n)
         {
-            float theta = blurAmount;
+            float theta = BlurAmount;
 
             return (float)((1.0 / Math.Sqrt(2 * Math.PI * theta)) *
                            Math.Exp(-(n * n) / (2 * theta * theta)));

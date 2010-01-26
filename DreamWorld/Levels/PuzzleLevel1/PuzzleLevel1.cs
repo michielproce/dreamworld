@@ -1,6 +1,7 @@
 ﻿using System;
 using DreamWorld.Entities;
 using DreamWorld.Levels.PuzzleLevel1.Entities;
+using DreamWorld.Rendering.Postprocessing;
 using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Levels.PuzzleLevel1
@@ -11,6 +12,11 @@ namespace DreamWorld.Levels.PuzzleLevel1
 
         private Cow[] Cows;
 
+        public PuzzleLevel1()
+        {
+            BloomOnTime = TimeSpan.FromSeconds(3);            
+        }
+
         public override string LevelInformationFileName
         {
             get { return "PuzzleLevel1.xml"; }
@@ -18,7 +24,7 @@ namespace DreamWorld.Levels.PuzzleLevel1
 
         public override void Initialize()
         {
-            base.Initialize();
+            base.Initialize();            
 
             Group group1 = new CowGroup();
             Group group2 = new CowGroup();
@@ -92,6 +98,16 @@ namespace DreamWorld.Levels.PuzzleLevel1
                 initialTutorialShown = true;
             }
             base.Update(gameTime);
+        }
+
+        public override void InitBloom(ref Bloom bloom)
+        {
+            bloom.BloomThreshold = .3f;
+            bloom.BlurAmount = 8f;
+            bloom.BloomIntensity = 1f;
+            bloom.BaseIntensity = 1f;
+            bloom.BloomSaturation = 2f;
+            bloom.BaseSaturation = 2f;
         }
     }
 }

@@ -211,12 +211,6 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
     </Compile>
-    <None Include="Levels\TestPuzzel.xml">
-      <Name>TestPuzzel</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Compile Include="Models\Puzzle\Level1\Platform.X">
       <Name>Platform</Name>
       <Importer>XImporter</Importer>

@@ -33,7 +33,9 @@ namespace DreamWorld.ScreenManagement.Screens
             
             
             Level = level;
-            Level.GameScreen = this;            
+            Level.GameScreen = this;
+            
+            TransitionOnTime = level.BloomOnTime;
         }
 
         public override void Initialize()
@@ -121,7 +123,7 @@ namespace DreamWorld.ScreenManagement.Screens
 
         public override void Draw(GameTime gameTime)
         {
-            ScreenManager.GraphicsDevice.Clear(Color.CornflowerBlue);
+            ScreenManager.GraphicsDevice.Clear(Color.White);
             Level.Draw(gameTime);           
             #if (DEBUG && !XBOX)
             DebugCamera debugCamera = Camera as DebugCamera;

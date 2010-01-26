@@ -34,6 +34,8 @@ namespace DreamWorld.Levels
         private Bloom bloom;
         private EdgeDetection edgeDetection;
 
+        public TimeSpan BloomOnTime { get; protected set; }
+
         protected Level()
         {
             Groups = new Dictionary<int, Group>();
@@ -81,8 +83,11 @@ namespace DreamWorld.Levels
             }
             
             spriteBatch = new SpriteBatch(Game.GraphicsDevice);
-            if(Game.Config.Bloom)
+            if (Game.Config.Bloom)
+            {
                 bloom = new Bloom(Game, spriteBatch);
+                InitBloom(ref bloom);
+            }
             if(Game.Config.EdgeDetect)
                 edgeDetection = new EdgeDetection(Game, spriteBatch);
             initialized = true;
@@ -142,6 +147,14 @@ namespace DreamWorld.Levels
                 particleSystem.Update(gameTime);
             foreach (Group group in Groups.Values)
                 group.Update(gameTime);
+            
+            // Update for bloom in, TODO: This is only valid for puzzle level, it "knows" the targets   
+            float intensity = 1 - GameScreen.TransitionAlpha/255f;
+            bloom.BaseIntensity = 1f + intensity * 6f;
+            bloom.BloomIntensity = 1f + intensity * 6f;
+            const float sat = 4f;
+            bloom.BaseSaturation = sat - intensity * sat;
+            bloom.BloomSaturation = sat - intensity * sat;
         }
 
         public void Draw(GameTime gameTime)
@@ -249,6 +262,7 @@ namespace DreamWorld.Levels
             }
         }
 
-        public abstract string LevelInformationFileName { get; }        
+        public abstract string LevelInformationFileName { get; }
+        public abstract void InitBloom(ref Bloom bloom);
     }
 }
