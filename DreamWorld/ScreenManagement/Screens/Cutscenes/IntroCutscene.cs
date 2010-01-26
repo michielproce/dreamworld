@@ -32,7 +32,7 @@ namespace DreamWorld.ScreenManagement.Screens.Cutscenes
             lines.Add(new CutsceneLine(Content.Load<SoundEffect>(@"Audio\Voice\Intro\03 planet_Diamonds"), "The planet was rich of diamonds, and people from all over their planet and even other planets wanted to have some of them."));
             lines.Add(new CutsceneLine(Content.Load<SoundEffect>(@"Audio\Voice\Intro\04 fierce_Competition"), "Fierce competition broke out between many mining companies,"));
             lines.Add(new CutsceneLine(Content.Load<SoundEffect>(@"Audio\Voice\Intro\05 planet_Ordr"), "and eventually the Planet Order decided to ban companies from other planets to mine the diamonds"));
-            lines.Add(new CutsceneLine(Content.Load<SoundEffect>(@"Audio\Voice\Intro\06 wealth_prosperity"), "giving the peope of Wubbles a chance at wealth en prosperity"));
+            lines.Add(new CutsceneLine(Content.Load<SoundEffect>(@"Audio\Voice\Intro\06 wealth_prosperity"), "giving the people of Wubbles a chance at wealth and prosperity"));
             lines.Add(new CutsceneLine(Content.Load<SoundEffect>(@"Audio\Voice\Intro\07 TDMC"), "Soon after, a few companies merged into a single organisation, known simply as The Diamond Mining Company, or TDMC.", Content.Load<Texture2D>(@"Textures\Cutscenes\Intro\shot2")));
             lines.Add(new CutsceneLine(Content.Load<SoundEffect>(@"Audio\Voice\Intro\08 looking_good"), "Things were looking good for the planet and the Koowaalaas", TimeSpan.FromSeconds(2)));
             
