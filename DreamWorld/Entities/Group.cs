@@ -188,7 +188,7 @@ namespace DreamWorld.Entities
         /// <summary>
         /// Returns true if this group is allowed to rotate in this direction
         /// </summary>
-        public bool IsRotationAllowed(Vector3 direction)
+        public virtual bool IsRotationAllowed(Vector3 direction)
         {
             return ((direction.X == 0 || AllowedRotations.X != 0) && (direction.Y == 0 || AllowedRotations.Y != 0)) &&
                    (direction.Z == 0 || AllowedRotations.Z != 0);
@@ -205,7 +205,7 @@ namespace DreamWorld.Entities
             if (IsRotating || !IsRotationAllowed(direction))
                 return;
 
-//            TODO: multiple rotations at the same time
+//            TODO (?): multiple rotations at the same time
 //            if (IsRotating)
 //            {
 //                OriginalRotation = Quaternion.Lerp(OriginalRotation, TargetRotation, AmountRotated);

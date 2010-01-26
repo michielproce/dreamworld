@@ -14,7 +14,7 @@ namespace DreamWorld.ScreenManagement.Screens
             playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
             MenuEntries.Add(playGameMenuEntry);
 
-            #if (DEBUG && !XBOX)
+            #if (!XBOX)
             MenuEntry settingsMenuEntry = new MenuEntry("Settings");
             settingsMenuEntry.Selected += SettingsEntrySelected;
             MenuEntries.Add(settingsMenuEntry);
@@ -28,7 +28,7 @@ namespace DreamWorld.ScreenManagement.Screens
             quitMenuEntry.Selected += OnCancel;
             MenuEntries.Add(quitMenuEntry);
 
-            #if (DEBUG && !XBOX)
+            #if (DEBUG)
             MenuEntry puzzleLevelMenuEntry = new MenuEntry("PuzzleLevel");
             puzzleLevelMenuEntry.Selected += LoadGameMenuEntrySelected;
             MenuEntries.Add(puzzleLevelMenuEntry);

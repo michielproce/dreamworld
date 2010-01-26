@@ -7,7 +7,7 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
     class Cow : GroupCenter
     {
         private const float gravity = .05f;
-        private float velocity;
+        public float velocity { get; private set; }
 
         protected override void LoadContent()
         {
