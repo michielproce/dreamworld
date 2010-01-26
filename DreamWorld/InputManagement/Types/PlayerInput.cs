@@ -100,6 +100,11 @@ namespace DreamWorld.InputManagement.Types
             get { return InputManager.Keyboard.NewlyPressed(Keys.Space) || InputManager.GamePad.NewlyPressed(Buttons.A); }
         }
 
+        public bool Interact
+        {
+            get { return InputManager.Keyboard.NewlyPressed(Keys.Enter) || InputManager.GamePad.NewlyPressed(Buttons.B); }
+        }
+
         public bool ShowPauseMenu
         {
             get

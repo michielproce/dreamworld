@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DreamWorld.Levels.VillageLevel;
 using DreamWorld.ScreenManagement.Screens;
+using DreamWorld.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -106,27 +107,11 @@ namespace DreamWorld.ScreenManagement
         {
             if (lines[currentLine].Texture != null)
                 texture = lines[currentLine].Texture;
-            text = CutLine(lines[currentLine].Text, 50);
+            text = StringUtil.CutLine(lines[currentLine].Text, 50);
             Vector2 textSize = font.MeasureString(text);
             Viewport vp = ScreenManager.GraphicsDevice.Viewport;           
             textPosition = new Vector2(vp.Width / 2f - textSize.X / 2f, vp.Height - textSize.Y - 100f);
             lines[currentLine].Audio.Play();
-        }
-
-        private static string CutLine(string line, int max)
-        {
-            for (int i = 0; i < line.Length; i += max)
-            {
-                for (int j = i; j > 0; j--)
-                {
-                    if (line[j] == ' ')
-                    {
-                        line = line.Remove(j, 1).Insert(j, "\n");
-                        break;
-                    }
-                }
-            }
-            return line;
         }
 
         public override void Draw(GameTime gameTime)

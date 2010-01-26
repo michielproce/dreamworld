@@ -14,6 +14,8 @@ namespace DreamWorld.ScreenManagement.Screens
 {
     public class GameScreen : Screen
     {
+        private bool initialTutorialShown;
+        public TutorialText TutorialText { get; private set; }
         public static GameScreen Instance { get; private set; }
         public Camera Camera { get; private set; }
         public Level Level { get; private set; }
@@ -52,6 +54,11 @@ namespace DreamWorld.ScreenManagement.Screens
             Level.Initialize();
             Camera.Initialize();
 
+            TutorialText = new TutorialText(ScreenManager.SpriteBatch, 
+                                            Content.Load<SpriteFont>(@"Fonts\tutorial"),
+                                            Content.Load<Texture2D>(@"Textures\blank"),
+                                            new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y) + new Vector2(50));
+            
             LoadingScreen.Loaded = true;
         }
 
@@ -87,6 +94,14 @@ namespace DreamWorld.ScreenManagement.Screens
                 if (Level.Skybox != null)
                     Level.Skybox.Update(gameTime); // TODO: This updates the skybox second time around, but we don't want the camera delay.
             }
+
+            if(!initialTutorialShown)
+            {
+                TutorialText.SetText("Welcome to DreamWorld. Use the left joystick to move, the right joystick to look around, A button to jump and B button to interact.", gameTime.TotalGameTime + TimeSpan.FromSeconds(10));
+                initialTutorialShown = true;
+            }
+
+            TutorialText.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -123,6 +138,8 @@ namespace DreamWorld.ScreenManagement.Screens
             }
                 debugDrawer.Draw(gameTime);
             #endif
+
+            TutorialText.Draw(gameTime);
             base.Draw(gameTime);
         }
     }

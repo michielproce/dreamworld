@@ -171,9 +171,11 @@
     <Compile Include="ScreenManagement\MenuScreen.cs" />
     <Compile Include="ScreenManagement\Screens\MessageBoxScreen.cs" />
     <Compile Include="ScreenManagement\Screens\SettingsMenuScreen.cs" />
+    <Compile Include="ScreenManagement\Screens\TutorialText.cs" />
     <Compile Include="ScreenManagement\SettingsMenuEntry.cs" />
     <Compile Include="Util\Curve3D.cs" />
     <Compile Include="Util\CollisionSkinPredicates.cs" />
+    <Compile Include="Util\StringUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
