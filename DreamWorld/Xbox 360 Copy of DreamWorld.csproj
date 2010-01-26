@@ -137,8 +137,6 @@
     <Compile Include="Util\Curve3D.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Audio\Voice\test1.wav" />
-    <Content Include="Audio\Voice\test2.wav" />
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
