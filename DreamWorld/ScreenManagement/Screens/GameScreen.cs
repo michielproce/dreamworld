@@ -95,13 +95,18 @@ namespace DreamWorld.ScreenManagement.Screens
                     Level.Skybox.Update(gameTime); // TODO: This updates the skybox second time around, but we don't want the camera delay.
             }
 
-            if(!initialTutorialShown)
+            if (TutorialText != null)
             {
-                TutorialText.SetText("Welcome to DreamWorld. Use the left joystick to move, the right joystick to look around, A button to jump and B button to interact.", gameTime.TotalGameTime + TimeSpan.FromSeconds(10));
-                initialTutorialShown = true;
-            }
+                if (!initialTutorialShown)
+                {
+                    TutorialText.SetText(
+                        "Welcome to DreamWorld. Use the left joystick to move, the right joystick to look around, A button to jump and B button to interact.",
+                        gameTime.TotalGameTime + TimeSpan.FromSeconds(10));
+                    initialTutorialShown = true;
+                }
 
-            TutorialText.Update(gameTime);
+                TutorialText.Update(gameTime);
+            }
             base.Update(gameTime);
         }
 
@@ -139,7 +144,8 @@ namespace DreamWorld.ScreenManagement.Screens
                 debugDrawer.Draw(gameTime);
             #endif
 
-            TutorialText.Draw(gameTime);
+            if (TutorialText != null)            
+                TutorialText.Draw(gameTime);
             base.Draw(gameTime);
         }
     }
