@@ -33,9 +33,7 @@ namespace DreamWorld.ScreenManagement.Screens
             
             
             Level = level;
-            Level.GameScreen = this;
-            
-            TransitionOnTime = level.BloomOnTime;
+            Level.GameScreen = this;           
         }
 
         public override void Initialize()

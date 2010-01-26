@@ -14,7 +14,7 @@ namespace DreamWorld.Levels.PuzzleLevel1
 
         public PuzzleLevel1()
         {
-            BloomOnTime = TimeSpan.FromSeconds(3);            
+            
         }
 
         public override string LevelInformationFileName
@@ -24,7 +24,9 @@ namespace DreamWorld.Levels.PuzzleLevel1
 
         public override void Initialize()
         {
-            base.Initialize();            
+            base.Initialize();
+
+            GameScreen.TransitionOnTime = TimeSpan.FromSeconds(3);
 
             Group group1 = new CowGroup();
             Group group2 = new CowGroup();
@@ -92,6 +94,14 @@ namespace DreamWorld.Levels.PuzzleLevel1
                     gameTime.TotalGameTime + TimeSpan.FromSeconds(15));
                 initialTutorialShown = true;
             }
+
+            // Update for bloom
+            float intensity = 1 - GameScreen.TransitionAlpha / 255f;
+            bloom.BaseIntensity = 1f + intensity * 6f;
+            bloom.BloomIntensity = 1f + intensity * 6f;
+            const float sat = 4f;
+            bloom.BaseSaturation = sat - intensity * sat;
+            bloom.BloomSaturation = sat - intensity * sat;
             base.Update(gameTime);
         }
 

@@ -1,4 +1,5 @@
 using DreamWorld.InputManagement;
+using DreamWorld.Levels.PuzzleLevel1;
 using DreamWorld.Levels.VillageLevel;
 using DreamWorld.ScreenManagement;
 using DreamWorld.ScreenManagement.Screens;
@@ -44,7 +45,9 @@ namespace DreamWorld
             Components.Add(ScreenManager);
             Components.Add(InputManager);
 
-            ScreenManager.AddScreen(new FloatingKoalaGamesIntroScreen());
+//            ScreenManager.AddScreen(new FloatingKoalaGamesIntroScreen());
+//            ScreenManager.AddScreen(new GameScreen(new VillageLevel()));
+            ScreenManager.AddScreen(new GameScreen(new PuzzleLevel1()));
         }
 
         public void ApplyConfig()

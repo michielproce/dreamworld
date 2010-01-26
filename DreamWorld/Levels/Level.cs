@@ -31,10 +31,8 @@ namespace DreamWorld.Levels
         private bool initialized;
 
         private SpriteBatch spriteBatch;
-        private Bloom bloom;
+        protected Bloom bloom;
         private EdgeDetection edgeDetection;
-
-        public TimeSpan BloomOnTime { get; protected set; }
 
         protected Level()
         {
@@ -146,15 +144,7 @@ namespace DreamWorld.Levels
             foreach (ParticleSystem particleSystem in particleSystems.Values)
                 particleSystem.Update(gameTime);
             foreach (Group group in Groups.Values)
-                group.Update(gameTime);
-            
-            // Update for bloom in, TODO: This is only valid for puzzle level, it "knows" the targets   
-            float intensity = 1 - GameScreen.TransitionAlpha/255f;
-            bloom.BaseIntensity = 1f + intensity * 6f;
-            bloom.BloomIntensity = 1f + intensity * 6f;
-            const float sat = 4f;
-            bloom.BaseSaturation = sat - intensity * sat;
-            bloom.BloomSaturation = sat - intensity * sat;
+                group.Update(gameTime);               
         }
 
         public void Draw(GameTime gameTime)

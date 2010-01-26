@@ -22,9 +22,9 @@ namespace DreamWorld.ScreenManagement
 
         public bool IsPopup { get; protected set; }
 
-        public TimeSpan TransitionOnTime { get; protected set; }
+        public TimeSpan TransitionOnTime { get; set; }
 
-        public TimeSpan TransitionOffTime { get; protected set; }
+        public TimeSpan TransitionOffTime { get; set; }
 
         public float TransitionPosition { get; protected set; }
 
