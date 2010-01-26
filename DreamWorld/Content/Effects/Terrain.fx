@@ -139,7 +139,7 @@ float4 TerrainPixelShader(PS_INPUT input) : COLOR0
     return color;
 }
 
-float4 IgnoreNormalDepthPixelShader(float4 color : COLOR0) : COLOR0
+float4 IgnoreNormalDepthPixelShader() : COLOR0
 {
     return 1;
 }
