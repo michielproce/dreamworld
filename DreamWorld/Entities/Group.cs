@@ -71,7 +71,7 @@ namespace DreamWorld.Entities
             }
         }
 
-        private const float RotationSpeed = 0.01f;
+        private const float RotationSpeed = 0.015f;
 
         public Group()
         {

@@ -11,7 +11,7 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
 
         protected override void LoadContent()
         {
-            Model = GameScreen.Content.Load<Model>(@"Models\Test\Test");
+            Model = GameScreen.Content.Load<Model>(@"Models\Puzzle\Level1\Cow");
 
             base.LoadContent();
         }
@@ -90,9 +90,9 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
             materialProperties.Elasticity = 0.25f;
 
             // Primitive:
-            box = new JigLibX.Geometry.Box(Vector3.Transform(new Vector3(-5f, 0f, -5f), Matrix.CreateScale(Scale)),
-                                           Matrix.CreateFromQuaternion(new Quaternion(0f, 0f, 0f, 0.9999999f)),
-                                           Vector3.Transform(new Vector3(10f, 10f, 10f), Matrix.CreateScale(Scale)));
+            box = new JigLibX.Geometry.Box(Vector3.Transform(new Vector3(-20.59352f, -0.1788588f, -8.250205f), Matrix.CreateScale(Scale)),
+                Matrix.CreateFromQuaternion(new Quaternion(0f, 0f, 0f, 0.9999999f)),
+                Vector3.Transform(new Vector3(40.6418f, 25.50671f, 15.746f), Matrix.CreateScale(Scale)));
 
             skin.AddPrimitive(box, materialProperties);
             #endregion
@@ -107,7 +107,7 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
 
             // Sync Body & Skin
             body.MoveTo(Vector3.Zero, Matrix.Identity);
-            skin.ApplyLocalTransform(new JigLibX.Math.Transform(Vector3.Zero, Matrix.Identity));
+            skin.ApplyLocalTransform(new JigLibX.Math.Transform(Vector3.Zero, Matrix.CreateScale(1, 1, -1)));
 
             // Enable Body
             body.EnableBody();

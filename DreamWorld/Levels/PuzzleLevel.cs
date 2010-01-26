@@ -8,7 +8,7 @@ namespace DreamWorld.Levels
 {
     public abstract class PuzzleLevel : Level
     {
-        protected internal float selectionRadius = 100;
+        protected internal float selectionRadius = 110;
         private int selectedGroup;
 
         public Group GetSelectedGroup()

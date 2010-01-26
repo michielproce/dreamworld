@@ -7,7 +7,6 @@ namespace DreamWorld.InputManagement.Types
 {
     public class PlayerInput : Input
     {
-        public const float MovementSpeed = 1f;
         public const float HorizontalMouseRotationSpeed = MathHelper.Pi/2000f;
         public const float HorizontalGamePadRotationSpeed = MathHelper.Pi/100f;
         public const float VerticalMouseRotationSpeed = MathHelper.Pi/2000f;
@@ -18,19 +17,18 @@ namespace DreamWorld.InputManagement.Types
             get
             {
                 Vector3 movement = new Vector3
-                    ((InputManager.Keyboard.State.IsKeyDown(Keys.A) ? -MovementSpeed : 0) +
-                     (InputManager.Keyboard.State.IsKeyDown(Keys.D) ? MovementSpeed : 0) +
-                     InputManager.GamePad.State.ThumbSticks.Left.X*MovementSpeed,
+                    ((InputManager.Keyboard.State.IsKeyDown(Keys.A) ? -1 : 0) +
+                     (InputManager.Keyboard.State.IsKeyDown(Keys.D) ? 1 : 0) +
+                     InputManager.GamePad.State.ThumbSticks.Left.X,
                      0,
-                     (InputManager.Keyboard.State.IsKeyDown(Keys.W) ? -MovementSpeed : 0) +
-                     (InputManager.Keyboard.State.IsKeyDown(Keys.S) ? MovementSpeed : 0) +
-                     -InputManager.GamePad.State.ThumbSticks.Left.Y*MovementSpeed
+                     (InputManager.Keyboard.State.IsKeyDown(Keys.W) ? -1 : 0) +
+                     (InputManager.Keyboard.State.IsKeyDown(Keys.S) ? 1 : 0) +
+                     -InputManager.GamePad.State.ThumbSticks.Left.Y
                     );
 
-                if (movement.Length() > MovementSpeed)
+                if (movement.Length() > 1)
                 {
                     movement.Normalize();
-                    movement *= MovementSpeed;
                 }
                 return movement;
             }

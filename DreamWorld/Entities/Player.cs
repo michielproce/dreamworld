@@ -17,7 +17,8 @@ namespace DreamWorld.Entities
             Jumping
         }
 
-        private const float jumpStart = 1.5f;
+        private const float movementSpeed = .7f;
+        private const float jumpStart = 1f;
         private const float jumpGravity = .05f;
         private float jumpVelocity;
 
@@ -61,7 +62,7 @@ namespace DreamWorld.Entities
 
             Body.Orientation *= Matrix.CreateRotationY(inputManager.Player.Rotation);
 
-            Vector3 movement = Vector3.Transform(inputManager.Player.Movement, Body.Orientation);
+            Vector3 movement = Vector3.Transform(inputManager.Player.Movement * movementSpeed, Body.Orientation);
 
             if (IsOnTerrain())
             {
@@ -110,13 +111,14 @@ namespace DreamWorld.Entities
                     movement = new Vector3(0, movement.Y, 0);
             }
 
-            jumpVelocity = movement.Y;
+            if(playerState == PlayerState.Jumping)
+                jumpVelocity = movement.Y;
 
             Body.Position += movement;
 
             if (playerState != PlayerState.Jumping)
             {
-                if (movement.Length() != 0)
+                if (new Vector2(movement.X, movement.Z).Length() != 0)
                     Animation.StartClip("Running");
                 else
                     Animation.StartClip("Standing");
@@ -200,9 +202,9 @@ namespace DreamWorld.Entities
             materialProperties.Elasticity = 0.0025f;
 
             // Primitive:
-            capsule = new JigLibX.Geometry.Capsule(new Vector3(0, 11, 0),
+            capsule = new JigLibX.Geometry.Capsule(new Vector3(0, 10, 0),
                 Matrix.CreateRotationX(MathHelper.PiOver2),
-                4,
+                3,
                 7f);
 
             skin.AddPrimitive(capsule, materialProperties);

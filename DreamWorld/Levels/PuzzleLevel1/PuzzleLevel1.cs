@@ -23,19 +23,37 @@ namespace DreamWorld.Levels.PuzzleLevel1
             SetGroup(group1, 15);
             SetGroup(group2, 16);
 
-            Cows = new Cow[2];
-            Cows[0] = new Cow { Name = "Cow1" };
-            Cows[1] = new Cow { Name = "Cow2" };
+            Cows = new Cow[4];
+            Cows[0] = new Cow { Name = "Cow1", Scale = new Vector3(0.3f) };
+            Cows[1] = new Cow { Name = "Cow2", Scale = new Vector3(0.3f) };
 
             Cows[0].Initialize();
             Cows[1].Initialize();
-            Cows[0].Body.MoveTo(new Vector3(210, 28, -20), Matrix.Identity);
-            Cows[1].Body.MoveTo(new Vector3(270, 28, -20), Matrix.Identity);
+            Cows[0].Body.MoveTo(new Vector3(200, 30, -20), Matrix.Identity);
+            Cows[1].Body.MoveTo(new Vector3(260, 30, -20), Matrix.Identity);
 
             Cows[0].Group = group1;
             Cows[1].Group = group2;
             group1.Center = Cows[1];
             group2.Center = Cows[0];
+
+            Group group3 = new CowGroup();
+            Group group4 = new CowGroup();
+            SetGroup(group3, 17);
+            SetGroup(group4, 18);
+
+            Cows[2] = new Cow { Name = "Cow3", Scale = new Vector3(0.3f) };
+            Cows[3] = new Cow { Name = "Cow4", Scale = new Vector3(0.3f) };
+
+            Cows[2].Initialize();
+            Cows[3].Initialize();
+            Cows[2].Body.MoveTo(new Vector3(160, 30, -40), Matrix.Identity);
+            Cows[3].Body.MoveTo(new Vector3(100, 30, -40), Matrix.Identity);
+
+            Cows[2].Group = group3;
+            Cows[3].Group = group4;
+            group3.Center = Cows[3];
+            group4.Center = Cows[2];
         }
 
         protected override bool GameIsLost()

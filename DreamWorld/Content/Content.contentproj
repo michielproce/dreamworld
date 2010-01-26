@@ -270,10 +270,20 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="Models\Puzzle\Level1\meadowFenced.X">
+      <Name>meadowFenced</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
     <Compile Include="Models\Village\Morwir.X">
       <Name>Morwir</Name>
       <Importer>XImporter</Importer>
       <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Puzzle\Level1\Cow.X">
+      <Name>Cow</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
     </Compile>
     <Compile Include="Models\Village\Wall.X">
       <Name>Wall</Name>
