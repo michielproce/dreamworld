@@ -153,7 +153,7 @@ float4 DefaultPixelShader(PS_INPUT input) : COLOR0
 float4 HighlightPixelShader(PS_INPUT input) : COLOR0
 {	
 	float4 color = DefaultPixelShader(input);
-    color.rgb *= 5;
+    color.rgb *= 3;
     return color;
 }
 
