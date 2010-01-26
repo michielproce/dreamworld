@@ -495,19 +495,19 @@
       <Name>sentity633991621915254991</Name>
       <TypeName>DreamWorld.Levels.PuzzleLevel1.Entities.Platform</TypeName>
       <Position>
-        <X>115</X>
+        <X>120</X>
         <Y>39</Y>
-        <Z>110</Z>
+        <Z>91</Z>
       </Position>
       <Rotation>
-        <X>0</X>
+        <X>90</X>
         <Y>0</Y>
-        <Z>90</Z>
+        <Z>0</Z>
       </Rotation>
       <Scale>
-        <X>2</X>
+        <X>1.8</X>
         <Y>2</Y>
-        <Z>3.8</Z>
+        <Z>2</Z>
       </Scale>
       <Group>8</Group>
     </SpawnInformation>
@@ -937,6 +937,84 @@
       <ID>1</ID>
       <R>255</R>
       <G>0</G>
+      <B>0</B>
+    </GroupColorInformation>
+    <GroupColorInformation>
+      <ID>2</ID>
+      <R>255</R>
+      <G>0</G>
+      <B>150</B>
+    </GroupColorInformation>
+    <GroupColorInformation>
+      <ID>3</ID>
+      <R>255</R>
+      <G>255</G>
+      <B>0</B>
+    </GroupColorInformation>
+    <GroupColorInformation>
+      <ID>4</ID>
+      <R>0</R>
+      <G>0</G>
+      <B>255</B>
+    </GroupColorInformation>
+    <GroupColorInformation>
+      <ID>5</ID>
+      <R>255</R>
+      <G>0</G>
+      <B>255</B>
+    </GroupColorInformation>
+    <GroupColorInformation>
+      <ID>6</ID>
+      <R>0</R>
+      <G>255</G>
+      <B>255</B>
+    </GroupColorInformation>
+    <GroupColorInformation>
+      <ID>7</ID>
+      <R>0</R>
+      <G>255</G>
+      <B>255</B>
+    </GroupColorInformation>
+    <GroupColorInformation>
+      <ID>8</ID>
+      <R>255</R>
+      <G>175</G>
+      <B>0</B>
+    </GroupColorInformation>
+    <GroupColorInformation>
+      <ID>9</ID>
+      <R>0</R>
+      <G>0</G>
+      <B>255</B>
+    </GroupColorInformation>
+    <GroupColorInformation>
+      <ID>10</ID>
+      <R>255</R>
+      <G>255</G>
+      <B>0</B>
+    </GroupColorInformation>
+    <GroupColorInformation>
+      <ID>11</ID>
+      <R>255</R>
+      <G>0</G>
+      <B>255</B>
+    </GroupColorInformation>
+    <GroupColorInformation>
+      <ID>12</ID>
+      <R>0</R>
+      <G>255</G>
+      <B>0</B>
+    </GroupColorInformation>
+    <GroupColorInformation>
+      <ID>13</ID>
+      <R>255</R>
+      <G>0</G>
+      <B>0</B>
+    </GroupColorInformation>
+    <GroupColorInformation>
+      <ID>14</ID>
+      <R>255</R>
+      <G>175</G>
       <B>0</B>
     </GroupColorInformation>
   </GroupColors>
