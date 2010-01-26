@@ -14,6 +14,7 @@ namespace DreamWorld.ScreenManagement
     {
         private TimeSpan? startTime;
 
+        private TimeSpan totalLineDuration = TimeSpan.Zero;
         private int currentLine;
         private bool started;
         private SoundEffectInstance currentSoundEffectInstance;
@@ -73,11 +74,7 @@ namespace DreamWorld.ScreenManagement
             if (currentLine == lines.Count - 1)
                 MediaPlayer.Volume *= .99f;
             if (currentLine < lines.Count)
-            {
-                TimeSpan totalLineDuration = TimeSpan.Zero;
-                for (int i = 0; i <= currentLine; i++)
-                    totalLineDuration += lines[i].Duration;
-
+            {                                
                 if (totalLineDuration - lines[currentLine].Delay < total)
                     text = "";
 
@@ -114,8 +111,11 @@ namespace DreamWorld.ScreenManagement
             Vector2 textSize = font.MeasureString(text);
             Viewport vp = ScreenManager.GraphicsDevice.Viewport;           
             textPosition = new Vector2(vp.Width / 2f - textSize.X / 2f, vp.Height - textSize.Y - 100f);
-            currentSoundEffectInstance = lines[currentLine].Audio.CreateInstance();
+            SoundEffect sound = Content.Load<SoundEffect>(lines[currentLine].Audio);
+
+            currentSoundEffectInstance = sound.CreateInstance();            
             currentSoundEffectInstance.Play();
+            totalLineDuration += sound.Duration + lines[currentLine].Delay;
         }
 
         public override void Draw(GameTime gameTime)
