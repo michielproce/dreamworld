@@ -172,6 +172,7 @@
     <Compile Include="ScreenManagement\Screens\SettingsMenuScreen.cs" />
     <Compile Include="ScreenManagement\SettingsMenuEntry.cs" />
     <Compile Include="Util\Curve3D.cs" />
+    <Compile Include="Util\CollisionSkinPredicates.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

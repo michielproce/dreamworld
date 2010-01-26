@@ -5,6 +5,10 @@ using DreamWorld.Entities;
 using DreamWorld.Rendering.Particles;
 using DreamWorld.Rendering.Postprocessing;
 using DreamWorld.ScreenManagement.Screens;
+using DreamWorld.Util;
+using JigLibX.Collision;
+using JigLibX.Geometry;
+using JigLibX.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -142,6 +146,23 @@ namespace DreamWorld.Levels
 
         public void Draw(GameTime gameTime)
         {
+            List<CollisionSkin> ignoreList = new List<CollisionSkin>();
+
+            if(GameScreen.Camera is ThirdPersonCamera)
+            {
+                float dist;
+                CollisionSkin skin;
+                Vector3 pos, normal;
+
+                CollisionSkinPredicate1 pred = new DefaultSkinPredicate();
+                Segment seg = new Segment(GameScreen.Camera.Position, Vector3.Zero);
+
+                DreamWorldPhysicsSystem.CurrentPhysicsSystem.CollisionSystem.SegmentIntersect(out dist, out skin, out pos, out normal, seg, pred);
+
+                if (skin != null)
+                    ignoreList.Add(skin);
+            }
+
             if (edgeDetection != null)
             {
                 edgeDetection.PrepareDraw();
@@ -157,13 +178,14 @@ namespace DreamWorld.Levels
                 {
                     foreach(Entity entity in group.Entities.Values)
                     {
-                        entity.Draw(gameTime, !entity.IgnoreEdgeDetection ? "NormalDepth" : "IgnoreNormalDepth");
+                        if(!ignoreList.Contains(entity.Skin))
+                            entity.Draw(gameTime, !entity.IgnoreEdgeDetection ? "NormalDepth" : "IgnoreNormalDepth");
                     }
                 }
 
                 edgeDetection.PrepareDrawDefault();                
 
-                DrawEntities(gameTime);
+                DrawEntities(gameTime, ignoreList);
                 if (Game.Config.Particles)
                     foreach (ParticleSystem particleSystem in particleSystems.Values)
                         particleSystem.Draw(gameTime);
@@ -172,7 +194,7 @@ namespace DreamWorld.Levels
             }
             else
             {
-                DrawEntities(gameTime);
+                DrawEntities(gameTime, ignoreList);
             }
             
 
@@ -182,7 +204,7 @@ namespace DreamWorld.Levels
                 bloom.Draw(gameTime);
         }
 
-        private void DrawEntities(GameTime gameTime)
+        private void DrawEntities(GameTime gameTime, List<CollisionSkin> ignoreList)
         {
             if (Skybox != null)
                 Skybox.Draw(gameTime, "Skybox");
@@ -196,28 +218,33 @@ namespace DreamWorld.Levels
             {
                 foreach (Entity entity in group.Entities.Values)
                 {
-                    #if (DEBUG && !XBOX)
-                    DebugCamera debugCamera = GameScreen.Camera as DebugCamera;
-                    if (debugCamera != null && entity == debugCamera.Form.Entity)
-                        entity.Draw(gameTime, "Highlight");
-                    else {
-                    #endif
-
-                        if (this is PuzzleLevel)
+                    if (!ignoreList.Contains(entity.Skin))
+                    {
+#if (DEBUG && !XBOX)
+                        DebugCamera debugCamera = GameScreen.Camera as DebugCamera;
+                        if (debugCamera != null && entity == debugCamera.Form.Entity)
+                            entity.Draw(gameTime, "Highlight");
+                        else
                         {
-                            Group selectedGroup = ((PuzzleLevel)this).GetSelectedGroup();
-                            if (group == selectedGroup)
-                                entity.Draw(gameTime, "Highlight");
-                            else
-                                entity.Draw(gameTime, "Default");
-                        }
-                        else {
-                            entity.Draw(gameTime, "Default");
-                        }
+#endif
 
-                #if (DEBUG&& !XBOX)
+                            if (this is PuzzleLevel)
+                            {
+                                Group selectedGroup = ((PuzzleLevel)this).GetSelectedGroup();
+                                if (group == selectedGroup)
+                                    entity.Draw(gameTime, "Highlight");
+                                else
+                                    entity.Draw(gameTime, "Default");
+                            }
+                            else
+                            {
+                                entity.Draw(gameTime, "Default");
+                            }
+
+#if (DEBUG&& !XBOX)
+                        }
+#endif
                     }
-                #endif
                 }
             }
         }
