@@ -28,7 +28,7 @@ namespace DreamWorld.ScreenManagement.Screens
         public GameScreen(Level level)
         {
             Instance = this;            
-            LoadingScreen = new LoadingScreen();
+            LoadingScreen = new LoadingScreen(level.LoadingColor);
             State = ScreenState.Hidden;
             
             

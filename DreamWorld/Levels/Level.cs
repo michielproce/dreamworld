@@ -27,6 +27,8 @@ namespace DreamWorld.Levels
         private Dictionary<string, ParticleSystem> particleSystems;
 
         public LevelInformation LevelInformation { get; private set; }
+        
+        public Color LoadingColor { get; protected set;  }
 
         private bool initialized;
 
@@ -38,6 +40,7 @@ namespace DreamWorld.Levels
         {
             Groups = new Dictionary<int, Group>();
             particleSystems = new Dictionary<string, ParticleSystem>();
+            LoadingColor = Color.Black;
         }
 
         public virtual void Initialize()

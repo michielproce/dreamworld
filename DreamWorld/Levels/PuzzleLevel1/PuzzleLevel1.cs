@@ -3,6 +3,7 @@ using DreamWorld.Entities;
 using DreamWorld.Levels.PuzzleLevel1.Entities;
 using DreamWorld.Rendering.Postprocessing;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Levels.PuzzleLevel1
 {
@@ -14,7 +15,7 @@ namespace DreamWorld.Levels.PuzzleLevel1
 
         public PuzzleLevel1()
         {
-            
+            LoadingColor = Color.White;   
         }
 
         public override string LevelInformationFileName

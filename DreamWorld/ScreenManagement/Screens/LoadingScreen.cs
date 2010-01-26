@@ -16,9 +16,11 @@ namespace DreamWorld.ScreenManagement.Screens
 
         private Texture2D loadingTexture;
         private Vector2 loadingTexturePosition;
+        private Color color;
 
-        public LoadingScreen()
+        public LoadingScreen(Color color)
         {
+            this.color = color;
             TransitionOffTime = TimeSpan.FromSeconds(0.5f);
             TransitionOnTime = TimeSpan.FromSeconds(0.5f);
         }
@@ -50,13 +52,13 @@ namespace DreamWorld.ScreenManagement.Screens
 
             string text = (loaded ? "Loaded!" : "Loading...");
 
-            Vector2 textPosition = new Vector2(80, 60);
+            Vector2 textPosition = new Vector2(80, 60);            
 
             spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState);
-            
-            spriteBatch.Draw(ScreenManager.BlankTexture, ScreenManager.FullscreenDestination, Color.Black);
+           
+            spriteBatch.Draw(ScreenManager.BlankTexture, ScreenManager.FullscreenDestination, color);
             spriteBatch.Draw(loadingTexture, loadingTexturePosition, new Color(255, 255, 255, TransitionAlpha));
-            spriteBatch.DrawString(font, text, textPosition, new Color(255, 255, 255, TransitionAlpha));
+            spriteBatch.DrawString(font, text, textPosition, new Color(255 - color.R, 255 - color.G, 255 - color.B, TransitionAlpha));
 
             spriteBatch.End();
         }
