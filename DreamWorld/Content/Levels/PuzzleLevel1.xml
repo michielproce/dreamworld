@@ -676,7 +676,7 @@
       <TypeName>DreamWorld.Levels.PuzzleLevel1.Entities.Platform</TypeName>
       <Position>
         <X>50</X>
-        <Y>26</Y>
+        <Y>25</Y>
         <Z>380</Z>
       </Position>
       <Rotation>
@@ -896,7 +896,7 @@
       <TypeName>DreamWorld.Levels.PuzzleLevel1.Entities.meadowFenced</TypeName>
       <Position>
         <X>50</X>
-        <Y>25</Y>
+        <Y>24</Y>
         <Z>-129</Z>
       </Position>
       <Rotation>

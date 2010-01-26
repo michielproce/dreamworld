@@ -30,9 +30,6 @@ namespace DreamWorld.Levels
             HandleGroupSelection(input.SelectGroup);
             HandleGroupRotation(input.RotateGroup);
 
-            if(GameIsLost())
-                LossEventHandler();
-
             if(GameIsWon())
                 VictoryEventHandler();
 
@@ -112,16 +109,6 @@ namespace DreamWorld.Levels
                 GameScreen.ScreenManager.AddScreen(new MainMenuScreen());
                 GameScreen.ExitScreen();
             }
-        }
-
-        protected virtual bool GameIsLost()
-        {
-            return false;
-        }
-
-        protected virtual void LossEventHandler()
-        {
-            Player.Respawn();
         }
     }
 }

@@ -7,7 +7,14 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
     class Cow : GroupCenter
     {
         private const float gravity = .05f;
-        public float velocity { get; private set; }
+        private float velocity;
+
+        public Vector3 startPosition = Vector3.Zero;
+
+        public bool IsFalling
+        {
+            get { return velocity < 0; }
+        }
 
         protected override void LoadContent()
         {
@@ -21,6 +28,7 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
             base.Initialize();
 
             Body.Immovable = false;
+            Respawn();
         }
 
         public override void Update(GameTime gameTime)
@@ -28,11 +36,12 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
             base.Update(gameTime);
 
             float distance = Vector3.Distance(Body.Position, Group.Center.Body.Position);
-            if(distance > 60.1 || distance < 59.9)
+            if (!IsFalling && (!(Group.Center is Cow) || !((Cow) Group.Center).IsFalling) &&
+                (distance > 60.1 || distance < 59.9))
             {
                 Vector3 direction = (Group.Center.Body.Position - Body.Position);
                 direction.Normalize();
-                Vector3 offset = direction * (distance - 60) / 2;
+                Vector3 offset = direction*(distance - 60)/2;
 
                 Body.Position += offset;
                 Group.Center.Body.Position -= offset;
@@ -49,40 +58,54 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
             }
         }
 
+        public void Respawn()
+        {
+            velocity = 0;
+            Body.MoveTo(startPosition, Matrix.Identity);
+        }
+
         /// <summary>
         /// Creates all needed object information for the JigLibX physics simulator.
         /// </summary>
         /// <param name="body">Returns Body.</param>
         /// <param name="skin">Returns CollisionSkin.</param>
         /// <param name="centerOfMass">Returns the center of mass wich is usefull for drawing objects.</param>
-        protected override void GetPhysicsInformation(out JigLibX.Physics.Body body, out JigLibX.Collision.CollisionSkin skin, out Vector3 centerOfMass)
+        protected override void GetPhysicsInformation(out JigLibX.Physics.Body body,
+                                                      out JigLibX.Collision.CollisionSkin skin, out Vector3 centerOfMass)
         {
             #region Header
+
             // Variables
             JigLibX.Collision.MaterialProperties materialProperties;
             JigLibX.Geometry.PrimitiveProperties primitiveProperties;
             JigLibX.Geometry.Box box;
 
             #region Mass Variables
+
             float mass;
             Matrix inertiaTensor;
             Matrix inertiaTensorCoM;
+
             #endregion
 
             // Create Skin & Body
             body = new JigLibX.Physics.Body();
             skin = new JigLibX.Collision.CollisionSkin(body);
             body.CollisionSkin = skin;
+
             #endregion
 
             #region Primitive Properties
+
             primitiveProperties = new JigLibX.Geometry.PrimitiveProperties();
             primitiveProperties.MassDistribution = JigLibX.Geometry.PrimitiveProperties.MassDistributionEnum.Solid;
             primitiveProperties.MassType = JigLibX.Geometry.PrimitiveProperties.MassTypeEnum.Mass;
             primitiveProperties.MassOrDensity = 0.001f;
+
             #endregion
 
             #region Primitive 0
+
             // MaterialProperties:
             materialProperties = new JigLibX.Collision.MaterialProperties();
             materialProperties.StaticRoughness = 0.5f;
@@ -90,16 +113,21 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
             materialProperties.Elasticity = 0.25f;
 
             // Primitive:
-            box = new JigLibX.Geometry.Box(Vector3.Transform(new Vector3(-20.59352f, -0.1788588f, -8.250205f), Matrix.CreateScale(Scale)),
-                Matrix.CreateFromQuaternion(new Quaternion(0f, 0f, 0f, 0.9999999f)),
-                Vector3.Transform(new Vector3(40.6418f, 25.50671f, 15.746f), Matrix.CreateScale(Scale)));
+            box =
+                new JigLibX.Geometry.Box(
+                    Vector3.Transform(new Vector3(-20.59352f, -0.1788588f, -8.250205f), Matrix.CreateScale(Scale)),
+                    Matrix.CreateFromQuaternion(new Quaternion(0f, 0f, 0f, 0.9999999f)),
+                    Vector3.Transform(new Vector3(40.6418f, 25.50671f, 15.746f), Matrix.CreateScale(Scale)));
 
             skin.AddPrimitive(box, materialProperties);
+
             #endregion
 
             #region Footer
+
             // Extract Mass Properties
-            skin.GetMassProperties(primitiveProperties, out mass, out centerOfMass, out inertiaTensor, out inertiaTensorCoM);
+            skin.GetMassProperties(primitiveProperties, out mass, out centerOfMass, out inertiaTensor,
+                                   out inertiaTensorCoM);
 
             // Set Mass Properties
             body.BodyInertia = inertiaTensorCoM;
@@ -111,6 +139,7 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
 
             // Enable Body
             body.EnableBody();
+
             #endregion
         }
     }

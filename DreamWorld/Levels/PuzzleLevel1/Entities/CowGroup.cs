@@ -21,12 +21,12 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
         public override bool IsRotationAllowed(Vector3 direction)
         {
             // Don't rotate if a cow is falling down
-            if (Center is Cow && ((Cow)Center).velocity != 0)
+            if (Center is Cow && ((Cow)Center).IsFalling)
                 return false;
 
             foreach (KeyValuePair<string, Entity> pair in Entities)
             {
-                if (Center is Cow && ((Cow)pair.Value).velocity != 0)
+                if (Center is Cow && ((Cow)pair.Value).IsFalling)
                     return false;
             }
             return base.IsRotationAllowed(direction);
