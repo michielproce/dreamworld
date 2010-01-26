@@ -1,10 +1,15 @@
-﻿using DreamWorld.Entities;
+﻿using System;
+using DreamWorld.Entities;
+using DreamWorld.ScreenManagement.Screens;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Media;
 
 namespace DreamWorld.Levels.VillageLevel
 {
     public class VillageLevel : Level
     {
+        private bool initialTutorialShown;
+
         public float maximumWalkingHeight { get; private set; }
 
         public override string LevelInformationFileName
@@ -23,6 +28,18 @@ namespace DreamWorld.Levels.VillageLevel
             MediaPlayer.IsRepeating = true;
 
             base.Initialize();
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (!initialTutorialShown && GameScreen.TutorialText != null)
+            {
+                GameScreen.TutorialText.SetText(
+                    "Welcome to DreamWorld. Use the left joystick to move, the right joystick to look around, A button to jump and B button to interact.",
+                    gameTime.TotalGameTime + TimeSpan.FromSeconds(10));
+                initialTutorialShown = true;
+            }
+            base.Update(gameTime);
         }
     }
 }

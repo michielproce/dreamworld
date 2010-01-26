@@ -7,6 +7,8 @@ namespace DreamWorld.Levels.PuzzleLevel1
 {
     class PuzzleLevel1 : PuzzleLevel
     {
+        private bool initialTutorialShown;
+
         private Cow[] Cows;
 
         public override string LevelInformationFileName
@@ -78,6 +80,18 @@ namespace DreamWorld.Levels.PuzzleLevel1
                     return false;
             }
             return true;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (!initialTutorialShown && GameScreen.TutorialText != null)
+            {
+                GameScreen.TutorialText.SetText(
+                    "Use the shoulder buttons to select groups. Use the right trigger and the thumbsticks to rotate the groups. Find your way to get the cows to the other side.",
+                    gameTime.TotalGameTime + TimeSpan.FromSeconds(10));
+                initialTutorialShown = true;
+            }
+            base.Update(gameTime);
         }
     }
 }

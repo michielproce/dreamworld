@@ -16,6 +16,7 @@ namespace DreamWorld.ScreenManagement
 
         private int currentLine;
         private bool started;
+        private SoundEffectInstance currentSoundEffectInstance;
 
         protected Texture2D texture;
         protected List<CutsceneLine> lines;
@@ -97,6 +98,8 @@ namespace DreamWorld.ScreenManagement
         }
         private void Stop()
         {
+            if(currentSoundEffectInstance != null)
+                currentSoundEffectInstance.Stop(true);
             MediaPlayer.Stop();            
             ExitScreen();            
             ScreenManager.AddScreen(LoadNextScreen());
@@ -111,7 +114,8 @@ namespace DreamWorld.ScreenManagement
             Vector2 textSize = font.MeasureString(text);
             Viewport vp = ScreenManager.GraphicsDevice.Viewport;           
             textPosition = new Vector2(vp.Width / 2f - textSize.X / 2f, vp.Height - textSize.Y - 100f);
-            lines[currentLine].Audio.Play();
+            currentSoundEffectInstance = lines[currentLine].Audio.CreateInstance();
+            currentSoundEffectInstance.Play();
         }
 
         public override void Draw(GameTime gameTime)

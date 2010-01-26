@@ -14,7 +14,6 @@ namespace DreamWorld.ScreenManagement.Screens
 {
     public class GameScreen : Screen
     {
-        private bool initialTutorialShown;
         public TutorialText TutorialText { get; private set; }
         public static GameScreen Instance { get; private set; }
         public Camera Camera { get; private set; }
@@ -96,17 +95,7 @@ namespace DreamWorld.ScreenManagement.Screens
             }
 
             if (TutorialText != null)
-            {
-                if (!initialTutorialShown)
-                {
-                    TutorialText.SetText(
-                        "Welcome to DreamWorld. Use the left joystick to move, the right joystick to look around, A button to jump and B button to interact.",
-                        gameTime.TotalGameTime + TimeSpan.FromSeconds(10));
-                    initialTutorialShown = true;
-                }
-
                 TutorialText.Update(gameTime);
-            }
             base.Update(gameTime);
         }
 
