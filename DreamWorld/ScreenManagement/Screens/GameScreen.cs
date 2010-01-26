@@ -28,7 +28,7 @@ namespace DreamWorld.ScreenManagement.Screens
         public GameScreen(Level level)
         {
             Instance = this;            
-            LoadingScreen = new LoadingScreen(@"Textures/Test/gradient");
+            LoadingScreen = new LoadingScreen();
             State = ScreenState.Hidden;
             
             

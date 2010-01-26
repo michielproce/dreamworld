@@ -14,19 +14,21 @@ namespace DreamWorld.ScreenManagement.Screens
         }
         public bool loaded;
 
-        private string background;
-        private Texture2D backgroundTexture;
+        private Texture2D loadingTexture;
+        private Vector2 loadingTexturePosition;
 
-        public LoadingScreen(string background)
+        public LoadingScreen()
         {
             TransitionOffTime = TimeSpan.FromSeconds(0.5f);
             TransitionOnTime = TimeSpan.FromSeconds(0.5f);
-            this.background = background;
         }
 
         protected override void LoadContent()
         {
-            backgroundTexture = ScreenManager.Game.Content.Load<Texture2D>(background);
+            loadingTexture = ScreenManager.Game.Content.Load<Texture2D>(@"Textures\Menu\loadingMorwir");
+            loadingTexturePosition = new Vector2(ScreenManager.GraphicsDevice.Viewport.TitleSafeArea.Right - loadingTexture.Width, 
+                ScreenManager.GraphicsDevice.Viewport.TitleSafeArea.Bottom - loadingTexture.Height) - 
+                new Vector2(100, 80);
         }
 
         public override void HandleInput()
@@ -53,8 +55,8 @@ namespace DreamWorld.ScreenManagement.Screens
             spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState);
             
             spriteBatch.Draw(ScreenManager.BlankTexture, ScreenManager.FullscreenDestination, Color.Black);
-            spriteBatch.Draw(backgroundTexture, ScreenManager.GraphicsDevice.Viewport.TitleSafeArea, new Color(TransitionAlpha, TransitionAlpha, TransitionAlpha, TransitionAlpha));
-            spriteBatch.DrawString(font, text, textPosition, new Color(0f, 0f, 0f, TransitionAlpha));
+            spriteBatch.Draw(loadingTexture, loadingTexturePosition, new Color(255, 255, 255, TransitionAlpha));
+            spriteBatch.DrawString(font, text, textPosition, new Color(255, 255, 255, TransitionAlpha));
 
             spriteBatch.End();
         }
