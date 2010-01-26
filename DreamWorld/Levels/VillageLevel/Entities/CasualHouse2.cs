@@ -53,7 +53,7 @@ namespace DreamWorld.Levels.VillageLevel.Entities
             materialProperties.Elasticity = 0.25f;
 
             // Primitive:
-            box = new JigLibX.Geometry.Box(Vector3.Transform(new Vector3(-75.66634f, -7.606163f, -58.60682f), Matrix.CreateScale(Scale)),
+            box = new JigLibX.Geometry.Box(Vector3.Transform(new Vector3(-75.25109f, -0.1123428f, -58.63351f), Matrix.CreateScale(Scale)),
                 Matrix.CreateFromQuaternion(new Quaternion(0f, 0f, 0f, 0.9999999f)),
                 Vector3.Transform(new Vector3(156.6712f, 65.21233f, 109.2022f), Matrix.CreateScale(Scale)));
             skin.AddPrimitive(box, materialProperties);

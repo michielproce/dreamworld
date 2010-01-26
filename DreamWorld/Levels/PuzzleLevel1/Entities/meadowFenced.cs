@@ -123,6 +123,21 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
             skin.AddPrimitive(box, materialProperties);
             #endregion
 
+            #region Primitive 5
+            // MaterialProperties:
+            materialProperties = new JigLibX.Collision.MaterialProperties();
+            materialProperties.StaticRoughness = 0.5f;
+            materialProperties.DynamicRoughness = 0.35f;
+            materialProperties.Elasticity = 0.25f;
+
+            // Primitive:
+            box = new JigLibX.Geometry.Box(Vector3.Transform(new Vector3(16.9552f, 2.029638f, 2.294162f), Matrix.CreateScale(Scale)),
+                Matrix.CreateFromQuaternion(new Quaternion(0f, 0f, 0f, 0.9999999f)),
+                Vector3.Transform(new Vector3(0.5814438f, 14.85469f, 0.6286488f), Matrix.CreateScale(Scale)));
+
+            skin.AddPrimitive(box, materialProperties);
+            #endregion
+
             #region Footer
             // Extract Mass Properties
             skin.GetMassProperties(primitiveProperties, out mass, out centerOfMass, out inertiaTensor, out inertiaTensorCoM);

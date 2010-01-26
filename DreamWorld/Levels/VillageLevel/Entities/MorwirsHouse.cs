@@ -76,9 +76,9 @@ namespace DreamWorld.Levels.VillageLevel.Entities
             materialProperties.Elasticity = 0.25f;
 
             // Primitive:
-            box = new JigLibX.Geometry.Box(Vector3.Transform(new Vector3(45.93829f, -2.454359f, -6.613831f), Matrix.CreateScale(Scale)),
+            box = new JigLibX.Geometry.Box(Vector3.Transform(new Vector3(27.77341f, -0.860815f, -12.68781f), Matrix.CreateScale(Scale)),
                 Matrix.CreateFromQuaternion(new Quaternion(0f, -0.1508591f, 0f, 0.9885553f)),
-                Vector3.Transform(new Vector3(11.39123f, 46.16199f, 47.85767f), Matrix.CreateScale(Scale)));
+                Vector3.Transform(new Vector3(30.06166f, 42.52391f, 47.64141f), Matrix.CreateScale(Scale)));
 
             skin.AddPrimitive(box, materialProperties);
             #endregion
@@ -91,9 +91,9 @@ namespace DreamWorld.Levels.VillageLevel.Entities
             materialProperties.Elasticity = 0.25f;
 
             // Primitive:
-            box = new JigLibX.Geometry.Box(Vector3.Transform(new Vector3(-12.96401f, -4.198624f, 30.73146f), Matrix.CreateScale(Scale)),
+            box = new JigLibX.Geometry.Box(Vector3.Transform(new Vector3(-12.50996f, -4.400898f, 18.69112f), Matrix.CreateScale(Scale)),
                 Matrix.CreateFromQuaternion(new Quaternion(0f, 0f, 0f, 0.9999999f)),
-                Vector3.Transform(new Vector3(50.21069f, 53.03441f, 10.58598f), Matrix.CreateScale(Scale)));
+                Vector3.Transform(new Vector3(51.71878f, 47.61389f, 23.94957f), Matrix.CreateScale(Scale)));
 
             skin.AddPrimitive(box, materialProperties);
             #endregion
@@ -106,9 +106,9 @@ namespace DreamWorld.Levels.VillageLevel.Entities
             materialProperties.Elasticity = 0.25f;
 
             // Primitive:
-            box = new JigLibX.Geometry.Box(Vector3.Transform(new Vector3(-37.40919f, -2.946903f, 23.37545f), Matrix.CreateScale(Scale)),
+            box = new JigLibX.Geometry.Box(Vector3.Transform(new Vector3(-35.05418f, 0.449337f, 20.17396f), Matrix.CreateScale(Scale)),
                 Matrix.CreateFromQuaternion(new Quaternion(0f, -0.2248033f, 0f, 0.9744042f)),
-                Vector3.Transform(new Vector3(28.71522f, 48.72113f, 6.41657f), Matrix.CreateScale(Scale)));
+                Vector3.Transform(new Vector3(28.98229f, 43.2935f, 11.30576f), Matrix.CreateScale(Scale)));
 
             skin.AddPrimitive(box, materialProperties);
             #endregion
@@ -121,9 +121,9 @@ namespace DreamWorld.Levels.VillageLevel.Entities
             materialProperties.Elasticity = 0.25f;
 
             // Primitive:
-            box = new JigLibX.Geometry.Box(Vector3.Transform(new Vector3(-52.93148f, -5.675295f, -2.829064f), Matrix.CreateScale(Scale)),
+            box = new JigLibX.Geometry.Box(Vector3.Transform(new Vector3(-51.89391f, 0.6725636f, -0.6817131f), Matrix.CreateScale(Scale)),
                 Matrix.CreateFromQuaternion(new Quaternion(0f, 0.1975219f, 0f, 0.9802985f)),
-                Vector3.Transform(new Vector3(8.862076f, 54.02518f, 33.73073f), Matrix.CreateScale(Scale)));
+                Vector3.Transform(new Vector3(9.006947f, 41.4878f, 31.03789f), Matrix.CreateScale(Scale)));
 
             skin.AddPrimitive(box, materialProperties);
             #endregion
@@ -136,9 +136,9 @@ namespace DreamWorld.Levels.VillageLevel.Entities
             materialProperties.Elasticity = 0.25f;
 
             // Primitive:
-            box = new JigLibX.Geometry.Box(Vector3.Transform(new Vector3(-50.39923f, -7.444853f, -3.560736f), Matrix.CreateScale(Scale)),
+            box = new JigLibX.Geometry.Box(Vector3.Transform(new Vector3(-51.86629f, -5.320751f, -1.259862f), Matrix.CreateScale(Scale)),
                 Matrix.CreateFromQuaternion(new Quaternion(0.003627084f, 0.3601545f, 0.009945944f, 0.9328326f)),
-                Vector3.Transform(new Vector3(69.53403f, 60.73677f, 8.670198f), Matrix.CreateScale(Scale)));
+                Vector3.Transform(new Vector3(73.0363f, 46.59728f, 59.96674f), Matrix.CreateScale(Scale)));
 
             skin.AddPrimitive(box, materialProperties);
             #endregion
