@@ -133,6 +133,7 @@
     <Compile Include="Levels\VillageLevel\Entities\CasualHouse2.cs" />
     <Compile Include="Levels\VillageLevel\Entities\Can.cs" />
     <Compile Include="Levels\VillageLevel\Entities\Morwir.cs" />
+    <Compile Include="Levels\VillageLevel\Entities\MorwirCane.cs" />
     <Compile Include="Levels\VillageLevel\Entities\MorwirsHouse.cs" />
     <Compile Include="Levels\VillageLevel\Entities\TestEntity.cs" />
     <Compile Include="Levels\PuzzleLevel.cs" />
