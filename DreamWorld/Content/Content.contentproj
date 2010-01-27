@@ -264,6 +264,12 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="Models\Skyboxes\Puzzle.x">
+      <Name>Puzzle</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+      <ProcessorParameters_EffectFile>Skybox.fx</ProcessorParameters_EffectFile>
+    </Compile>
     <Compile Include="Models\Village\Cane.X">
       <Name>Cane</Name>
       <Importer>XImporter</Importer>

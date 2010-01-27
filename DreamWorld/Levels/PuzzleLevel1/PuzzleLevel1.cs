@@ -25,6 +25,7 @@ namespace DreamWorld.Levels.PuzzleLevel1
 
         public override void Initialize()
         {
+            Skybox = new Skybox("Puzzle") { Name = "Skybox" };
             base.Initialize();
 
             GameScreen.TransitionOnTime = TimeSpan.FromSeconds(3);
