@@ -23,7 +23,7 @@ namespace DreamWorld.ScreenManagement.Screens.Cutscenes
         protected override void LoadCutscene()
         {
             song = Content.Load<Song>(@"Audio\Music\Intro");
-            volume = .2f;
+            volume = .4f;
 
             texture = Content.Load<Texture2D>(@"Textures\Cutscenes\Intro\shot1"); // initial texture
 
