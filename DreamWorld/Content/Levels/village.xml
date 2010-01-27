@@ -36,7 +36,7 @@
       <TypeName>DreamWorld.Levels.VillageLevel.Entities.CasualHouse1</TypeName>
       <Position>
         <X>545</X>
-        <Y>-550</Y>
+        <Y>-524</Y>
         <Z>379</Z>
       </Position>
       <Rotation>
@@ -45,9 +45,9 @@
         <Z>0</Z>
       </Rotation>
       <Scale>
-        <X>0.1</X>
-        <Y>0.1</Y>
-        <Z>0.1</Z>
+        <X>1</X>
+        <Y>1</Y>
+        <Z>1</Z>
       </Scale>
       <Group>0</Group>
     </SpawnInformation>
@@ -96,7 +96,7 @@
       <TypeName>DreamWorld.Levels.VillageLevel.Entities.CasualHouse1</TypeName>
       <Position>
         <X>400</X>
-        <Y>-550</Y>
+        <Y>-524</Y>
         <Z>450</Z>
       </Position>
       <Rotation>
@@ -105,9 +105,9 @@
         <Z>0</Z>
       </Rotation>
       <Scale>
-        <X>0.1</X>
-        <Y>0.1</Y>
-        <Z>0.1</Z>
+        <X>1</X>
+        <Y>1</Y>
+        <Z>1</Z>
       </Scale>
       <Group>0</Group>
     </SpawnInformation>
@@ -156,7 +156,7 @@
       <TypeName>DreamWorld.Levels.VillageLevel.Entities.CasualHouse1</TypeName>
       <Position>
         <X>400</X>
-        <Y>-550</Y>
+        <Y>-524</Y>
         <Z>350</Z>
       </Position>
       <Rotation>
@@ -165,9 +165,9 @@
         <Z>0</Z>
       </Rotation>
       <Scale>
-        <X>0.1</X>
-        <Y>0.1</Y>
-        <Z>0.1</Z>
+        <X>1</X>
+        <Y>1</Y>
+        <Z>1</Z>
       </Scale>
       <Group>0</Group>
     </SpawnInformation>
@@ -176,7 +176,7 @@
       <TypeName>DreamWorld.Levels.VillageLevel.Entities.CasualHouse1</TypeName>
       <Position>
         <X>600</X>
-        <Y>-550</Y>
+        <Y>-524</Y>
         <Z>-100</Z>
       </Position>
       <Rotation>
@@ -185,9 +185,9 @@
         <Z>0</Z>
       </Rotation>
       <Scale>
-        <X>0.1</X>
-        <Y>0.1</Y>
-        <Z>0.1</Z>
+        <X>1</X>
+        <Y>1</Y>
+        <Z>1</Z>
       </Scale>
       <Group>0</Group>
     </SpawnInformation>
