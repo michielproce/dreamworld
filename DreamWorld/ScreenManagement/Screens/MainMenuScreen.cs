@@ -29,9 +29,9 @@ namespace DreamWorld.ScreenManagement.Screens
             MenuEntries.Add(quitMenuEntry);
 
             #if (DEBUG)
-            MenuEntry puzzleLevelMenuEntry = new MenuEntry("PuzzleLevel");
-            puzzleLevelMenuEntry.Selected += LoadGameMenuEntrySelected;
-            MenuEntries.Add(puzzleLevelMenuEntry);
+//            MenuEntry puzzleLevelMenuEntry = new MenuEntry("PuzzleLevel");
+//            puzzleLevelMenuEntry.Selected += LoadGameMenuEntrySelected;
+//            MenuEntries.Add(puzzleLevelMenuEntry);
             #endif
         }
 
