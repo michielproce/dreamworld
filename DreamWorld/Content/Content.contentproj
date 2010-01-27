@@ -267,7 +267,7 @@
     <Compile Include="Models\Village\Cane.X">
       <Name>Cane</Name>
       <Importer>XImporter</Importer>
-      <Processor>DefaultModelProcessor</Processor>
+      <Processor>SkinnedModelProcessor</Processor>
     </Compile>
     <Compile Include="Models\Puzzle\Level1\meadowFenced.X">
       <Name>meadowFenced</Name>
