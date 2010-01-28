@@ -38,25 +38,20 @@ namespace DreamWorld.InputManagement.Types
         {
             get
             {
-                return (Mouse.GetState().LeftButton == ButtonState.Released
-                            ? InputManager.Mouse.Movement.X*HorizontalMouseRotationSpeed
-                            : 0) +
-                       (InputManager.GamePad.State.IsButtonUp(Buttons.RightTrigger) &&
-                        InputManager.GamePad.State.IsButtonUp(Buttons.LeftTrigger)
-                            ? -InputManager.GamePad.State.ThumbSticks.Right.X*HorizontalGamePadRotationSpeed
-                            : 0);
+                return (InputManager.Mouse.Movement.X*HorizontalMouseRotationSpeed)
+                       + -InputManager.GamePad.State.ThumbSticks.Right.X*HorizontalGamePadRotationSpeed;
             }
         }
 
         public float HorizontalRotation
         {
             get
-            {
-                return (Mouse.GetState().LeftButton == ButtonState.Pressed
-                            ? InputManager.Mouse.Movement.X*HorizontalMouseRotationSpeed
+            {      
+                return (Mouse.GetState().LeftButton == ButtonState.Pressed && InputManager.Keyboard.State.IsKeyDown(Keys.LeftControl)
+                            ? InputManager.Mouse.Movement.X * HorizontalMouseRotationSpeed
                             : 0) +
                        (InputManager.GamePad.State.IsButtonDown(Buttons.LeftTrigger)
-                            ? InputManager.GamePad.State.ThumbSticks.Right.X*HorizontalGamePadRotationSpeed
+                            ? InputManager.GamePad.State.ThumbSticks.Right.X * HorizontalGamePadRotationSpeed
                             : 0);
             }
         }
@@ -75,10 +70,8 @@ namespace DreamWorld.InputManagement.Types
             get
             {
                 return (InputManager.Mouse.Movement.Y*VerticalMouseRotationSpeed) +
-                       (InputManager.GamePad.State.IsButtonUp(Buttons.RightTrigger) &&
-                        InputManager.GamePad.State.IsButtonUp(Buttons.LeftTrigger)
-                            ? InputManager.GamePad.State.ThumbSticks.Right.Y*VerticalGamePadRotationSpeed
-                            : 0);
+                       (InputManager.GamePad.State.ThumbSticks.Right.Y*VerticalGamePadRotationSpeed);
+                  
             }
         }
 
@@ -86,7 +79,7 @@ namespace DreamWorld.InputManagement.Types
         {
             get
             {
-                return InputManager.Mouse.ScrollWheel/100f +
+                return InputManager.Keyboard.State.IsKeyDown(Keys.LeftControl) ? InputManager.Mouse.ScrollWheel/100f : 0 +
                        (InputManager.GamePad.State.IsButtonDown(Buttons.LeftTrigger)
                             ? InputManager.GamePad.State.ThumbSticks.Right.Y
                             : 0);
@@ -117,10 +110,10 @@ namespace DreamWorld.InputManagement.Types
         {
             get
             {
-                if (InputManager.Keyboard.NewlyPressed(Keys.LeftShift) ||
+                if (InputManager.Keyboard.NewlyPressed(Keys.E) ||
                     InputManager.GamePad.NewlyPressed(Buttons.RightShoulder))
                     return 1;
-                if (InputManager.Keyboard.NewlyPressed(Keys.LeftControl) ||
+                if (InputManager.Keyboard.NewlyPressed(Keys.Q) ||
                     InputManager.GamePad.NewlyPressed(Buttons.LeftShoulder))
                     return -1;
 
@@ -128,40 +121,31 @@ namespace DreamWorld.InputManagement.Types
             }
         }
 
-        public Vector3 RotateGroup
+        public int CycleAxle
         {
             get
             {
-                // Translate the user input to a group rotation
-                switch (InputManager.GamePad.NewGesture)
-                {
-                    default:
-                        if (InputManager.Keyboard.NewlyPressed(Keys.J))
-                            return Vector3.Backward;
-                        if (InputManager.Keyboard.NewlyPressed(Keys.L))
-                            return Vector3.Forward;
-                        if (InputManager.Keyboard.NewlyPressed(Keys.I))
-                            return Vector3.Left;
-                        if (InputManager.Keyboard.NewlyPressed(Keys.K))
-                            return Vector3.Right;
-                        if (InputManager.Keyboard.NewlyPressed(Keys.U))
-                            return Vector3.Up;
-                        if (InputManager.Keyboard.NewlyPressed(Keys.O))
-                            return Vector3.Down;
-                        return Vector3.Zero;
-                    case Gestures.Up:
-                        return Vector3.Left;
-                    case Gestures.Down:
-                        return Vector3.Right;
-                    case Gestures.Left:
-                        return Vector3.Backward;
-                    case Gestures.Right:
-                        return Vector3.Forward;
-                    case Gestures.Clockwise:
-                        return Vector3.Down;
-                    case Gestures.CounterClockwise:
-                        return Vector3.Up;
-                }
+                return (InputManager.Mouse.ScrollWheel > 0 ? 1 : 0) +
+                       (InputManager.Mouse.ScrollWheel < 0 ? -1 : 0) +
+                       (InputManager.GamePad.NewlyPressed(Buttons.X) ? 1 : 0);
+            }
+        }
+
+        public bool CycleAxleDirection
+        {
+            get
+            {
+                return InputManager.Mouse.NewlyPressed(MouseHandler.Buttons.RightButton) ||
+                       InputManager.GamePad.NewlyPressed(Buttons.Y);
+            }
+        }
+
+        public bool ApplyRotation
+        {
+            get
+            {
+                return InputManager.Mouse.NewlyPressed(MouseHandler.Buttons.LeftButton) ||
+                       InputManager.GamePad.NewlyPressed(Buttons.B);
             }
         }
     }

@@ -150,7 +150,7 @@ namespace DreamWorld.Levels
                 group.Update(gameTime);               
         }
 
-        public void Draw(GameTime gameTime)
+        public virtual void Draw(GameTime gameTime)
         {
             List<CollisionSkin> ignoreList = new List<CollisionSkin>();
 

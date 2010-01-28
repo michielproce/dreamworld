@@ -11,6 +11,15 @@ namespace DreamWorld.Levels
         protected internal float selectionRadius = 110;
         private int selectedGroup;
 
+        protected PuzzleHUD hud;
+
+        public override void Initialize()
+        {            
+            base.Initialize();
+            hud = new PuzzleHUD(GameScreen.GraphicsDevice);
+            hud.Load(GameScreen.Content);
+        }
+
         public Group GetSelectedGroup()
         {
             int[] keys = new int[Groups.Count];
@@ -27,8 +36,15 @@ namespace DreamWorld.Levels
         {
             PlayerInput input = Game.InputManager.Player;
 
-            HandleGroupSelection(input.SelectGroup);
-            HandleGroupRotation(input.RotateGroup);
+            HandleGroupSelection(input.SelectGroup);            
+            
+            hud.CycleAxle(input.CycleAxle);
+            if (input.CycleAxleDirection)
+                hud.CycleAxleDirection();
+            if(input.ApplyRotation)
+                RotateGroup(hud.CurrentDirection);
+
+            hud.Update(gameTime);
 
             if(GameIsWon())
                 VictoryEventHandler();
@@ -62,7 +78,7 @@ namespace DreamWorld.Levels
             }
         }
 
-        private void HandleGroupRotation(Vector3 direction)
+        private void RotateGroup(Vector3 direction)
         {
             Group targetGroup = GetSelectedGroup();
 
@@ -109,6 +125,12 @@ namespace DreamWorld.Levels
                 GameScreen.ScreenManager.AddScreen(new MainMenuScreen());
                 GameScreen.ExitScreen();
             }
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+            hud.Draw(gameTime);
         }
     }
 }
