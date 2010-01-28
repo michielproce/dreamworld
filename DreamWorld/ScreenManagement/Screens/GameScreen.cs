@@ -104,7 +104,7 @@ namespace DreamWorld.ScreenManagement.Screens
             PlayerInput playerInput = ScreenManager.InputManager.Player;
             if(playerInput.ShowPauseMenu)
             {
-                const string message = "Are you sure you want to return to the main menu?";
+                const string message = "Are you sure you want to return to the main menu";
 
                 MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(message);
                 confirmExitMessageBox.Accepted += ConfirmExitMessageBoxAccepted;
