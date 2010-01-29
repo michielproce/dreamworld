@@ -18,7 +18,7 @@ namespace DreamWorld.ScreenManagement.Screens
 
         protected override void LoadContent()
         {
-            texture = ScreenManager.Game.Content.Load<Texture2D>(@"Textures\Intro\Credits");
+            texture = ScreenManager.Game.Content.Load<Texture2D>(@"Textures\Menu\credits");
             Viewport vp = ScreenManager.Game.GraphicsDevice.Viewport;
             destination = new Rectangle(0, 0, vp.Width, vp.Height);
         }
