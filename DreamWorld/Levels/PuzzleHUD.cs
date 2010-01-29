@@ -14,7 +14,7 @@ namespace DreamWorld.Levels
         public const int CW = 1;
         public const int CCW = -1;
 
-        private const float height = .2f; // Height relative to the game height
+        private const float height = .25f; // Height relative to the game height
 
         private GraphicsDevice device;
         private Model model;
@@ -44,7 +44,8 @@ namespace DreamWorld.Levels
 
         public void CycleAxle(int direction)
         {
-            Console.Out.WriteLine(direction);
+            if(direction == 0)
+                return;
             currentAxle += direction;            
             if(currentAxle > axles.Length - 1)            
                 currentAxle = 0;
@@ -87,7 +88,7 @@ namespace DreamWorld.Levels
 
             model = content.Load<Model>(@"Models\Puzzle\Axles");
 
-            world = Matrix.CreateScale(new Vector3(.7f));
+            world = Matrix.CreateScale(new Vector3(.5f));
 
             transforms = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(transforms);
@@ -104,7 +105,7 @@ namespace DreamWorld.Levels
                 foreach (Effect effect in mesh.Effects)
                 {
 //                    effect.Parameters["IgnoreSun"].SetValue(true);
-                    effect.Parameters["view"].SetValue(Matrix.CreateLookAt(new Vector3(2, 1, .5f), Vector3.Zero, Vector3.Up));
+                    effect.Parameters["view"].SetValue(Matrix.CreateLookAt(new Vector3(2, 1.2f, .5f), Vector3.Zero, Vector3.Up));
                     effect.Parameters["projection"].SetValue(Matrix.CreatePerspectiveFieldOfView(
                            MathHelper.ToRadians(45.0f),
                            viewport.AspectRatio,
@@ -123,8 +124,7 @@ namespace DreamWorld.Levels
         {            
             originalViewport = device.Viewport;
             device.Viewport = viewport;
-            device.RenderState.DepthBufferEnable = true;
-
+            device.RenderState.DepthBufferEnable = true;            
             
             
             foreach (ModelMesh mesh in model.Meshes) {
