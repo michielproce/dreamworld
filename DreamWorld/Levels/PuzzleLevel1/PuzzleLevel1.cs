@@ -102,7 +102,8 @@ namespace DreamWorld.Levels.PuzzleLevel1
             {
                 GameScreen.TutorialText.SetText(
                     "Congratulations. You have taken the first steps to help create a better world.\nAll you have to do now is get the cows accross to the other meadow. Note that the cows can rotate around eachother.",
-                    "Congratulations. You have taken the first steps to help create a better world.\nAll you have to do now is get the cows accross to the other meadow. Note that the cows can rotate around eachother.");
+                    "Congratulations. You have taken the first steps to help create a better world.\nAll you have to do now is get the cows accross to the other meadow. Note that the cows can rotate around eachother.",
+                    gameTime.TotalGameTime + TimeSpan.FromSeconds(15));
                 meadowTutorialShown = true;
             }
 
