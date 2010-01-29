@@ -17,21 +17,19 @@ namespace DreamWorld
         public bool Bloom { get; set; }
         public bool EdgeDetect { get; set; }
         public bool Particles { get; set; }
-        public bool Shadows { get; set; }
         public bool Subtitles { get; set; }
 
         public Config()
         {
             // Default values
-            Width = 1024;
-            Height = 768;
+            Width = 1280;
+            Height = 800;
             Fullscreen = false;
             AntiAliasing = false;
             VerticalSync = false;
             Bloom = true;
             EdgeDetect = true;
             Particles = true;
-            Shadows = true;
             Subtitles = true;
         }
 
