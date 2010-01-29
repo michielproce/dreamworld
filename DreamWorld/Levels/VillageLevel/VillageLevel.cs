@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DreamWorld.Entities;
+using DreamWorld.Levels.PuzzleLevel1.Entities;
 using DreamWorld.Levels.VillageLevel.Entities;
 using DreamWorld.Rendering.Postprocessing;
 using DreamWorld.ScreenManagement.Screens;
@@ -46,17 +47,13 @@ namespace DreamWorld.Levels.VillageLevel
 
             if (LevelsCompleted < 1)
             {
+                List<Entity> toRemove = new List<Entity>();
                 foreach (KeyValuePair<int, Group> group in Groups)
-                {
                     foreach (KeyValuePair<string, Entity> entity in group.Value.Entities)
-                    {
-                        if (entity.Value is Stable)
-                        {
-                            group.Value.RemoveEntity(entity.Value.Name);
-                            return;
-                        }
-                    }
-                }
+                        if (entity.Value is Stable || entity.Value is CowDummy)
+                            toRemove.Add(entity.Value);
+                foreach (Entity entity in toRemove)
+                    entity.Group.RemoveEntity(entity.Name);
             }
         }
 
@@ -64,9 +61,20 @@ namespace DreamWorld.Levels.VillageLevel
         {
             if (!initialTutorialShown && GameScreen.TutorialText != null)
             {
-                GameScreen.TutorialText.SetText(
-                    "Welcome to DreamWorld.\nUse the arrow or WSAD keys to move around.\nUse your mouse to look around.\nPress space to jump.\nTry and find someone to talk to in the village.",
-                    "Welcome to DreamWorld.\nUse the left joystick to move and the right joystick to look around.\nPress the A button to jump.\nTry and find someone to talk to in the village.");
+                if (LevelsCompleted == 0)
+                {
+                    GameScreen.TutorialText.SetText(
+                        "Welcome to DreamWorld.\nUse the arrow or WSAD keys to move around.\nUse your mouse to look around.\nPress space to jump.\nTry and find someone to talk to in the village.",
+                        "Welcome to DreamWorld.\nUse the left joystick to move and the right joystick to look around.\nPress the A button to jump.\nTry and find someone to talk to in the village.");
+                }
+                else if (LevelsCompleted == 1)
+                {
+                    GameScreen.TutorialText.SetText(
+                    "Congratulations, you have helped the village. There are now cows for milk and food.\nHowever, this is it for now. We have 7 more levels planned, so check floatingkoalagames.com for updates.",
+                    "Congratulations, you have helped the village. There are now cows for milk and food.\nHowever, this is it for now. We have 7 more levels planned, so check floatingkoalagames.com for updates.",
+                    gameTime.TotalGameTime + TimeSpan.FromSeconds(15));
+                }
+
                 initialTutorialShown = true;
             }
             base.Update(gameTime);

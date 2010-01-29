@@ -27,21 +27,21 @@ namespace DreamWorld.Levels.VillageLevel.Entities
         public override void Update(GameTime gameTime)
         {
             float dist = Vector3.Distance(Level.Player.Body.Position, Body.Position);
-            if (dist < 50f)
+            if (dist < 50f && Level is VillageLevel && ((VillageLevel)Level).LevelsCompleted == 0)
             {
                 GameScreen.TutorialText.SetText("Click the left mouse button to interact with Morwir.",
                                                 "Press the B button to interact with Morwir."
                                                 );
-                if(GameScreen.InputManager.Player.ApplyRotation)
-                {                    
+                if (GameScreen.InputManager.Player.ApplyRotation)
+                {
                     GameScreen.ExitScreen();
                     GameScreen.ScreenManager.AddScreen(new MorwirCutscene());
                 }
                 hintVisible = true;
             }
-            else if(hintVisible)
+            else if (hintVisible)
             {
-                GameScreen.TutorialText.Hide();    
+                GameScreen.TutorialText.Hide();
             }
             base.Update(gameTime);
         }

@@ -1111,6 +1111,66 @@
       </Scale>
       <Group>0</Group>
     </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity634003753649583804</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.CowDummy</TypeName>
+      <Position>
+        <X>230</X>
+        <Y>-550</Y>
+        <Z>340</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>275</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>0.4</X>
+        <Y>0.4</Y>
+        <Z>0.4</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity634003754873793825</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.CowDummy</TypeName>
+      <Position>
+        <X>205</X>
+        <Y>-550</Y>
+        <Z>334</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>0.4</X>
+        <Y>0.4</Y>
+        <Z>0.4</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity634003756242292099</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.CowDummy</TypeName>
+      <Position>
+        <X>195</X>
+        <Y>-550</Y>
+        <Z>305</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>180</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>0.4</X>
+        <Y>0.4</Y>
+        <Z>0.4</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
   </Spawns>
   <GroupColors />
 </LevelInformation>
