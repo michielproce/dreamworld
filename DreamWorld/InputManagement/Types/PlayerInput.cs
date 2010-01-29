@@ -106,21 +106,6 @@ namespace DreamWorld.InputManagement.Types
             }
         }
 
-        public int SelectGroup
-        {
-            get
-            {
-                if (InputManager.Keyboard.NewlyPressed(Keys.E) ||
-                    InputManager.GamePad.NewlyPressed(Buttons.RightShoulder))
-                    return 1;
-                if (InputManager.Keyboard.NewlyPressed(Keys.Q) ||
-                    InputManager.GamePad.NewlyPressed(Buttons.LeftShoulder))
-                    return -1;
-
-                return 0;
-            }
-        }
-
         public int CycleAxle
         {
             get

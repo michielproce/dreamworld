@@ -1,7 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using DreamWorld.Cameras;
 using DreamWorld.Entities;
 using DreamWorld.InputManagement.Types;
 using DreamWorld.ScreenManagement.Screens;
+using DreamWorld.Util;
+using JigLibX.Collision;
+using JigLibX.Geometry;
+using JigLibX.Physics;
 using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Levels
@@ -32,11 +38,23 @@ namespace DreamWorld.Levels
             return null;
         }
 
+        public void SetSelectedGroup(Group group)
+        {
+            int[] keys = new int[Groups.Count];
+            Groups.Keys.CopyTo(keys, 0);
+            foreach (int i in keys)
+            {
+                if (Groups[keys[i]] == group)
+                {
+                    selectedGroup = i;
+                    return;
+                }
+            }
+        }
+
         public override void Update(GameTime gameTime)
         {
-            PlayerInput input = Game.InputManager.Player;
-
-            HandleGroupSelection(input.SelectGroup);            
+            PlayerInput input = Game.InputManager.Player;           
             
             hud.CycleAxle(input.CycleAxle);
             if (input.CycleAxleDirection)
@@ -46,35 +64,44 @@ namespace DreamWorld.Levels
 
             hud.Update(gameTime);
 
+            SelectGroup();
+
             if(GameIsWon())
                 VictoryEventHandler();
 
             base.Update(gameTime);
         }
 
-        private void HandleGroupSelection(int selection)
+        private void SelectGroup()
         {
-            if(selection == 0)
+            if (!(GameScreen.Camera is ThirdPersonCamera))
                 return;
 
-            int[] keys = new int[Groups.Count];
-            Groups.Keys.CopyTo(keys, 0);
+            ThirdPersonCamera camera = (ThirdPersonCamera)GameScreen.Camera;
+            Vector3 direction = camera.Direction;
+            direction.Normalize();
+            direction *= selectionRadius*2;
 
-            for (int tries = 0; tries < Groups.Count; tries++ )
+            float dist;
+            CollisionSkin skin;
+            Vector3 pos, normal;
+
+            CollisionSkinPredicate1 pred = new IgnoreSkinPredicate(Player.Skin);
+            Segment seg = new Segment(camera.Position, direction);
+
+            DreamWorldPhysicsSystem.CurrentPhysicsSystem.CollisionSystem.SegmentIntersect(out dist, out skin, out pos, out normal, seg, pred);
+
+            if (skin == null) return;
+
+            foreach (KeyValuePair<int, Group> group in Groups)
             {
-                // Keep looping untill we have found a group that is allowed to rotate
-                selectedGroup += selection;
-                if (selectedGroup >= keys.Length)
+                foreach (KeyValuePair<string, Entity> entity in group.Value.Entities)
                 {
-                    selectedGroup -= keys.Length;
+                    if (entity.Value.Skin != skin) continue;
+                    if (!group.Value.AllowedRotations.Equals(Vector3.Zero) && group.Value.IsInRange)
+                        SetSelectedGroup(group.Value);
+                    return;
                 }
-                else if (selectedGroup < 0)
-                {
-                    selectedGroup += keys.Length;
-                }
-
-                if (!Groups[keys[selectedGroup]].AllowedRotations.Equals(Vector3.Zero) && Groups[keys[selectedGroup]].IsInRange)
-                    break;
             }
         }
 

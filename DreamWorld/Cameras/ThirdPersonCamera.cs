@@ -22,7 +22,7 @@ namespace DreamWorld.Cameras
         public override Vector3 Direction { 
             get
             {
-                return Vector3.Normalize(level.Player.Body.Position - Position);
+                return Vector3.Normalize(level.Player.Body.Position + level.Player.CameraOffset - Position);
             }
         }
 
