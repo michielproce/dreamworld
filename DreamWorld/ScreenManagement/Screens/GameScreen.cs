@@ -88,8 +88,9 @@ namespace DreamWorld.ScreenManagement.Screens
                 float timeStep = (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
                 DreamWorldPhysicsSystem.CurrentPhysicsSystem.Integrate(timeStep);
                 
-                Camera.Update(gameTime);
+                
                 Level.Update(gameTime);
+                Camera.Update(gameTime);
                 if (Level.Skybox != null)
                     Level.Skybox.Update(gameTime); // TODO: This updates the skybox second time around, but we don't want the camera delay.
             }
