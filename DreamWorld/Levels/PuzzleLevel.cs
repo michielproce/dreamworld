@@ -56,9 +56,8 @@ namespace DreamWorld.Levels
         {
             PlayerInput input = Game.InputManager.Player;           
             
-            hud.CycleAxle(input.CycleAxle);
-            if (input.CycleAxleDirection)
-                hud.CycleAxleDirection();
+            hud.Cycle(input.CycleAxle);
+
             if(input.ApplyRotation)
                 RotateGroup(hud.CurrentDirection);
 

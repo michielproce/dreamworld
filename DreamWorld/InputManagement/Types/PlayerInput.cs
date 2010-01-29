@@ -9,6 +9,7 @@ namespace DreamWorld.InputManagement.Types
     {
         public const float HorizontalMouseRotationSpeed = MathHelper.Pi/2000f;
         public const float HorizontalGamePadRotationSpeed = MathHelper.Pi/100f;
+        public const float HorizontalKeyboardRotationSpeed = MathHelper.Pi / 100f;
         public const float VerticalMouseRotationSpeed = MathHelper.Pi/2000f;
         public const float VerticalGamePadRotationSpeed = MathHelper.Pi/100f;
 
@@ -21,8 +22,8 @@ namespace DreamWorld.InputManagement.Types
                      (InputManager.Keyboard.State.IsKeyDown(Keys.D) ? 1 : 0) +
                      InputManager.GamePad.State.ThumbSticks.Left.X,
                      0,
-                     (InputManager.Keyboard.State.IsKeyDown(Keys.W) ? -1 : 0) +
-                     (InputManager.Keyboard.State.IsKeyDown(Keys.S) ? 1 : 0) +
+                     (InputManager.Keyboard.State.IsKeyDown(Keys.W) || InputManager.Keyboard.State.IsKeyDown(Keys.Up) ? -1 : 0) +
+                     (InputManager.Keyboard.State.IsKeyDown(Keys.S) || InputManager.Keyboard.State.IsKeyDown(Keys.Down) ? 1 : 0) +
                      -InputManager.GamePad.State.ThumbSticks.Left.Y
                     );
 
@@ -38,7 +39,9 @@ namespace DreamWorld.InputManagement.Types
         {
             get
             {
-                return (InputManager.Mouse.Movement.X*HorizontalMouseRotationSpeed)
+                return (InputManager.Mouse.Movement.X*HorizontalMouseRotationSpeed) +
+                    (InputManager.Keyboard.State.IsKeyDown(Keys.Left) ? HorizontalKeyboardRotationSpeed : 0) +
+                    (InputManager.Keyboard.State.IsKeyDown(Keys.Right) ? -HorizontalKeyboardRotationSpeed : 0) + 
                        + -InputManager.GamePad.State.ThumbSticks.Right.X*HorizontalGamePadRotationSpeed;
             }
         }
@@ -110,18 +113,12 @@ namespace DreamWorld.InputManagement.Types
         {
             get
             {
-                return (InputManager.Mouse.ScrollWheel > 0 ? 1 : 0) +
-                       (InputManager.Mouse.ScrollWheel < 0 ? -1 : 0) +
-                       (InputManager.GamePad.NewlyPressed(Buttons.X) ? 1 : 0);
-            }
-        }
-
-        public bool CycleAxleDirection
-        {
-            get
-            {
-                return InputManager.Mouse.NewlyPressed(MouseHandler.Buttons.RightButton) ||
-                       InputManager.GamePad.NewlyPressed(Buttons.Y);
+                return (InputManager.Keyboard.State.IsKeyUp(Keys.LeftControl) && InputManager.Mouse.ScrollWheel > 0 ? 1 : 0) +
+                       (InputManager.Keyboard.State.IsKeyUp(Keys.LeftControl) && InputManager.Mouse.ScrollWheel < 0 ? -1 : 0) +
+                       (InputManager.Keyboard.NewlyPressed(Keys.Q) ? -1 : 0) +
+                       (InputManager.Keyboard.NewlyPressed(Keys.E) ? 1 : 0) + 
+                       (InputManager.GamePad.NewlyPressed(Buttons.X) ? -1 : 0) +
+                       (InputManager.GamePad.NewlyPressed(Buttons.Y) ? 1 : 0);
             }
         }
 
@@ -129,7 +126,7 @@ namespace DreamWorld.InputManagement.Types
         {
             get
             {
-                return InputManager.Mouse.NewlyPressed(MouseHandler.Buttons.LeftButton) ||
+                return InputManager.Keyboard.State.IsKeyUp(Keys.LeftControl) && InputManager.Mouse.NewlyPressed(MouseHandler.Buttons.LeftButton) ||
                        InputManager.GamePad.NewlyPressed(Buttons.B);
             }
         }

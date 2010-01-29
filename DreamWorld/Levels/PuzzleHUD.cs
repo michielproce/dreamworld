@@ -41,22 +41,27 @@ namespace DreamWorld.Levels
             currentDirection = CW;
         }
 
-
-        public void CycleAxle(int direction)
+        public void Cycle(int direction)
         {
             if(direction == 0)
                 return;
+            if(direction != currentDirection)
+            {
+                currentDirection = direction;   
+            } else
+            {
+                CycleAxle(direction);
+            }
+        }
+
+        private void CycleAxle(int direction)
+        {
             currentAxle += direction;            
             if(currentAxle > axles.Length - 1)            
                 currentAxle = 0;
             if (currentAxle < 0)
                 currentAxle = axles.Length - 1;            
             rotation = 0;            
-        }
-
-        public void CycleAxleDirection()
-        {
-            currentDirection = currentDirection == CW ? CCW : CW;
         }
 
         public Vector3 CurrentDirection
