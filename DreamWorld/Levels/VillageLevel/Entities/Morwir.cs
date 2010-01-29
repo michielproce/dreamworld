@@ -29,8 +29,10 @@ namespace DreamWorld.Levels.VillageLevel.Entities
             float dist = Vector3.Distance(Level.Player.Body.Position, Body.Position);
             if (dist < 50f)
             {
-                GameScreen.TutorialText.SetText("Press the B button to interact with morwir");
-                if(GameScreen.InputManager.Player.Interact)
+                GameScreen.TutorialText.SetText("Click the left mouse button to interact with Morwir.",
+                                                "Press the B button to interact with Morwir."
+                                                );
+                if(GameScreen.InputManager.Player.ApplyRotation)
                 {                    
                     GameScreen.ExitScreen();
                     GameScreen.ScreenManager.AddScreen(new MorwirCutscene());

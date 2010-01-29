@@ -4,6 +4,7 @@ using DreamWorld.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace DreamWorld.ScreenManagement.Screens
 {
@@ -32,14 +33,14 @@ namespace DreamWorld.ScreenManagement.Screens
             text = "";
             end = TimeSpan.Zero;
         }
-
-        public void SetText(string text)
+        
+        public void SetText(string pcText, string xboxText)
         {
-            SetText(text, TimeSpan.Zero);
+            SetText(pcText, xboxText, TimeSpan.Zero);
         }
-        public void SetText(string text, TimeSpan end)
+        public void SetText(string pcText, string xboxText, TimeSpan end)
         {
-            this.text = StringUtil.CutLine(text, MaxChars);
+            text = StringUtil.CutLine(GamePad.GetState(PlayerIndex.One).IsConnected ? xboxText : pcText, MaxChars);
             this.end = end;
             visible = true;
             Vector2 size = font.MeasureString(this.text);      

@@ -94,11 +94,6 @@ namespace DreamWorld.InputManagement.Types
             get { return InputManager.Keyboard.NewlyPressed(Keys.Space) || InputManager.GamePad.NewlyPressed(Buttons.A); }
         }
 
-        public bool Interact
-        {
-            get { return InputManager.Keyboard.NewlyPressed(Keys.Enter) || InputManager.GamePad.NewlyPressed(Buttons.B); }
-        }
-
         public bool ShowPauseMenu
         {
             get
@@ -117,8 +112,8 @@ namespace DreamWorld.InputManagement.Types
                        (InputManager.Keyboard.State.IsKeyUp(Keys.LeftControl) && InputManager.Mouse.ScrollWheel < 0 ? -1 : 0) +
                        (InputManager.Keyboard.NewlyPressed(Keys.Q) ? -1 : 0) +
                        (InputManager.Keyboard.NewlyPressed(Keys.E) ? 1 : 0) + 
-                       (InputManager.GamePad.NewlyPressed(Buttons.X) ? -1 : 0) +
-                       (InputManager.GamePad.NewlyPressed(Buttons.Y) ? 1 : 0);
+                       (InputManager.GamePad.NewlyPressed(Buttons.LeftShoulder) ? -1 : 0) +
+                       (InputManager.GamePad.NewlyPressed(Buttons.RightShoulder) ? 1 : 0);
             }
         }
 

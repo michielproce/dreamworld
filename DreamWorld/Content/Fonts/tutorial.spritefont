@@ -2,7 +2,7 @@
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics">
 	<Asset Type="Graphics:FontDescription">
 		<FontName>Requiem</FontName>
-		<Size>12</Size>
+		<Size>13</Size>
 		<Spacing>2</Spacing>
 		<Style>Regular</Style>
 		<CharacterRegions>

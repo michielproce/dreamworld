@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
+using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,25 +19,29 @@ namespace DreamWorld.Levels
         private const float height = .25f; // Height relative to the game height
 
         private GraphicsDevice device;
+        private GameScreen gameScreen;
         private Model model;
         private Matrix world;
         private Matrix[] transforms;        
         private Viewport viewport;
         private Viewport originalViewport;
         
-
         private ModelMesh[] axles;
         private int currentAxle;
         private int currentDirection;
+
+        private bool cycledBefore;
 
         private float rotation;
 
 
         
 
-        public PuzzleHUD(GraphicsDevice device)
+        public PuzzleHUD(GameScreen gameScreen)
         {
-            this.device = device;
+            this.gameScreen = gameScreen;
+            this.device =  gameScreen.GraphicsDevice;
+            
             axles = new ModelMesh[3];
             currentAxle = XZ;
             currentDirection = CW;
@@ -45,6 +51,14 @@ namespace DreamWorld.Levels
         {
             if(direction == 0)
                 return;
+            if (!cycledBefore && gameScreen.TutorialText != null)
+            {
+                gameScreen.TutorialText.SetText(
+                    "Great.\nYou can now cycle through the different rotations and directions.\nUse the left mouse button to apply the rotation.\nJump on the platform and apply the correct rotation to get on the green platform with the cows.",
+                    "Great.\nYou can now cycle through the different rotations and directions.\nUse the B button to apply the rotation.\nJump on the platform and apply the correct rotation to get on the green platform with the cows.");
+                cycledBefore = true;
+            }
+
             if(direction != currentDirection)
             {
                 currentDirection = direction;   

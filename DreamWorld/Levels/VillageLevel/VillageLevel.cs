@@ -46,8 +46,8 @@ namespace DreamWorld.Levels.VillageLevel
             if (!initialTutorialShown && GameScreen.TutorialText != null)
             {
                 GameScreen.TutorialText.SetText(
-                    "Welcome to DreamWorld. Use the left joystick to move, the right joystick to look around, A button to jump and B button to interact.",
-                    gameTime.TotalGameTime + TimeSpan.FromSeconds(10));
+                    "Welcome to DreamWorld.\nUse the arrow or WSAD keys to move around.\nUse your mouse to look around.\nPress space to jump.\nTry and find someone to talk to in the village.",
+                    "Welcome to DreamWorld.\nUse the left joystick to move and the right joystick to look around.\nPress the A button to jump.\nTry and find someone to talk to in the village.");
                 initialTutorialShown = true;
             }
             base.Update(gameTime);

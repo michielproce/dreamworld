@@ -4,18 +4,25 @@
     {
         public static string CutLine(string line, int max)
         {
-            for (int i = 0; i < line.Length; i += max)
-            {
-                for (int j = i; j > 0; j--)
+            string[] lines = line.Split('\n');
+
+            for (int i = 0; i < lines.Length; i++) 
+            {             
+                for (int j = 0; j < lines[i].Length; j += max)
                 {
-                    if (line[j] == ' ')
+                    for (int k = j; k > 0; k--)
                     {
-                        line = line.Remove(j, 1).Insert(j, "\n");
-                        break;
+                        if (lines[i][k] == ' ')
+                        {
+                            lines[i] = lines[i].Remove(k, 1).Insert(k, "\n");
+                            break;
+                        }
                     }
                 }
+
             }
-            return line;
+
+            return string.Join("\n", lines);
         }
     }
 }

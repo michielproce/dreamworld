@@ -22,7 +22,7 @@ namespace DreamWorld.Levels
         public override void Initialize()
         {            
             base.Initialize();
-            hud = new PuzzleHUD(GameScreen.GraphicsDevice);
+            hud = new PuzzleHUD(GameScreen);
             hud.Load(GameScreen.Content);
         }
 
