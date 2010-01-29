@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using DreamWorld.Entities;
+using DreamWorld.Levels.VillageLevel.Entities;
 using DreamWorld.Rendering.Postprocessing;
 using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
@@ -10,6 +12,8 @@ namespace DreamWorld.Levels.VillageLevel
     public class VillageLevel : Level
     {
         private bool initialTutorialShown;
+
+        public int LevelsCompleted;
 
         public float maximumWalkingHeight { get; private set; }
 
@@ -39,6 +43,21 @@ namespace DreamWorld.Levels.VillageLevel
             MediaPlayer.IsRepeating = true;
 
             base.Initialize();
+
+            if (LevelsCompleted < 1)
+            {
+                foreach (KeyValuePair<int, Group> group in Groups)
+                {
+                    foreach (KeyValuePair<string, Entity> entity in group.Value.Entities)
+                    {
+                        if (entity.Value is Stable)
+                        {
+                            group.Value.RemoveEntity(entity.Value.Name);
+                            return;
+                        }
+                    }
+                }
+            }
         }
 
         public override void Update(GameTime gameTime)

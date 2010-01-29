@@ -1091,6 +1091,26 @@
       </Scale>
       <Group>0</Group>
     </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity634003739056278764</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.Stable</TypeName>
+      <Position>
+        <X>220</X>
+        <Y>-550.0002</Y>
+        <Z>310</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>-45</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>0.5</X>
+        <Y>0.5</Y>
+        <Z>0.5</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
   </Spawns>
   <GroupColors />
 </LevelInformation>

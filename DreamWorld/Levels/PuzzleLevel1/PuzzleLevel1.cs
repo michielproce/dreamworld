@@ -2,6 +2,7 @@
 using DreamWorld.Entities;
 using DreamWorld.Levels.PuzzleLevel1.Entities;
 using DreamWorld.Rendering.Postprocessing;
+using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -73,6 +74,13 @@ namespace DreamWorld.Levels.PuzzleLevel1
                     return false;
             }
             return true;
+        }
+
+        protected override void VictoryEventHandler()
+        {
+            Level villageLevel = new VillageLevel.VillageLevel{ LevelsCompleted = 1 };
+            GameScreen.ScreenManager.AddScreen(new GameScreen(villageLevel));
+            GameScreen.ExitScreen();
         }
 
         public override void Update(GameTime gameTime)
