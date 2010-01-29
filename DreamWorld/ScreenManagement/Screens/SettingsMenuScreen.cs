@@ -12,7 +12,7 @@ namespace DreamWorld.ScreenManagement.Screens
         private readonly SettingsMenuEntry fullscreenEntry;
         private readonly SettingsMenuEntry antiAliasingEntry;
         private readonly SettingsMenuEntry verticalSyncEntry;
-        private readonly SettingsMenuEntry shadowsEntry;
+//        private readonly SettingsMenuEntry shadowsEntry;
 
         private readonly MenuEntry saveMenuEntry;
         private readonly MenuEntry exitMenuEntry;
@@ -25,7 +25,7 @@ namespace DreamWorld.ScreenManagement.Screens
             fullscreenEntry = new SettingsMenuEntry("Screenmode", "");
             antiAliasingEntry = new SettingsMenuEntry("Anti-aliasing", "");
             verticalSyncEntry = new SettingsMenuEntry("Vertical synchronization", "");
-            shadowsEntry = new SettingsMenuEntry("Shadows", "");
+//            shadowsEntry = new SettingsMenuEntry("Shadows", "");
             saveMenuEntry = new MenuEntry("Save");
             exitMenuEntry = new MenuEntry("Cancel");
 
@@ -33,7 +33,7 @@ namespace DreamWorld.ScreenManagement.Screens
             fullscreenEntry.Selected += FullscreenMenuEntrySelected;
             antiAliasingEntry.Selected += AntiAliasingMenuEntrySelected;
             verticalSyncEntry.Selected += VerticalSyncMenuEntrySelected;
-            shadowsEntry.Selected += ShadowMenuEntrySelected;
+//            shadowsEntry.Selected += ShadowMenuEntrySelected;
             saveMenuEntry.Selected += SaveMenuEntrySelected;
             exitMenuEntry.Selected += OnCancel;
 
@@ -41,7 +41,7 @@ namespace DreamWorld.ScreenManagement.Screens
             MenuEntries.Add(fullscreenEntry);
             MenuEntries.Add(antiAliasingEntry);
             MenuEntries.Add(verticalSyncEntry);
-            MenuEntries.Add(shadowsEntry);
+//            MenuEntries.Add(shadowsEntry);
             MenuEntries.Add(saveMenuEntry);
             MenuEntries.Add(exitMenuEntry);
         }
@@ -79,7 +79,7 @@ namespace DreamWorld.ScreenManagement.Screens
             fullscreenEntry.Value =     config.Fullscreen ? "Fullscreen" : "Windowed";
             antiAliasingEntry.Value =   config.AntiAliasing ? "On" : "Off";
             verticalSyncEntry.Value =   config.VerticalSync ? "On" : "Off";
-            shadowsEntry.Value =        config.Shadows ? "On" : "Off";
+//            shadowsEntry.Value =        config.Shadows ? "On" : "Off";
         }
 
         private void ResolutionMenuEntrySelected(object sender, EventArgs e)
@@ -127,11 +127,11 @@ namespace DreamWorld.ScreenManagement.Screens
             SetMenuEntryText();
         }
 
-        private void ShadowMenuEntrySelected(object sender, EventArgs e)
-        {
-            config.Shadows = !config.Shadows;
-            SetMenuEntryText();
-        }
+//        private void ShadowMenuEntrySelected(object sender, EventArgs e)
+//        {
+//            config.Shadows = !config.Shadows;
+//            SetMenuEntryText();
+//        }
 
         private void SaveMenuEntrySelected(object sender, EventArgs e)
         {
