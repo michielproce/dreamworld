@@ -47,6 +47,7 @@ namespace DreamWorld
 
             ScreenManager.AddScreen(new FloatingKoalaGamesIntroScreen());
 //            ScreenManager.AddScreen(new GameScreen(new VillageLevel()));
+//            ScreenManager.AddScreen(new GameScreen(new VillageLevel{LevelsCompleted = 1}));
 //            ScreenManager.AddScreen(new GameScreen(new PuzzleLevel1()));
         }
 
