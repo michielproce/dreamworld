@@ -45,7 +45,7 @@ namespace DreamWorld.ScreenManagement.Screens
 
         void PlayGameMenuEntrySelected(object sender, EventArgs e)
         {
-            ScreenManager.AddScreen(new IntroCutscene());
+            ScreenManager.AddScreen(new VillageIntroCutscene());
             ExitScreen();
         }
 

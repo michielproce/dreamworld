@@ -164,7 +164,8 @@
     <Compile Include="ScreenManagement\Screen.cs" />
     <Compile Include="ScreenManagement\ScreenManager.cs" />
     <Compile Include="ScreenManagement\Screens\CreditsScreen.cs" />
-    <Compile Include="ScreenManagement\Screens\Cutscenes\IntroCutscene.cs" />
+    <Compile Include="ScreenManagement\Screens\Cutscenes\VillageIntroCutscene.cs" />
+    <Compile Include="ScreenManagement\Screens\Cutscenes\GlobalIntroCutscene.cs" />
     <Compile Include="ScreenManagement\Screens\Cutscenes\MorwirCutscene.cs" />
     <Compile Include="ScreenManagement\Screens\GameScreen.cs" />
     <Compile Include="ScreenManagement\Screens\FloatingKoalaGamesIntroScreen.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using DreamWorld.ScreenManagement.Screens;
+using DreamWorld.ScreenManagement.Screens.Cutscenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -31,7 +32,7 @@ namespace DreamWorld.ScreenManagement
         {
             if (gameTime.TotalGameTime > duration && !IsExiting)
             {
-                ScreenManager.AddScreen(new MainMenuScreen());
+                ScreenManager.AddScreen(new GlobalIntroCutscene());
                 ExitScreen();
             }
             base.Update(gameTime);

@@ -107,10 +107,10 @@ namespace DreamWorld.ScreenManagement
         {
             if (lines[currentLine].Texture != null)
                 texture = lines[currentLine].Texture;
-            text = StringUtil.CutLine(lines[currentLine].Text, 50);
+            text = StringUtil.CutLine(lines[currentLine].Text, 45);
             Vector2 textSize = font.MeasureString(text);
             Viewport vp = ScreenManager.GraphicsDevice.Viewport;           
-            textPosition = new Vector2(vp.Width / 2f - textSize.X / 2f, vp.Height - textSize.Y - 100f);
+            textPosition = new Vector2(vp.Width / 2f - textSize.X / 2f, vp.Height - textSize.Y - 30f);
             SoundEffect sound = Content.Load<SoundEffect>(lines[currentLine].Audio);
 
             currentSoundEffectInstance = sound.CreateInstance();            
