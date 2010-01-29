@@ -5,6 +5,7 @@ using DreamWorld.Rendering.Postprocessing;
 using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace DreamWorld.Levels.PuzzleLevel1
 {
@@ -68,6 +69,11 @@ namespace DreamWorld.Levels.PuzzleLevel1
 
         protected override bool GameIsWon()
         {
+            #if(DEBUG)
+            if (GameScreen.InputManager.Keyboard.NewlyPressed(Keys.OemTilde))
+                return true;
+            #endif
+
             foreach (Cow cow in Cows)
             {
                 if(cow.Body.Position.Z < 410 || cow.Group.IsRotating || !cow.Group.IsColliding)

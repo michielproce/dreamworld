@@ -39,6 +39,8 @@ namespace DreamWorld.InputManagement.Types
             {
                 return InputManager.Keyboard.NewlyPressed(Keys.Enter)
                      ||
+                    InputManager.Keyboard.NewlyPressed(Keys.Space)
+                     ||
                     InputManager.GamePad.NewlyPressed(Buttons.A);
             }
         }
