@@ -264,6 +264,11 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="Models\Village\Stable.X">
+      <Name>Stable</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
     <Compile Include="Models\Puzzle\Axles.X">
       <Name>Axles</Name>
       <Importer>XImporter</Importer>
