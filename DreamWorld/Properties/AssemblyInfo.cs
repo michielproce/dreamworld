@@ -6,10 +6,10 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("DreamWorld")]
 [assembly: AssemblyProduct("DreamWorld")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyDescription("Dreamworld is a game being developed by four students of Hanze University Groningen, in commission of the Imagine Cup, hosted by Microsoft. It focusses on simple gameplay which challenges the players mind and skills. Through the solving of complex 3D puzzles, the player helps a poor and decaying village to regain its prosperity.")]
+[assembly: AssemblyCompany("Floating Koala Games")]
 
-[assembly: AssemblyCopyright("Copyright ©  2009")]
+[assembly: AssemblyCopyright("Copyright ©  2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
