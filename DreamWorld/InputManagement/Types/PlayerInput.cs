@@ -72,8 +72,8 @@ namespace DreamWorld.InputManagement.Types
         {
             get
             {
-                return (InputManager.Mouse.Movement.Y*VerticalMouseRotationSpeed) +
-                       (InputManager.GamePad.State.ThumbSticks.Right.Y*VerticalGamePadRotationSpeed);
+                return (((DreamWorldGame)InputManager.Game).Config.InvertCamera ? 1 : -1) * ((InputManager.Mouse.Movement.Y*VerticalMouseRotationSpeed) +
+                       (InputManager.GamePad.State.ThumbSticks.Right.Y*VerticalGamePadRotationSpeed));
                   
             }
         }

@@ -13,6 +13,7 @@ namespace DreamWorld.ScreenManagement.Screens
         private readonly SettingsMenuEntry antiAliasingEntry;
         private readonly SettingsMenuEntry verticalSyncEntry;
         private readonly SettingsMenuEntry subtitlesEntry;
+        private readonly SettingsMenuEntry invertCameraEntry;
 
         private readonly MenuEntry saveMenuEntry;
         private readonly MenuEntry exitMenuEntry;
@@ -26,6 +27,7 @@ namespace DreamWorld.ScreenManagement.Screens
             antiAliasingEntry = new SettingsMenuEntry("Anti-aliasing", "");
             verticalSyncEntry = new SettingsMenuEntry("Vertical synchronization", "");
             subtitlesEntry = new SettingsMenuEntry("Subtitles", "");
+            invertCameraEntry = new SettingsMenuEntry("Invert camera", "");
             saveMenuEntry = new MenuEntry("Save");
             exitMenuEntry = new MenuEntry("Cancel");
 
@@ -34,6 +36,7 @@ namespace DreamWorld.ScreenManagement.Screens
             antiAliasingEntry.Selected += AntiAliasingMenuEntrySelected;
             verticalSyncEntry.Selected += VerticalSyncMenuEntrySelected;
             subtitlesEntry.Selected += SubtitlesMenuEntrySelected;
+            invertCameraEntry.Selected += InvertCameraMenuEntrySelected;
             saveMenuEntry.Selected += SaveMenuEntrySelected;
             exitMenuEntry.Selected += OnCancel;
 
@@ -42,6 +45,7 @@ namespace DreamWorld.ScreenManagement.Screens
             MenuEntries.Add(antiAliasingEntry);
             MenuEntries.Add(verticalSyncEntry);
             MenuEntries.Add(subtitlesEntry);
+            MenuEntries.Add(invertCameraEntry);
             MenuEntries.Add(saveMenuEntry);
             MenuEntries.Add(exitMenuEntry);
         }
@@ -80,6 +84,7 @@ namespace DreamWorld.ScreenManagement.Screens
             antiAliasingEntry.Value =   config.AntiAliasing ? "On" : "Off";
             verticalSyncEntry.Value =   config.VerticalSync ? "On" : "Off";
             subtitlesEntry.Value =      config.Subtitles ? "On" : "Off";
+            invertCameraEntry.Value =   config.InvertCamera ? "On" : "Off";
         }
 
         private void ResolutionMenuEntrySelected(object sender, EventArgs e)
@@ -133,6 +138,12 @@ namespace DreamWorld.ScreenManagement.Screens
             SetMenuEntryText();
         }
 
+        private void InvertCameraMenuEntrySelected(object sender, EventArgs e)
+        {
+            config.InvertCamera = !config.InvertCamera;
+            SetMenuEntryText();
+        }
+
         private void SaveMenuEntrySelected(object sender, EventArgs e)
         {
             Config.Save(config);
@@ -158,7 +169,7 @@ namespace DreamWorld.ScreenManagement.Screens
             MenuEntry menuEntry = MenuEntries[key];
 
             if (saveMenuEntry == menuEntry)
-                position += new Vector2(0, 50);
+                position += new Vector2(0, 20);
 
             bool isSelected = IsActive && (key == selectedEntry);
 
