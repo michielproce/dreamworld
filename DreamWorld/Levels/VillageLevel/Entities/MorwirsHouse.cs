@@ -1,5 +1,4 @@
-﻿using System;
-using DreamWorld.Entities;
+﻿using DreamWorld.Entities;
 using DreamWorld.Rendering.Particles.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

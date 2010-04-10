@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using DreamWorld.Entities;
-using DreamWorld.Levels.PuzzleLevel1.Entities;
 using DreamWorld.Levels.VillageLevel.Entities;
 using DreamWorld.Rendering.Postprocessing;
-using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Media;
 

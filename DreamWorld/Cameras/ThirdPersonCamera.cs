@@ -1,5 +1,4 @@
 ﻿using System;
-using DreamWorld.Entities;
 using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Cameras

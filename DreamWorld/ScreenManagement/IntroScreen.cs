@@ -1,5 +1,4 @@
 ﻿using System;
-using DreamWorld.ScreenManagement.Screens;
 using DreamWorld.ScreenManagement.Screens.Cutscenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

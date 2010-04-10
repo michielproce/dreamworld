@@ -1,7 +1,4 @@
-﻿using System;
-using DreamWorld.Entities;
-using DreamWorld.Helpers.Renderers;
-using DreamWorld.ScreenManagement.Screens;
+﻿using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 

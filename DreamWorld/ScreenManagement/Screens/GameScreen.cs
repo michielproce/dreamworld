@@ -7,7 +7,6 @@ using DreamWorld.Levels;
 using JigLibX.Collision;
 using JigLibX.Physics;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.ScreenManagement.Screens

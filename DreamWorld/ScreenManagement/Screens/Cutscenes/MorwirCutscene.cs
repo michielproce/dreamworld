@@ -1,8 +1,5 @@
 ﻿using System;
-using DreamWorld.Levels;
 using DreamWorld.Levels.PuzzleLevel1;
-using DreamWorld.Levels.VillageLevel;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.ScreenManagement.Screens.Cutscenes

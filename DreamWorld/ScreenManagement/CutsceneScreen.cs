@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using DreamWorld.Levels.VillageLevel;
-using DreamWorld.ScreenManagement.Screens;
 using DreamWorld.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;

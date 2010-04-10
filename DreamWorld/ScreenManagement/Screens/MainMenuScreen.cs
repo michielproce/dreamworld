@@ -1,6 +1,5 @@
 using System;
 using DreamWorld.Levels.PuzzleLevel1;
-using DreamWorld.Levels.VillageLevel;
 using DreamWorld.ScreenManagement.Screens.Cutscenes;
 using Microsoft.Xna.Framework.Graphics;
 

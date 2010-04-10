@@ -1,6 +1,4 @@
-﻿using System;
-using DreamWorld.Entities;
-using JigLibX.Collision;
+﻿using JigLibX.Collision;
 
 namespace DreamWorld.Util
 {

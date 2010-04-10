@@ -1,8 +1,6 @@
-﻿using System;
-using DreamWorld.Cameras;
+﻿using DreamWorld.Cameras;
 using DreamWorld.InputManagement;
 using DreamWorld.Levels.VillageLevel;
-using JigLibX.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 

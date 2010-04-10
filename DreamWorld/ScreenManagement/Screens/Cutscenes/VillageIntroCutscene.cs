@@ -1,8 +1,6 @@
 ﻿using System;
 using DreamWorld.Levels.VillageLevel;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Media;
 
 namespace DreamWorld.ScreenManagement.Screens.Cutscenes
 {
