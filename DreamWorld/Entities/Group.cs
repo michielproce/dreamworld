@@ -44,12 +44,12 @@ namespace DreamWorld.Entities
             {
                 foreach (Entity entity in Entities.Values)
                 {
-                    for (int i = 0; i <= entity.Skin.Collisions.Count - 1; i++)
+                    foreach (CollisionInfo collision in entity.Skin.Collisions)
                     {
-                        if ((!IgnoreCollisionSkins.Contains(entity.Skin.Collisions[i].SkinInfo.Skin0) &&
-                             entity.Skin.Collisions[i].SkinInfo.Skin0.Owner.Immovable) ||
-                            (!IgnoreCollisionSkins.Contains(entity.Skin.Collisions[i].SkinInfo.Skin1) &&
-                             entity.Skin.Collisions[i].SkinInfo.Skin1.Owner.Immovable))
+                        if ((!IgnoreCollisionSkins.Contains(collision.SkinInfo.Skin0) &&
+                             collision.SkinInfo.Skin0.Owner.Immovable) ||
+                            (!IgnoreCollisionSkins.Contains(collision.SkinInfo.Skin1) &&
+                             collision.SkinInfo.Skin1.Owner.Immovable))
                         {
                             return true;
                         }
@@ -181,6 +181,8 @@ namespace DreamWorld.Entities
         {
             if (!Entities.ContainsKey(name))
                 throw new InvalidOperationException("Entity " + name + " doesn't exist");
+            if (IgnoreCollisionSkins.Contains(Entities[name].Skin))
+                IgnoreCollisionSkins.Remove(Entities[name].Skin);
             Entities[name].DisablePhysics();
             Entities.Remove(name);
         }

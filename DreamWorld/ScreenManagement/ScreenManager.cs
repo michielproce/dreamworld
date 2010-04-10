@@ -9,7 +9,7 @@ namespace DreamWorld.ScreenManagement
 {
     public class ScreenManager : DrawableGameComponent
     {
-        private List<Screen> screens = new List<Screen>();
+        private readonly List<Screen> screens = new List<Screen>();
 
         public InputManager InputManager { get; private set; }
 
@@ -51,9 +51,9 @@ namespace DreamWorld.ScreenManagement
                 screen.UnloadContent();
         }
 
+
         public override void Update(GameTime gameTime)
         {
-
             bool otherScreenHasFocus = !Game.IsActive;
             bool coveredByOtherScreen = false;
 
@@ -89,6 +89,7 @@ namespace DreamWorld.ScreenManagement
             }
         }
 
+
         public void AddScreen(Screen screen)
         {
             screen.ScreenManager = this;
@@ -119,6 +120,7 @@ namespace DreamWorld.ScreenManagement
 
             screens.Remove(screen);
         }
+
 
         public void FadeBackBufferToBlack(int alpha)
         {

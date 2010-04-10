@@ -156,14 +156,7 @@ namespace DreamWorld.Levels
 
             if(GameScreen.Camera is ThirdPersonCamera)
             {
-                float dist;
-                CollisionSkin skin;
-                Vector3 pos, normal;
-
-                CollisionSkinPredicate1 pred = new DefaultSkinPredicate();
-                Segment seg = new Segment(GameScreen.Camera.Position, Vector3.Zero);
-
-                DreamWorldPhysicsSystem.CurrentPhysicsSystem.CollisionSystem.SegmentIntersect(out dist, out skin, out pos, out normal, seg, pred);
+                CollisionSkin skin = ((ThirdPersonCamera) GameScreen.Camera).GetCollidingSkin();
 
                 if (skin != null)
                     ignoreList.Add(skin);
@@ -202,9 +195,6 @@ namespace DreamWorld.Levels
             {
                 DrawEntities(gameTime, ignoreList);
             }
-            
-
-            
             
             if(bloom != null)
                 bloom.Draw(gameTime);

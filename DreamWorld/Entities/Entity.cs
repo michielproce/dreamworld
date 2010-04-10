@@ -40,8 +40,7 @@ namespace DreamWorld.Entities
         public Vector3 Scale { get; set; }
         public Body Body { get; private set; }
         public CollisionSkin Skin { get; private set; }
-        public Vector3 CenterOfMass;
-        
+
         public Matrix World { get; private set; }
         
         public Model Model { get; protected set; }
@@ -92,7 +91,6 @@ namespace DreamWorld.Entities
 
             Body = body;
             Skin = skin;
-            CenterOfMass = centerOfMass;
 
             foreach (SoundEffect3D sound in sounds)
                 sound.Initialize();

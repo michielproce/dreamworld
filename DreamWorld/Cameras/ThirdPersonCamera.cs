@@ -1,4 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using DreamWorld.ScreenManagement.Screens;
+using DreamWorld.Util;
+using JigLibX.Collision;
+using JigLibX.Geometry;
+using JigLibX.Physics;
 using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Cameras
@@ -88,6 +94,24 @@ namespace DreamWorld.Cameras
                     Vector3.Up);
 
             base.Update(gameTime);
+        }
+
+        /// <summary>
+        /// Get null or the collisionskin that is colliding with the camera.
+        /// Since we are using a physics-system, there can only be one skin at a position.
+        /// </summary>
+        public CollisionSkin GetCollidingSkin()
+        {
+            float dist;
+            CollisionSkin skin;
+            Vector3 pos, normal;
+
+            CollisionSkinPredicate1 pred = new DefaultSkinPredicate();
+            Segment seg = new Segment(Position, Vector3.Zero);
+
+            DreamWorldPhysicsSystem.CurrentPhysicsSystem.CollisionSystem.SegmentIntersect(out dist, out skin, out pos, out normal, seg, pred);
+
+            return skin;
         }
     }
 }
