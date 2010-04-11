@@ -31,8 +31,6 @@ namespace DreamWorld.Entities
 
         public override void Initialize()
         {
-            if(Level.Terrain != null)
-                Level.Terrain.AddShadowedEntity(this);
             inputManager = GameScreen.InputManager;
             Animation.InitialClip = "Standing";
             Animation.Speed = 1.0f;

@@ -3,19 +3,12 @@
  * PARAMETERS
  * ==========
  */
-#define MaxShadows 2 // Same in Terrain.cs
-#define ShadowIntensity .5 // 0.0-1.0
-
 float4x4 world;
 float4x4 view;
 float4x4 projection;
 
 float3 Ambient = .3;
 float3 Sun = float3(.5, -.5, 0);
-
-int NumberOfShadows = 0;
-float2 ShadowPositions[MaxShadows];
-float ShadowRadii[MaxShadows];
 
 float TransitionHeight;
 float TransitionSmudge;
@@ -110,31 +103,8 @@ float4 TerrainPixelShader(PS_INPUT input) : COLOR0
 		color = tex2D(Sampler1, input.TexCoords) * (1-weight);
 		color += tex2D(Sampler2, input.TexCoords) * weight; 
 	}
-	
 			
     color.rgb *= saturate(input.SunFactor + Ambient);
-	
-	for(int i=0; i < NumberOfShadows; i++)
-	{
-		float2 pos = ShadowPositions[i];
-		float rad = ShadowRadii[i];
-		
-		if(abs(input.vPos.x - pos.x) < rad && 
-			abs(input.vPos.y - pos.y) < rad)
-		{
-			float2 dist = input.vPos - pos;
-			float lenSq = dist.x * dist.x + dist.y * dist.y;			
-			float radSq = rad * rad;
-			if(lenSq < radSq)
-			{
-				float weight = lenSq / radSq + (1 - ShadowIntensity);
-				if(weight < 1)
-					color *= weight;
-			}
-		}
-		
-
-	}
 
     return color;
 }
