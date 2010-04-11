@@ -139,10 +139,13 @@
     <Compile Include="Levels\VillageLevel\Entities\Morwir.cs" />
     <Compile Include="Levels\VillageLevel\Entities\MorwirCane.cs" />
     <Compile Include="Levels\VillageLevel\Entities\MorwirsHouse.cs" />
+    <Compile Include="Levels\VillageLevel\Entities\Statue.cs" />
     <Compile Include="Levels\VillageLevel\Entities\TestEntity.cs" />
     <Compile Include="Levels\PuzzleLevel.cs" />
     <Compile Include="Entities\Group.cs" />
     <Compile Include="Levels\VillageLevel\Entities\TrashCan.cs" />
+    <Compile Include="Levels\VillageLevel\Entities\Tree.cs" />
+    <Compile Include="Levels\VillageLevel\Entities\TreeTrunk.cs" />
     <Compile Include="Levels\VillageLevel\Entities\VillageZeppelin.cs" />
     <Compile Include="Levels\VillageLevel\Entities\Wall.cs" />
     <Compile Include="Levels\VillageLevel\Entities\Gate.cs" />

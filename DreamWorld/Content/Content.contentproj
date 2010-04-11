@@ -264,6 +264,21 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="Models\Village\Statue.X">
+      <Name>Statue</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Village\TreeTrunk.X">
+      <Name>TreeTrunk</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Village\Tree.X">
+      <Name>Tree</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
     <Compile Include="Models\Village\Stable.X">
       <Name>Stable</Name>
       <Importer>XImporter</Importer>
