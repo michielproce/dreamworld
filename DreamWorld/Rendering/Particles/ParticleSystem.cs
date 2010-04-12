@@ -110,9 +110,6 @@ namespace DreamWorld.Rendering.Particles
 
         public void Update(GameTime gameTime)
         {
-            effectViewParameter.SetValue(gameScreen.Camera.View);
-            effectProjectionParameter.SetValue(gameScreen.Camera.Projection);
-
             currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             // Retire Active Particles
@@ -196,6 +193,9 @@ namespace DreamWorld.Rendering.Particles
 
         public void Draw(GameTime gameTime)
         {
+            effectViewParameter.SetValue(gameScreen.Camera.View);
+            effectProjectionParameter.SetValue(gameScreen.Camera.Projection);
+
             GraphicsDevice device = this.device;
 
             // Restore the vertex buffer contents if the graphics device was lost.
