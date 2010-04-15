@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LevelInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PlayerStartPosition>
+    <X>0</X>
+    <Y>10</Y>
+    <Z>0</Z>
+  </PlayerStartPosition>
+  <PlayerStartRotation>
+    <X>0</X>
+    <Y>0</Y>
+    <Z>0</Z>
+  </PlayerStartRotation>
+  <Spawns>
+    <SpawnInformation>
+      <Name>Start</Name>
+      <TypeName>DreamWorld.Levels.PuzzleLevel1.Entities.Platform</TypeName>
+      <Position>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>2</X>
+        <Y>2</Y>
+        <Z>2</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+  </Spawns>
+  <GroupColors>
+    <GroupColorInformation>
+      <ID>1</ID>
+      <R>255</R>
+      <G>0</G>
+      <B>0</B>
+    </GroupColorInformation>
+  </GroupColors>
+</LevelInformation>

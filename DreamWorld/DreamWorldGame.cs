@@ -1,4 +1,7 @@
 using DreamWorld.InputManagement;
+using DreamWorld.Levels.PuzzleLevel1;
+using DreamWorld.Levels.TutorialLevel;
+using DreamWorld.Levels.VillageLevel;
 using DreamWorld.ScreenManagement;
 using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
@@ -45,6 +48,7 @@ namespace DreamWorld
             ScreenManager.AddScreen(new FloatingKoalaGamesIntroScreen());
 //            ScreenManager.AddScreen(new GameScreen(new VillageLevel()));
 //            ScreenManager.AddScreen(new GameScreen(new VillageLevel{LevelsCompleted = 1}));
+//            ScreenManager.AddScreen(new GameScreen(new TutorialLevel()));
 //            ScreenManager.AddScreen(new GameScreen(new PuzzleLevel1()));
         }
 
