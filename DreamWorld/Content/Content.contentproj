@@ -737,6 +737,16 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="Models\Village\Skull.X">
+      <Name>Skull</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Village\StableTrashed.X">
+      <Name>StableTrashed</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
     <Compile Include="Models\Village\Bricks.X">
       <Name>Bricks</Name>
       <Importer>XImporter</Importer>
