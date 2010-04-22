@@ -131,6 +131,7 @@
     <Compile Include="Levels\SpawnInformation.cs" />
     <Compile Include="Levels\PuzzleLevel1\Entities\Cow.cs" />
     <Compile Include="Levels\TutorialLevel\TutorialLevel.cs" />
+    <Compile Include="Levels\VillageLevel\Entities\Bricks.cs" />
     <Compile Include="Levels\VillageLevel\Entities\CasualHouse1.cs" />
     <Compile Include="Levels\VillageLevel\Entities\CasualHouse2.cs" />
     <Compile Include="Levels\VillageLevel\Entities\Can.cs" />
