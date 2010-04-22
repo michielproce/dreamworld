@@ -737,6 +737,11 @@
       <Processor>PassThroughProcessor</Processor>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="Models\Village\Bird.X">
+      <Name>Bird</Name>
+      <Importer>XImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
+    </Compile>
     <Compile Include="Models\Village\Skull.X">
       <Name>Skull</Name>
       <Importer>XImporter</Importer>

@@ -96,6 +96,11 @@ namespace DreamWorld.Entities.Global
             
             base.Update(gameTime);  
         }
+       
+        protected void FastForward(float time)
+        {
+            this.time += time;
+        }
 
         protected override Matrix GenerateWorldMatrix()
         {

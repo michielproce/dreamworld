@@ -16,6 +16,7 @@ namespace DreamWorld.Entities
         public float Speed { get; set; }
         public bool Paused { get; set; }
         public string CurrentClip { get; private set; }
+        public TimeSpan CurrentTimeSpan { get; private set; }
 
         private Dictionary<string, Matrix> additionalBoneTransforms;
         
@@ -78,7 +79,7 @@ namespace DreamWorld.Entities
         }
 
         private void AdvanceAnimation(TimeSpan ts)
-        {
+        {            
             animationPlayer.UpdateBoneTransforms(ts, true);
             animationPlayer.GetBoneTransforms().CopyTo(boneTransforms, 0);
             foreach (KeyValuePair<string, Matrix> pair in additionalBoneTransforms)
@@ -88,6 +89,8 @@ namespace DreamWorld.Entities
             }
             animationPlayer.UpdateWorldTransforms(Matrix.Identity, boneTransforms);
             animationPlayer.UpdateSkinTransforms();
+
+            CurrentTimeSpan += ts;
         }
 
     }
