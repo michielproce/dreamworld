@@ -93,6 +93,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Entities\Animation.cs" />
     <Compile Include="Entities\Global\Bird.cs" />
+    <Compile Include="Entities\Global\Info.cs" />
     <Compile Include="Entities\Global\PlaceHolder.cs" />
     <Compile Include="Entities\Global\Zeppelin.cs" />
     <Compile Include="Entities\GroupCenter.cs" />
