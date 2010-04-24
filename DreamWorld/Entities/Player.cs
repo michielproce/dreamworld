@@ -198,10 +198,10 @@ namespace DreamWorld.Entities
             materialProperties.Elasticity = 0.0025f;
 
             // Primitive:
-            capsule = new JigLibX.Geometry.Capsule(new Vector3(0, 10, 0),
+            capsule = new JigLibX.Geometry.Capsule(new Vector3(0, 8.8f, 0),
                 Matrix.CreateRotationX(MathHelper.PiOver2),
-                3,
-                7f);
+                2.8f,
+                6f);
 
             skin.AddPrimitive(capsule, materialProperties);
             #endregion
@@ -230,7 +230,7 @@ namespace DreamWorld.Entities
             return
                 Matrix.CreateScale(Scale) *
                 Body.Orientation * Matrix.CreateRotationY(MathHelper.Pi)*
-                Matrix.CreateTranslation(Body.Position);            
+                Matrix.CreateTranslation(Body.Position - new Vector3(0,0.5f,0));            
         }
     }
 }
