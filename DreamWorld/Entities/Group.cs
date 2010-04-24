@@ -16,7 +16,7 @@ namespace DreamWorld.Entities
         public Dictionary<string, Entity> Entities { get; private set; }
         public GroupCenter Center;
         public Vector3 AllowedRotations;
-        internal List<CollisionSkin> IgnoreCollisionSkins;
+        private List<CollisionSkin> IgnoreCollisionSkins;
 
         private float AmountRotated;
         public Color Color;
@@ -67,7 +67,7 @@ namespace DreamWorld.Entities
                     return false;
                 return Center != null &&
                        Vector3.Distance(Center.Body.Position, GameScreen.Level.Player.Body.Position) <
-                       ((PuzzleLevel) GameScreen.Level).selectionRadius;
+                       ((PuzzleLevel) GameScreen.Level).SelectionRadius;
             }
         }
 

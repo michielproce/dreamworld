@@ -84,9 +84,9 @@ namespace DreamWorld.Levels
                 if (currentAxle == XZ)
                     v = new Vector3(0, 1, 0);
                 if (currentAxle == XY)
-                    v = new Vector3(-1, 0, 0);
-                if (currentAxle == YZ)
                     v = new Vector3(0, 0, 1);
+                if (currentAxle == YZ)
+                    v = new Vector3(1, 0, 0);
 
                 v *= currentDirection;
 
@@ -99,7 +99,7 @@ namespace DreamWorld.Levels
             viewport = new Viewport();
             viewport.Height = (int)(height*device.Viewport.Height);
             viewport.Width = (int)(height*device.Viewport.Height);
-            viewport.X = device.Viewport.TitleSafeArea.Right - viewport.Width;
+            viewport.X = device.Viewport.TitleSafeArea.Right/2 - viewport.Width/2;
             viewport.Y = device.Viewport.TitleSafeArea.Bottom - viewport.Height;
 
             model = content.Load<Model>(@"Models\Puzzle\Axles");
@@ -120,13 +120,7 @@ namespace DreamWorld.Levels
                     axles[YZ] = mesh;
                 foreach (Effect effect in mesh.Effects)
                 {
-//                    effect.Parameters["IgnoreSun"].SetValue(true);
-                    effect.Parameters["view"].SetValue(Matrix.CreateLookAt(new Vector3(2, 1.2f, .5f), Vector3.Zero, Vector3.Up));
-                    effect.Parameters["projection"].SetValue(Matrix.CreatePerspectiveFieldOfView(
-                           MathHelper.ToRadians(45.0f),
-                           viewport.AspectRatio,
-                           1.0f,
-                           10.0f));
+                    effect.Parameters["projection"].SetValue(Matrix.CreatePerspective(1,1,1,10));
                 }
             }
         }
@@ -146,6 +140,7 @@ namespace DreamWorld.Levels
             foreach (ModelMesh mesh in model.Meshes) {
                 foreach (Effect effect in mesh.Effects)
                 {
+                    effect.Parameters["view"].SetValue(Matrix.CreateLookAt(-Vector3.Normalize(gameScreen.Level.Player.Body.Position - gameScreen.Camera.Position) * 2.4f, Vector3.Zero, Vector3.Up));
                     
                     if(mesh.Equals(axles[currentAxle]))
                     {

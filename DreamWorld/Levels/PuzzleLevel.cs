@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DreamWorld.Cameras;
 using DreamWorld.Entities;
 using DreamWorld.InputManagement.Types;
@@ -14,23 +13,23 @@ namespace DreamWorld.Levels
 {
     public abstract class PuzzleLevel : Level
     {
-        protected internal float selectionRadius = 110;
-        private int selectedGroup;
+        protected internal float SelectionRadius = 110;
 
-        protected PuzzleHUD hud;
+        private int _selectedGroup;
+        private PuzzleHUD _hud;
 
         public override void Initialize()
         {            
             base.Initialize();
-            hud = new PuzzleHUD(GameScreen);
-            hud.Load(GameScreen.Content);
+            _hud = new PuzzleHUD(GameScreen);
+            _hud.Load(GameScreen.Content);
         }
 
         public Group GetSelectedGroup()
         {
             int[] keys = new int[Groups.Count];
             Groups.Keys.CopyTo(keys, 0);
-            Group group = Groups[keys[selectedGroup]];
+            Group group = Groups[keys[_selectedGroup]];
 
             if (!group.AllowedRotations.Equals(Vector3.Zero) && group.IsInRange)
                 return group;
@@ -46,7 +45,7 @@ namespace DreamWorld.Levels
             {
                 if (Groups[keys[i]] == group)
                 {
-                    selectedGroup = i;
+                    _selectedGroup = i;
                     return;
                 }
             }
@@ -56,12 +55,12 @@ namespace DreamWorld.Levels
         {
             PlayerInput input = Game.InputManager.Player;           
             
-            hud.Cycle(input.CycleAxle);
+            _hud.Cycle(input.CycleAxle);
 
             if(input.ApplyRotation)
-                RotateGroup(hud.CurrentDirection);
+                RotateGroup(_hud.CurrentDirection);
 
-            hud.Update(gameTime);
+            _hud.Update(gameTime);
 
             SelectGroup();
 
@@ -79,7 +78,7 @@ namespace DreamWorld.Levels
             ThirdPersonCamera camera = (ThirdPersonCamera)GameScreen.Camera;
             Vector3 direction = camera.Direction;
             direction.Normalize();
-            direction *= selectionRadius*2;
+            direction *= SelectionRadius*2;
 
             float dist;
             CollisionSkin skin;
@@ -106,37 +105,13 @@ namespace DreamWorld.Levels
 
         private void RotateGroup(Vector3 direction)
         {
+            if (direction == Vector3.Zero) return;
+
             Group targetGroup = GetSelectedGroup();
+            if (targetGroup == null) return;
 
-            if (direction != Vector3.Zero && targetGroup != null)
-            {
-                if (direction.X == 0 && direction.Z == 0)
-                {
-                    direction.Normalize();
-                    targetGroup.Rotate(direction * MathHelper.PiOver2);
-                }
-                else
-                {
-                    Vector3 cameraDirection = GameScreen.Camera.Direction;
-                    float angle = MathHelper.ToDegrees((float) Math.Atan2(cameraDirection.X, cameraDirection.Z));
-                    float rotation = 0;
-
-                    if (angle > 45 && angle < 135)
-                    {
-                        rotation = -MathHelper.PiOver2;
-                    }
-                    else if (angle > -135 && angle < -45)
-                    {
-                        rotation = MathHelper.PiOver2;
-                    }
-                    else if (angle > -45 && angle < 45)
-                    {
-                        rotation = MathHelper.Pi;
-                    }
-
-                    targetGroup.Rotate(Vector3.Transform(direction, Matrix.CreateRotationY(rotation)));
-                }
-            }
+            targetGroup.Rotate(direction);
+            return;
         }
 
         protected virtual bool GameIsWon()
@@ -156,7 +131,7 @@ namespace DreamWorld.Levels
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            hud.Draw(gameTime);
+            _hud.Draw(gameTime);
         }
     }
 }
