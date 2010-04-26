@@ -93,6 +93,8 @@
     <Compile Include="Config.cs" />
     <Compile Include="Entities\Animation.cs" />
     <Compile Include="Entities\Global\Bird.cs" />
+    <Compile Include="Entities\Global\HelpSign.cs" />
+    <Compile Include="Entities\Global\HelpTubes.cs" />
     <Compile Include="Entities\Global\Info.cs" />
     <Compile Include="Entities\Global\PlaceHolder.cs" />
     <Compile Include="Entities\Global\Zeppelin.cs" />
@@ -152,6 +154,7 @@
     <Compile Include="Levels\VillageLevel\Entities\TrashCan.cs" />
     <Compile Include="Levels\VillageLevel\Entities\Tree.cs" />
     <Compile Include="Levels\VillageLevel\Entities\TreeTrunk.cs" />
+    <Compile Include="Levels\VillageLevel\Entities\Tubes.cs" />
     <Compile Include="Levels\VillageLevel\Entities\VillageBird.cs" />
     <Compile Include="Levels\VillageLevel\Entities\VillageZeppelin.cs" />
     <Compile Include="Levels\VillageLevel\Entities\Wall.cs" />
