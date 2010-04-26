@@ -45,6 +45,14 @@ namespace DreamWorld.InputManagement.Types
             }
         }
 
+        public bool ToggleDebugCameraReticle
+        {
+            get
+            {
+                return InputManager.Keyboard.NewlyPressed(Keys.F1);
+            }
+        }
+
         public bool SelectEntity 
         {
             get

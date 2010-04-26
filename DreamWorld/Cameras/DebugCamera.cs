@@ -15,6 +15,7 @@ namespace DreamWorld.Cameras
     {        
 
         private SpriteBatch spriteBatch;
+        private bool reticleVisible;
         private Texture2D reticleTexture;
         private Vector2 reticlePosition;
         private bool mouseLook = true;
@@ -28,6 +29,7 @@ namespace DreamWorld.Cameras
 
         public DebugCamera()
         {
+            reticleVisible = true;
             Form = new EntityForm(GameScreen.Instance.Level is PuzzleLevel);            
         }
 
@@ -123,7 +125,10 @@ namespace DreamWorld.Cameras
                 LevelInformation.Save(level.LevelInformation,
                                       level.LevelInformationFileName);
                 ShowForm(placeHolder);
-            }             
+            }
+
+            if (inputManager.Debug.ToggleDebugCameraReticle)
+                reticleVisible = !reticleVisible;
 
             base.Update(gameTime);
         }
@@ -181,9 +186,12 @@ namespace DreamWorld.Cameras
 
         public void DrawReticle()
         {
-            spriteBatch.Begin();
-            spriteBatch.Draw(reticleTexture, reticlePosition, Color.White);
-            spriteBatch.End();
+            if (reticleVisible)
+            {
+                spriteBatch.Begin();
+                spriteBatch.Draw(reticleTexture, reticlePosition, Color.White);
+                spriteBatch.End();
+            }
         }
 
         public void DisposeForm()
