@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LevelInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <PlayerStartPosition>
-    <X>320</X>
+    <X>280</X>
     <Y>-550</Y>
     <Z>520</Z>
   </PlayerStartPosition>
   <PlayerStartRotation>
     <X>0</X>
-    <Y>0</Y>
+    <Y>-40</Y>
     <Z>0</Z>
   </PlayerStartRotation>
   <Spawns>

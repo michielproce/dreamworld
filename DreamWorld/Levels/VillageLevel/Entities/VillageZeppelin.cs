@@ -25,7 +25,7 @@ namespace DreamWorld.Levels.VillageLevel.Entities
         public override void Initialize()
         {
             // I already created the perfect path.. We're boosting it initially so it comes into frame in the first second you enter the village.
-            FastForward(300);
+            FastForward(450);
             base.Initialize();
         }
 
