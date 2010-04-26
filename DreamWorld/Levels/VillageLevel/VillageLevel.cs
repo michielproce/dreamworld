@@ -43,16 +43,25 @@ namespace DreamWorld.Levels.VillageLevel
 
             base.Initialize();
 
+            List<Entity> toRemove = new List<Entity>();
+
             if (LevelsCompleted < 1)
             {
-                List<Entity> toRemove = new List<Entity>();
                 foreach (KeyValuePair<int, Group> group in Groups)
                     foreach (KeyValuePair<string, Entity> entity in group.Value.Entities)
                         if (entity.Value is Stable || entity.Value is CowDummy)
                             toRemove.Add(entity.Value);
-                foreach (Entity entity in toRemove)
-                    entity.Group.RemoveEntity(entity.Name);
+            } 
+            else
+            {
+                foreach (KeyValuePair<int, Group> group in Groups)
+                    foreach (KeyValuePair<string, Entity> entity in group.Value.Entities)
+                        if (entity.Value is StableTrashed)
+                            toRemove.Add(entity.Value);
             }
+
+            foreach (Entity entity in toRemove)
+                entity.Group.RemoveEntity(entity.Name);
         }
 
         public override void Update(GameTime gameTime)
