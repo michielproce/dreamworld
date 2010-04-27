@@ -2292,16 +2292,16 @@
       <Group>0</Group>
     </SpawnInformation>
     <SpawnInformation>
-      <Name>entity634078367434501092</Name>
+      <Name>wentity634078367434501092</Name>
       <TypeName>DreamWorld.Entities.Global.HelpTubes</TypeName>
       <Position>
-        <X>410</X>
+        <X>280</X>
         <Y>-550</Y>
-        <Z>450</Z>
+        <Z>510</Z>
       </Position>
       <Rotation>
         <X>0</X>
-        <Y>-60</Y>
+        <Y>0</Y>
         <Z>0</Z>
       </Rotation>
       <Scale>
@@ -2495,9 +2495,9 @@
       <Name>villageSign1</Name>
       <TypeName>DreamWorld.Entities.Global.HelpSign</TypeName>
       <Position>
-        <X>410</X>
+        <X>280</X>
         <Y>-546</Y>
-        <Z>450</Z>
+        <Z>510</Z>
       </Position>
       <Rotation>
         <X>0</X>
