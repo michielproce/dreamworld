@@ -123,17 +123,17 @@ template TextureFilename {
 
 KeyValuePair {
  "Date";
- "2010-04-27 12:45:02";
+ "2010-04-27 17:59:36";
 }
 
 KeyValuePair {
  "File";
- "D:\\School\\CS4\\Game Design & Development\\av\\media\\models\\levelObjects\\village\\statue.max";
+ "D:\\svn dreamworld\\media\\models\\levelObjects\\village\\statue.max";
 }
 
 KeyValuePair {
  "User";
- "Tuna";
+ "Michiel";
 }
 
 KeyValuePair {

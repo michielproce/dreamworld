@@ -1,5 +1,5 @@
 ﻿using System;
-using DreamWorld.Levels.PuzzleLevel1;
+using DreamWorld.Levels.TutorialLevel;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.ScreenManagement.Screens.Cutscenes
@@ -15,7 +15,7 @@ namespace DreamWorld.ScreenManagement.Screens.Cutscenes
 
         protected override Screen LoadNextScreen()
         {
-            return new GameScreen(new PuzzleLevel1());
+            return new GameScreen(new TutorialLevel());
         }
    
         protected override void LoadCutscene()

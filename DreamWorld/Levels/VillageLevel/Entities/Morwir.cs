@@ -1,5 +1,8 @@
-﻿using DreamWorld.Entities;
+﻿using System;
+using DreamWorld.Entities;
+using DreamWorld.Interface.Help;
 using DreamWorld.ScreenManagement.Screens.Cutscenes;
+using DreamWorld.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -20,6 +23,23 @@ namespace DreamWorld.Levels.VillageLevel.Entities
         {
             Model = GameScreen.Content.Load<Model>(@"Models\Village\Morwir");
             base.LoadContent();
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (Vector3.Distance(Level.Player.Body.Position, Body.Position) <= Help.HELP_DISTANCE)
+            {
+                GameScreen.HelpSystem.ShowCustomHint(
+                    StringUtil.ParsePlatform("{Click the left mouse button|Press B} to talk."), this);
+                
+                if(GameScreen.InputManager.Player.ApplyRotation)
+                {
+                    GameScreen.ExitScreen();
+                    GameScreen.ScreenManager.AddScreen(new MorwirCutscene());
+                }                    
+            }
+
+            base.Update(gameTime);
         }
 
         /// <summary>

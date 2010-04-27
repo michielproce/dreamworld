@@ -16,11 +16,11 @@ namespace DreamWorld.Interface.Help
         private string hint;
         private SpriteFont hintFont;
         private Vector2 hintSize;
-        private Vector2 hintPos;        
-        
-        public bool HintVisible { get; set; }
+        private Vector2 hintPos;
 
-        public Entity Helper { get; set; }
+        private Entity customHelper;
+        public bool HintVisible { get; set; }
+        public Entity Helper { get; set; }        
 
         public HelpSystem(GameScreen gameScreen)
         {
@@ -35,7 +35,7 @@ namespace DreamWorld.Interface.Help
 
         public void Update(GameTime gameTime)
         {
-            if (Helper != null)
+            if (Helper != null) 
             {                
                 if(hint == null) {
                     hint = StringUtil.ParsePlatform("{Click the left mouse button|Press B} to read the sign.");
@@ -56,12 +56,20 @@ namespace DreamWorld.Interface.Help
                     hint = null;
                 }
             }
-
+            if(customHelper != null)
+            {
+                // Remove the custom helper if we're to far away.
+                if (Vector3.Distance(gameScreen.Level.Player.Body.Position, customHelper.Body.Position) > Help.HELP_DISTANCE)
+                {
+                    customHelper = null;
+                    hint = null;
+                }                
+            }
         }
 
         public void Draw(GameTime gameTime)
         {
-            if (Helper != null && hint != null && HintVisible)
+            if (hint != null && HintVisible)
             {
                 SpriteBatch spriteBatch = gameScreen.ScreenManager.SpriteBatch;
                 spriteBatch.Begin();
@@ -69,6 +77,12 @@ namespace DreamWorld.Interface.Help
                 spriteBatch.DrawString(hintFont, hint, hintPos, Color.White);                
                 spriteBatch.End();
             }
+        }
+
+        public void ShowCustomHint(string hint, Entity helper)
+        {
+            this.hint = hint;
+            this.customHelper = helper;
         }
     }
 }
