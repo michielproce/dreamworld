@@ -2272,42 +2272,22 @@
       <Group>0</Group>
     </SpawnInformation>
     <SpawnInformation>
-      <Name>entity634078362789530820</Name>
-      <TypeName>DreamWorld.Levels.VillageLevel.Entities.Wall</TypeName>
+      <Name>wentity634078362789530820</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.Fence</TypeName>
       <Position>
-        <X>220</X>
-        <Y>-558.5093</Y>
+        <X>225</X>
+        <Y>-550</Y>
         <Z>400</Z>
       </Position>
       <Rotation>
         <X>0</X>
-        <Y>0</Y>
+        <Y>-90</Y>
         <Z>0</Z>
       </Rotation>
       <Scale>
-        <X>1</X>
-        <Y>0.8</Y>
-        <Z>1</Z>
-      </Scale>
-      <Group>0</Group>
-    </SpawnInformation>
-    <SpawnInformation>
-      <Name>entity634078364788424277</Name>
-      <TypeName>DreamWorld.Levels.VillageLevel.Entities.Wall</TypeName>
-      <Position>
-        <X>490</X>
-        <Y>-558.5093</Y>
-        <Z>480</Z>
-      </Position>
-      <Rotation>
-        <X>0</X>
-        <Y>135</Y>
-        <Z>0</Z>
-      </Rotation>
-      <Scale>
-        <X>0.8</X>
-        <Y>0.8</Y>
-        <Z>1</Z>
+        <X>2</X>
+        <Y>2</Y>
+        <Z>2</Z>
       </Scale>
       <Group>0</Group>
     </SpawnInformation>
@@ -2568,6 +2548,106 @@
         <X>0.4</X>
         <Y>0.4</Y>
         <Z>0.4</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity634079796462656250</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.Fence</TypeName>
+      <Position>
+        <X>185</X>
+        <Y>-550</Y>
+        <Z>404</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>-80</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>2</X>
+        <Y>2</Y>
+        <Z>2</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity634079797656718750</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.Fence</TypeName>
+      <Position>
+        <X>151</X>
+        <Y>-550</Y>
+        <Z>412</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>-80</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>2</X>
+        <Y>2</Y>
+        <Z>2</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity634079800539843750</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.Fence</TypeName>
+      <Position>
+        <X>263</X>
+        <Y>-550</Y>
+        <Z>405</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>-110</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>2</X>
+        <Y>2</Y>
+        <Z>2</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity634079801402812500</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.Fence</TypeName>
+      <Position>
+        <X>297</X>
+        <Y>-550</Y>
+        <Z>411</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>-90</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>2</X>
+        <Y>2</Y>
+        <Z>2</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity634079802590468750</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.Fence</TypeName>
+      <Position>
+        <X>332</X>
+        <Y>-550</Y>
+        <Z>410</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>-90</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>2</X>
+        <Y>2</Y>
+        <Z>2</Z>
       </Scale>
       <Group>0</Group>
     </SpawnInformation>
