@@ -16,7 +16,7 @@ namespace DreamWorld.Levels
         protected internal float SelectionRadius = 110;
 
         private int _selectedGroup;
-        private PuzzleHUD _hud;
+        protected PuzzleHUD _hud;
 
         public override void Initialize()
         {            

@@ -26,6 +26,8 @@ namespace DreamWorld.Levels.TutorialLevel
 
             base.Initialize();
 
+            _hud.hidden = true;
+
             GameScreen.TransitionOnTime = TimeSpan.FromSeconds(3);            
         }
 
@@ -34,6 +36,8 @@ namespace DreamWorld.Levels.TutorialLevel
             if (Player.Body.Position.Y < -50)
                 Player.Respawn();
 
+            if (GameScreen.HelpSystem.Helper != null && GameScreen.HelpSystem.Helper.Name == "tutorialSign04")
+                _hud.hidden = false;
 
             // Update for bloom
             float intensity = 1 - GameScreen.TransitionAlpha / 255f;
