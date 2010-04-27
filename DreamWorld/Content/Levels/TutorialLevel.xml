@@ -476,7 +476,7 @@
       <TypeName>DreamWorld.Levels.PuzzleLevel1.Entities.Platform</TypeName>
       <Position>
         <X>110</X>
-        <Y>5</Y>
+        <Y>8</Y>
         <Z>-195</Z>
       </Position>
       <Rotation>
@@ -496,7 +496,7 @@
       <TypeName>DreamWorld.Entities.GroupCenter</TypeName>
       <Position>
         <X>110</X>
-        <Y>10</Y>
+        <Y>15</Y>
         <Z>-195</Z>
       </Position>
       <Rotation>
