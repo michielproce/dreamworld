@@ -8,7 +8,7 @@ namespace DreamWorld.ScreenManagement.Screens
 {
     public class HelpScreen : Screen
     {
-        private const string RETURN_TEXT = "\n\nClick the left mouse button or press B to return.";
+        
 
         private HelpSystem helpSystem;
         private string text;
@@ -41,7 +41,7 @@ namespace DreamWorld.ScreenManagement.Screens
             fontPos = new Vector2(vp.Width / 2f - size.X / 2f, vp.Height / 2f - size.Y /2f);
             
             // Add the quit text info
-            text += RETURN_TEXT;
+            text += StringUtil.ParsePlatform("\n\n\n{Click the left mouse button|Press B} to return.");
         }
 
         public override void Update(GameTime gameTime)

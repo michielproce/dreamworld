@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 using DreamWorld.Entities;
 using DreamWorld.Levels;
 using DreamWorld.ScreenManagement.Screens;
+using DreamWorld.Util;
 
 namespace DreamWorld.Interface.Help
 {
@@ -56,7 +57,7 @@ namespace DreamWorld.Interface.Help
         {
             string text = null;
             itemsDictionary.TryGetValue(entityName, out text);
-            return text;
+            return StringUtil.ParsePlatform(text);
         }
 
         public bool HasHelp(Entity entity)

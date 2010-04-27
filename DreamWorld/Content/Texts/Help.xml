@@ -3,8 +3,24 @@
   <Items>
     <HelpItem>
       <Entity>villageSign1</Entity>
-      <Text>Lorem ipsum dolor sit amet,
-consectetur adipiscing elit. In facilisis, nisl at tempor posuere, ante elit adipiscing ligula, non convallis eros libero ut erat. Quisque rhoncus sem iaculis mi sodales facilisis. Nulla arcu purus, luctus sagittis pulvinar non, bibendum vel lectus. Fusce in ante eget nulla lacinia dignissim. Sed non arcu et turpis pharetra ultrices. Sed justo nisl, rhoncus id ullamcorper sit amet, cursus eget elit. Nulla facilisi. Etiam porttitor elit vitae justo lacinia ultrices. Curabitur congue lacinia mauris, eget imperdiet tellus dapibus non. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer gravida nunc eget nisi dignissim accumsan. Donec quis velit nisi, eu volutpat arcu. Donec ornare dui eu mi euismod condimentum porta nibh rhoncus.</Text>
+<Text>Important message for Koowaalaa's from other villages: Carbwir is a mess, so watch your steps. Look around you to see where you can go and to inspect your surroundings. If you have forgotten how to move your head or body, just {point the mouse|use your right thumbstick} to look and {press the WSAD or arrow keys|use your right thumbstick} to move. If you need to jump over something, press the {space bar|A button}. 
+Good luck, visitor!</Text>
+    </HelpItem>
+    <HelpItem>
+      <Entity>villageSign2</Entity>
+<Text>Problem Plaza. This statue was erected for the villagers of Carbwir to honor the brave Koowaalaa who, years ago, brought great prosperity to the village. For each of the eight Development Goals of the United Nations he solved for our village, a stone symbol has been forged out of the purest gold. The more a goal is present in the village (i.e. more food), the more the symbol will shine. If the goal is poorly represented, the symbol will decay.</Text>
+    </HelpItem>
+    <HelpItem>
+      <Entity>villageSign3</Entity>
+      <Text>Warning, these stables are unstable! Do not attempt to have a picnic here, or you may become food for the vultures. Unless you are foolish enough to try and repair the sable, please go away.</Text>
+    </HelpItem>
+    <HelpItem>
+      <Entity>villageSign4</Entity>
+      <Text>Please, drink you own water, our well has been standing dry for so long, we don't even know if it will work if we ever get water in it again.</Text>
+    </HelpItem>
+    <HelpItem>
+      <Entity>villageSign5</Entity>
+      <Text>To all people of Carbwir: This gate has been locked. Not because we wanted to, but because it's rusted shut, and we don't have the key anymore. It got lost a while ago, when someone tried to polish the Plaza with it, and it fell. Don't go try to get it back though, it's stuck in the Plaza itself. So, let's just wait until the WVHO helps us replace the gates.</Text>
     </HelpItem>
   </Items>
 </Help>

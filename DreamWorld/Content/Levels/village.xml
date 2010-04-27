@@ -2432,7 +2432,7 @@
       <Group>0</Group>
     </SpawnInformation>
     <SpawnInformation>
-      <Name>entity634078805504843750</Name>
+      <Name>villageSign4</Name>
       <TypeName>DreamWorld.Entities.Global.HelpSign</TypeName>
       <Position>
         <X>429</X>
@@ -2452,7 +2452,7 @@
       <Group>0</Group>
     </SpawnInformation>
     <SpawnInformation>
-      <Name>entity634078806914062500</Name>
+      <Name>villageSign2</Name>
       <TypeName>DreamWorld.Entities.Global.HelpSign</TypeName>
       <Position>
         <X>335</X>
@@ -2472,7 +2472,7 @@
       <Group>0</Group>
     </SpawnInformation>
     <SpawnInformation>
-      <Name>entity634078807635156250</Name>
+      <Name>villageSign3</Name>
       <TypeName>DreamWorld.Entities.Global.HelpSign</TypeName>
       <Position>
         <X>200</X>
@@ -2492,7 +2492,7 @@
       <Group>0</Group>
     </SpawnInformation>
     <SpawnInformation>
-      <Name>entity634078808129687500</Name>
+      <Name>villageSign5</Name>
       <TypeName>DreamWorld.Entities.Global.HelpSign</TypeName>
       <Position>
         <X>80</X>
@@ -2512,7 +2512,7 @@
       <Group>0</Group>
     </SpawnInformation>
     <SpawnInformation>
-      <Name>entity634078809199062500</Name>
+      <Name>villageSign1</Name>
       <TypeName>DreamWorld.Entities.Global.HelpSign</TypeName>
       <Position>
         <X>410</X>

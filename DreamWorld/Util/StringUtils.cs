@@ -1,4 +1,9 @@
-﻿namespace DreamWorld.Util
+﻿using System;
+using System.Text.RegularExpressions;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+
+namespace DreamWorld.Util
 {
     public static class StringUtil
     {
@@ -19,10 +24,26 @@
                         }
                     }
                 }
+            }
+            return string.Join("\n", lines);
+        }
+        
+        public static string ParsePlatform(string text)
+        {
+            // Example: Press {Enter|B} to begin.
+            // {PC|XBOX} is parsed.
+//            Regex.Replace(.)
 
+            int platform = GamePad.GetState(PlayerIndex.One).IsConnected ? 2 : 1;
+            Regex regex = new Regex(@"{(.*?)\|(.*?)}");
+            Match match = regex.Match(text);
+            while(match.Success)
+            {                
+                text = regex.Replace(text, match.Groups[platform].Value, 1, match.Index );
+                match = regex.Match(text); // Re-match, since the text has changed.
             }
 
-            return string.Join("\n", lines);
+            return text;
         }
     }
 }
