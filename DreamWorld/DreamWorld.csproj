@@ -159,6 +159,7 @@
     <Compile Include="Levels\VillageLevel\Entities\Tree.cs" />
     <Compile Include="Levels\VillageLevel\Entities\TreeTrunk.cs" />
     <Compile Include="Levels\VillageLevel\Entities\Tubes.cs" />
+    <Compile Include="Levels\VillageLevel\Entities\TunnelClosed.cs" />
     <Compile Include="Levels\VillageLevel\Entities\VillageBird.cs" />
     <Compile Include="Levels\VillageLevel\Entities\VillageZeppelin.cs" />
     <Compile Include="Levels\VillageLevel\Entities\Wall.cs" />
