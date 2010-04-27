@@ -2,6 +2,7 @@
 using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Media;
 
 namespace DreamWorld.ScreenManagement
 {
@@ -82,6 +83,7 @@ namespace DreamWorld.ScreenManagement
                 if (!UpdateTransition(gameTime, TransitionOffTime, 1))
                 {
                     ScreenManager.RemoveScreen(this);
+                    HandleExit();
                 }
             }
             else if (CoveredByOtherScreen)
@@ -137,21 +139,23 @@ namespace DreamWorld.ScreenManagement
         }
 
         public virtual void HandleInput() { }
+        
+        public virtual void HandleExit() { }
 
         public virtual void Draw(GameTime gameTime) { }
 
 
         public void ExitScreen()
-        {
+        {            
             if (TransitionOffTime == TimeSpan.Zero)
             {
                 ScreenManager.RemoveScreen(this);
+                HandleExit();
             }
             else
             {
                 IsExiting = true;
             }
         }
-
     }
 }

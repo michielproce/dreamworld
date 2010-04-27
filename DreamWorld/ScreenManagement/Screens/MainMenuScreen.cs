@@ -2,6 +2,7 @@ using System;
 using DreamWorld.Levels.PuzzleLevel1;
 using DreamWorld.ScreenManagement.Screens.Cutscenes;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 namespace DreamWorld.ScreenManagement.Screens
 {
@@ -36,6 +37,7 @@ namespace DreamWorld.ScreenManagement.Screens
 
         protected override void LoadContent()
         {
+            MediaPlayer.Play(Content.Load<Song>(@"Audio\Music\Menu"));
             Background = Content.Load<Texture2D>(@"Textures/Menu/mainMenu");
             Font = Content.Load<SpriteFont>(@"Fonts/mainMenu");
             Font.Spacing *= 0.9f;
@@ -44,6 +46,7 @@ namespace DreamWorld.ScreenManagement.Screens
 
         void PlayGameMenuEntrySelected(object sender, EventArgs e)
         {
+            MediaPlayer.Stop();
             ScreenManager.AddScreen(new VillageIntroCutscene());
             ExitScreen();
         }
@@ -79,6 +82,7 @@ namespace DreamWorld.ScreenManagement.Screens
 
         void ConfirmExitMessageBoxAccepted(object sender, EventArgs e)
         {
+            MediaPlayer.Stop();
             ScreenManager.Game.Exit();
         }
 

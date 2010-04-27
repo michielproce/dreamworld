@@ -34,10 +34,8 @@ namespace DreamWorld.Levels.VillageLevel
             maximumWalkingHeight = -525;
             Skybox = new Skybox("Village") { Name = "Skybox" };
             Terrain = new Terrain("Village") { Name = "Terrain" };
-
-            Song ambient = GameScreen.Content.Load<Song>(@"Audio\Ambient\Village");
-            MediaPlayer.Play(ambient);
-            MediaPlayer.IsRepeating = true;
+            
+            MediaPlayer.Play(GameScreen.Content.Load<Song>(@"Audio\Music\Village"));
 
             base.Initialize();
 

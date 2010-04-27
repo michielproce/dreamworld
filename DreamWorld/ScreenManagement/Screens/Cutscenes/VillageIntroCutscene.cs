@@ -1,6 +1,7 @@
 ﻿using System;
 using DreamWorld.Levels.VillageLevel;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 namespace DreamWorld.ScreenManagement.Screens.Cutscenes
 {
@@ -19,7 +20,10 @@ namespace DreamWorld.ScreenManagement.Screens.Cutscenes
         }
 
         protected override void LoadCutscene()
-        {            
+        {
+            song = Content.Load<Song>(@"Audio\Music\Intro2");
+            volume = .4f;
+
             texture = Content.Load<Texture2D>(@"Textures\Cutscenes\Intro\shot5"); // initial texture
 
             lines.Add(new CutsceneLine(@"Audio\Voice\Intro\25 uncombinable_pair", "Though the WVHO and TDMC may seem uncombinable, there is one remarkable pair coming from both organisations."));

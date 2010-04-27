@@ -6,6 +6,7 @@ using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace DreamWorld.Levels.PuzzleLevel1
 {
@@ -25,6 +26,8 @@ namespace DreamWorld.Levels.PuzzleLevel1
 
         public override void Initialize()
         {
+            MediaPlayer.Play(GameScreen.Content.Load<Song>(@"Audio\Music\Puzzle1"));
+
             Skybox = new Skybox("Puzzle") { Name = "Skybox" };
             base.Initialize();
 

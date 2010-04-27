@@ -3,6 +3,7 @@ using DreamWorld.Entities.Global;
 using DreamWorld.Rendering.Postprocessing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 namespace DreamWorld.Levels.TutorialLevel
 {
@@ -21,6 +22,8 @@ namespace DreamWorld.Levels.TutorialLevel
 
         public override void Initialize()
         {
+            MediaPlayer.Play(GameScreen.Content.Load<Song>(@"Audio\Music\Tutorial"));
+
             base.Initialize();
 
             GameScreen.TransitionOnTime = TimeSpan.FromSeconds(3);            

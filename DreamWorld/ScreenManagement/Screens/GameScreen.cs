@@ -10,6 +10,7 @@ using JigLibX.Collision;
 using JigLibX.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 namespace DreamWorld.ScreenManagement.Screens
 {
@@ -106,6 +107,11 @@ namespace DreamWorld.ScreenManagement.Screens
 
                 ScreenManager.AddScreen(confirmExitMessageBox);
             }
+        }
+
+        public override void HandleExit()
+        {
+            MediaPlayer.Stop();
         }
 
         private void ConfirmExitMessageBoxAccepted(object sender, EventArgs e)
