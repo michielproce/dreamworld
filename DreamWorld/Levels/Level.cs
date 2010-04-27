@@ -58,14 +58,22 @@ namespace DreamWorld.Levels
 
             GetGroup(0).AllowedRotations = Vector3.Zero;
 
+            foreach(GroupColorInformation colorInfo in LevelInformation.GroupColors)
+            {
+                GetGroup(colorInfo.ID).Color = new Color(colorInfo.R, colorInfo.G, colorInfo.B);
+            }
+
             foreach (SpawnInformation spawn in LevelInformation.Spawns)
             {
                 Entity entity = Entity.CreateFromSpawnInfo(spawn);
                 entity.Spawn();
             }
 
-            foreach (Group group in Groups.Values)
-                group.Initialize();
+            foreach (KeyValuePair<int, Group> group in Groups)
+            {
+                group.Value.groupId = group.Key;
+                group.Value.Initialize();
+            }
             foreach (ParticleSystem particleSystem in particleSystems.Values)
                 particleSystem.Initialize();
 
@@ -77,11 +85,6 @@ namespace DreamWorld.Levels
 
             Player.Respawn();
             Player.Group = GetGroup(0);
-
-            foreach(GroupColorInformation colorInfo in LevelInformation.GroupColors)
-            {
-                GetGroup(colorInfo.ID).Color = new Color(colorInfo.R, colorInfo.G, colorInfo.B);
-            }
             
             spriteBatch = new SpriteBatch(Game.GraphicsDevice);
             bloom = new Bloom(Game, spriteBatch);

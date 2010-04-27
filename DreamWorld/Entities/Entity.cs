@@ -175,22 +175,25 @@ namespace DreamWorld.Entities
 
         public virtual void Draw(GameTime gameTime, string technique)
         {
-            Model.CopyAbsoluteBoneTransformsTo(transforms);
-            foreach (ModelMesh mesh in Model.Meshes)
+            if (Model != null)
             {
-                foreach(Effect effect in mesh.Effects)
+                Model.CopyAbsoluteBoneTransformsTo(transforms);
+                foreach (ModelMesh mesh in Model.Meshes)
                 {
-                    effect.CurrentTechnique = effect.Techniques[technique];
-                    effect.Parameters["world"].SetValue(transforms[mesh.ParentBone.Index] * World);
-                    effect.Parameters["view"].SetValue(GameScreen.Camera.View);
-                    effect.Parameters["projection"].SetValue(GameScreen.Camera.Projection);
-                    if (Group != null)
-                        effect.Parameters["Ambient"].SetValue(Group.Color.ToVector3());
-                    if(Animation.Loaded)                    
-                        effect.Parameters["Bones"].SetValue(Animation.SkinTransforms);
-                    
+                    foreach (Effect effect in mesh.Effects)
+                    {
+                        effect.CurrentTechnique = effect.Techniques[technique];
+                        effect.Parameters["world"].SetValue(transforms[mesh.ParentBone.Index]*World);
+                        effect.Parameters["view"].SetValue(GameScreen.Camera.View);
+                        effect.Parameters["projection"].SetValue(GameScreen.Camera.Projection);
+                        if (Group != null)
+                            effect.Parameters["Ambient"].SetValue(Group.Color.ToVector3());
+                        if (Animation.Loaded)
+                            effect.Parameters["Bones"].SetValue(Animation.SkinTransforms);
+
+                    }
+                    mesh.Draw();
                 }
-                mesh.Draw();
             }
 
             #if (DEBUG && !XBOX)

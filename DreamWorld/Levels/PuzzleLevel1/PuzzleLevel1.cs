@@ -12,7 +12,7 @@ namespace DreamWorld.Levels.PuzzleLevel1
 {
     class PuzzleLevel1 : PuzzleLevel
     {
-        private Cow[] Cows;
+        private Cow[] _cows;
 
         public PuzzleLevel1()
         {
@@ -26,45 +26,46 @@ namespace DreamWorld.Levels.PuzzleLevel1
 
         public override void Initialize()
         {
+            GameScreen.TransitionOnTime = TimeSpan.FromSeconds(3);
+
             MediaPlayer.Play(GameScreen.Content.Load<Song>(@"Audio\Music\Puzzle1"));
 
             Skybox = new Skybox("Puzzle") { Name = "Skybox" };
-            base.Initialize();
-
-            GameScreen.TransitionOnTime = TimeSpan.FromSeconds(3);
 
             Group group1 = new CowGroup();
             Group group2 = new CowGroup();
-            SetGroup(group1, 15);
-            SetGroup(group2, 16);
-
-            Cows = new Cow[4];
-            Cows[0] = new Cow { Name = "Cow1", Scale = new Vector3(0.3f), startPosition = new Vector3(200, 30, -20) };
-            Cows[1] = new Cow { Name = "Cow2", Scale = new Vector3(0.3f), startPosition = new Vector3(260, 30, -20) };
-
-            Cows[0].Initialize();
-            Cows[1].Initialize();
-
-            Cows[0].Group = group1;
-            Cows[1].Group = group2;
-            group1.Center = Cows[1];
-            group2.Center = Cows[0];
-
             Group group3 = new CowGroup();
             Group group4 = new CowGroup();
+
+            SetGroup(group1, 15);
+            SetGroup(group2, 16);
             SetGroup(group3, 17);
             SetGroup(group4, 18);
 
-            Cows[2] = new Cow { Name = "Cow3", Scale = new Vector3(0.3f), startPosition = new Vector3(160, 30, -40) };
-            Cows[3] = new Cow { Name = "Cow4", Scale = new Vector3(0.3f), startPosition = new Vector3(100, 30, -40) };
+            base.Initialize();
 
-            Cows[2].Initialize();
-            Cows[3].Initialize();
+            _cows = new Cow[4];
+            _cows[0] = new Cow { Name = "Cow1", Scale = new Vector3(0.3f), startPosition = new Vector3(200, 30, -20) };
+            _cows[1] = new Cow { Name = "Cow2", Scale = new Vector3(0.3f), startPosition = new Vector3(260, 30, -20) };
 
-            Cows[2].Group = group3;
-            Cows[3].Group = group4;
-            group3.Center = Cows[3];
-            group4.Center = Cows[2];
+            _cows[0].Group = group1;
+            _cows[1].Group = group2;
+            group1.Center = _cows[1];
+            group2.Center = _cows[0];
+
+            _cows[0].Initialize();
+            _cows[1].Initialize();
+
+            _cows[2] = new Cow { Name = "Cow3", Scale = new Vector3(0.3f), startPosition = new Vector3(160, 30, -40) };
+            _cows[3] = new Cow { Name = "Cow4", Scale = new Vector3(0.3f), startPosition = new Vector3(100, 30, -40) };
+
+            _cows[2].Group = group3;
+            _cows[3].Group = group4;
+            group3.Center = _cows[3];
+            group4.Center = _cows[2];
+
+            _cows[2].Initialize();
+            _cows[3].Initialize();
         }
 
         protected override bool GameIsWon()
@@ -74,7 +75,7 @@ namespace DreamWorld.Levels.PuzzleLevel1
                 return true;
             #endif
 
-            foreach (Cow cow in Cows)
+            foreach (Cow cow in _cows)
             {
                 if(cow.Body.Position.Z < 410 || cow.Group.IsRotating || !cow.Group.IsColliding)
                     return false;
@@ -94,7 +95,7 @@ namespace DreamWorld.Levels.PuzzleLevel1
             if (Player.Body.Position.Y < -50)
                 Player.Respawn();
 
-            foreach (Cow cow in Cows)
+            foreach (Cow cow in _cows)
             {
                 if (cow.Body.Position.Y < -25 || Vector3.Distance(cow.Body.Position, cow.Group.Center.Body.Position) < 10)
                 {

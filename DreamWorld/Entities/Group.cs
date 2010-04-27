@@ -13,6 +13,8 @@ namespace DreamWorld.Entities
     {
         private GameScreen GameScreen;
 
+        public int groupId;
+
         public Dictionary<string, Entity> Entities { get; private set; }
         public GroupCenter Center;
         public Vector3 AllowedRotations;
