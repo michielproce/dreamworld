@@ -27,12 +27,7 @@ namespace DreamWorld.Levels
         private int currentAxle;
         private int currentDirection;
 
-        private bool cycledBefore;
-
         private float rotation;
-
-
-        
 
         public PuzzleHUD(GameScreen gameScreen)
         {
@@ -48,13 +43,6 @@ namespace DreamWorld.Levels
         {
             if(direction == 0)
                 return;
-            if (!cycledBefore && gameScreen.TutorialText != null)
-            {
-                gameScreen.TutorialText.SetText(
-                    "Great.\nYou can now cycle through the different rotations and directions.\nUse the left mouse button to apply the rotation.\nJump on the platform and apply the correct rotation to get on the green platform with the cows.",
-                    "Great.\nYou can now cycle through the different rotations and directions.\nUse the B button to apply the rotation.\nJump on the platform and apply the correct rotation to get on the green platform with the cows.");
-                cycledBefore = true;
-            }
 
             if(direction != currentDirection)
             {

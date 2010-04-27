@@ -11,9 +11,6 @@ namespace DreamWorld.Levels.PuzzleLevel1
 {
     class PuzzleLevel1 : PuzzleLevel
     {
-        private bool initialTutorialShown;
-        private bool meadowTutorialShown;
-
         private Cow[] Cows;
 
         public PuzzleLevel1()
@@ -102,23 +99,6 @@ namespace DreamWorld.Levels.PuzzleLevel1
                     if (cow.Group.Center is Cow)
                         ((Cow)cow.Group.Center).Respawn();
                 }
-            }
-
-            if (!initialTutorialShown && GameScreen.TutorialText != null)
-            {
-                GameScreen.TutorialText.SetText(
-                    "In front of you is a rotatable group of objects. You have selected it by looking at it. You can rotate this group by using the Axle Gizmo in the bottom right of the screen.\nYou can change your current rotation by scrolling your mousewheel or the Q and E buttons.\nTry this now.",
-                    "In front of you is a rotatable group of objects. You have selected it by looking at it. You can rotate this group by using the Axle Gizmo in the bottom right of the screen.\nYou can change your current rotation using the shoulder buttons.\nTry this now.");
-                initialTutorialShown = true;
-            }
-
-            if(Player.Body.Position.Z < -20 && !meadowTutorialShown && GameScreen.TutorialText != null)
-            {
-                GameScreen.TutorialText.SetText(
-                    "Congratulations. You have taken the first steps to help create a better world.\nAll you have to do now is get the cows accross to the other meadow. Note that the cows can rotate around eachother.",
-                    "Congratulations. You have taken the first steps to help create a better world.\nAll you have to do now is get the cows accross to the other meadow. Note that the cows can rotate around eachother.",
-                    gameTime.TotalGameTime + TimeSpan.FromSeconds(15));
-                meadowTutorialShown = true;
             }
 
             // Update for bloom

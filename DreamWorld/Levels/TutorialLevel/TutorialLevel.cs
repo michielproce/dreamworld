@@ -23,15 +23,7 @@ namespace DreamWorld.Levels.TutorialLevel
         {
             base.Initialize();
 
-            GameScreen.TransitionOnTime = TimeSpan.FromSeconds(3);
-
-            Info[] infos = new Info[1];
-
-            infos[0] = new Info { Name = "info0", pcText = "bla bla pc", xboxText = "bla bla xbox"};
-            infos[0].Initialize();
-            infos[0].Group = GetGroup(0);
-
-            infos[0].Body.MoveTo(new Vector3(0,0,-51), Matrix.Identity);
+            GameScreen.TransitionOnTime = TimeSpan.FromSeconds(3);            
         }
 
         public override void Update(GameTime gameTime)

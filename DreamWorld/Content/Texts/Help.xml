@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Help xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Items>
+    <HelpItem>
+      <Entity>villageSign1</Entity>
+      <Text>Lorem ipsum dolor sit amet,
+consectetur adipiscing elit. In facilisis, nisl at tempor posuere, ante elit adipiscing ligula, non convallis eros libero ut erat. Quisque rhoncus sem iaculis mi sodales facilisis. Nulla arcu purus, luctus sagittis pulvinar non, bibendum vel lectus. Fusce in ante eget nulla lacinia dignissim. Sed non arcu et turpis pharetra ultrices. Sed justo nisl, rhoncus id ullamcorper sit amet, cursus eget elit. Nulla facilisi. Etiam porttitor elit vitae justo lacinia ultrices. Curabitur congue lacinia mauris, eget imperdiet tellus dapibus non. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer gravida nunc eget nisi dignissim accumsan. Donec quis velit nisi, eu volutpat arcu. Donec ornare dui eu mi euismod condimentum porta nibh rhoncus.</Text>
+    </HelpItem>
+  </Items>
+</Help>

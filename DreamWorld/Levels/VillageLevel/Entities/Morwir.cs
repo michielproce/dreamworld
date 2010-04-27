@@ -8,7 +8,6 @@ namespace DreamWorld.Levels.VillageLevel.Entities
     public class Morwir : Entity
     {
         public static bool ListInEditor = true;
-        private bool hintVisible;
 
         public override void Initialize()
         {
@@ -21,28 +20,6 @@ namespace DreamWorld.Levels.VillageLevel.Entities
         {
             Model = GameScreen.Content.Load<Model>(@"Models\Village\Morwir");
             base.LoadContent();
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            float dist = Vector3.Distance(Level.Player.Body.Position, Body.Position);
-            if (dist < 50f && Level is VillageLevel && ((VillageLevel)Level).LevelsCompleted == 0)
-            {
-                GameScreen.TutorialText.SetText("Click the left mouse button to interact with Morwir.",
-                                                "Press the B button to interact with Morwir."
-                                                );
-                if (GameScreen.InputManager.Player.ApplyRotation)
-                {
-                    GameScreen.ExitScreen();
-                    GameScreen.ScreenManager.AddScreen(new MorwirCutscene());
-                }
-                hintVisible = true;
-            }
-            else if (hintVisible)
-            {
-                GameScreen.TutorialText.Hide();
-            }
-            base.Update(gameTime);
         }
 
         /// <summary>

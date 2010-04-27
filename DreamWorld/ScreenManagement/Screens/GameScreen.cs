@@ -1,8 +1,10 @@
 using System;
 using DreamWorld.Cameras;
+using DreamWorld.Entities;
 using DreamWorld.Helpers.Renderers;
 using DreamWorld.InputManagement;
 using DreamWorld.InputManagement.Types;
+using DreamWorld.Interface.Help;
 using DreamWorld.Levels;
 using JigLibX.Collision;
 using JigLibX.Physics;
@@ -13,16 +15,14 @@ namespace DreamWorld.ScreenManagement.Screens
 {
     public class GameScreen : Screen
     {
-        public TutorialText TutorialText { get; private set; }
         public static GameScreen Instance { get; private set; }
         public Camera Camera { get; private set; }
         public Level Level { get; private set; }
         public InputManager InputManager { get; private set; }
         public GraphicsDevice GraphicsDevice { get; private set; }
-
         public DebugDrawer debugDrawer;
-
         public DreamWorldPhysicsSystem PhysicsSystem { get; private set; }
+        public HelpSystem HelpSystem { get; private set; }
 
         public GameScreen(Level level)
         {
@@ -52,10 +52,7 @@ namespace DreamWorld.ScreenManagement.Screens
             Level.Initialize();
             Camera.Initialize();
 
-            TutorialText = new TutorialText(ScreenManager.SpriteBatch, 
-                                            Content.Load<SpriteFont>(@"Fonts\tutorial"),
-                                            Content.Load<Texture2D>(@"Textures\blank"),
-                                            new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y) + new Vector2(50));
+            HelpSystem = new HelpSystem(this);
             
             LoadingScreen.Loaded = true;
         }
@@ -86,16 +83,14 @@ namespace DreamWorld.ScreenManagement.Screens
 
                 float timeStep = (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
                 DreamWorldPhysicsSystem.CurrentPhysicsSystem.Integrate(timeStep);
-                
-                
+                               
+                HelpSystem.Update(gameTime);
                 Level.Update(gameTime);
                 Camera.Update(gameTime);
                 if (Level.Skybox != null)
                     Level.Skybox.Update(gameTime); // TODO: This updates the skybox second time around, but we don't want the camera delay.
             }
 
-            if (TutorialText != null)
-                TutorialText.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -122,7 +117,9 @@ namespace DreamWorld.ScreenManagement.Screens
         public override void Draw(GameTime gameTime)
         {
             ScreenManager.GraphicsDevice.Clear(Color.White);
-            Level.Draw(gameTime);           
+            Level.Draw(gameTime);        
+            HelpSystem.Draw(gameTime);
+
             #if (DEBUG && !XBOX)
             DebugCamera debugCamera = Camera as DebugCamera;
             if (debugCamera != null)
@@ -132,9 +129,7 @@ namespace DreamWorld.ScreenManagement.Screens
             }
                 debugDrawer.Draw(gameTime);
             #endif
-
-            if (TutorialText != null)            
-                TutorialText.Draw(gameTime);
+                        
             base.Draw(gameTime);
         }
     }

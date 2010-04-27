@@ -95,7 +95,6 @@
     <Compile Include="Entities\Global\Bird.cs" />
     <Compile Include="Entities\Global\HelpSign.cs" />
     <Compile Include="Entities\Global\HelpTubes.cs" />
-    <Compile Include="Entities\Global\Info.cs" />
     <Compile Include="Entities\Global\PlaceHolder.cs" />
     <Compile Include="Entities\Global\Zeppelin.cs" />
     <Compile Include="Entities\GroupCenter.cs" />
@@ -123,6 +122,10 @@
     <Compile Include="Interface\Debug\Forms\EntityForm.Designer.cs">
       <DependentUpon>EntityForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interface\Help\HelpHint.cs" />
+    <Compile Include="Interface\Help\HelpItem.cs" />
+    <Compile Include="Interface\Help\Help.cs" />
+    <Compile Include="Interface\Help\HelpSystem.cs" />
     <Compile Include="Levels\GroupColorInformation.cs" />
     <Compile Include="Levels\Level.cs" />
     <Compile Include="Levels\LevelInformation.cs" />
@@ -183,13 +186,13 @@
     <Compile Include="ScreenManagement\Screens\Cutscenes\MorwirCutscene.cs" />
     <Compile Include="ScreenManagement\Screens\GameScreen.cs" />
     <Compile Include="ScreenManagement\Screens\FloatingKoalaGamesIntroScreen.cs" />
+    <Compile Include="ScreenManagement\Screens\HelpScreen.cs" />
     <Compile Include="ScreenManagement\Screens\LoadingScreen.cs" />
     <Compile Include="ScreenManagement\Screens\MainMenuScreen.cs" />
     <Compile Include="ScreenManagement\MenuEntry.cs" />
     <Compile Include="ScreenManagement\MenuScreen.cs" />
     <Compile Include="ScreenManagement\Screens\MessageBoxScreen.cs" />
     <Compile Include="ScreenManagement\Screens\SettingsMenuScreen.cs" />
-    <Compile Include="ScreenManagement\Screens\TutorialText.cs" />
     <Compile Include="ScreenManagement\SettingsMenuEntry.cs" />
     <Compile Include="Util\Curve3D.cs" />
     <Compile Include="Util\CollisionSkinPredicates.cs" />
