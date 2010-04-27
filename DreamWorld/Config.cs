@@ -14,9 +14,6 @@ namespace DreamWorld
         public bool Fullscreen { get; set; }
         public bool AntiAliasing { get; set; }
         public bool VerticalSync { get; set; }
-        public bool Bloom { get; set; }
-        public bool EdgeDetect { get; set; }
-        public bool Particles { get; set; }
         public bool Subtitles { get; set; }
         public bool InvertCamera { get; set; }
 
@@ -28,11 +25,8 @@ namespace DreamWorld
             Fullscreen = false;
             AntiAliasing = false;
             VerticalSync = false;
-            Bloom = true;
-            EdgeDetect = true;
-            Particles = true;
             Subtitles = true;
-            InvertCamera = true;
+            InvertCamera = false;
         }
 
         public static Config Load()

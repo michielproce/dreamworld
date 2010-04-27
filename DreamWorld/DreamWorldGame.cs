@@ -6,6 +6,7 @@ using DreamWorld.ScreenManagement;
 using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 namespace DreamWorld
 {
@@ -39,6 +40,8 @@ namespace DreamWorld
             #else
             ApplyConfig();
             #endif
+
+            MediaPlayer.IsRepeating = true;
 
             ScreenManager = new ScreenManager(this);
             InputManager = new InputManager(this);                     

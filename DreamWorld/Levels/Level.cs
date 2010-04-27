@@ -84,13 +84,10 @@ namespace DreamWorld.Levels
             }
             
             spriteBatch = new SpriteBatch(Game.GraphicsDevice);
-            if (Game.Config.Bloom)
-            {
-                bloom = new Bloom(Game, spriteBatch);
-                InitBloom(ref bloom);
-            }
-            if(Game.Config.EdgeDetect)
-                edgeDetection = new EdgeDetection(Game, spriteBatch);
+            bloom = new Bloom(Game, spriteBatch);
+            InitBloom(ref bloom);
+
+            edgeDetection = new EdgeDetection(Game, spriteBatch);
             initialized = true;
         }
 
@@ -162,42 +159,34 @@ namespace DreamWorld.Levels
                     ignoreList.Add(skin);
             }
 
-            if (edgeDetection != null)
-            {
-                edgeDetection.PrepareDraw();
-                edgeDetection.PrepareDrawNormalDepth();
-                
-                if (Skybox != null)
-                    Skybox.Draw(gameTime, "IgnoreNormalDepth");
-
-                if(Terrain != null)
-                    Terrain.Draw(gameTime, "IgnoreNormalDepth");
-                
-                foreach (Group group in Groups.Values)
-                {
-                    foreach(Entity entity in group.Entities.Values)
-                    {
-                        if(!ignoreList.Contains(entity.Skin))
-                            entity.Draw(gameTime, !entity.IgnoreEdgeDetection ? "NormalDepth" : "IgnoreNormalDepth");
-                    }
-                }
-
-                edgeDetection.PrepareDrawDefault();                
-
-                DrawEntities(gameTime, ignoreList);
-                if (Game.Config.Particles)
-                    foreach (ParticleSystem particleSystem in particleSystems.Values)
-                        particleSystem.Draw(gameTime);
-
-                edgeDetection.Draw(gameTime);
-            }
-            else
-            {
-                DrawEntities(gameTime, ignoreList);
-            }
+            edgeDetection.PrepareDraw();
+            edgeDetection.PrepareDrawNormalDepth();
             
-            if(bloom != null)
-                bloom.Draw(gameTime);
+            if (Skybox != null)
+                Skybox.Draw(gameTime, "IgnoreNormalDepth");
+
+            if(Terrain != null)
+                Terrain.Draw(gameTime, "IgnoreNormalDepth");
+            
+            foreach (Group group in Groups.Values)
+            {
+                foreach(Entity entity in group.Entities.Values)
+                {
+                    if(!ignoreList.Contains(entity.Skin))
+                        entity.Draw(gameTime, !entity.IgnoreEdgeDetection ? "NormalDepth" : "IgnoreNormalDepth");
+                }
+            }
+
+            edgeDetection.PrepareDrawDefault();                
+
+            DrawEntities(gameTime, ignoreList);
+
+            foreach (ParticleSystem particleSystem in particleSystems.Values)
+                particleSystem.Draw(gameTime);
+
+            edgeDetection.Draw(gameTime);
+      
+            bloom.Draw(gameTime);
         }
 
         private void DrawEntities(GameTime gameTime, List<CollisionSkin> ignoreList)
