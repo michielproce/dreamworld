@@ -24,23 +24,23 @@ Good luck, visitor!</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign01</Entity>
-      <Text>Well hello, Tubbles! Yes, we know your name. No, it's not because we are weird living sign thingies, it's because Morwir painted this. Haha! Right. Let's go ahead and teach you a thing or two about the Dreamworld. As you can see, it's quite blank and abstract. This way, you won't have to give any attention to nice frilly things which would only distract you from the purpose of why you are here: to solve problems. Should you ever get into a situation here in the Dreamworld in which you see no way out, have no fear because we are here! Also, you can just press {escape|start} and return to the real world. If you wish to continue the tutorial, walk to the arrow.</Text>
+      <Text>Well hello, Tubbles! Yes, we know your name. No, it's not because we are weird living sign thingies, it's because Morwir painted this. Haha! Right. Let's go ahead and teach you a thing or two about the Dreamworld. As you can see, it's quite blank and abstract. This way, you won't lose any attention to nice frilly things which would distract you from the purpose of why you are here: to solve problems. Should you ever get into a situation here in the Dreamworld in which you see no way out, have no fear, we are here! Also, you can just press {escape|start} and return to the real world. If you wish to continue the tutorial, walk to the arrow.</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign02</Entity>
-      <Text>See those big blocks and smoke in front of you? Those are groups. Blocks with the same color are in the same group. They will come in all sorts of shapes and configurations, but for now, we will keep things easy. The blocks have a groupcenter, indicated by the smoke. The color of the smoke indicates which group it belongs to. You can't stand on group centers, but you can stand on blocks. Move on to the next arrow. </Text>
+      <Text>See those big purple blocks and smoke in front of you? Those are groups. Blocks with the same color are in the same group. They will come in all sorts of shapes and configurations, but for now, we will keep things easy. The blocks have a groupcenter, indicated by the smoke. The color of the smoke indicates which group it belongs to. You can't stand on group centers, but you can stand on blocks. Move on to the next arrow. </Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign03</Entity>
-      <Text>Please look to your right. There are two groups over there, orange and green. Both have one block and a groupcenter. Notice how looking at a block highlights it. A highlighted block is selected. Now look to your left. The pink group consists of one block and a groupcenter. However, you can't select it. This is because the groupcenter is too far away from you. You can only select groups that are within a radius, (represented by iets?). If the groupcenter is not within this radius, you can't select it. Please walk to the next arrow. </Text>
+      <Text>Please look to your right. There are two groups over there, orange and green. Both have one block and a groupcenter. A small crosshair has appeared, to help you selecting groups. Just aim the crosshair at a block in the group you want to select and the group will be highlighted, indicating it is selected. Now look to your left. The pink group consists of one block and a groupcenter. However, you can't select it. This is because the groupcenter is too far away from you. You can only select groups that are within a radius. If the groupcenter is not within this radius, the crosshair will change color and you can't select the group. Please walk to the next arrow.</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign04</Entity>
-      <Text>We will now explain the axle-gizmo. At the bottom of the screen, three rotating cogs have appeared. Each cog represents an axle (X, Y and Z). One cog is rotating in a certain direction. If you have selected a group and {left-click|press B}, the group will rotate around it's groupcenter over the selected axle in the selected direction. You will try this later on, first we will explain a little more about the gizmo. To swap axles or spin it the other way around, use {Q and E|the shoulderkeys}. Practice a bit with it before you try to solve any puzzle. For now, move to the blue group in front of you.</Text>
+      <Text>We will now explain the axle-gizmo. At the bottom of the screen, three cogs have appeared. Each cog represents an axle (X, Y and Z). One cog is rotating in a certain direction. If you have selected a group and {left-click|press B}, the group will rotate around it's groupcenter over the selected axle in the selected direction. You will try this later on, first we will explain a little more about the gizmo. To swap axles or it's spinning rotation, use {Q and E or the scrollwheel|the shoulderkeys}. Practice a bit with it before you try to solve any puzzle. So, move to the blue group in front of you.</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign05</Entity>
-      <Text>Try to rotate the group in front of you using the axle-gizmo, and then move to the next arrow.</Text>
+      <Text>Try to select and rotate the group in front of you using the axle-gizmo, and then move to the next arrow.</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign06</Entity>
