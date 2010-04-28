@@ -1,4 +1,5 @@
-﻿using DreamWorld.Entities;
+﻿using System;
+using DreamWorld.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -16,23 +17,26 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
             get { return velocity < 0; }
         }
 
-        protected override void LoadContent()
-        {
-            Model = GameScreen.Content.Load<Model>(@"Models\Puzzle\Level1\Cow");
-
-            base.LoadContent();
-        }
-
         public override void Initialize()
         {
+            Animation.InitialClip = "Idle";
+            
             base.Initialize();
 
             Body.Immovable = false;
             Respawn();
         }
 
+        protected override void LoadContent()
+        {
+            Model = GameScreen.Content.Load<Model>(@"Models\Global\Cow");
+
+            base.LoadContent();
+        }
+
         public override void Update(GameTime gameTime)
         {
+            
             base.Update(gameTime);
 
             float distance = Vector3.Distance(Body.Position, Group.Center.Body.Position);
@@ -46,6 +50,11 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
                 Body.Position += offset;
                 Group.Center.Body.Position -= offset;
             }
+
+            if(Group.IsRotating || IsFalling)
+                Animation.StartClip("Flipping");
+            else
+                Animation.StartClip("Idle");
 
             if (!Group.IsRotating && !Group.IsColliding)
             {

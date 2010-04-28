@@ -9,7 +9,8 @@ namespace DreamWorld.Levels.VillageLevel.Entities
         public static bool ListInEditor = true;
         protected override void LoadContent()
         {
-            Model = GameScreen.Content.Load<Model>(@"Models\Puzzle\Level1\Cow");
+            Animation.InitialClip = "Idle";
+            Model = GameScreen.Content.Load<Model>(@"Models\Global\Cow");
             base.LoadContent();
         }
 

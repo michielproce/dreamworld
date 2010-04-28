@@ -23,7 +23,6 @@ namespace DreamWorld.Levels.VillageLevel.Entities
         public override void Initialize()
         {
             Animation.InitialClip = "Flying";
-            Animation.Speed = 1.0f;
             base.Initialize();
         }
 

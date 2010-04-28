@@ -37,7 +37,6 @@ namespace DreamWorld.Entities
         {
             inputManager = GameScreen.InputManager;
             Animation.InitialClip = "Standing";
-            Animation.Speed = 1.0f;
             Scale = new Vector3(.12f);
 
             base.Initialize();

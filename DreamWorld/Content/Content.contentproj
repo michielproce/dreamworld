@@ -308,11 +308,6 @@
       <Importer>XImporter</Importer>
       <Processor>SkinnedModelProcessor</Processor>
     </Compile>
-    <Compile Include="Models\Puzzle\Level1\Cow.X">
-      <Name>Cow</Name>
-      <Importer>XImporter</Importer>
-      <Processor>DefaultModelProcessor</Processor>
-    </Compile>
     <Compile Include="Models\Village\Wall.X">
       <Name>Wall</Name>
       <Importer>XImporter</Importer>
@@ -786,6 +781,11 @@
       <Name>CheckPoint</Name>
       <Importer>XImporter</Importer>
       <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Global\Cow.X">
+      <Name>Cow</Name>
+      <Importer>XImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
     </Compile>
     <None Include="Texts\Help.xml">
       <Name>Help</Name>

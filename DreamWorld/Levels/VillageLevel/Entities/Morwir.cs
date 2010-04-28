@@ -15,7 +15,6 @@ namespace DreamWorld.Levels.VillageLevel.Entities
         public override void Initialize()
         {
             Animation.InitialClip = "Standing";
-            Animation.Speed = 1.0f;
             base.Initialize();
         }
 
