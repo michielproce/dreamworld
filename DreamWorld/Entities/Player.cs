@@ -4,6 +4,7 @@ using DreamWorld.Entities.Global;
 using DreamWorld.InputManagement;
 using DreamWorld.Levels;
 using DreamWorld.Levels.VillageLevel;
+using JigLibX.Collision;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -91,28 +92,7 @@ namespace DreamWorld.Entities
                 float dot = Vector3.Dot(movement, Skin.Collisions[i].DirToBody0);
                 if (dot < 0)
                 {
-                    bool ignoreCollision = false;
-
-                    // Check checkpoints in Puzzle levels.
-                    if (GameScreen.Level is PuzzleLevel)
-                    {
-                        foreach (Group group in GameScreen.Level.Groups.Values)
-                        {
-                            foreach (Entity entity in group.Entities.Values)
-                            {
-                                if (entity is CheckPoint && entity.Skin == Skin.Collisions[i].SkinInfo.Skin1)
-                                {
-                                    ignoreCollision = true;
-                                    SpawnPosition = entity.Body.Position;
-                                    SpawnOrientation = entity.Body.Orientation;
-                                    break;
-                                }
-                            }
-                            if (ignoreCollision)
-                                break;
-                        }
-                    }
-                    if (!ignoreCollision)
+                    if (!IsCheckPoint(Skin.Collisions[i].SkinInfo.Skin1))
                     {
                         movement -= Skin.Collisions[i].DirToBody0*dot;
 
@@ -168,7 +148,7 @@ namespace DreamWorld.Entities
         {
             for (int i = 0; i <= Skin.Collisions.Count - 1; i++)
             {
-                if (Skin.Collisions[i].DirToBody0.Y > .4f)
+                if (!IsCheckPoint(Skin.Collisions[i].SkinInfo.Skin1) && Skin.Collisions[i].DirToBody0.Y > .4f)
                     return true;
             }
             return false;
@@ -182,6 +162,23 @@ namespace DreamWorld.Entities
                 jumpVelocity = 0;
                 playerState = PlayerState.OnTerrain;
             }
+        }
+
+        private bool IsCheckPoint(CollisionSkin skin)
+        {
+            // Check checkpoints in Puzzle levels.
+            if (GameScreen.Level is PuzzleLevel)
+            {
+                foreach (Group group in GameScreen.Level.Groups.Values)
+                    foreach (Entity entity in group.Entities.Values)
+                        if (entity is CheckPoint && entity.Skin == skin)
+                        {
+                            SpawnPosition = entity.Body.Position;
+                            SpawnOrientation = entity.Body.Orientation;
+                            return true;
+                        }
+            }
+            return false;
         }
 
         public void Respawn()
