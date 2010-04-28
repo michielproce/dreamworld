@@ -33,44 +33,44 @@ namespace DreamWorld.Levels.PuzzleLevel1
 
             Skybox = new Skybox("Puzzle") { Name = "Skybox" };
 
-            Group group1 = new CowGroup();
-            Group group2 = new CowGroup();
-            Group group3 = new CowGroup();
-            Group group4 = new CowGroup();
-
-            SetGroup(group1, 15);
-            SetGroup(group2, 16);
-            SetGroup(group3, 17);
-            SetGroup(group4, 18);
+//            Group group1 = new CowGroup();
+//            Group group2 = new CowGroup();
+//            Group group3 = new CowGroup();
+//            Group group4 = new CowGroup();
+//
+//            SetGroup(group1, 15);
+//            SetGroup(group2, 16);
+//            SetGroup(group3, 17);
+//            SetGroup(group4, 18);
 
             base.Initialize();
 
             ThirdPersonCamera cam = GameScreen.Camera as ThirdPersonCamera;
             if (cam != null)
                 cam.VerticalRotation = MathHelper.ToRadians(-15);            
-
-            _cows = new Cow[4];
-            _cows[0] = new Cow { Name = "Cow1", Scale = new Vector3(0.3f), startPosition = new Vector3(200, 30, -20) };
-            _cows[1] = new Cow { Name = "Cow2", Scale = new Vector3(0.3f), startPosition = new Vector3(260, 30, -20) };
-
-            _cows[0].Group = group1;
-            _cows[1].Group = group2;
-            group1.Center = _cows[1];
-            group2.Center = _cows[0];
-
-            _cows[0].Initialize();
-            _cows[1].Initialize();
-
-            _cows[2] = new Cow { Name = "Cow3", Scale = new Vector3(0.3f), startPosition = new Vector3(160, 30, -40) };
-            _cows[3] = new Cow { Name = "Cow4", Scale = new Vector3(0.3f), startPosition = new Vector3(100, 30, -40) };
-
-            _cows[2].Group = group3;
-            _cows[3].Group = group4;
-            group3.Center = _cows[3];
-            group4.Center = _cows[2];
-
-            _cows[2].Initialize();
-            _cows[3].Initialize();
+//
+//            _cows = new Cow[4];
+//            _cows[0] = new Cow { Name = "Cow1", Scale = new Vector3(0.3f), startPosition = new Vector3(200, 30, -20) };
+//            _cows[1] = new Cow { Name = "Cow2", Scale = new Vector3(0.3f), startPosition = new Vector3(260, 30, -20) };
+//
+//            _cows[0].Group = group1;
+//            _cows[1].Group = group2;
+//            group1.Center = _cows[1];
+//            group2.Center = _cows[0];
+//
+//            _cows[0].Initialize();
+//            _cows[1].Initialize();
+//
+//            _cows[2] = new Cow { Name = "Cow3", Scale = new Vector3(0.3f), startPosition = new Vector3(160, 30, -40) };
+//            _cows[3] = new Cow { Name = "Cow4", Scale = new Vector3(0.3f), startPosition = new Vector3(100, 30, -40) };
+//
+//            _cows[2].Group = group3;
+//            _cows[3].Group = group4;
+//            group3.Center = _cows[3];
+//            group4.Center = _cows[2];
+//
+//            _cows[2].Initialize();
+//            _cows[3].Initialize();
         }
 
         protected override bool GameIsWon()
@@ -80,12 +80,14 @@ namespace DreamWorld.Levels.PuzzleLevel1
                 return true;
             #endif
 
-            foreach (Cow cow in _cows)
-            {
-                if(cow.Body.Position.Z < 410 || cow.Group.IsRotating || !cow.Group.IsColliding)
-                    return false;
-            }
-            return true;
+            return false;
+
+//            foreach (Cow cow in _cows)
+//            {
+//                if(cow.Body.Position.Z < 410 || cow.Group.IsRotating || !cow.Group.IsColliding)
+//                    return false;
+//            }
+//            return true;
         }
 
         protected override void VictoryEventHandler()
@@ -100,15 +102,15 @@ namespace DreamWorld.Levels.PuzzleLevel1
             if (Player.Body.Position.Y < -50)
                 Player.Respawn();
 
-            foreach (Cow cow in _cows)
-            {
-                if (cow.Body.Position.Y < -25 || Vector3.Distance(cow.Body.Position, cow.Group.Center.Body.Position) < 10)
-                {
-                    cow.Respawn();
-                    if (cow.Group.Center is Cow)
-                        ((Cow)cow.Group.Center).Respawn();
-                }
-            }
+//            foreach (Cow cow in _cows)
+//            {
+//                if (cow.Body.Position.Y < -25 || Vector3.Distance(cow.Body.Position, cow.Group.Center.Body.Position) < 10)
+//                {
+//                    cow.Respawn();
+//                    if (cow.Group.Center is Cow)
+//                        ((Cow)cow.Group.Center).Respawn();
+//                }
+//            }
 
             // Update for bloom
             float intensity = 1 - GameScreen.TransitionAlpha / 255f;
