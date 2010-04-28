@@ -857,7 +857,7 @@
       <Position>
         <X>405</X>
         <Y>2</Y>
-        <Z>-145</Z>
+        <Z>-165</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -867,7 +867,7 @@
       <Scale>
         <X>2</X>
         <Y>1</Y>
-        <Z>2</Z>
+        <Z>6</Z>
       </Scale>
       <Group>0</Group>
     </SpawnInformation>
@@ -877,7 +877,7 @@
       <Position>
         <X>405</X>
         <Y>7</Y>
-        <Z>-165</Z>
+        <Z>-215</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -896,8 +896,8 @@
       <TypeName>DreamWorld.Levels.PuzzleLevel1.Entities.Platform</TypeName>
       <Position>
         <X>405</X>
-        <Y>12</Y>
-        <Z>-180</Z>
+        <Y>15</Y>
+        <Z>-235</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -916,8 +916,8 @@
       <TypeName>DreamWorld.Entities.GroupCenter</TypeName>
       <Position>
         <X>405</X>
-        <Y>11</Y>
-        <Z>-165</Z>
+        <Y>15</Y>
+        <Z>-215</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -936,8 +936,8 @@
       <TypeName>DreamWorld.Levels.PuzzleLevel1.Entities.Platform</TypeName>
       <Position>
         <X>420</X>
-        <Y>19</Y>
-        <Z>-165</Z>
+        <Y>28</Y>
+        <Z>-200</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -945,9 +945,9 @@
         <Z>0</Z>
       </Rotation>
       <Scale>
-        <X>1</X>
+        <X>1.5</X>
         <Y>1</Y>
-        <Z>1</Z>
+        <Z>5</Z>
       </Scale>
       <Group>0</Group>
     </SpawnInformation>
@@ -965,7 +965,7 @@
         <Z>0</Z>
       </Rotation>
       <Scale>
-        <X>1</X>
+        <X>1.5</X>
         <Y>1</Y>
         <Z>5</Z>
       </Scale>
