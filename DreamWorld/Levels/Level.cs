@@ -184,10 +184,12 @@ namespace DreamWorld.Levels
 
             DrawEntities(gameTime, ignoreList);
 
+            edgeDetection.Draw(gameTime);
+
             foreach (ParticleSystem particleSystem in particleSystems.Values)
                 particleSystem.Draw(gameTime);
 
-            edgeDetection.Draw(gameTime);
+            
       
             bloom.Draw(gameTime);
         }

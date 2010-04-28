@@ -28,7 +28,7 @@ namespace DreamWorld.Entities
 
         public override void Update(GameTime gameTime)
         {
-            if (_frames++ % 10 == 0)
+            if (_frames++ % 15 == 0)
                 particleSystem.AddParticle(Body.Position, Vector3.Zero);
             base.Update(gameTime);
         }
