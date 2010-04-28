@@ -48,7 +48,7 @@ namespace DreamWorld.ScreenManagement.Screens.Cutscenes
             lines.Add(new CutsceneLine(@"Audio\Voice\Intro\19 WVHO", "They founded an organisation called WVHO, Wobble Village Help Organisation."));
             lines.Add(new CutsceneLine(@"Audio\Voice\Intro\20 food_resources", " The Organisation uses airships to supply the villages with food and resources"));
             lines.Add(new CutsceneLine(@"Audio\Voice\Intro\21 wise_men", "and held good contact with the wise men that led the villages."));
-            lines.Add(new CutsceneLine(@"Audio\Voice\Intro\22 magic_potions", "These old medicine mans had the power to create magic potions."));
+            lines.Add(new CutsceneLine(@"Audio\Voice\Intro\22 magic_potions", "These old medicine men had the power to create magic potions."));
             lines.Add(new CutsceneLine(@"Audio\Voice\Intro\23 council_succeed", "A council of medicine men is trying to find a potion to help the villages, but have yet to succeed."));
             lines.Add(new CutsceneLine(@"Audio\Voice\Intro\24 WVHO_villages", "So, the WVHO helps the villages.", TimeSpan.FromSeconds(2)));
         }   
