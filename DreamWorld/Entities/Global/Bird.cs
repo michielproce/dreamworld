@@ -13,7 +13,7 @@ namespace DreamWorld.Entities.Global
 
         private State state;
         private TimeSpan lastStateSwitch;
-        private Random random;
+        private static Random random = new Random();
         private float? initialHeight;
         private float prevRotation;
         
@@ -24,7 +24,6 @@ namespace DreamWorld.Entities.Global
         public override void Initialize()
         {
             state = State.Flying;
-            random = new Random();
 
             if (Level.Terrain != null && Level.Terrain.HeightMapInfo.IsOnHeightmap(SpawnInformation.Position))            
                 initialHeight = SpawnInformation.Position.Y - Level.Terrain.HeightMapInfo.GetHeight(SpawnInformation.Position);            
