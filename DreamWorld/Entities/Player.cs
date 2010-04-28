@@ -2,6 +2,7 @@
 using DreamWorld.Cameras;
 using DreamWorld.Entities.Global;
 using DreamWorld.InputManagement;
+using DreamWorld.Levels;
 using DreamWorld.Levels.VillageLevel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -91,20 +92,25 @@ namespace DreamWorld.Entities
                 if (dot < 0)
                 {
                     bool ignoreCollision = false;
-                    foreach (Group group in GameScreen.Level.Groups.Values)
+
+                    // Check checkpoints in Puzzle levels.
+                    if (GameScreen.Level is PuzzleLevel)
                     {
-                        foreach (Entity entity in group.Entities.Values)
+                        foreach (Group group in GameScreen.Level.Groups.Values)
                         {
-                            if (entity is CheckPoint && entity.Skin == Skin.Collisions[i].SkinInfo.Skin1)
+                            foreach (Entity entity in group.Entities.Values)
                             {
-                                ignoreCollision = true;
-                                SpawnPosition = entity.Body.Position;
-                                SpawnOrientation = entity.Body.Orientation;
-                                break;
+                                if (entity is CheckPoint && entity.Skin == Skin.Collisions[i].SkinInfo.Skin1)
+                                {
+                                    ignoreCollision = true;
+                                    SpawnPosition = entity.Body.Position;
+                                    SpawnOrientation = entity.Body.Orientation;
+                                    break;
+                                }
                             }
+                            if (ignoreCollision)
+                                break;
                         }
-                        if (ignoreCollision)
-                            break;
                     }
                     if (!ignoreCollision)
                     {
