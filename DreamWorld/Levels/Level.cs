@@ -78,8 +78,8 @@ namespace DreamWorld.Levels
                 particleSystem.Initialize();
 
             Player.Initialize();
-            Player.StartPosition = LevelInformation.PlayerStartPosition;
-            Player.StartOrientation = Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(LevelInformation.PlayerStartRotation.Y),
+            Player.SpawnPosition = LevelInformation.PlayerStartPosition;
+            Player.SpawnOrientation = Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(LevelInformation.PlayerStartRotation.Y),
                                               MathHelper.ToRadians(LevelInformation.PlayerStartRotation.X),
                                               MathHelper.ToRadians(LevelInformation.PlayerStartRotation.Z));
 

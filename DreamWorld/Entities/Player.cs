@@ -1,4 +1,6 @@
-﻿using DreamWorld.Cameras;
+﻿using System;
+using DreamWorld.Cameras;
+using DreamWorld.Entities.Global;
 using DreamWorld.InputManagement;
 using DreamWorld.Levels.VillageLevel;
 using Microsoft.Xna.Framework;
@@ -26,8 +28,8 @@ namespace DreamWorld.Entities
 
         private InputManager inputManager;
 
-        public Vector3 StartPosition;
-        public Matrix StartOrientation;
+        public Vector3 SpawnPosition { get; set;}
+        public Matrix SpawnOrientation { get; set; }
 
         public override void Initialize()
         {
@@ -88,13 +90,32 @@ namespace DreamWorld.Entities
                 float dot = Vector3.Dot(movement, Skin.Collisions[i].DirToBody0);
                 if (dot < 0)
                 {
-                    movement -= Skin.Collisions[i].DirToBody0 * dot;
-                    
-                    // Check if this conflicts with other collisionskins
-                    // TODO: do mathmatical magic to calculate a direction that doesn't conflict with any skin
-                    for (int j = i-1; j >= 0; j--)
-                        if(Vector3.Dot(movement, Skin.Collisions[j].DirToBody0) < 0)
-                            movement = Vector3.Zero;
+                    bool ignoreCollision = false;
+                    foreach (Group group in GameScreen.Level.Groups.Values)
+                    {
+                        foreach (Entity entity in group.Entities.Values)
+                        {
+                            if (entity is CheckPoint && entity.Skin == Skin.Collisions[i].SkinInfo.Skin1)
+                            {
+                                ignoreCollision = true;
+                                SpawnPosition = entity.Body.Position;
+                                SpawnOrientation = entity.Body.Orientation;
+                                break;
+                            }
+                        }
+                        if (ignoreCollision)
+                            break;
+                    }
+                    if (!ignoreCollision)
+                    {
+                        movement -= Skin.Collisions[i].DirToBody0*dot;
+
+                        // Check if this conflicts with other collisionskins
+                        // TODO: do mathmatical magic to calculate a direction that doesn't conflict with any skin
+                        for (int j = i - 1; j >= 0; j--)
+                            if (Vector3.Dot(movement, Skin.Collisions[j].DirToBody0) < 0)
+                                movement = Vector3.Zero;
+                    }
 
                 }
             }
@@ -160,7 +181,7 @@ namespace DreamWorld.Entities
         public void Respawn()
         {
             jumpVelocity = 0;
-            Body.MoveTo(StartPosition, StartOrientation);
+            Body.MoveTo(SpawnPosition, SpawnOrientation);
         }
 
         protected override void GetPhysicsInformation(out JigLibX.Physics.Body body, out JigLibX.Collision.CollisionSkin skin, out Vector3 centerOfMass)

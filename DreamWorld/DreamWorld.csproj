@@ -93,6 +93,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Entities\Animation.cs" />
     <Compile Include="Entities\Global\Bird.cs" />
+    <Compile Include="Entities\Global\CheckPoint.cs" />
     <Compile Include="Entities\Global\HelpSign.cs" />
     <Compile Include="Entities\Global\HelpTubes.cs" />
     <Compile Include="Entities\Global\PlaceHolder.cs" />
