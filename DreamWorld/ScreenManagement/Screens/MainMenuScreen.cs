@@ -37,7 +37,9 @@ namespace DreamWorld.ScreenManagement.Screens
 
         protected override void LoadContent()
         {
-            MediaPlayer.Play(Content.Load<Song>(@"Audio\Music\Menu"));
+            if(MediaPlayer.State != MediaState.Playing)
+                MediaPlayer.Play(Content.Load<Song>(@"Audio\Music\Menu"));
+
             Background = Content.Load<Texture2D>(@"Textures/Menu/mainMenu");
             Font = Content.Load<SpriteFont>(@"Fonts/mainMenu");
             Font.Spacing *= 0.9f;
