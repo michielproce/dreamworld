@@ -1,4 +1,5 @@
 ﻿using System;
+using DreamWorld.Cameras;
 using DreamWorld.Entities;
 using DreamWorld.Levels.PuzzleLevel1.Entities;
 using DreamWorld.Rendering.Postprocessing;
@@ -43,6 +44,10 @@ namespace DreamWorld.Levels.PuzzleLevel1
             SetGroup(group4, 18);
 
             base.Initialize();
+
+            ThirdPersonCamera cam = GameScreen.Camera as ThirdPersonCamera;
+            if (cam != null)
+                cam.VerticalRotation = MathHelper.ToRadians(-15);            
 
             _cows = new Cow[4];
             _cows[0] = new Cow { Name = "Cow1", Scale = new Vector3(0.3f), startPosition = new Vector3(200, 30, -20) };

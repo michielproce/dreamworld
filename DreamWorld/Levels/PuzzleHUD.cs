@@ -29,7 +29,7 @@ namespace DreamWorld.Levels
 
         private float rotation;
 
-        public bool hidden;
+        public bool Hidden { get; set;}
 
         public PuzzleHUD(GameScreen gameScreen)
         {
@@ -122,7 +122,7 @@ namespace DreamWorld.Levels
 
         public void Draw(GameTime gameTime)
         {            
-            if(hidden)
+            if(Hidden)
                 return;
 
             originalViewport = device.Viewport;

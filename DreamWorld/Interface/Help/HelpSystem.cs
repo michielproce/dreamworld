@@ -1,4 +1,5 @@
-﻿using DreamWorld.Entities;
+﻿using DreamWorld.Cameras;
+using DreamWorld.Entities;
 using DreamWorld.Levels;
 using DreamWorld.ScreenManagement;
 using DreamWorld.ScreenManagement.Screens;
@@ -35,6 +36,9 @@ namespace DreamWorld.Interface.Help
 
         public void Update(GameTime gameTime)
         {
+            if(gameScreen.Camera is DebugCamera)
+                return;
+
             if (Helper != null) 
             {                
                 if(hint == null) {

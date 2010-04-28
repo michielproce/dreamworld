@@ -1,5 +1,7 @@
-﻿using DreamWorld.Rendering.Particles.Systems;
+﻿using System;
+using DreamWorld.Rendering.Particles.Systems;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Entities
 {
@@ -7,7 +9,9 @@ namespace DreamWorld.Entities
     {
         public static bool ListInEditor = true;
         private GroupCenterParticleSystem particleSystem;
-        private int _frames;
+        private int frames;
+        private bool hideModel;
+        
 
         public override void Initialize()
         {
@@ -18,21 +22,27 @@ namespace DreamWorld.Entities
 
         protected override void LoadContent()
         {
-            // Only load a model if a deriving class has added one
-            if (Model != null)
+            // Only load model if a deriving class has none. This is necessary for the level editor.
+            if (Model == null)
             {
-                base.LoadContent();
-                return;
+                Model = GameScreen.Content.Load<Model>(@"Models\Puzzle\GroupCenter");
+                hideModel = true;
             }
+
+            base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (_frames++ % 15 == 0)
+            if (frames++ % 15 == 0)
                 particleSystem.AddParticle(Body.Position, Vector3.Zero);
             base.Update(gameTime);
         }
 
-
+        public override void Draw(GameTime gameTime, string technique)
+        {
+            if(!hideModel)
+                base.Draw(gameTime, technique);
+        }
     }
 }

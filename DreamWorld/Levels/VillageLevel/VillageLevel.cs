@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DreamWorld.Cameras;
 using DreamWorld.Entities;
 using DreamWorld.Levels.VillageLevel.Entities;
 using DreamWorld.Rendering.Postprocessing;
@@ -38,6 +39,10 @@ namespace DreamWorld.Levels.VillageLevel
             MediaPlayer.Play(GameScreen.Content.Load<Song>(@"Audio\Music\Village"));
 
             base.Initialize();
+
+            ThirdPersonCamera cam = GameScreen.Camera as ThirdPersonCamera;
+            if (cam != null)
+                cam.VerticalRotation = MathHelper.ToRadians(5);     
 
             List<Entity> toRemove = new List<Entity>();
 

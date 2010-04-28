@@ -19,11 +19,12 @@ namespace DreamWorld.Cameras
         private float distance = 30f;
 
         private const float minVerticalRotation = -MathHelper.PiOver2 * .99f;
-        private const float maxVerticalRotation = -minVerticalRotation;
-        private float verticalRotation = MathHelper.ToRadians(5);
+        private const float maxVerticalRotation = -minVerticalRotation;        
 
         private float horizontalRotation;
-        
+
+        public float VerticalRotation { get; set; }
+
         public override Vector3 Direction { 
             get
             {
@@ -57,11 +58,11 @@ namespace DreamWorld.Cameras
             float verticalRotationInput = inputManager.Player.VerticalRotation;
             if (camOnFloor && verticalRotationInput < 0)
                 verticalRotationInput = 0;
-            verticalRotation -= verticalRotationInput;
-            if (verticalRotation < minVerticalRotation)
-                verticalRotation = minVerticalRotation;
-            if (verticalRotation > maxVerticalRotation)
-                verticalRotation = maxVerticalRotation;
+            VerticalRotation -= verticalRotationInput;
+            if (VerticalRotation < minVerticalRotation)
+                VerticalRotation = minVerticalRotation;
+            if (VerticalRotation > maxVerticalRotation)
+                VerticalRotation = maxVerticalRotation;
 
             if (inputManager.Player.ResetHorizontalRotation)
                 horizontalRotation = 0;
@@ -71,7 +72,7 @@ namespace DreamWorld.Cameras
                 Vector3.Transform(
                     Vector3.Transform(
                         new Vector3(0, 0, distance),
-                        Matrix.CreateRotationX(verticalRotation)),
+                        Matrix.CreateRotationX(VerticalRotation)),
                     Matrix.CreateRotationY(playerRotation + horizontalRotation));
 
             if(level.Terrain != null)

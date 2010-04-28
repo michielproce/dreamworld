@@ -2295,13 +2295,13 @@
       <Name>wentity634078367434501092</Name>
       <TypeName>DreamWorld.Entities.Global.HelpTubes</TypeName>
       <Position>
-        <X>280</X>
+        <X>277.5</X>
         <Y>-550</Y>
-        <Z>510</Z>
+        <Z>505</Z>
       </Position>
       <Rotation>
         <X>0</X>
-        <Y>0</Y>
+        <Y>40</Y>
         <Z>0</Z>
       </Rotation>
       <Scale>
@@ -2495,13 +2495,13 @@
       <Name>villageSign1</Name>
       <TypeName>DreamWorld.Entities.Global.HelpSign</TypeName>
       <Position>
-        <X>280</X>
+        <X>277.5</X>
         <Y>-546</Y>
-        <Z>510</Z>
+        <Z>505</Z>
       </Position>
       <Rotation>
         <X>0</X>
-        <Y>-45</Y>
+        <Y>0</Y>
         <Z>14</Z>
       </Rotation>
       <Scale>

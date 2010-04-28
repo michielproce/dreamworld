@@ -1,4 +1,5 @@
 ﻿using System;
+using DreamWorld.Cameras;
 using DreamWorld.Entities.Global;
 using DreamWorld.Rendering.Postprocessing;
 using Microsoft.Xna.Framework;
@@ -26,7 +27,11 @@ namespace DreamWorld.Levels.TutorialLevel
 
             base.Initialize();
 
-            _hud.hidden = true;
+            ThirdPersonCamera cam = GameScreen.Camera as ThirdPersonCamera;
+            if (cam != null)
+                cam.VerticalRotation = MathHelper.ToRadians(-15);     
+
+            _hud.Hidden = true;
 
             GameScreen.TransitionOnTime = TimeSpan.FromSeconds(3);            
         }
@@ -37,7 +42,7 @@ namespace DreamWorld.Levels.TutorialLevel
                 Player.Respawn();
 
             if (GameScreen.HelpSystem.Helper != null && GameScreen.HelpSystem.Helper.Name == "tutorialSign04")
-                _hud.hidden = false;
+                _hud.Hidden = false;
 
             // Update for bloom
             float intensity = 1 - GameScreen.TransitionAlpha / 255f;
