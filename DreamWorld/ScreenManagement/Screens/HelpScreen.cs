@@ -20,7 +20,7 @@ namespace DreamWorld.ScreenManagement.Screens
             this.helpSystem = helpSystem;
             this.text = text;
 
-            helpSystem.HintVisible = false;
+            helpSystem.ScreenActive = true;
             IsPopup = true;
             TransitionOnTime = TimeSpan.FromMilliseconds(300);
         }
@@ -46,7 +46,7 @@ namespace DreamWorld.ScreenManagement.Screens
             if (ScreenManager.InputManager.Player.ApplyRotation)
             {               
                 ExitScreen();
-                helpSystem.HintVisible = true;
+                helpSystem.ScreenActive = false;
             }
             base.Update(gameTime);
         }

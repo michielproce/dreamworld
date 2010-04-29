@@ -20,7 +20,8 @@ namespace DreamWorld.Interface.Help
         private Vector2 hintPos;
 
         private Entity customHelper;
-        public bool HintVisible { get; set; }
+
+        public bool ScreenActive { get; set; }
         public Entity Helper { get; set; }        
 
         public HelpSystem(GameScreen gameScreen)
@@ -28,8 +29,7 @@ namespace DreamWorld.Interface.Help
             this.gameScreen = gameScreen;
 
             Help.LoadInstance();
-            
-            HintVisible = true;
+        
             hintFont = GameScreen.Instance.Content.Load<SpriteFont>(@"Fonts\helphint");
         }
         
@@ -73,7 +73,7 @@ namespace DreamWorld.Interface.Help
 
         public void Draw(GameTime gameTime)
         {
-            if (hint != null && HintVisible)
+            if (hint != null && !ScreenActive)
             {
                 SpriteBatch spriteBatch = gameScreen.ScreenManager.SpriteBatch;
                 spriteBatch.Begin();

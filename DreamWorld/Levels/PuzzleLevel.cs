@@ -57,7 +57,7 @@ namespace DreamWorld.Levels
             
             _hud.Cycle(input.CycleAxle);
 
-            if(input.ApplyRotation)
+            if(input.ApplyRotation && !GameScreen.HelpSystem.ScreenActive)
                 RotateGroup(_hud.CurrentDirection);
 
             _hud.Update(gameTime);

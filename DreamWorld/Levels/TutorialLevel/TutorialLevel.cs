@@ -53,7 +53,7 @@ namespace DreamWorld.Levels.TutorialLevel
                 if (GameScreen.HelpSystem.Helper.Name == "tutorialSign04")
                     _hud.Hidden = false;
 
-                if (GameScreen.HelpSystem.Helper.Name == "tutorialSign11" && !GameScreen.HelpSystem.HintVisible)
+                if (GameScreen.HelpSystem.Helper.Name == "tutorialSign11" && GameScreen.HelpSystem.ScreenActive)
                     readingLastSign = true;
             }
 
@@ -84,7 +84,7 @@ namespace DreamWorld.Levels.TutorialLevel
                 return true;
 #endif
             // The game is won when the player is done reading the last sign.
-            return readingLastSign && GameScreen.HelpSystem.Helper != null && GameScreen.HelpSystem.HintVisible;
+            return readingLastSign && GameScreen.HelpSystem.Helper != null && !GameScreen.HelpSystem.ScreenActive;
         }
 
         protected override void VictoryEventHandler()
