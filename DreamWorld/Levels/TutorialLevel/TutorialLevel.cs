@@ -1,7 +1,9 @@
 ﻿using System;
 using DreamWorld.Cameras;
+using DreamWorld.Entities;
 using DreamWorld.Entities.Global;
 using DreamWorld.Rendering.Postprocessing;
+using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
@@ -10,6 +12,8 @@ namespace DreamWorld.Levels.TutorialLevel
 {
     class TutorialLevel : PuzzleLevel
     {
+        // True if the player is reading the last sign
+        private bool readingLastSign;
 
         public TutorialLevel()
         {
@@ -24,6 +28,8 @@ namespace DreamWorld.Levels.TutorialLevel
         public override void Initialize()
         {
             MediaPlayer.Play(GameScreen.Content.Load<Song>(@"Audio\Music\Tutorial"));
+
+            Skybox = new Skybox("Puzzle") { Name = "Skybox" };
 
             base.Initialize();
 
@@ -41,8 +47,14 @@ namespace DreamWorld.Levels.TutorialLevel
             if (Player.Body.Position.Y < -50)
                 Player.Respawn();
 
-            if (GameScreen.HelpSystem.Helper != null && GameScreen.HelpSystem.Helper.Name == "tutorialSign04")
-                _hud.Hidden = false;
+            if (GameScreen.HelpSystem.Helper != null)
+            {
+                if (GameScreen.HelpSystem.Helper.Name == "tutorialSign04")
+                    _hud.Hidden = false;
+
+                if (GameScreen.HelpSystem.Helper.Name == "tutorialSign11" && !GameScreen.HelpSystem.HintVisible)
+                    readingLastSign = true;
+            }
 
             // Update for bloom
             float intensity = 1 - GameScreen.TransitionAlpha / 255f;
@@ -62,6 +74,21 @@ namespace DreamWorld.Levels.TutorialLevel
             bloom.BaseIntensity = 1f;
             bloom.BloomSaturation = 2f;
             bloom.BaseSaturation = 2f;
+        }
+
+        protected override bool GameIsWon()
+        {
+            // The game is won when the player is done reading the last sign.
+            return readingLastSign && GameScreen.HelpSystem.Helper != null && GameScreen.HelpSystem.HintVisible;
+        }
+
+        protected override void VictoryEventHandler()
+        {
+            if (!GameScreen.IsExiting)
+            {
+                GameScreen.ScreenManager.AddScreen(new GameScreen(new VillageLevel.VillageLevel()));
+                GameScreen.ExitScreen();
+            }
         }
     }
 }
