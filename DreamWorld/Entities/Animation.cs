@@ -22,7 +22,8 @@ namespace DreamWorld.Entities
         
         public Animation()
         {       
-            additionalBoneTransforms = new Dictionary<string, Matrix>();             
+            additionalBoneTransforms = new Dictionary<string, Matrix>();
+            Speed = 1;
         }
 
         public void Load(SkinningData skinningData)
