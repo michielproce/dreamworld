@@ -50,7 +50,7 @@ namespace DreamWorld.Levels.TutorialLevel
 
             if (GameScreen.HelpSystem.Helper != null)
             {
-                if (GameScreen.HelpSystem.Helper.Name == "tutorialSign04")
+                if (GameScreen.HelpSystem.Helper.Name == "tutorialSign03")
                     _hud.Hidden = false;
 
                 if (GameScreen.HelpSystem.Helper.Name == "tutorialSign11" && GameScreen.HelpSystem.ScreenActive)

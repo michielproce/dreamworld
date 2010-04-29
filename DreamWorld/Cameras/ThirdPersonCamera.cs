@@ -16,7 +16,7 @@ namespace DreamWorld.Cameras
 
         private const float minDistance = 5f;
         private const float maxDistance = 100f;
-        private float distance = 30f;
+        private float distance = 35f;
 
         private const float minVerticalRotation = -MathHelper.PiOver2 * .99f;
         private const float maxVerticalRotation = -minVerticalRotation;        

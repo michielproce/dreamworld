@@ -28,17 +28,18 @@ namespace DreamWorld.ScreenManagement.Screens
         protected override void LoadContent()
         {
             font = Content.Load<SpriteFont>(@"Fonts\helptext");
-            
+            text = text.Replace("\n", "\n\n");
             // Cut the lines
             Viewport vp = ScreenManager.GraphicsDevice.Viewport;
-            text = StringUtil.CutLine(vp, font, text, 0.8f);
-            
+//            text = StringUtil.CutLine(vp, font, text, 0.8f);
+            text = StringUtil.CutLine(text, 100);
+
+            // Add the quit text info
+            text += StringUtil.ParsePlatform("\n\n\n{Click the left mouse button|Press B} to return.");
+
             // Center the text
             Vector2 size = font.MeasureString(text);
             fontPos = new Vector2(vp.Width / 2f - size.X / 2f, vp.Height / 2f - size.Y /2f);
-            
-            // Add the quit text info
-            text += StringUtil.ParsePlatform("\n\n\n{Click the left mouse button|Press B} to return.");
         }
 
         public override void Update(GameTime gameTime)

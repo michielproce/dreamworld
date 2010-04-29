@@ -3,77 +3,90 @@
   <Items>
     <HelpItem>
       <Entity>villageSign1</Entity>
-<Text>Important message for Koowaalaa's from other villages: Carbwir is a mess, so watch your steps. Look around you to see where you can go and to inspect your surroundings. If you have forgotten how to move your head or body, just {point the mouse|use your right thumbstick} to look and {press the WSAD or arrow keys|use your right thumbstick} to move. If you need to jump over something, press the {space bar|A button}. 
+<Text>Important message for Koowaalaas from other villages: Carbwir is a messss, so watch your step. Look around you to see where you can go and to inspect your surroundings.
+If you have forgotten how to move, just {point the mouse|use your right thumbstick} to look around and {press the WSAD or arrow keys|use your right thumbstick} to move. If you need to jump, press the {space bar|A button}. 
 Good luck, visitor!</Text>
     </HelpItem>
     <HelpItem>
       <Entity>villageSign2</Entity>
-<Text>Problem Plaza. This statue was erected for the villagers of Carbwir to honor the brave Koowaalaa who, years ago, brought great prosperity to the village. For each of the eight Development Goals of the United Nations he solved for our village, a symbol has been forged out of the purest gold. The more a goal is present in the village (i.e. more food), the more the symbol will shine. If the goal is poorly represented, the symbol will decay.</Text>
+<Text>Problem Plaza. This statue was built for the villagers of Carbwir to honor the brave Koowaalaas who, years ago, brought great prosperity to this village. 
+For each of the eight Development Goals of the United Nations he achieved, a symbol has been forged out of the purest gold. The more a goal is represented, the more the symbol will shine. If a goal is poorly represented, the symbol will decay.</Text>
     </HelpItem>
     <HelpItem>
       <Entity>villageSign3</Entity>
-      <Text>Warning, these stables are unstable! Do not attempt to have a picnic here, or you may become food for the vultures. Unless you are foolish enough to try and repair the sable, please go away.</Text>
+      <Text>Warning: these stables are unsafe!
+This used to be the primary source of food for the village. Unless you are foolish enough to try and repair the stables, please go away.</Text>
     </HelpItem>
     <HelpItem>
       <Entity>villageSign4</Entity>
-      <Text>Please, drink you own water, our well has been standing dry for so long, we don't even know if it will work if we ever get water in it again.</Text>
+      <Text>Please, drink your own water! This well is empty.</Text>
     </HelpItem>
     <HelpItem>
       <Entity>villageSign5</Entity>
-      <Text>To all people of Carbwir: This gate has been locked. Not because we wanted to, but because it's rusted shut, and we don't have the key anymore. It got lost a while ago, when someone tried to polish the Plaza with it, and it fell. Don't go try to get it back though, it's stuck in the Plaza itself. So, let's just wait until the WVHO helps us replace the gates.</Text>
+      <Text>To all people: This gate has been locked.
+The key is lost. We're waiting for the WVHO to replace the gates.</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign01</Entity>
-      <Text>Well hello, Tubbles! Yes, we know your name. No, it's not because we are weird living sign thingies, it's because Morwir painted this. Haha! Right. Let's go ahead and teach you a thing or two about the Dreamworld. As you can see, it's quite blank and abstract. This way, you won't lose any attention to nice frilly things which would distract you from the purpose of why you are here: to solve problems. Should you ever get into a situation here in the Dreamworld in which you see no way out, have no fear, we are here! Also, you can just press {escape|start} and return to the real world. If you wish to continue the tutorial, walk to the arrow.</Text>
-    </HelpItem>
-	<HelpItem>
-      <Entity>tutorialSign02</Entity>
-      <Text>See those big purple blocks and smoke in front of you? Those are groups. Blocks with the same color are in the same group. They will come in all sorts of shapes and configurations, but for now, we will keep things easy. The blocks have a groupcenter, indicated by the smoke. The color of the smoke indicates which group it belongs to. You can't stand on group centers, but you can stand on blocks. Move on to the next arrow. </Text>
+      <Text>Hello Tubbles!
+You've just entered the Dreamworld. Should you ever get into a situation here in which you see no way out, you can just press {escape|start} to return to the village.
+Go straight ahead to start with the tutorial.</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign03</Entity>
-      <Text>Please look to your right. There are two groups over there, orange and green. Both have one block and a groupcenter. A small crosshair has appeared, to help you selecting groups. Just aim the crosshair at a block in the group you want to select and the group will be highlighted, indicating it is selected. Now look to your left. The pink group consists of one block and a groupcenter. However, you can't select it. This is because the groupcenter is too far away from you. You can only select groups that are within a radius. If the groupcenter is not within this radius, the crosshair will change color and you can't select the group. Please walk to the next arrow.</Text>
-    </HelpItem>
-	<HelpItem>
-      <Entity>tutorialSign04</Entity>
-      <Text>We will now explain the axle-gizmo. At the bottom of the screen, three cogs have appeared. Each cog represents an axle (X, Y and Z). One cog is rotating in a certain direction. If you have selected a group and {left-click|press B}, the group will rotate around it's groupcenter over the selected axle in the selected direction. You will try this later on, first we will explain a little more about the gizmo. To swap axles or it's spinning rotation, use {Q and E or the scrollwheel|the shoulderkeys}. Practice a bit with it before you try to solve any puzzle. So, move to the blue group in front of you.</Text>
-    </HelpItem>
-	<HelpItem>
-      <Entity>tutorialSign05</Entity>
-      <Text>Try to select and rotate the group in front of you using the axle-gizmo, and then move to the next arrow.</Text>
+      <Text>We just actived your Axle Gizmo, this will allow you to rotate platforms across a certain axis.
+First, you can select a group of platforms, indicated by their color, by pointing your crosshair at them. When selected, they will light up. The center of the group, around which the platforms are rotated, are indicated by the glowy thingies.
+Then, you can rotate them, using your Axle Gizmo, down in your screen. Select an axis or rotation by using {Q and E or the scrollwheel|the shoulderbuttons}. The Gizmo's axis you've selected will rotate in the given direction.
+Once you've selected the axis and/or rotation, use {left-click|press B} to apply your rotation.
+In front of you are two platforms, orange and green, go ahead and test it out!</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign06</Entity>
-      <Text>Right, let's put all the things you've learned to practice! In front of you is a red group, containing four blocks. Right now, you are standing on a gray block. Gray blocks are static, they cannot be moved. To get to the arrow at the other side, you need to stand on the red block right in front of you (just walk on it), select the red group and rotate it over the correct axle. Notice how you will rotate along with the group if you stand on it.</Text>
+      <Text>Now that you've practiced rotating platforms, let's put it to use!
+In front of you is a red group of platforms. Stand on the platform in front of you, select the group and rotate it along the horizontal axis twice to get across.
+Yes, you could jump across, but this is good practice!</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign07</Entity>
-      <Text>Well done! The next thing you need to master, is jumping. You can jump the distance of one standard block, plus a little bit. This means you can jump to the next arrow from here, but not to the third block. Practice jumping by hopping over the gray blocks towards the green group in the distance. In case you've forgotten how to jump: press the {space bar|A button}.</Text>
+      <Text>Well done! Now you need to jump.
+You've already learned how (remember, by pressing the {space bar|A button}). Do this now by jumping across the gaps.
+P.S. There's cake at the end.</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign08</Entity>
-      <Text>Not every block is placed next to another block. Sometimes, you need to rotate it towards you, and then jump on it in order to progress. This is also the case with the green group in front of you. Try to reach the arrow, using the green platform.</Text>
+      <Text>Sorry, the cake was a lie.
+In front of you is a green platform which you can't reach. Rotate it towards you, stand on it, and rotate it back to get across.</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign09</Entity>
-      <Text>Untill now, you only needed to rotate blocks over the blue, horizontal axle. However, blocks can also be rotated over the red and green axle. This is needed at the next group. Two things are happening here. First, you need to rotate the block the red or green axle. Second, you need to reuse the block in order to get to the arrow. Reusing blocks is something you'll need to do often in the puzzles. After you use a block, don't forget it if you try to go further into the puzzle. You may need it again. Try to get to the arrow above now, using the black block twice.</Text>
+      <Text>For the next puzzle, you'll need to use a different axis. See if you can figure it out.
+Hint: Think about your position when rotating the pink platform.</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign10</Entity>
-      <Text>Great! You're almost there, just one more thing. The blue block at the other side is locked in at it's right and left side, but also at the other side of it's groupcenter. This means you will have to use at least two axles to rotate it next to you. This is another trick you will often need to do in the Dreamworld, especially when puzzles get tougher. Practice your skill for one last time, get to the arrow!</Text>
+      <Text>The blue platform is stuck! 
+See if you can use the various axis to position it so you can jump across.
+Hint: Think vertically.</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign11</Entity>
-      <Text>Awesome, you did it! With the basics of the mechanics mastered, you are now ready to face the puzzles representing the eight Development Goals. And just in time, the potion is beginning to wear out. Good luck! </Text>
+      <Text>Great, you did it!
+With the basics learnt, you are now ready to face the real puzzles representing the eight Development Goals.
+And just in time, the potion is beginning to wear out. Good luck!</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>puzzleSign01</Entity>
-      <Text>Welcome back, Tubbles. I see you have chosen to enter the Dreamworld from the Unstable Stable, so the problem for this puzzle is Hunger. As you know, the stable has collapsed and the villagers have no viable source of food. If you're able to solve this puzzle, it's real world effect will be a rebuild stable and a foodsupply for the villagers. Move to the closest meadow to read how you can solve this puzzle.</Text>
+      <Text>Welcome back to the Dreamworld, Tubbles.
+You have chosen to enter through the Stable and the problem for this puzzle is hunger. The stable has collapsed and the villagers have no other viable source of food. 
+If you solve the puzzle, its real world effect will a be a rebuilt stable and therefore a steady foodsupply for the village.
+On the meadow to your left is another sign that will help you solve the puzzle.</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>puzzleSign02</Entity>
-      <Text>As told, this puzzle is about food. To illustrate this, there are two pairs of cows in this puzzle. These cows can be selected and rotated just like you would with groups. However, the cows have a little twist on the usual mechanic. As you may have noticed, they have no group center! This is because they are eachothers center. Select one cow and it's pairing cow will become its center. Select the other cow and the first cow will become its center. 
-Your goal is to get both pair of cows from this meadow to the meadow on the other side. Oh, and by the way: the cows are connected to their pairs through an invisible rope. They cannot be moved further apart or closer to eachother as they are right now, and if one cow falls over the edge, it will take its pair with him and both will be respawned in the meadow. Good luck! </Text>
+      <Text>This puzzle is about food! 
+As you can see, there are two pairs of cows in this puzzle. Unlike platforms, they're not connected to a center (the glowing thingies), instead, they rotate around each other. Select one cow and it'll rotate around the other. And vice versa.
+Your goal is to get both pairs to the other meadow, across the puzzle. Good luck!
+P.S. If a cow falls down, the both of the pair will be respawned in this meadow.</Text>
     </HelpItem>
   </Items>
 </Help>

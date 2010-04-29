@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LevelInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <PlayerStartPosition>
-    <X>0</X>
+    <X>-30</X>
     <Y>28.5</Y>
     <Z>20</Z>
   </PlayerStartPosition>
@@ -712,32 +712,12 @@
       <Group>13</Group>
     </SpawnInformation>
     <SpawnInformation>
-      <Name>entity634081374020156250</Name>
-      <TypeName>DreamWorld.Levels.PuzzleLevel1.Entities.Platform</TypeName>
-      <Position>
-        <X>-40</X>
-        <Y>25</Y>
-        <Z>20</Z>
-      </Position>
-      <Rotation>
-        <X>0</X>
-        <Y>0</Y>
-        <Z>0</Z>
-      </Rotation>
-      <Scale>
-        <X>1.8</X>
-        <Y>2</Y>
-        <Z>3.8</Z>
-      </Scale>
-      <Group>0</Group>
-    </SpawnInformation>
-    <SpawnInformation>
       <Name>entity634081374374218750</Name>
       <TypeName>DreamWorld.Entities.Global.HelpTubes</TypeName>
       <Position>
-        <X>-40</X>
+        <X>-15</X>
         <Y>29</Y>
-        <Z>5</Z>
+        <Z>15</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -755,9 +735,9 @@
       <Name>puzzleSign01</Name>
       <TypeName>DreamWorld.Entities.Global.HelpSign</TypeName>
       <Position>
-        <X>-40</X>
+        <X>-15</X>
         <Y>31</Y>
-        <Z>5</Z>
+        <Z>15</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -775,9 +755,9 @@
       <Name>entity634081376361093750</Name>
       <TypeName>DreamWorld.Entities.Global.HelpTubes</TypeName>
       <Position>
-        <X>110</X>
+        <X>80</X>
         <Y>30</Y>
-        <Z>-120</Z>
+        <Z>-60</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -795,9 +775,9 @@
       <Name>puzzleSign02</Name>
       <TypeName>DreamWorld.Entities.Global.HelpSign</TypeName>
       <Position>
-        <X>110</X>
+        <X>80</X>
         <Y>33</Y>
-        <Z>-120</Z>
+        <Z>-60</Z>
       </Position>
       <Rotation>
         <X>0</X>

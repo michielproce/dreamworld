@@ -37,11 +37,11 @@
       <Position>
         <X>10</X>
         <Y>4</Y>
-        <Z>0</Z>
+        <Z>-30</Z>
       </Position>
       <Rotation>
         <X>0</X>
-        <Y>90</Y>
+        <Y>-45</Y>
         <Z>0</Z>
       </Rotation>
       <Scale>
@@ -57,11 +57,11 @@
       <Position>
         <X>10</X>
         <Y>6</Y>
-        <Z>0</Z>
+        <Z>-30</Z>
       </Position>
       <Rotation>
         <X>0</X>
-        <Y>-90</Y>
+        <Y>-45</Y>
         <Z>-12</Z>
       </Rotation>
       <Scale>
@@ -89,7 +89,7 @@
         <Y>30</Y>
         <Z>3</Z>
       </Scale>
-      <Group>1</Group>
+      <Group>0</Group>
     </SpawnInformation>
     <SpawnInformation>
       <Name>entity634079172173906250</Name>
@@ -110,66 +110,6 @@
         <Z>3</Z>
       </Scale>
       <Group>1</Group>
-    </SpawnInformation>
-    <SpawnInformation>
-      <Name>entity634079178761718750</Name>
-      <TypeName>DreamWorld.Entities.GroupCenter</TypeName>
-      <Position>
-        <X>0</X>
-        <Y>10</Y>
-        <Z>-70</Z>
-      </Position>
-      <Rotation>
-        <X>0</X>
-        <Y>0</Y>
-        <Z>0</Z>
-      </Rotation>
-      <Scale>
-        <X>1</X>
-        <Y>1</Y>
-        <Z>1</Z>
-      </Scale>
-      <Group>1</Group>
-    </SpawnInformation>
-    <SpawnInformation>
-      <Name>entity634079179183593750</Name>
-      <TypeName>DreamWorld.Entities.Global.HelpTubes</TypeName>
-      <Position>
-        <X>10</X>
-        <Y>4</Y>
-        <Z>-40</Z>
-      </Position>
-      <Rotation>
-        <X>0</X>
-        <Y>-60</Y>
-        <Z>0</Z>
-      </Rotation>
-      <Scale>
-        <X>0.25</X>
-        <Y>0.25</Y>
-        <Z>0.25</Z>
-      </Scale>
-      <Group>0</Group>
-    </SpawnInformation>
-    <SpawnInformation>
-      <Name>tutorialSign02</Name>
-      <TypeName>DreamWorld.Entities.Global.HelpSign</TypeName>
-      <Position>
-        <X>10</X>
-        <Y>6</Y>
-        <Z>-40</Z>
-      </Position>
-      <Rotation>
-        <X>0</X>
-        <Y>-60</Y>
-        <Z>15</Z>
-      </Rotation>
-      <Scale>
-        <X>0.25</X>
-        <Y>0.25</Y>
-        <Z>0.25</Z>
-      </Scale>
-      <Group>0</Group>
     </SpawnInformation>
     <SpawnInformation>
       <Name>entity634079181616406250</Name>
@@ -212,52 +152,12 @@
       <Group>0</Group>
     </SpawnInformation>
     <SpawnInformation>
-      <Name>entity634079189702656250</Name>
-      <TypeName>DreamWorld.Entities.GroupCenter</TypeName>
-      <Position>
-        <X>-130</X>
-        <Y>5</Y>
-        <Z>-110</Z>
-      </Position>
-      <Rotation>
-        <X>0</X>
-        <Y>0</Y>
-        <Z>0</Z>
-      </Rotation>
-      <Scale>
-        <X>1</X>
-        <Y>1</Y>
-        <Z>1</Z>
-      </Scale>
-      <Group>2</Group>
-    </SpawnInformation>
-    <SpawnInformation>
-      <Name>entity634079192593437500</Name>
-      <TypeName>DreamWorld.Levels.PuzzleLevel1.Entities.Platform</TypeName>
-      <Position>
-        <X>-60</X>
-        <Y>0</Y>
-        <Z>-110</Z>
-      </Position>
-      <Rotation>
-        <X>0</X>
-        <Y>0</Y>
-        <Z>0</Z>
-      </Rotation>
-      <Scale>
-        <X>1</X>
-        <Y>1</Y>
-        <Z>1</Z>
-      </Scale>
-      <Group>2</Group>
-    </SpawnInformation>
-    <SpawnInformation>
       <Name>entity634079193429375000</Name>
       <TypeName>DreamWorld.Levels.PuzzleLevel1.Entities.Platform</TypeName>
       <Position>
-        <X>70</X>
+        <X>110</X>
         <Y>0</Y>
-        <Z>-100</Z>
+        <Z>-140</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -275,9 +175,9 @@
       <Name>entity634079193644218750</Name>
       <TypeName>DreamWorld.Levels.PuzzleLevel1.Entities.Platform</TypeName>
       <Position>
-        <X>70</X>
+        <X>80</X>
         <Y>0</Y>
-        <Z>-130</Z>
+        <Z>-140</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -295,9 +195,9 @@
       <Name>entity634079194987656250</Name>
       <TypeName>DreamWorld.Entities.GroupCenter</TypeName>
       <Position>
-        <X>60</X>
+        <X>110</X>
         <Y>0</Y>
-        <Z>-100</Z>
+        <Z>-120</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -315,9 +215,9 @@
       <Name>entity634079195269375000</Name>
       <TypeName>DreamWorld.Entities.GroupCenter</TypeName>
       <Position>
-        <X>60</X>
+        <X>80</X>
         <Y>0</Y>
-        <Z>-130</Z>
+        <Z>-120</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -335,13 +235,13 @@
       <Name>entity634079195807812500</Name>
       <TypeName>DreamWorld.Entities.Global.HelpTubes</TypeName>
       <Position>
-        <X>13</X>
+        <X>35</X>
         <Y>4</Y>
-        <Z>-100</Z>
+        <Z>-185</Z>
       </Position>
       <Rotation>
         <X>0</X>
-        <Y>-90</Y>
+        <Y>0</Y>
         <Z>0</Z>
       </Rotation>
       <Scale>
@@ -355,13 +255,13 @@
       <Name>tutorialSign03</Name>
       <TypeName>DreamWorld.Entities.Global.HelpSign</TypeName>
       <Position>
-        <X>13</X>
+        <X>35</X>
         <Y>7</Y>
-        <Z>-100</Z>
+        <Z>-185</Z>
       </Position>
       <Rotation>
         <X>0</X>
-        <Y>-90</Y>
+        <Y>0</Y>
         <Z>15</Z>
       </Rotation>
       <Scale>
@@ -390,126 +290,6 @@
         <Z>4</Z>
       </Scale>
       <Group>0</Group>
-    </SpawnInformation>
-    <SpawnInformation>
-      <Name>entity634079200666562500</Name>
-      <TypeName>DreamWorld.Entities.Global.HelpTubes</TypeName>
-      <Position>
-        <X>30</X>
-        <Y>4</Y>
-        <Z>-185</Z>
-      </Position>
-      <Rotation>
-        <X>0</X>
-        <Y>0</Y>
-        <Z>0</Z>
-      </Rotation>
-      <Scale>
-        <X>0.25</X>
-        <Y>0.25</Y>
-        <Z>0.25</Z>
-      </Scale>
-      <Group>0</Group>
-    </SpawnInformation>
-    <SpawnInformation>
-      <Name>tutorialSign04</Name>
-      <TypeName>DreamWorld.Entities.Global.HelpSign</TypeName>
-      <Position>
-        <X>30</X>
-        <Y>6</Y>
-        <Z>-185</Z>
-      </Position>
-      <Rotation>
-        <X>0</X>
-        <Y>180</Y>
-        <Z>15</Z>
-      </Rotation>
-      <Scale>
-        <X>0.25</X>
-        <Y>0.25</Y>
-        <Z>0.25</Z>
-      </Scale>
-      <Group>0</Group>
-    </SpawnInformation>
-    <SpawnInformation>
-      <Name>entity634079201676875000</Name>
-      <TypeName>DreamWorld.Entities.Global.HelpTubes</TypeName>
-      <Position>
-        <X>60</X>
-        <Y>4</Y>
-        <Z>-185</Z>
-      </Position>
-      <Rotation>
-        <X>0</X>
-        <Y>0</Y>
-        <Z>0</Z>
-      </Rotation>
-      <Scale>
-        <X>0.25</X>
-        <Y>0.25</Y>
-        <Z>0.25</Z>
-      </Scale>
-      <Group>0</Group>
-    </SpawnInformation>
-    <SpawnInformation>
-      <Name>tutorialSign05</Name>
-      <TypeName>DreamWorld.Entities.Global.HelpSign</TypeName>
-      <Position>
-        <X>60</X>
-        <Y>7</Y>
-        <Z>-185</Z>
-      </Position>
-      <Rotation>
-        <X>0</X>
-        <Y>180</Y>
-        <Z>-15</Z>
-      </Rotation>
-      <Scale>
-        <X>0.25</X>
-        <Y>0.25</Y>
-        <Z>0.25</Z>
-      </Scale>
-      <Group>0</Group>
-    </SpawnInformation>
-    <SpawnInformation>
-      <Name>entity634079202437187500</Name>
-      <TypeName>DreamWorld.Levels.PuzzleLevel1.Entities.Platform</TypeName>
-      <Position>
-        <X>110</X>
-        <Y>8</Y>
-        <Z>-195</Z>
-      </Position>
-      <Rotation>
-        <X>0</X>
-        <Y>0</Y>
-        <Z>0</Z>
-      </Rotation>
-      <Scale>
-        <X>1</X>
-        <Y>1</Y>
-        <Z>1</Z>
-      </Scale>
-      <Group>5</Group>
-    </SpawnInformation>
-    <SpawnInformation>
-      <Name>entity634079202779687500</Name>
-      <TypeName>DreamWorld.Entities.GroupCenter</TypeName>
-      <Position>
-        <X>110</X>
-        <Y>15</Y>
-        <Z>-195</Z>
-      </Position>
-      <Rotation>
-        <X>0</X>
-        <Y>0</Y>
-        <Z>0</Z>
-      </Rotation>
-      <Scale>
-        <X>1</X>
-        <Y>1</Y>
-        <Z>1</Z>
-      </Scale>
-      <Group>5</Group>
     </SpawnInformation>
     <SpawnInformation>
       <Name>entity634079203631250000</Name>
@@ -835,7 +615,7 @@
       <Name>entity634079218172968750</Name>
       <TypeName>DreamWorld.Levels.PuzzleLevel1.Entities.Platform</TypeName>
       <Position>
-        <X>355</X>
+        <X>405</X>
         <Y>2</Y>
         <Z>-120</Z>
       </Position>
@@ -1417,9 +1197,9 @@
     </GroupColorInformation>
     <GroupColorInformation>
       <ID>8</ID>
-      <R>0</R>
-      <G>0</G>
-      <B>0</B>
+      <R>255</R>
+      <G>20</G>
+      <B>147</B>
     </GroupColorInformation>
     <GroupColorInformation>
       <ID>9</ID>
