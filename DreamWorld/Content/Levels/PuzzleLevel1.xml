@@ -35,7 +35,7 @@
       <Name>startPlatform</Name>
       <TypeName>DreamWorld.Levels.PuzzleLevel1.Entities.Platform</TypeName>
       <Position>
-        <X>0</X>
+        <X>-10</X>
         <Y>25</Y>
         <Z>20</Z>
       </Position>
@@ -45,7 +45,7 @@
         <Z>0</Z>
       </Rotation>
       <Scale>
-        <X>1.8</X>
+        <X>5.8</X>
         <Y>2</Y>
         <Z>1.8</Z>
       </Scale>
@@ -710,6 +710,106 @@
         <Z>1</Z>
       </Scale>
       <Group>13</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity634081374020156250</Name>
+      <TypeName>DreamWorld.Levels.PuzzleLevel1.Entities.Platform</TypeName>
+      <Position>
+        <X>-40</X>
+        <Y>25</Y>
+        <Z>20</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>1.8</X>
+        <Y>2</Y>
+        <Z>3.8</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity634081374374218750</Name>
+      <TypeName>DreamWorld.Entities.Global.HelpTubes</TypeName>
+      <Position>
+        <X>-40</X>
+        <Y>29</Y>
+        <Z>5</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>0.25</X>
+        <Y>0.25</Y>
+        <Z>0.25</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>puzzleSign01</Name>
+      <TypeName>DreamWorld.Entities.Global.HelpSign</TypeName>
+      <Position>
+        <X>-40</X>
+        <Y>31</Y>
+        <Z>5</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>15</Z>
+      </Rotation>
+      <Scale>
+        <X>0.25</X>
+        <Y>0.25</Y>
+        <Z>0.25</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity634081376361093750</Name>
+      <TypeName>DreamWorld.Entities.Global.HelpTubes</TypeName>
+      <Position>
+        <X>110</X>
+        <Y>30</Y>
+        <Z>-120</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>0.25</X>
+        <Y>0.25</Y>
+        <Z>0.25</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>puzzleSign02</Name>
+      <TypeName>DreamWorld.Entities.Global.HelpSign</TypeName>
+      <Position>
+        <X>110</X>
+        <Y>33</Y>
+        <Z>-120</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>-13</Z>
+      </Rotation>
+      <Scale>
+        <X>0.25</X>
+        <Y>0.25</Y>
+        <Z>0.25</Z>
+      </Scale>
+      <Group>0</Group>
     </SpawnInformation>
   </Spawns>
   <GroupColors>

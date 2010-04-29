@@ -66,5 +66,13 @@ Good luck, visitor!</Text>
       <Entity>tutorialSign11</Entity>
       <Text>Awesome, you did it! With the basics of the mechanics mastered, you are now ready to face the puzzles representing the eight Development Goals. And just in time, the potion is beginning to wear out. Good luck! </Text>
     </HelpItem>
+	<HelpItem>
+      <Entity>puzzleSign01</Entity>
+      <Text>Welcome back, Tubbles. I see you have chosen to enter the Dreamworld from the Unstable Stable, so the problem for this puzzle is Hunger. As you know, the stable has collapsed and the villagers have no viable source of food. If you're able to solve this puzzle, it's real world effect will be a rebuild stable and a foodsupply for the villagers. Move to the closest meadow to read how you can solve this puzzle.</Text>
+    </HelpItem>
+	<HelpItem>
+      <Entity>puzzleSign02</Entity>
+      <Text>As told, this puzzle is about food. To illustrate this, there are two pairs of cows in this puzzle. These cows can be selected and rotated just like you would with groups. However, the cows have a little twist on the usual mechanic. As you may have noticed, they have no group center! This is because they are eachothers center. Select one cow and it's pairing cow will become its center. Select the other cow and the first cow will become its center. Your goal is to get both pair of cows from this meadow to the meadow on the other side. Oh, and by the way: the cows are connected to their pairs through an invisible rope. They cannot be moved further apart or closer to eachother as they are right now, and if one cow falls over the edge, it will take its pair with him and both will be respawned in the meadow. Good luck! </Text>
+    </HelpItem>
   </Items>
 </Help>
