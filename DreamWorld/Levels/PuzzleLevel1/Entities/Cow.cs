@@ -9,6 +9,7 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
     {
         private const float gravity = .05f;
         private float velocity;
+        private static Random random = new Random();
 
         public Vector3 startPosition = Vector3.Zero;
 
@@ -20,9 +21,9 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
         public override void Initialize()
         {
             Animation.InitialClip = "Idle";
+            Animation.Paused = true;
             
             base.Initialize();
-
             Body.Immovable = false;
             Respawn();
         }
@@ -36,8 +37,13 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
 
         public override void Update(GameTime gameTime)
         {
-            
             base.Update(gameTime);
+
+            if (Animation.Paused)
+            {
+                if (random.Next(360) == 1)
+                    Animation.Paused = false;
+            }
 
             float distance = Vector3.Distance(Body.Position, Group.Center.Body.Position);
             if (!IsFalling && (!(Group.Center is Cow) || !((Cow) Group.Center).IsFalling) &&
@@ -51,10 +57,14 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
                 Group.Center.Body.Position -= offset;
             }
 
-            if(Group.IsRotating || IsFalling)
+            if (Group.IsRotating || IsFalling)
                 Animation.StartClip("Flipping");
             else
+            {
+                if (!Animation.CurrentClip.Equals("Idle"))
+                    Animation.ResetClip();
                 Animation.StartClip("Idle");
+            }
 
             if (!Group.IsRotating && !Group.IsColliding)
             {
@@ -69,6 +79,7 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
 
         public void Respawn()
         {
+            Animation.Paused = true;
             velocity = 0;
             Body.MoveTo(startPosition, Matrix.Identity);
         }

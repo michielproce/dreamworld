@@ -52,6 +52,11 @@ namespace DreamWorld.Entities
             }
         }
 
+        public void ResetClip()
+        {
+            AdvanceAnimation(TimeSpan.Zero);
+        }
+
         public Matrix[] SkinTransforms
         {
             get
