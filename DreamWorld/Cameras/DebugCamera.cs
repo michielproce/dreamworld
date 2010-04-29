@@ -15,9 +15,6 @@ namespace DreamWorld.Cameras
     {        
 
         private SpriteBatch spriteBatch;
-        private bool reticleVisible;
-        private Texture2D reticleTexture;
-        private Vector2 reticlePosition;
         private bool mouseLook = true;
 
         public const float MaxPitch = MathHelper.PiOver2 * .99f; // Matrix.createLookAt gets confused with maxPitch > 90 degrees
@@ -29,7 +26,6 @@ namespace DreamWorld.Cameras
 
         public DebugCamera()
         {
-            reticleVisible = true;
             Form = new EntityForm(GameScreen.Instance.Level is PuzzleLevel);            
         }
 
@@ -41,10 +37,7 @@ namespace DreamWorld.Cameras
                1.0f,
                10000.0f);
             
-            spriteBatch = new SpriteBatch(inputManager.Game.GraphicsDevice);                        
-            reticleTexture = GameScreen.Instance.Content.Load<Texture2D>(@"Textures\Debug\Reticle");
-            reticlePosition = new Vector2(inputManager.Game.GraphicsDevice.Viewport.Width / 2 - reticleTexture.Width / 2, 
-                inputManager.Game.GraphicsDevice.Viewport.Height / 2 - reticleTexture.Height / 2);
+            spriteBatch = new SpriteBatch(inputManager.Game.GraphicsDevice);
 
             base.Initialize();
         }
@@ -127,9 +120,6 @@ namespace DreamWorld.Cameras
                 ShowForm(placeHolder);
             }
 
-            if (inputManager.Debug.ToggleDebugCameraReticle)
-                reticleVisible = !reticleVisible;
-
             base.Update(gameTime);
         }
 
@@ -181,16 +171,6 @@ namespace DreamWorld.Cameras
             get
             {
                 return Vector3.Normalize(lookAt - Position);
-            }
-        }
-
-        public void DrawReticle()
-        {
-            if (reticleVisible)
-            {
-                spriteBatch.Begin();
-                spriteBatch.Draw(reticleTexture, reticlePosition, Color.White);
-                spriteBatch.End();
             }
         }
 

@@ -25,9 +25,13 @@ namespace DreamWorld.ScreenManagement.Screens
         public DreamWorldPhysicsSystem PhysicsSystem { get; private set; }
         public HelpSystem HelpSystem { get; private set; }
 
+        private bool crosshairVisible;
+        private Texture2D crosshairTexture;
+        private Vector2 crosshairPosition;
+
         public GameScreen(Level level)
         {
-            Instance = this;            
+            Instance = this;
             LoadingScreen = new LoadingScreen(level.LoadingColor);
             State = ScreenState.Hidden;
             
@@ -54,6 +58,11 @@ namespace DreamWorld.ScreenManagement.Screens
             Camera.Initialize();
 
             HelpSystem = new HelpSystem(this);
+
+            crosshairVisible = Level is PuzzleLevel;
+            crosshairTexture = Content.Load<Texture2D>(@"Textures\Interface\crosshair");
+            crosshairPosition = new Vector2(GraphicsDevice.Viewport.Width / 2 - crosshairTexture.Width / 2,
+                GraphicsDevice.Viewport.Height / 2 - crosshairTexture.Height / 2);
             
             LoadingScreen.Loaded = true;
         }
@@ -73,14 +82,18 @@ namespace DreamWorld.ScreenManagement.Screens
                     {
                         if (Camera is DebugCamera)
                         {
+                            crosshairVisible = Level is PuzzleLevel;
                             ((DebugCamera)Camera).DisposeForm();
                             Camera = new ThirdPersonCamera();                            
                         }
-                        else
+                        else 
+                        {
+                            crosshairVisible = true;
                             Camera = new DebugCamera { Position = Camera.Position };
+                        }
                         Camera.Initialize();
                     }
-                #endif
+#endif
 
                 float timeStep = (float)gameTime.ElapsedGameTime.Ticks / TimeSpan.TicksPerSecond;
                 DreamWorldPhysicsSystem.CurrentPhysicsSystem.Integrate(timeStep);
@@ -126,15 +139,12 @@ namespace DreamWorld.ScreenManagement.Screens
             Level.Draw(gameTime);        
             HelpSystem.Draw(gameTime);
 
-            #if (DEBUG && !XBOX)
-            DebugCamera debugCamera = Camera as DebugCamera;
-            if (debugCamera != null)
+            if (crosshairVisible)
             {
-                debugCamera.DrawReticle();
-                GraphicsDevice.RenderState.DepthBufferEnable = true;
+                ScreenManager.SpriteBatch.Begin();
+                ScreenManager.SpriteBatch.Draw(crosshairTexture, crosshairPosition, Color.White);
+                ScreenManager.SpriteBatch.End();
             }
-                debugDrawer.Draw(gameTime);
-            #endif
                         
             base.Draw(gameTime);
         }
