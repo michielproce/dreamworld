@@ -80,11 +80,9 @@ namespace DreamWorld.Levels.PuzzleLevel1
                 return true;
             #endif
 
-            return false;
-
             foreach (Cow cow in _cows)
             {
-                if(cow.Body.Position.Z < 410 || cow.Group.IsRotating || !cow.Group.IsColliding)
+                if(cow.Body.Position.Z < 260 || cow.Group.IsRotating || !cow.Group.IsColliding)
                     return false;
             }
             return true;
