@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using DreamWorld.ScreenManagement;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace DreamWorld.Util
@@ -26,6 +28,15 @@ namespace DreamWorld.Util
                 }
             }
             return string.Join("\n", lines);
+        }
+        
+        public static string CutLine(Viewport vp, SpriteFont font, string line, float amount)
+        {
+            float charWidth = font.MeasureString(line).X / line.Length; ;
+            float maxWidth = vp.Width * amount;
+            int maxChars = (int)Math.Floor(maxWidth / charWidth);
+
+            return StringUtil.CutLine(line, maxChars);
         }
         
         public static string ParsePlatform(string text)

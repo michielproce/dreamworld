@@ -31,10 +31,7 @@ namespace DreamWorld.ScreenManagement.Screens
             
             // Cut the lines
             Viewport vp = ScreenManager.GraphicsDevice.Viewport;
-            float charWidth = font.MeasureString(text).X / text.Length;;
-            float maxWidth = vp.Width - 200;
-            int maxChars = (int) Math.Floor(maxWidth / charWidth);
-            text = StringUtil.CutLine(text, maxChars);
+            text = StringUtil.CutLine(vp, font, text, 0.8f);
             
             // Center the text
             Vector2 size = font.MeasureString(text);

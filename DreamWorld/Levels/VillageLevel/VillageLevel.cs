@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using DreamWorld.Audio;
 using DreamWorld.Cameras;
 using DreamWorld.Entities;
 using DreamWorld.Levels.VillageLevel.Entities;
 using DreamWorld.Rendering.Postprocessing;
+using DreamWorld.ScreenManagement;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 
 namespace DreamWorld.Levels.VillageLevel
@@ -74,15 +77,17 @@ namespace DreamWorld.Levels.VillageLevel
                         case Stage.FINISHED_TUTORIAL:
                             if (entity.Value is Stable ||
                                 entity.Value is CowDummy)
-                                toRemove.Add(entity.Value);
+                                toRemove.Add(entity.Value);                                                           
 
                             if(entity.Value is StableTrashed)
-                                ((StableTrashed) entity.Value).IsPortalToPuzzle = true;
+                                ((StableTrashed) entity.Value).IsPortalToPuzzle = true;                            
                             break;
 
                         case Stage.FINISHED_PUZZLE1:
                             if (entity.Value is StableTrashed)
                                 toRemove.Add(entity.Value);
+
+                            GameScreen.VoiceOver = new VoiceOver(GameScreen.Content.Load<SoundEffect>(@"Audio\Voice\52 done_better"), "Tubbles, you have done even better then I had expected. Just arrived and already solved the problem. You better take a look outside and see what change you made to the village.");
                             break;
                     }
                 }

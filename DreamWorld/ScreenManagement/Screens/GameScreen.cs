@@ -1,4 +1,5 @@
 using System;
+using DreamWorld.Audio;
 using DreamWorld.Cameras;
 using DreamWorld.Entities;
 using DreamWorld.Helpers.Renderers;
@@ -6,9 +7,11 @@ using DreamWorld.InputManagement;
 using DreamWorld.InputManagement.Types;
 using DreamWorld.Interface.Help;
 using DreamWorld.Levels;
+using DreamWorld.Util;
 using JigLibX.Collision;
 using JigLibX.Physics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 
@@ -24,10 +27,14 @@ namespace DreamWorld.ScreenManagement.Screens
         public DebugDrawer debugDrawer;
         public DreamWorldPhysicsSystem PhysicsSystem { get; private set; }
         public HelpSystem HelpSystem { get; private set; }
+        
+        public VoiceOver VoiceOver { get; set; }
 
         private bool crosshairVisible;
         private Texture2D crosshairTexture;
         private Vector2 crosshairPosition;
+
+        private SpriteFont subtitleFont;
 
         public GameScreen(Level level)
         {
@@ -63,6 +70,8 @@ namespace DreamWorld.ScreenManagement.Screens
             crosshairTexture = Content.Load<Texture2D>(@"Textures\Interface\crosshair");
             crosshairPosition = new Vector2(GraphicsDevice.Viewport.Width / 2 - crosshairTexture.Width / 2,
                 GraphicsDevice.Viewport.Height / 2 - crosshairTexture.Height / 2);
+            
+            subtitleFont = Content.Load<SpriteFont>(@"Fonts\subtitle");
             
             LoadingScreen.Loaded = true;
         }
@@ -138,6 +147,28 @@ namespace DreamWorld.ScreenManagement.Screens
             ScreenManager.GraphicsDevice.Clear(Color.White);
             Level.Draw(gameTime);        
             HelpSystem.Draw(gameTime);
+            
+            if(VoiceOver != null)
+            {
+                if (!VoiceOver.Started)
+                {
+                    VoiceOver.Audio.Play();
+                    VoiceOver.Started = true;
+                }
+
+                if(VoiceOver.Audio.State == SoundState.Playing && ((DreamWorldGame) ScreenManager.Game).Config.Subtitles)
+                {
+                    Viewport vp = GraphicsDevice.Viewport;
+                    string text = text = StringUtil.CutLine(vp, subtitleFont, VoiceOver.Text, 0.9f);
+                    Vector2 textSize = subtitleFont.MeasureString(text);
+                    Vector2 textPosition = new Vector2(vp.Width / 2f - textSize.X / 2f, vp.Height - textSize.Y - 30f);
+
+                    ScreenManager.SpriteBatch.Begin();
+                    ScreenManager.SpriteBatch.DrawString(subtitleFont, text, textPosition + new Vector2(2), Color.Black);
+                    ScreenManager.SpriteBatch.DrawString(subtitleFont, text, textPosition, Color.White);
+                    ScreenManager.SpriteBatch.End();
+                }
+            }
 
             if (crosshairVisible)
             {
