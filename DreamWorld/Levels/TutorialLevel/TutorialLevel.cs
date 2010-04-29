@@ -30,7 +30,7 @@ namespace DreamWorld.Levels.TutorialLevel
         {
             MediaPlayer.Play(GameScreen.Content.Load<Song>(@"Audio\Music\Tutorial"));
 
-            Skybox = new Skybox("Puzzle") { Name = "Skybox" };
+            Skybox = new Skybox("Tutorial") { Name = "Skybox" };
 
             base.Initialize();
 

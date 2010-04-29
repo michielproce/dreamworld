@@ -802,6 +802,12 @@
       <Importer>XImporter</Importer>
       <Processor>DefaultModelProcessor</Processor>
     </Compile>
+    <Compile Include="Models\Skyboxes\Tutorial.x">
+      <Name>Tutorial</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+      <ProcessorParameters_EffectFile>Skybox.fx</ProcessorParameters_EffectFile>
+    </Compile>
     <None Include="Texts\Help.xml">
       <Name>Help</Name>
       <Importer>EffectImporter</Importer>
