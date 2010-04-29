@@ -16,7 +16,7 @@ namespace DreamWorld.Rendering.Particles.Systems
         {
             settings.TextureName = "Flare";
 
-            settings.MaxParticles = 8;
+            settings.MaxParticles = 20;
 
             settings.Duration = TimeSpan.FromSeconds(1.5f);
 

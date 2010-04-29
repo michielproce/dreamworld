@@ -1,4 +1,4 @@
-﻿using System;
+﻿using DreamWorld.Levels.PuzzleLevel1.Entities;
 using DreamWorld.Rendering.Particles.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -34,7 +34,9 @@ namespace DreamWorld.Entities
 
         public override void Update(GameTime gameTime)
         {
-            if (frames++ % 15 == 0)
+            int framesPerParticle = this is Cow && Group.IsRotating ? 5 : 15;
+
+            if (frames++ % framesPerParticle == 0)
                 particleSystem.AddParticle(Body.Position, Vector3.Zero);
             base.Update(gameTime);
         }
