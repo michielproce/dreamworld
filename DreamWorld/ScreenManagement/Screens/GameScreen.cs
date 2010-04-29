@@ -159,7 +159,7 @@ namespace DreamWorld.ScreenManagement.Screens
                 if(VoiceOver.Audio.State == SoundState.Playing && ((DreamWorldGame) ScreenManager.Game).Config.Subtitles)
                 {
                     Viewport vp = GraphicsDevice.Viewport;
-                    string text = text = StringUtil.CutLine(vp, subtitleFont, VoiceOver.Text, 0.9f);
+                    string text = StringUtil.CutLine(vp, subtitleFont, VoiceOver.Text, 0.9f);
                     Vector2 textSize = subtitleFont.MeasureString(text);
                     Vector2 textPosition = new Vector2(vp.Width / 2f - textSize.X / 2f, vp.Height - textSize.Y - 30f);
 
