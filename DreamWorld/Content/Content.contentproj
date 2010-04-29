@@ -787,6 +787,21 @@
       <Importer>XImporter</Importer>
       <Processor>SkinnedModelProcessor</Processor>
     </Compile>
+    <Compile Include="Models\Village\FenceLeft.X">
+      <Name>FenceLeft</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Village\FenceMid.X">
+      <Name>FenceMid</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Village\FenceRight.X">
+      <Name>FenceRight</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
     <None Include="Texts\Help.xml">
       <Name>Help</Name>
       <Importer>EffectImporter</Importer>

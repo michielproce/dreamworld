@@ -145,6 +145,9 @@
     <Compile Include="Levels\VillageLevel\Entities\Can.cs" />
     <Compile Include="Levels\VillageLevel\Entities\CowDummy.cs" />
     <Compile Include="Levels\VillageLevel\Entities\Fence.cs" />
+    <Compile Include="Levels\VillageLevel\Entities\FenceLeft.cs" />
+    <Compile Include="Levels\VillageLevel\Entities\FenceMid.cs" />
+    <Compile Include="Levels\VillageLevel\Entities\FenceRight.cs" />
     <Compile Include="Levels\VillageLevel\Entities\Skull.cs" />
     <Compile Include="Levels\VillageLevel\Entities\Stable.cs" />
     <Compile Include="Levels\VillageLevel\Entities\Crate.cs" />
