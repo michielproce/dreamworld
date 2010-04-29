@@ -6,6 +6,7 @@ using DreamWorld.Rendering.Postprocessing;
 using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
 namespace DreamWorld.Levels.TutorialLevel
@@ -78,6 +79,10 @@ namespace DreamWorld.Levels.TutorialLevel
 
         protected override bool GameIsWon()
         {
+#if(DEBUG)
+            if (GameScreen.InputManager.Keyboard.NewlyPressed(Keys.OemTilde))
+                return true;
+#endif
             // The game is won when the player is done reading the last sign.
             return readingLastSign && GameScreen.HelpSystem.Helper != null && GameScreen.HelpSystem.HintVisible;
         }
@@ -86,7 +91,7 @@ namespace DreamWorld.Levels.TutorialLevel
         {
             if (!GameScreen.IsExiting)
             {
-                GameScreen.ScreenManager.AddScreen(new GameScreen(new VillageLevel.VillageLevel()));
+                GameScreen.ScreenManager.AddScreen(new GameScreen(new VillageLevel.VillageLevel(VillageLevel.VillageLevel.Stage.FINISHED_TUTORIAL)));
                 GameScreen.ExitScreen();
             }
         }

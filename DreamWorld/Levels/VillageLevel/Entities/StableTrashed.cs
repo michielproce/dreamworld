@@ -1,5 +1,8 @@
 ﻿using DreamWorld.Entities;
+using DreamWorld.Interface.Help;
 using DreamWorld.ScreenManagement.Screens;
+using DreamWorld.ScreenManagement.Screens.Cutscenes;
+using DreamWorld.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -8,10 +11,30 @@ namespace DreamWorld.Levels.VillageLevel.Entities
     public class StableTrashed : Entity
     {
         public static bool ListInEditor = true;
+
+        public bool IsPortalToPuzzle { get; set; }
+
         protected override void LoadContent()
         {
             Model = GameScreen.Content.Load<Model>(@"Models\Village\StableTrashed");
             base.LoadContent();
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (IsPortalToPuzzle && Vector3.Distance(Level.Player.Body.Position, Body.Position) <= Help.HELP_DISTANCE * 30f)
+            {
+                GameScreen.HelpSystem.ShowCustomHint(
+                    StringUtil.ParsePlatform("{Click the left mouse button|Press B} to go to the DreamWorld."), this);
+
+                if (GameScreen.InputManager.Player.ApplyRotation)
+                {
+                    GameScreen.ExitScreen();
+                    GameScreen.ScreenManager.AddScreen(new GameScreen(new PuzzleLevel1.PuzzleLevel1()));
+                }
+            }
+
+            base.Update(gameTime);
         }
 
         /// <summary>

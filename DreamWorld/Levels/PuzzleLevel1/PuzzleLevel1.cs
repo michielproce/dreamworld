@@ -92,7 +92,7 @@ namespace DreamWorld.Levels.PuzzleLevel1
 
         protected override void VictoryEventHandler()
         {
-            Level villageLevel = new VillageLevel.VillageLevel{ LevelsCompleted = 1 };
+            Level villageLevel = new VillageLevel.VillageLevel(VillageLevel.VillageLevel.Stage.FINISHED_PUZZLE1);
             GameScreen.ScreenManager.AddScreen(new GameScreen(villageLevel));
             GameScreen.ExitScreen();
         }

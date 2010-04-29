@@ -11,13 +11,25 @@ namespace DreamWorld.Levels.VillageLevel
 {
     public class VillageLevel : Level
     {
-        public int LevelsCompleted;
+        public enum Stage
+        {
+            START,
+            FINISHED_TUTORIAL,
+            FINISHED_PUZZLE1,
+        }
+
+        private Stage currentStage;
 
         public float maximumWalkingHeight { get; private set; }
 
         public override string LevelInformationFileName
         {
             get { return "Village.xml"; }
+        }
+
+        public VillageLevel(Stage stage)
+        {
+            currentStage = stage;
         }
 
         public override void InitBloom(ref Bloom bloom)
@@ -46,19 +58,34 @@ namespace DreamWorld.Levels.VillageLevel
 
             List<Entity> toRemove = new List<Entity>();
 
-            if (LevelsCompleted < 1)
+            foreach (KeyValuePair<int, Group> group in Groups)
             {
-                foreach (KeyValuePair<int, Group> group in Groups)
-                    foreach (KeyValuePair<string, Entity> entity in group.Value.Entities)
-                        if (entity.Value is Stable || entity.Value is CowDummy)
-                            toRemove.Add(entity.Value);
-            } 
-            else
-            {
-                foreach (KeyValuePair<int, Group> group in Groups)
-                    foreach (KeyValuePair<string, Entity> entity in group.Value.Entities)
-                        if (entity.Value is StableTrashed)
-                            toRemove.Add(entity.Value);
+                foreach (KeyValuePair<string, Entity> entity in group.Value.Entities)
+                {
+
+                    switch (currentStage)
+                    {
+                        case Stage.START:
+                            if (entity.Value is Stable ||
+                                entity.Value is CowDummy)
+                                toRemove.Add(entity.Value);
+                            break;
+
+                        case Stage.FINISHED_TUTORIAL:
+                            if (entity.Value is Stable ||
+                                entity.Value is CowDummy)
+                                toRemove.Add(entity.Value);
+
+                            if(entity.Value is StableTrashed)
+                                ((StableTrashed) entity.Value).IsPortalToPuzzle = true;
+                            break;
+
+                        case Stage.FINISHED_PUZZLE1:
+                            if (entity.Value is StableTrashed)
+                                toRemove.Add(entity.Value);
+                            break;
+                    }
+                }
             }
 
             foreach (Entity entity in toRemove)

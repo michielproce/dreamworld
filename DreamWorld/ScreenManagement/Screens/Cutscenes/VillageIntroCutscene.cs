@@ -16,7 +16,7 @@ namespace DreamWorld.ScreenManagement.Screens.Cutscenes
 
         protected override Screen LoadNextScreen()
         {
-            return new GameScreen(new VillageLevel());
+            return new GameScreen(new VillageLevel(VillageLevel.Stage.START));
         }
 
         protected override void LoadCutscene()
