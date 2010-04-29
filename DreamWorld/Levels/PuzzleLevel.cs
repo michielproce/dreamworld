@@ -84,7 +84,7 @@ namespace DreamWorld.Levels
             CollisionSkin skin;
             Vector3 pos, normal;
 
-            CollisionSkinPredicate1 pred = new IgnoreSkinPredicate(Player.Skin);
+            CollisionSkinPredicate1 pred = new IsSelectablePredicate(this);
             Segment seg = new Segment(camera.Position, direction);
 
             DreamWorldPhysicsSystem.CurrentPhysicsSystem.CollisionSystem.SegmentIntersect(out dist, out skin, out pos, out normal, seg, pred);
