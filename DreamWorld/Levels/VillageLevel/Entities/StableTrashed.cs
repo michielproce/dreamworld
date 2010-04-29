@@ -1,4 +1,5 @@
-﻿using DreamWorld.Entities;
+﻿using System;
+using DreamWorld.Entities;
 using DreamWorld.Interface.Help;
 using DreamWorld.ScreenManagement.Screens;
 using DreamWorld.ScreenManagement.Screens.Cutscenes;
@@ -22,8 +23,11 @@ namespace DreamWorld.Levels.VillageLevel.Entities
 
         public override void Update(GameTime gameTime)
         {
-            if (IsPortalToPuzzle && Vector3.Distance(Level.Player.Body.Position, Body.Position) <= Help.HELP_DISTANCE * 30f)
+            
+            if (IsPortalToPuzzle && (Vector3.Distance(Level.Player.Body.Position, Body.Position) <= 30f))
             {
+                Console.Out.WriteLine(Vector3.Distance(Level.Player.Body.Position, Body.Position));
+
                 GameScreen.HelpSystem.ShowCustomHint(
                     StringUtil.ParsePlatform("{Click the left mouse button|Press B} to go to the DreamWorld."), this);
 
