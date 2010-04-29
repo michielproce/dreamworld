@@ -50,7 +50,8 @@ namespace DreamWorld
 
             ScreenManager.AddScreen(new FloatingKoalaGamesIntroScreen());
 //            ScreenManager.AddScreen(new GameScreen(new VillageLevel(VillageLevel.Stage.START)));
-//            ScreenManager.AddScreen(new GameScreen(new VillageLevel{LevelsCompleted = 1}));
+//            ScreenManager.AddScreen(new GameScreen(new VillageLevel(VillageLevel.Stage.FINISHED_TUTORIAL)));
+//            ScreenManager.AddScreen(new GameScreen(new VillageLevel(VillageLevel.Stage.FINISHED_PUZZLE1)));            
 //            ScreenManager.AddScreen(new GameScreen(new TutorialLevel()));
 //            ScreenManager.AddScreen(new GameScreen(new PuzzleLevel1()));
         }
