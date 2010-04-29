@@ -355,7 +355,7 @@
       <Name>entity634080862160468750</Name>
       <TypeName>DreamWorld.Levels.PuzzleLevel1.Entities.Platform</TypeName>
       <Position>
-        <X>130</X>
+        <X>110</X>
         <Y>25</Y>
         <Z>240</Z>
       </Position>
@@ -377,7 +377,7 @@
       <Position>
         <X>180</X>
         <Y>25</Y>
-        <Z>220</Z>
+        <Z>240</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -395,9 +395,9 @@
       <Name>entity634080863390781250</Name>
       <TypeName>DreamWorld.Entities.GroupCenter</TypeName>
       <Position>
-        <X>180</X>
+        <X>160</X>
         <Y>25</Y>
-        <Z>240</Z>
+        <Z>220</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -517,7 +517,7 @@
       <Position>
         <X>200</X>
         <Y>25</Y>
-        <Z>100</Z>
+        <Z>110</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -527,7 +527,7 @@
       <Scale>
         <X>1.8</X>
         <Y>2</Y>
-        <Z>1.8</Z>
+        <Z>3.8</Z>
       </Scale>
       <Group>0</Group>
     </SpawnInformation>
@@ -535,9 +535,9 @@
       <Name>entity634080870661406250</Name>
       <TypeName>DreamWorld.Levels.PuzzleLevel1.Entities.Platform</TypeName>
       <Position>
-        <X>210</X>
+        <X>218</X>
         <Y>25</Y>
-        <Z>118</Z>
+        <Z>120</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -545,7 +545,7 @@
         <Z>0</Z>
       </Rotation>
       <Scale>
-        <X>3.8</X>
+        <X>1.8</X>
         <Y>2</Y>
         <Z>1.8</Z>
       </Scale>
@@ -596,8 +596,8 @@
       <TypeName>DreamWorld.Entities.GroupCenter</TypeName>
       <Position>
         <X>320</X>
-        <Y>25</Y>
-        <Z>160</Z>
+        <Y>27</Y>
+        <Z>180</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -617,7 +617,7 @@
       <Position>
         <X>322</X>
         <Y>75</Y>
-        <Z>160</Z>
+        <Z>180</Z>
       </Position>
       <Rotation>
         <X>0</X>
@@ -670,6 +670,46 @@
         <Z>1.8</Z>
       </Scale>
       <Group>11</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity634081352839843750</Name>
+      <TypeName>DreamWorld.Levels.PuzzleLevel1.Entities.Platform</TypeName>
+      <Position>
+        <X>240</X>
+        <Y>25</Y>
+        <Z>120</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>1.8</X>
+        <Y>2</Y>
+        <Z>1.8</Z>
+      </Scale>
+      <Group>13</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity634081353234843750</Name>
+      <TypeName>DreamWorld.Entities.GroupCenter</TypeName>
+      <Position>
+        <X>240</X>
+        <Y>30</Y>
+        <Z>120</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>1</X>
+        <Y>1</Y>
+        <Z>1</Z>
+      </Scale>
+      <Group>13</Group>
     </SpawnInformation>
   </Spawns>
   <GroupColors>
