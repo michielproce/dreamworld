@@ -72,7 +72,8 @@ Good luck, visitor!</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>puzzleSign02</Entity>
-      <Text>As told, this puzzle is about food. To illustrate this, there are two pairs of cows in this puzzle. These cows can be selected and rotated just like you would with groups. However, the cows have a little twist on the usual mechanic. As you may have noticed, they have no group center! This is because they are eachothers center. Select one cow and it's pairing cow will become its center. Select the other cow and the first cow will become its center. Your goal is to get both pair of cows from this meadow to the meadow on the other side. Oh, and by the way: the cows are connected to their pairs through an invisible rope. They cannot be moved further apart or closer to eachother as they are right now, and if one cow falls over the edge, it will take its pair with him and both will be respawned in the meadow. Good luck! </Text>
+      <Text>As told, this puzzle is about food. To illustrate this, there are two pairs of cows in this puzzle. These cows can be selected and rotated just like you would with groups. However, the cows have a little twist on the usual mechanic. As you may have noticed, they have no group center! This is because they are eachothers center. Select one cow and it's pairing cow will become its center. Select the other cow and the first cow will become its center. 
+Your goal is to get both pair of cows from this meadow to the meadow on the other side. Oh, and by the way: the cows are connected to their pairs through an invisible rope. They cannot be moved further apart or closer to eachother as they are right now, and if one cow falls over the edge, it will take its pair with him and both will be respawned in the meadow. Good luck! </Text>
     </HelpItem>
   </Items>
 </Help>
