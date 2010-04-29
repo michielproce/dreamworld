@@ -59,10 +59,12 @@ namespace DreamWorld.Util
 
             foreach (KeyValuePair<int, Group> group in _level.Groups)
             {
+                if (group.Value.AllowedRotations.Equals(Vector3.Zero) || !group.Value.IsInRange)
+                    continue;
+
                 foreach (KeyValuePair<string, Entity> entity in group.Value.Entities)
                 {
-                    if (entity.Value.Skin != skin) continue;
-                    if (!group.Value.AllowedRotations.Equals(Vector3.Zero) && group.Value.IsInRange)
+                    if (entity.Value.Skin == skin)
                         return true;
                 }
             }
