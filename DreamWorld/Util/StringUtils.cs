@@ -32,7 +32,7 @@ namespace DreamWorld.Util
         
         public static string CutLine(Viewport vp, SpriteFont font, string line, float amount)
         {
-            float charWidth = font.MeasureString(line).X / line.Length; ;
+            float charWidth = font.MeasureString(line.Replace("\n", "")).X / line.Length; ;
             float maxWidth = vp.Width * amount;
             int maxChars = (int)Math.Floor(maxWidth / charWidth);
 

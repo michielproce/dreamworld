@@ -31,8 +31,7 @@ namespace DreamWorld.ScreenManagement.Screens
             text = text.Replace("\n", "\n\n");
             // Cut the lines
             Viewport vp = ScreenManager.GraphicsDevice.Viewport;
-//            text = StringUtil.CutLine(vp, font, text, 0.8f);
-            text = StringUtil.CutLine(text, 100);
+            text = StringUtil.CutLine(vp, font, text, 0.8f);
 
             // Add the quit text info
             text += StringUtil.ParsePlatform("\n\n\n{Click the left mouse button|Press B} to return.");
