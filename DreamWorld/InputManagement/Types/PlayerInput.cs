@@ -16,6 +16,9 @@ namespace DreamWorld.InputManagement.Types
         {
             get
             {
+                if(ShowOverview)
+                    return Vector3.Zero;
+
                 Vector3 movement = new Vector3
                     ((InputManager.Keyboard.State.IsKeyDown(Keys.A) ? -1 : 0) +
                      (InputManager.Keyboard.State.IsKeyDown(Keys.D) ? 1 : 0) +
@@ -38,6 +41,9 @@ namespace DreamWorld.InputManagement.Types
         {
             get
             {
+                if (ShowOverview)
+                    return 0f;
+
                 return (InputManager.Mouse.Movement.X*HorizontalMouseRotationSpeed) +
                     (InputManager.Keyboard.State.IsKeyDown(Keys.Left) ? HorizontalKeyboardRotationSpeed : 0) +
                     (InputManager.Keyboard.State.IsKeyDown(Keys.Right) ? -HorizontalKeyboardRotationSpeed : 0) + 

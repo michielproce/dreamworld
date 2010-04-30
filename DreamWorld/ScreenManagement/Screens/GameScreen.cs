@@ -113,6 +113,7 @@ namespace DreamWorld.ScreenManagement.Screens
                 {
                     if (((DreamWorldGame)ScreenManager.Game).InputManager.Player.ShowOverview && Camera is ThirdPersonCamera)
                     {
+                        crosshairVisible = false;
                         Camera = new OverviewCamera
                         {
                             targetPosition = Level.overviewPosition,
@@ -130,6 +131,8 @@ namespace DreamWorld.ScreenManagement.Screens
                         if (overviewCamera.transition == 0)
                         {
                             Camera = overviewCamera.oldCamera;
+                            if (Level is PuzzleLevel)
+                                crosshairVisible = true;
                         }
                     }
                 }
