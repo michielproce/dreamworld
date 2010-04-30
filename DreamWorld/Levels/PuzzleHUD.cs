@@ -129,11 +129,15 @@ namespace DreamWorld.Levels
             device.Viewport = viewport;
             device.RenderState.DepthBufferEnable = true;            
             
+            Vector3 cameraPosition = -Vector3.Normalize(gameScreen.Camera.Direction);
+            cameraPosition.Y += 0.35f;
+            cameraPosition.Normalize();
+            cameraPosition *= 2.4f;
             
             foreach (ModelMesh mesh in model.Meshes) {
                 foreach (Effect effect in mesh.Effects)
                 {
-                    effect.Parameters["view"].SetValue(Matrix.CreateLookAt(-Vector3.Normalize(gameScreen.Level.Player.Body.Position - gameScreen.Camera.Position) * 2.4f, Vector3.Zero, Vector3.Up));
+                    effect.Parameters["view"].SetValue(Matrix.CreateLookAt(cameraPosition, Vector3.Zero, Vector3.Up));
                     
                     if(mesh.Equals(axles[currentAxle]))
                     {

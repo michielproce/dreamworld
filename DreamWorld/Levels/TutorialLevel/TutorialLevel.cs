@@ -34,6 +34,9 @@ namespace DreamWorld.Levels.TutorialLevel
 
             base.Initialize();
 
+            overviewPosition = new Vector3(146.2f, 117.2f, -328.4f);
+            overviewLookat = new Vector3(146.7f, 116.7f, -327.8f);
+
             ThirdPersonCamera cam = GameScreen.Camera as ThirdPersonCamera;
             if (cam != null)
                 cam.VerticalRotation = MathHelper.ToRadians(-15);     

@@ -124,5 +124,13 @@ namespace DreamWorld.InputManagement.Types
                        InputManager.GamePad.NewlyPressed(Buttons.B);
             }
         }
+
+        public bool ShowOverview
+        {
+            get
+            {
+                return InputManager.Keyboard.State.IsKeyDown(Keys.Tab);
+            }
+        }
     }
 }

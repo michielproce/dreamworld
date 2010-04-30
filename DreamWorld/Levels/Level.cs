@@ -36,6 +36,9 @@ namespace DreamWorld.Levels
         protected Bloom bloom;
         private EdgeDetection edgeDetection;
 
+        public Vector3 overviewPosition = new Vector3(50, 500, 150);
+        public Vector3 overviewLookat = new Vector3(150, 0, 150);
+
         protected Level()
         {
             Groups = new Dictionary<int, Group>();

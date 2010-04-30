@@ -41,7 +41,7 @@ namespace DreamWorld.InputManagement.Types
         {
             get
             {
-                return InputManager.Keyboard.NewlyPressed(Keys.Tab);
+                return InputManager.Keyboard.NewlyPressed(Keys.LeftAlt);
             }
         }
 

@@ -90,6 +90,7 @@
     <Compile Include="Audio\VoiceOver.cs" />
     <Compile Include="Cameras\Camera.cs" />
     <Compile Include="Cameras\DebugCamera.cs" />
+    <Compile Include="Cameras\OverviewCamera.cs" />
     <Compile Include="Cameras\ThirdPersonCamera.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Entities\Animation.cs" />

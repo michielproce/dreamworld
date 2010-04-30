@@ -108,8 +108,36 @@ namespace DreamWorld.ScreenManagement.Screens
                 DreamWorldPhysicsSystem.CurrentPhysicsSystem.Integrate(timeStep);
                                
                 HelpSystem.Update(gameTime);
+
+                if(!(Camera is DebugCamera))
+                {
+                    if (((DreamWorldGame)ScreenManager.Game).InputManager.Player.ShowOverview && Camera is ThirdPersonCamera)
+                    {
+                        Camera = new OverviewCamera
+                        {
+                            targetPosition = Level.overviewPosition,
+                            targetLookat = Level.overviewLookat,
+                            oldCamera = Camera as ThirdPersonCamera,
+                            player = Level.Player
+                        };
+                        Camera.Initialize();
+                    }
+                    else if (!((DreamWorldGame)ScreenManager.Game).InputManager.Player.ShowOverview && Camera is OverviewCamera)
+                    {
+                        OverviewCamera overviewCamera = (OverviewCamera)Camera;
+                        overviewCamera.isExitting = true;
+
+                        if (overviewCamera.transition == 0)
+                        {
+                            Camera = overviewCamera.oldCamera;
+                        }
+                    }
+                }
+
+
                 Level.Update(gameTime);
                 Camera.Update(gameTime);
+
                 if (Level.Skybox != null)
                     Level.Skybox.Update(gameTime); // TODO: This updates the skybox second time around, but we don't want the camera delay.
             }
