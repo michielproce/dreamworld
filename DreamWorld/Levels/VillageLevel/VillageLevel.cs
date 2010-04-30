@@ -21,7 +21,7 @@ namespace DreamWorld.Levels.VillageLevel
             FINISHED_PUZZLE1,
         }
 
-        private Stage currentStage;
+        public Stage CurrentStage { get; private set;}
 
         public float maximumWalkingHeight { get; private set; }
 
@@ -32,7 +32,7 @@ namespace DreamWorld.Levels.VillageLevel
 
         public VillageLevel(Stage stage)
         {
-            currentStage = stage;
+            CurrentStage = stage;
         }
 
         public override void InitBloom(ref Bloom bloom)
@@ -66,7 +66,7 @@ namespace DreamWorld.Levels.VillageLevel
                 foreach (KeyValuePair<string, Entity> entity in group.Value.Entities)
                 {
 
-                    switch (currentStage)
+                    switch (CurrentStage)
                     {
                         case Stage.START:
                             if (entity.Value is Stable ||
@@ -77,10 +77,7 @@ namespace DreamWorld.Levels.VillageLevel
                         case Stage.FINISHED_TUTORIAL:
                             if (entity.Value is Stable ||
                                 entity.Value is CowDummy)
-                                toRemove.Add(entity.Value);                                                           
-
-                            if(entity.Value is StableTrashed)
-                                ((StableTrashed) entity.Value).IsPortalToPuzzle = true;                            
+                                toRemove.Add(entity.Value);                                                                                 
                             break;
 
                         case Stage.FINISHED_PUZZLE1:

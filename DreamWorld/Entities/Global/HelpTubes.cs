@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using DreamWorld.Rendering.Particles.Systems;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Entities.Global
@@ -6,10 +8,39 @@ namespace DreamWorld.Entities.Global
     public class HelpTubes : Entity
     {
         public static bool ListInEditor = true;
+
+        private static Random random = new Random();
+
+        private HelpParticleSystem particleSystem;
+        private int frames;
+
+       
+
+        public override void Initialize()
+        {
+            particleSystem = new HelpParticleSystem();
+            Level.AddParticleSystem(Name + "_particleSystem", particleSystem);
+            base.Initialize();
+        }
+
         protected override void LoadContent()
         {
             Model = GameScreen.Content.Load<Model>(@"Models\Global\HelpTubes");
             base.LoadContent();
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+
+           
+            float x = 3 + ((float) random.NextDouble()*6);
+            if (random.NextDouble() < .5)
+                x *= -1;
+            // Update the particles every X frames
+            Vector3 offset = Vector3.Transform(new Vector3(x, 5, 0), Body.Orientation);
+            if (frames++ % 5 == 0)
+                particleSystem.AddParticle(Body.Position + offset, Vector3.Zero);
+            base.Update(gameTime);
         }
 
         /// <summary>

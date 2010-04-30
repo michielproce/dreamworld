@@ -1,6 +1,7 @@
 ﻿using System;
 using DreamWorld.Entities;
 using DreamWorld.Interface.Help;
+using DreamWorld.Rendering.Particles.Systems;
 using DreamWorld.ScreenManagement.Screens.Cutscenes;
 using DreamWorld.Util;
 using Microsoft.Xna.Framework;
@@ -12,8 +13,15 @@ namespace DreamWorld.Levels.VillageLevel.Entities
     {
         public static bool ListInEditor = true;
 
+        private static Random random = new Random();
+        private HelpParticleSystem particleSystem;
+        private int frames;
+
         public override void Initialize()
         {
+            particleSystem = new HelpParticleSystem();
+            Level.AddParticleSystem(Name + "_particleSystem", particleSystem);
+
             Animation.InitialClip = "Standing";
             base.Initialize();
         }
@@ -26,18 +34,26 @@ namespace DreamWorld.Levels.VillageLevel.Entities
 
         public override void Update(GameTime gameTime)
         {
-            if (Vector3.Distance(Level.Player.Body.Position, Body.Position) <= Help.HELP_DISTANCE)
+            VillageLevel vl = Level as VillageLevel;
+            if (vl != null && vl.CurrentStage == VillageLevel.Stage.START)
             {
-                GameScreen.HelpSystem.ShowCustomHint(
-                    StringUtil.ParsePlatform("{Click the left mouse button|Press B} to talk."), this);
-                
-                if(GameScreen.InputManager.Player.ApplyRotation)
+                if (Vector3.Distance(Level.Player.Body.Position, Body.Position) <= Help.HELP_DISTANCE)
                 {
-                    GameScreen.ExitScreen();
-                    GameScreen.ScreenManager.AddScreen(new MorwirCutscene());
-                }                    
-            }
+                    GameScreen.HelpSystem.ShowCustomHint(
+                        StringUtil.ParsePlatform("{Click the left mouse button|Press B} to talk."), this);
+                    
+                    if(GameScreen.InputManager.Player.ApplyRotation)
+                    {
+                        GameScreen.ExitScreen();
+                        GameScreen.ScreenManager.AddScreen(new MorwirCutscene());
+                    }                    
+                }
 
+                const int dim = 3;
+                if (frames++ % 10 == 0)
+                    particleSystem.AddParticle(Body.Position + new Vector3(random.Next(dim * 2) - dim, 13, random.Next(dim * 2) - dim), Vector3.Zero);                
+            }
+            
             base.Update(gameTime);
         }
 

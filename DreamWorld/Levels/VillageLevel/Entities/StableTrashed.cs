@@ -1,6 +1,7 @@
 ﻿using System;
 using DreamWorld.Entities;
 using DreamWorld.Interface.Help;
+using DreamWorld.Rendering.Particles.Systems;
 using DreamWorld.ScreenManagement.Screens;
 using DreamWorld.ScreenManagement.Screens.Cutscenes;
 using DreamWorld.Util;
@@ -13,7 +14,17 @@ namespace DreamWorld.Levels.VillageLevel.Entities
     {
         public static bool ListInEditor = true;
 
-        public bool IsPortalToPuzzle { get; set; }
+        private static Random random = new Random();
+        private HelpParticleSystem particleSystem;
+        private int frames;
+
+        public override void Initialize()
+        {
+            particleSystem = new HelpParticleSystem();
+            Level.AddParticleSystem(Name + "_particleSystem", particleSystem);
+            base.Initialize();
+        }
+
 
         protected override void LoadContent()
         {
@@ -23,20 +34,26 @@ namespace DreamWorld.Levels.VillageLevel.Entities
 
         public override void Update(GameTime gameTime)
         {
-            
-            if (IsPortalToPuzzle && (Vector3.Distance(Level.Player.Body.Position, Body.Position) <= 30f))
+            VillageLevel vl = Level as VillageLevel;
+            if (vl != null && vl.CurrentStage == VillageLevel.Stage.FINISHED_TUTORIAL)
             {
-                Console.Out.WriteLine(Vector3.Distance(Level.Player.Body.Position, Body.Position));
-
-                GameScreen.HelpSystem.ShowCustomHint(
-                    StringUtil.ParsePlatform("{Click the left mouse button|Press B} to go to the DreamWorld."), this);
-
-                if (GameScreen.InputManager.Player.ApplyRotation)
+                if (Vector3.Distance(Level.Player.Body.Position, Body.Position) <= 30f)
                 {
-                    GameScreen.ExitScreen();
-                    GameScreen.ScreenManager.AddScreen(new GameScreen(new PuzzleLevel1.PuzzleLevel1()));
+                    GameScreen.HelpSystem.ShowCustomHint(
+                        StringUtil.ParsePlatform("{Click the left mouse button|Press B} to go to the DreamWorld."), this);
+
+                    if (GameScreen.InputManager.Player.ApplyRotation)
+                    {
+                        GameScreen.ExitScreen();
+                        GameScreen.ScreenManager.AddScreen(new GameScreen(new PuzzleLevel1.PuzzleLevel1()));
+                    }
                 }
+
+                const int dim = 15;
+                if (frames++ % 5 == 0)
+                    particleSystem.AddParticle(Body.Position + new Vector3(random.Next(dim * 2) - dim, 13, random.Next(dim * 2) - dim), Vector3.Zero);                
             }
+            
 
             base.Update(gameTime);
         }
