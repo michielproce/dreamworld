@@ -28,16 +28,23 @@ namespace DreamWorld.ScreenManagement
         private SpriteFont font;
         private string text;
 
+        private SpriteFont hintFont;
+        private Vector2 hintPosition;
+        private string hintText;
+
         protected CutsceneScreen()
         {
-            
             text = "";
         }
 
         protected override void LoadContent()
         {
             font = Content.Load<SpriteFont>(@"Fonts\subtitle");
-            
+            hintFont = Content.Load<SpriteFont>(@"Fonts\helphint");
+            hintText = StringUtil.ParsePlatform("Press {enter|a} to skip.");
+            Vector2 hintSize = hintFont.MeasureString(hintText);
+            hintPosition = new Vector2(ScreenManager.GraphicsDevice.Viewport.Width - hintSize.X - 10, 5);
+
             lines = new List<CutsceneLine>();
             LoadCutscene();
             if (song != null)
@@ -128,6 +135,10 @@ namespace DreamWorld.ScreenManagement
                 spriteBatch.DrawString(font, text, textPosition + new Vector2(2), Color.Black);
                 spriteBatch.DrawString(font, text, textPosition, Color.White);
             }
+
+            spriteBatch.DrawString(hintFont, hintText, hintPosition + new Vector2(2), Color.Black);
+            spriteBatch.DrawString(hintFont, hintText, hintPosition, Color.White);
+
             spriteBatch.End();
 
             base.Draw(gameTime);
