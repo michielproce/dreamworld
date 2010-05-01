@@ -87,6 +87,9 @@ namespace DreamWorld.ScreenManagement.Screens
             if (!OtherScreenHasFocus)
             {
                 #if (DEBUG && !XBOX)
+                    if (InputManager.Debug.ToggleDebugCameraReticle)
+                        crosshairVisible = !crosshairVisible;
+
                     if (((DreamWorldGame)ScreenManager.Game).InputManager.Debug.ToggleDebugCamera)
                     {
                         if (Camera is DebugCamera)
