@@ -9,7 +9,13 @@ namespace DreamWorld.InputManagement.Types
             get
             {
                 return
+                    InputManager.Keyboard.NewlyPressed(Keys.Left)
+                     ||
                     InputManager.Keyboard.NewlyPressed(Keys.Up)
+                     ||
+                    InputManager.GamePad.NewlyPressed(Buttons.RightThumbstickLeft)
+                     ||
+                    InputManager.GamePad.NewlyPressed(Buttons.LeftThumbstickLeft)
                      ||
                     InputManager.GamePad.NewlyPressed(Buttons.RightThumbstickUp)
                      ||
@@ -23,7 +29,14 @@ namespace DreamWorld.InputManagement.Types
         {
             get
             {
-                return InputManager.Keyboard.NewlyPressed(Keys.Down)
+                return
+                    InputManager.Keyboard.NewlyPressed(Keys.Right)
+                     || 
+                    InputManager.Keyboard.NewlyPressed(Keys.Down)
+                     ||
+                    InputManager.GamePad.NewlyPressed(Buttons.RightThumbstickRight)
+                     ||
+                    InputManager.GamePad.NewlyPressed(Buttons.LeftThumbstickRight)
                      ||
                     InputManager.GamePad.NewlyPressed(Buttons.RightThumbstickDown)
                      ||
