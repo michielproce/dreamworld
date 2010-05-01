@@ -42,7 +42,6 @@ namespace DreamWorld
             #endif
 
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume = 0;
 
             ScreenManager = new ScreenManager(this);
             InputManager = new InputManager(this);                     
