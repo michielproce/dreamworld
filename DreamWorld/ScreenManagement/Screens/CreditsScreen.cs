@@ -39,7 +39,8 @@ namespace DreamWorld.ScreenManagement.Screens
         {
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             spriteBatch.Begin();
-            spriteBatch.Draw(texture, destination, new Color(255, 255, 255, TransitionAlpha));
+            Color color = IsExiting ? Color.White : new Color(255, 255, 255, TransitionAlpha);
+            spriteBatch.Draw(texture, destination, color);
             spriteBatch.End();
         }
     }

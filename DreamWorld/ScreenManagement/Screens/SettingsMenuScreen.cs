@@ -20,12 +20,15 @@ namespace DreamWorld.ScreenManagement.Screens
 
         public SettingsMenuScreen()
         {
+            menuPosition = new Vector2(150, 215);
+            entryOffset = new Vector2(0, 5);
+
             config = Config.Load();
 
             resolutionEntry = new SettingsMenuEntry("Resolution", "");
             fullscreenEntry = new SettingsMenuEntry("Screenmode", "");
             antiAliasingEntry = new SettingsMenuEntry("Anti-aliasing", "");
-            verticalSyncEntry = new SettingsMenuEntry("Vertical synchronization", "");
+            verticalSyncEntry = new SettingsMenuEntry("Vertical sync", "");
             subtitlesEntry = new SettingsMenuEntry("Subtitles", "");
             invertCameraEntry = new SettingsMenuEntry("Invert camera", "");
             saveMenuEntry = new MenuEntry("Save");
@@ -52,8 +55,6 @@ namespace DreamWorld.ScreenManagement.Screens
 
         public override void Initialize()
         {
-            menuPosition = new Vector2(100, 240);
-
             foreach (DisplayMode mode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
             {
                 if (mode.Width == config.Width && mode.Height == config.Height)
@@ -72,6 +73,7 @@ namespace DreamWorld.ScreenManagement.Screens
         protected override void LoadContent()
         {
             Background = Content.Load<Texture2D>(@"Textures/Menu/settings");
+            Font = Content.Load<SpriteFont>(@"Fonts/bigSettingsMenu");
             SmallFont = Content.Load<SpriteFont>(@"Fonts/smallSettingsMenu");
             SmallFont.Spacing *= 0.9f;
             base.LoadContent();
@@ -169,13 +171,16 @@ namespace DreamWorld.ScreenManagement.Screens
             MenuEntry menuEntry = MenuEntries[key];
 
             if (saveMenuEntry == menuEntry)
-                position += new Vector2(0, 20);
+                position += new Vector2(0, 10);
+            else if (exitMenuEntry == menuEntry)
+                position += new Vector2(160, -entryOffset.Y - menuEntry.GetHeight(this));
 
             bool isSelected = IsActive && (key == selectedEntry);
 
             menuEntry.Draw(gameTime, this, position, isSelected);
 
             position.Y += menuEntry.GetHeight(this);
+            position += entryOffset;
         }
     }
 }

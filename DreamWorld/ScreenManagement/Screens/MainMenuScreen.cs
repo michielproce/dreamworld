@@ -1,6 +1,7 @@
 using System;
 using DreamWorld.Levels.PuzzleLevel1;
 using DreamWorld.ScreenManagement.Screens.Cutscenes;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 
@@ -10,6 +11,9 @@ namespace DreamWorld.ScreenManagement.Screens
     {
         public MainMenuScreen()
         {
+            menuPosition = new Vector2(150, 255);
+            entryOffset = new Vector2(0, 26);
+
             MenuEntry playGameMenuEntry = new MenuEntry("Play game");
             playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
             MenuEntries.Add(playGameMenuEntry);
@@ -27,12 +31,6 @@ namespace DreamWorld.ScreenManagement.Screens
             MenuEntry quitMenuEntry = new MenuEntry("Quit");
             quitMenuEntry.Selected += OnCancel;
             MenuEntries.Add(quitMenuEntry);
-
-            #if (DEBUG)
-//            MenuEntry puzzleLevelMenuEntry = new MenuEntry("PuzzleLevel");
-//            puzzleLevelMenuEntry.Selected += LoadGameMenuEntrySelected;
-//            MenuEntries.Add(puzzleLevelMenuEntry);
-            #endif
         }
 
         protected override void LoadContent()
@@ -53,12 +51,6 @@ namespace DreamWorld.ScreenManagement.Screens
             ExitScreen();
         }
 
-        void LoadGameMenuEntrySelected(object sender, EventArgs e)
-        {
-            ScreenManager.AddScreen(new GameScreen(new PuzzleLevel1()));
-            ExitScreen();
-        }
-
         void SettingsEntrySelected(object sender, EventArgs e)
         {
             ScreenManager.AddScreen(new SettingsMenuScreen());
@@ -70,7 +62,6 @@ namespace DreamWorld.ScreenManagement.Screens
             ScreenManager.AddScreen(new CreditsScreen());
             ExitScreen();
         }
-         
 
         protected override void OnCancel()
         {

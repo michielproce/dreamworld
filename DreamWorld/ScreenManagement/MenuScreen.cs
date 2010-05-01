@@ -14,14 +14,14 @@ namespace DreamWorld.ScreenManagement
 
         protected List<MenuEntry> MenuEntries { get; private set; }
         internal int selectedEntry;
-        protected Vector2 menuPosition;
+        protected Vector2 menuPosition = new Vector2(100, 250);
+        protected Vector2 entryOffset;
 
         protected MenuScreen()
         {
             MenuEntries = new List<MenuEntry>();
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
-            menuPosition = new Vector2(100, 250);
         }
 
         private void OnSelectEntry()
@@ -94,7 +94,7 @@ namespace DreamWorld.ScreenManagement
             else
                 position.X += transitionOffset * 512;
 
-            spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState, Matrix.CreateScale((float)viewport.Width / 1280, (float)viewport.Height / 800, 1));
+            spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState, Matrix.CreateScale((float)viewport.Width / 1280, (float)viewport.Height / 720, 1));
 
             
             if (Background != null)
@@ -119,6 +119,7 @@ namespace DreamWorld.ScreenManagement
             menuEntry.Draw(gameTime, this, position, isSelected);
 
             position.Y += menuEntry.GetHeight(this);
+            position += entryOffset;
         }
 
     }

@@ -813,6 +813,11 @@
       <Importer>XImporter</Importer>
       <Processor>DefaultModelProcessor</Processor>
     </Compile>
+    <Compile Include="Fonts\bigSettingsMenu.spritefont">
+      <Name>bigSettingsMenu</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
     <None Include="Texts\Help.xml">
       <Name>Help</Name>
       <Importer>EffectImporter</Importer>
