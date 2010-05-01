@@ -37,12 +37,27 @@ namespace DreamWorld.Levels.VillageLevel
 
         public override void InitBloom(ref Bloom bloom)
         {
-            bloom.BloomThreshold = .3f;
-            bloom.BlurAmount = 4f;
-            bloom.BloomIntensity = 1f;
-            bloom.BaseIntensity = 1f;
-            bloom.BloomSaturation = 1f;
-            bloom.BaseSaturation = 1f;
+            switch (CurrentStage)
+            {
+                case Stage.START:
+                case Stage.FINISHED_TUTORIAL:
+                    bloom.BloomThreshold = .3f;
+                    bloom.BlurAmount = 4f;
+                    bloom.BloomIntensity = 1f;
+                    bloom.BaseIntensity = 1f;
+                    bloom.BloomSaturation = .85f;
+                    bloom.BaseSaturation = .85f;
+                    break;
+
+                case Stage.FINISHED_PUZZLE1:
+                    bloom.BloomThreshold = .3f;
+                    bloom.BlurAmount = 4f;
+                    bloom.BloomIntensity = 1f;
+                    bloom.BaseIntensity = 1f;
+                    bloom.BloomSaturation = 1.15f;
+                    bloom.BaseSaturation = 1.15f;
+                    break;
+            }
         }
 
         public override void Initialize()
