@@ -1167,9 +1167,9 @@
     </GroupColorInformation>
     <GroupColorInformation>
       <ID>3</ID>
-      <R>255</R>
-      <G>128</G>
-      <B>0</B>
+      <R>0</R>
+      <G>0</G>
+      <B>255</B>
     </GroupColorInformation>
     <GroupColorInformation>
       <ID>4</ID>
@@ -1198,8 +1198,8 @@
     <GroupColorInformation>
       <ID>8</ID>
       <R>255</R>
-      <G>20</G>
-      <B>147</B>
+      <G>128</G>
+      <B>0</B>
     </GroupColorInformation>
     <GroupColorInformation>
       <ID>9</ID>

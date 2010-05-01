@@ -1,5 +1,6 @@
 using System;
 using DreamWorld.InputManagement.Types;
+using DreamWorld.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -32,8 +33,8 @@ namespace DreamWorld.ScreenManagement.Screens
         {
             Message = message;
 
-            const string usageText = "\nA button or Enter to accept" +
-                                     "\nB button or Esc to cancel";
+            string usageText = StringUtil.ParsePlatform("\n{Enter | A button} to accept.\n" +
+                                                        "{Escape|B button} to cancel.");
 
             if (includeUsageText)
                 Message += usageText;
@@ -96,9 +97,9 @@ namespace DreamWorld.ScreenManagement.Screens
 
             spriteBatch.Draw(backgroundTexture, position, color);
 
-            spriteBatch.DrawString(font, Message, textPosition, Color.Black);
+            spriteBatch.DrawString(font, Message, textPosition, new Color(0,0,0, TransitionAlpha));
 
-            spriteBatch.Draw(foregroundTexture, position, color);
+            spriteBatch.Draw(foregroundTexture, position, color);                       
 
             spriteBatch.End();
         }

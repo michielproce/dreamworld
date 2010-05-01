@@ -29,22 +29,23 @@ The key is lost. We're waiting for the WVHO to replace the gates.</Text>
 	<HelpItem>
       <Entity>tutorialSign01</Entity>
       <Text>Hello Tubbles!
-You've just entered the Dreamworld. Should you ever get into a situation here in which you see no way out, you can just press {escape|start} to return to the village.
-Go straight ahead to start with the tutorial.</Text>
+You've just entered the Dreamworld.
+Go straight ahead to start a tutorial. If you wish to skip this, press {escape|the start button}.
+-Morwir</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign03</Entity>
       <Text>We just actived your Axle Gizmo, this will allow you to rotate platforms across a certain axis.
 First, you can select a group of platforms, indicated by their color, by pointing your crosshair at them. When selected, they will light up. The center of the group, around which the platforms are rotated, are indicated by the glowy thingies.
-Then, you can rotate them, using your Axle Gizmo, down in your screen. Select an axis or rotation by using {Q and E or the scrollwheel|the shoulderbuttons}. The Gizmo's axis you've selected will rotate in the given direction.
+Then, you can rotate them, using your Axle Gizmo, down in your screen. Select an axis or rotation by using {the scrollwheel|the shoulderbuttons}. The Gizmo's axis you've selected will rotate in the given direction.
 Once you've selected the axis and/or rotation, use {left-click|press B} to apply your rotation.
-In front of you are two platforms, orange and green, go ahead and test it out!</Text>
+In front of you are two platforms, blue and green, go ahead and test it out!</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign06</Entity>
       <Text>Now that you've practiced rotating platforms, let's put it to use!
 In front of you is a red group of platforms. Stand on the platform in front of you, select the group and rotate it along the horizontal axis twice to get across.
-Yes, you could jump across, but this is good practice!</Text>
+One more thing: If need an overview of the level, you can view it by holding {tab|the back button}.</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign07</Entity>
@@ -60,7 +61,7 @@ In front of you is a green platform which you can't reach. Rotate it towards you
 	<HelpItem>
       <Entity>tutorialSign09</Entity>
       <Text>For the next puzzle, you'll need to use a different axis. See if you can figure it out.
-Hint: Think about your position when rotating the pink platform.</Text>
+Hint: Think about your position when rotating the orange platform.</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign10</Entity>
@@ -87,6 +88,17 @@ On the meadow to your left is another sign that will help you solve the puzzle.<
 As you can see, there are two pairs of cows in this puzzle. Unlike platforms, they're not connected to a center (the glowing thingies), instead, they rotate around each other. Select one cow and it'll rotate around the other. And vice versa.
 Your goal is to get both pairs to the other meadow, across the puzzle. Good luck!
 P.S. If a cow falls down, the both of the pair will be respawned in this meadow.</Text>
+    </HelpItem>
+    <HelpItem>
+      <Entity>villageSignAfterTutorial</Entity>
+      <Text>Now that you've learned how the Dreamworld works, find a spot which could use some improvement.
+At this moment there is only one, more will be available in later versions of the game.
+Tip: It's behind you!</Text>
+    </HelpItem>
+    <HelpItem>
+      <Entity>villageSignAfterPuzzle1</Entity>
+      <Text>Congratulations! You've finished this version of Dreamworld.
+As you can see, life is a little brighter in the village. The cows are back!</Text>
     </HelpItem>
   </Items>
 </Help>

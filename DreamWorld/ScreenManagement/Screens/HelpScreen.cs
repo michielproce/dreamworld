@@ -28,7 +28,11 @@ namespace DreamWorld.ScreenManagement.Screens
         protected override void LoadContent()
         {
             font = Content.Load<SpriteFont>(@"Fonts\helptext");
+            
+            // Create paragraphs, not to far apart.
             text = text.Replace("\n", "\n\n");
+            font.LineSpacing = 24;
+
             // Cut the lines
             Viewport vp = ScreenManager.GraphicsDevice.Viewport;
             text = StringUtil.CutLine(vp, font, text, 0.8f);

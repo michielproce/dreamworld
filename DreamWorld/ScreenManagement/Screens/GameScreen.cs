@@ -7,6 +7,8 @@ using DreamWorld.InputManagement;
 using DreamWorld.InputManagement.Types;
 using DreamWorld.Interface.Help;
 using DreamWorld.Levels;
+using DreamWorld.Levels.TutorialLevel;
+using DreamWorld.Levels.VillageLevel;
 using DreamWorld.Util;
 using JigLibX.Collision;
 using JigLibX.Physics;
@@ -156,12 +158,24 @@ namespace DreamWorld.ScreenManagement.Screens
             PlayerInput playerInput = ScreenManager.InputManager.Player;
             if(playerInput.ShowPauseMenu)
             {
-                const string message = "Are you sure you want to return to the main menu";
+                if (Level is TutorialLevel)
+                {
+                    const string message = "Are you sure you want to skip";
 
-                MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(message);
-                confirmExitMessageBox.Accepted += ConfirmExitMessageBoxAccepted;
+                    MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(message);
+                    confirmExitMessageBox.Accepted += ConfirmExitTutorialMessageBoxAccepted;
 
-                ScreenManager.AddScreen(confirmExitMessageBox);
+                    ScreenManager.AddScreen(confirmExitMessageBox);
+                }
+                else
+                {
+                    const string message = "Are you sure you want to exit";
+
+                    MessageBoxScreen confirmExitToMainMenuMessageBox = new MessageBoxScreen(message);
+                    confirmExitToMainMenuMessageBox.Accepted += ConfirmExitToMainMenuMessageBoxAccepted;
+
+                    ScreenManager.AddScreen(confirmExitToMainMenuMessageBox);
+                }
             }
         }
 
@@ -170,9 +184,15 @@ namespace DreamWorld.ScreenManagement.Screens
             MediaPlayer.Stop();
         }
 
-        private void ConfirmExitMessageBoxAccepted(object sender, EventArgs e)
+        private void ConfirmExitToMainMenuMessageBoxAccepted(object sender, EventArgs e)
         {
             ScreenManager.AddScreen(new MainMenuScreen());
+            ExitScreen();
+        }
+
+        private void ConfirmExitTutorialMessageBoxAccepted(object sender, EventArgs e)
+        {
+            ScreenManager.AddScreen(new GameScreen(new VillageLevel(VillageLevel.Stage.FINISHED_TUTORIAL)));
             ExitScreen();
         }
 

@@ -135,7 +135,8 @@ namespace DreamWorld.InputManagement.Types
         {
             get
             {
-                return InputManager.Keyboard.State.IsKeyDown(Keys.Tab);
+                return InputManager.Keyboard.State.IsKeyDown(Keys.Tab) ||
+                    InputManager.GamePad.State.IsButtonDown(Buttons.Back);
             }
         }
     }

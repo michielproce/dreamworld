@@ -85,20 +85,28 @@ namespace DreamWorld.Levels.VillageLevel
                     {
                         case Stage.START:
                             if (entity.Value is Stable ||
-                                entity.Value is CowDummy)
+                                entity.Value is CowDummy ||
+                                "villageSignAfterTutorial".Equals(entity.Key) ||
+                                "villageTubesAfterTutorial".Equals(entity.Key) ||
+                                "villageSignAfterPuzzle1".Equals(entity.Key) ||
+                                "villageTubesAfterPuzzle1".Equals(entity.Key))
                                 toRemove.Add(entity.Value);
                             break;
 
                         case Stage.FINISHED_TUTORIAL:
                             if (entity.Value is Stable ||
-                                entity.Value is CowDummy)
+                                entity.Value is CowDummy || 
+                                "villageSignAfterPuzzle1".Equals(entity.Key) ||
+                                "villageTubesAfterPuzzle1".Equals(entity.Key))
                                 toRemove.Add(entity.Value);                                                                                 
                             break;
 
                         case Stage.FINISHED_PUZZLE1:
                             if (entity.Value is StableTrashed || 
                                 "villageSign3".Equals(entity.Key) || 
-                                "villageTubes3".Equals(entity.Key))
+                                "villageTubes3".Equals(entity.Key) || 
+                                "villageSignAfterTutorial".Equals(entity.Key) ||
+                                "villageTubesAfterTutorial".Equals(entity.Key))                              
                                 toRemove.Add(entity.Value);
 
                             GameScreen.VoiceOver = new VoiceOver(GameScreen.Content.Load<SoundEffect>(@"Audio\Voice\52 done_better"), "Tubbles, you have done even better then I had expected. Just arrived and already solved the problem. You better take a look outside and see what change you made to the village.", .3f);
