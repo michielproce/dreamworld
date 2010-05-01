@@ -65,7 +65,7 @@ namespace DreamWorld.ScreenManagement.Screens
 
         protected override void OnCancel()
         {
-            const string message = "Are you sure you want to exit dreamworld";
+            const string message = "Are you sure you want to quit?";
 
             MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(message);
             confirmExitMessageBox.Accepted += ConfirmExitMessageBoxAccepted;
