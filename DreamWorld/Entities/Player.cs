@@ -60,7 +60,7 @@ namespace DreamWorld.Entities
             base.LoadContent();
 
             footStepSound = new SoundEffect3D(this, GameScreen.Content.Load<SoundEffect>(@"Audio\Effects\Footstep"));
-            footStepSound.Boost = .9f;
+            footStepSound.Boost = .8f;
 
             jumpSounds = new List<SoundEffect3D>();
             for (int i = 1; i <= 3; i++)
