@@ -161,6 +161,7 @@
     <Compile Include="Levels\PuzzleLevel.cs" />
     <Compile Include="Entities\Group.cs" />
     <Compile Include="Levels\VillageLevel\Entities\TrashCan.cs" />
+    <Compile Include="Levels\VillageLevel\Entities\TrashedHouse.cs" />
     <Compile Include="Levels\VillageLevel\Entities\Tree.cs" />
     <Compile Include="Levels\VillageLevel\Entities\TreeTrunk.cs" />
     <Compile Include="Levels\VillageLevel\Entities\Tubes.cs" />

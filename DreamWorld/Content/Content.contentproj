@@ -808,6 +808,11 @@
       <Processor>DefaultModelProcessor</Processor>
       <ProcessorParameters_EffectFile>Skybox.fx</ProcessorParameters_EffectFile>
     </Compile>
+    <Compile Include="Models\Village\TrashedHouse.X">
+      <Name>TrashedHouse</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
     <None Include="Texts\Help.xml">
       <Name>Help</Name>
       <Importer>EffectImporter</Importer>
