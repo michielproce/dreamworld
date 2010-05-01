@@ -1,4 +1,6 @@
-﻿using DreamWorld.Entities;
+﻿using System;
+using DreamWorld.Entities;
+using DreamWorld.Rendering.Particles.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -6,12 +8,58 @@ namespace DreamWorld.Levels.VillageLevel.Entities
 {
     public class Statue : Entity
     {
+        private const string FOOD_SYMBOL = "mesh_flySymbol";
+
+        private static Random random = new Random();
+        private int frames;
+        private GoldSparkleParticleSystem particleSystem;
+
         public static bool ListInEditor = true;
+
+        public override void Initialize()
+        {
+            particleSystem = new GoldSparkleParticleSystem();
+            Level.AddParticleSystem(Name + "_particleSystem", particleSystem);
+
+            base.Initialize();
+        }
+
         protected override void LoadContent()
         {
+
             Model = GameScreen.Content.Load<Model>(@"Models\Village\Statue");
             base.LoadContent();
+        } 
+
+        public override void Draw(GameTime gameTime, string technique)
+        {
+            VillageLevel vl = Level as VillageLevel;
+            if (vl != null && vl.CurrentStage == VillageLevel.Stage.FINISHED_PUZZLE1)
+            {
+                Vector3 offset = new Vector3(0, (float)(random.NextDouble() - .5) * 3, (float)(random.NextDouble() - .5) * 3);
+                if (frames++ % 30 == 0)
+                    particleSystem.AddParticle(Body.Position + new Vector3(-10, 29, 1) + offset, Vector3.Zero);
+
+                Model.CopyAbsoluteBoneTransformsTo(transforms);
+                foreach (ModelMesh mesh in Model.Meshes)
+                {
+                    bool isCow = FOOD_SYMBOL.Equals(mesh.Name);
+                    foreach (Effect effect in mesh.Effects)
+                    {
+                        effect.CurrentTechnique = isCow ? effect.Techniques["Highlight"] : effect.Techniques["Default"];
+                        effect.Parameters["world"].SetValue(transforms[mesh.ParentBone.Index]*World);
+                        effect.Parameters["view"].SetValue(GameScreen.Camera.View);
+                        effect.Parameters["projection"].SetValue(GameScreen.Camera.Projection);
+                        if (isCow)
+                            effect.Parameters["Ambient"].SetValue(Color.Gold.ToVector3());
+                    }                    
+                    mesh.Draw();
+                }
+            } 
+            else
+                base.Draw(gameTime, technique);
         }
+
 
         /// <summary>
         /// Creates all needed object information for the JigLibX physics simulator.

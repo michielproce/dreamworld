@@ -175,6 +175,7 @@
     <Compile Include="Rendering\Particles\ParticleSettings.cs" />
     <Compile Include="Rendering\Particles\ParticleSystem.cs" />
     <Compile Include="Rendering\Particles\ParticleVertex.cs" />
+    <Compile Include="Rendering\Particles\Systems\GoldSparkleParticleSystem.cs" />
     <Compile Include="Rendering\Particles\Systems\GroupCenterParticleSystem.cs" />
     <Compile Include="Rendering\Particles\Systems\HelpParticleSystem.cs" />
     <Compile Include="Rendering\Particles\Systems\HouseSmokeParticleSystem.cs" />
