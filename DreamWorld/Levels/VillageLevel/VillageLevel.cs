@@ -101,7 +101,7 @@ namespace DreamWorld.Levels.VillageLevel
                                 "villageTubes3".Equals(entity.Key))
                                 toRemove.Add(entity.Value);
 
-                            GameScreen.VoiceOver = new VoiceOver(GameScreen.Content.Load<SoundEffect>(@"Audio\Voice\52 done_better"), "Tubbles, you have done even better then I had expected. Just arrived and already solved the problem. You better take a look outside and see what change you made to the village.");
+                            GameScreen.VoiceOver = new VoiceOver(GameScreen.Content.Load<SoundEffect>(@"Audio\Voice\52 done_better"), "Tubbles, you have done even better then I had expected. Just arrived and already solved the problem. You better take a look outside and see what change you made to the village.", .3f);
                             break;
                     }
                 }
