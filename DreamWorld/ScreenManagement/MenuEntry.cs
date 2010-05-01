@@ -33,7 +33,7 @@ namespace DreamWorld.ScreenManagement
 
         public virtual void Draw(GameTime gameTime, MenuScreen screen, Vector2 position, bool isSelected)
         {
-            Color color = isSelected ? new Color(153, 102, 204, screen.TransitionAlpha) : new Color(255, 255, 255, screen.TransitionAlpha);
+            Color color = isSelected ? new Color(29, 22, 18, screen.TransitionAlpha) : new Color(83, 71, 65, screen.TransitionAlpha);
             SpriteFont font = screen.Font ?? screen.ScreenManager.Font;
             Vector2 origin = new Vector2(0, 0.5f * font.LineSpacing);
 
