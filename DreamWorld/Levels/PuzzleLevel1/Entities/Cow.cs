@@ -41,7 +41,7 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
 
             if (Animation.Paused)
             {
-                if (random.Next(360) == 1)
+                if (random.Next(75) == 1)
                     Animation.Paused = false;
             }
 

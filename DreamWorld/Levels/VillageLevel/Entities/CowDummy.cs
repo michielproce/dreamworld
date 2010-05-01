@@ -1,4 +1,5 @@
-﻿using DreamWorld.Entities;
+﻿using System;
+using DreamWorld.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -6,12 +7,26 @@ namespace DreamWorld.Levels.VillageLevel.Entities
 {
     public class CowDummy : Entity
     {
+        private static Random random = new Random();
+
         public static bool ListInEditor = true;
         protected override void LoadContent()
         {
             Animation.InitialClip = "Idle";
+            Animation.Paused = true;
             Model = GameScreen.Content.Load<Model>(@"Models\Global\Cow");
             base.LoadContent();
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (Animation.Paused)
+            {
+                if (random.Next(75) == 1)
+                    Animation.Paused = false;
+            }
+
+            base.Update(gameTime);
         }
 
         /// <summary>
