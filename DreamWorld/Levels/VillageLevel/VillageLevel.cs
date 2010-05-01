@@ -81,7 +81,9 @@ namespace DreamWorld.Levels.VillageLevel
                             break;
 
                         case Stage.FINISHED_PUZZLE1:
-                            if (entity.Value is StableTrashed)
+                            if (entity.Value is StableTrashed || 
+                                "villageSign3".Equals(entity.Key) || 
+                                "villageTubes3".Equals(entity.Key))
                                 toRemove.Add(entity.Value);
 
                             GameScreen.VoiceOver = new VoiceOver(GameScreen.Content.Load<SoundEffect>(@"Audio\Voice\52 done_better"), "Tubbles, you have done even better then I had expected. Just arrived and already solved the problem. You better take a look outside and see what change you made to the village.");
@@ -92,6 +94,19 @@ namespace DreamWorld.Levels.VillageLevel
 
             foreach (Entity entity in toRemove)
                 entity.Group.RemoveEntity(entity.Name);
+
+            // Move the player to it's location
+            switch (CurrentStage)
+            {
+                case Stage.FINISHED_TUTORIAL:
+                    Player.Body.MoveTo(new Vector3(300, -550, 90), Matrix.Identity);
+                    break;
+
+                case Stage.FINISHED_PUZZLE1:
+                    Player.Body.MoveTo(new Vector3(250, -550, 275), Matrix.CreateRotationY(MathHelper.ToRadians(130)));
+                    break;
+            }
+
         }
     }
 }

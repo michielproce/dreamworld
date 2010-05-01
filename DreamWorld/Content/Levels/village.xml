@@ -2212,7 +2212,7 @@
       <Group>0</Group>
     </SpawnInformation>
     <SpawnInformation>
-      <Name>entity634078300817143553</Name>
+      <Name>villageTubes3</Name>
       <TypeName>DreamWorld.Entities.Global.HelpTubes</TypeName>
       <Position>
         <X>200</X>
