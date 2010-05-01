@@ -11,8 +11,8 @@ namespace DreamWorld.ScreenManagement.Screens
     {
         public string Message;
 
-        private Texture2D headerTexture;
-        private Texture2D bodyTexture;
+        private Texture2D backgroundTexture;
+        private Texture2D foregroundTexture;
 
         private float headerAspectRatio;
         private const float bodyToHeaderRatio = 1.1f;
@@ -48,10 +48,10 @@ namespace DreamWorld.ScreenManagement.Screens
         {
             ContentManager content = ScreenManager.Game.Content;
 
-            headerTexture = content.Load<Texture2D>(@"Textures/Menu/confirmHeader");
-            bodyTexture = content.Load<Texture2D>(@"Textures/Menu/confirmBody");
+            backgroundTexture = content.Load<Texture2D>(@"Textures/Menu/confirmBackground");
+            foregroundTexture = content.Load<Texture2D>(@"Textures/Menu/confirmForeground");
 
-            headerAspectRatio = (float) headerTexture.Width / headerTexture.Height;
+            headerAspectRatio = (float)backgroundTexture.Width / backgroundTexture.Height;
         }
 
         public override void HandleInput()
@@ -81,31 +81,24 @@ namespace DreamWorld.ScreenManagement.Screens
             SpriteFont font = ScreenManager.Font;
 
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
-            Vector2 defaultSize = new Vector2(1280, 800);
+            Vector2 defaultSize = new Vector2(1280, 720);
 
             Vector2 textSize = font.MeasureString(Message);
             Vector2 textPosition = (defaultSize - textSize) / 2;
 
-            Rectangle bodyRectangle = new Rectangle(    (int)textPosition.X - hPadding,
-                                                        (int)textPosition.Y - vPadding,
-                                                        (int)textSize.X + hPadding * 2,
-                                                        (int)textSize.Y + vPadding * 2);
-
-            int headerWidth =  (int) (bodyRectangle.Width * bodyToHeaderRatio);
-            int headerHeight = (int) (headerWidth / headerAspectRatio);
-
-            Rectangle headerRectangle = new Rectangle(bodyRectangle.X - (headerWidth - bodyRectangle.Width) / 2, bodyRectangle.Y - headerHeight/3, headerWidth, headerHeight);
-
+            Rectangle position = new Rectangle((viewport.Width - backgroundTexture.Width) / 2, (viewport.Height - backgroundTexture.Height) / 2, backgroundTexture.Width, backgroundTexture.Height);
+            position.Y += 5;
             Color color = new Color(255, 255, 255, TransitionAlpha);
 
             ScreenManager.FadeBackBufferToBlack(TransitionAlpha * 2 / 3);
 
-            spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState, Matrix.CreateScale((float)viewport.Width / 1280, (float)viewport.Height / 800, 1));
+            spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState, Matrix.CreateScale((float)viewport.Width / 1280, (float)viewport.Height / 720, 1));
 
-            spriteBatch.Draw(headerTexture, headerRectangle, color);
-            spriteBatch.Draw(bodyTexture, bodyRectangle, color);
+            spriteBatch.Draw(backgroundTexture, position, color);
 
-            spriteBatch.DrawString(font, Message, textPosition, color);
+            spriteBatch.DrawString(font, Message, textPosition, Color.Black);
+
+            spriteBatch.Draw(foregroundTexture, position, color);
 
             spriteBatch.End();
         }
