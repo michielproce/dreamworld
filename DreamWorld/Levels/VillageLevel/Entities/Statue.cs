@@ -8,7 +8,7 @@ namespace DreamWorld.Levels.VillageLevel.Entities
 {
     public class Statue : Entity
     {
-        private const string FOOD_SYMBOL = "mesh_flySymbol";
+        private const string FOOD_SYMBOL = "mesh_cowSymbol";
 
         private static Random random = new Random();
         private int frames;
