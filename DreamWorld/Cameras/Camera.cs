@@ -38,6 +38,7 @@ namespace DreamWorld.Cameras
         public virtual void Update(GameTime gameTime)
         {
             Listener.Position = Position;
+            Listener.Forward = Direction;
         }
 
 

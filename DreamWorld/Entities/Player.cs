@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using DreamWorld.Audio;
 using DreamWorld.Cameras;
 using DreamWorld.Entities.Global;
 using DreamWorld.InputManagement;
@@ -6,12 +8,15 @@ using DreamWorld.Levels;
 using DreamWorld.Levels.VillageLevel;
 using JigLibX.Collision;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Entities
 {
     public class Player : Entity
     {
+        private static Random random = new Random();
+
         enum PlayerState
         {
             OnTerrain,
@@ -33,6 +38,9 @@ namespace DreamWorld.Entities
         public Vector3 SpawnPosition { get; set;}
         public Matrix SpawnOrientation { get; set; }
 
+        private SoundEffect3D footStepSound;
+        private List<SoundEffect3D> jumpSounds;
+
         public override void Initialize()
         {
             inputManager = GameScreen.InputManager;
@@ -50,6 +58,20 @@ namespace DreamWorld.Entities
         {            
             Model = GameScreen.Content.Load<Model>(@"Models\Global\Player");                       
             base.LoadContent();
+
+            footStepSound = new SoundEffect3D(this, GameScreen.Content.Load<SoundEffect>(@"Audio\Effects\Footstep"));
+            footStepSound.Boost = .9f;
+
+            jumpSounds = new List<SoundEffect3D>();
+            for (int i = 1; i <= 2; i++)
+            {
+                SoundEffect3D jumpSound = new SoundEffect3D(this, GameScreen.Content.Load<SoundEffect>(@"Audio\Effects\Jump" + i), false);
+                jumpSounds.Add(jumpSound);
+                jumpSound.Boost = .9f;
+                sounds.Add(jumpSound);                
+            }
+
+            sounds.Add(footStepSound);
         }
 
         public override void Update(GameTime gameTime)
@@ -121,10 +143,16 @@ namespace DreamWorld.Entities
             if (playerState != PlayerState.Jumping)
             {
                 if (new Vector2(movement.X, movement.Z).Length() != 0)
+                {
+                    footStepSound.Play();
                     Animation.StartClip("Running");
+                }
                 else
+                {
+                    footStepSound.Stop();
                     Animation.StartClip("Standing");
-            }
+                }
+            } 
 
 
             base.Update(gameTime);
@@ -132,6 +160,8 @@ namespace DreamWorld.Entities
 
         private void StartJumping()
         {
+            footStepSound.Stop();
+            jumpSounds[random.Next(jumpSounds.Count)].Play();
             Animation.StartClip("Jumping");
             playerState = PlayerState.Jumping;
             jumpVelocity = jumpStart;

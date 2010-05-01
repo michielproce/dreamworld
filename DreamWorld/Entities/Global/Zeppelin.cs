@@ -4,6 +4,7 @@ using DreamWorld.Audio;
 using DreamWorld.Rendering.Particles.Systems;
 using DreamWorld.Util;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Entities.Global
@@ -33,10 +34,8 @@ namespace DreamWorld.Entities.Global
         public override void Initialize()
         {
             Level.AddParticleSystem(SpawnInformation.Name + "_smoke", smokeParticleSystem);
-            SoundEffect3D engine = new SoundEffect3D("Steam Engine");
-            AddSoundEffect(engine);
-
-            base.Initialize();
+                        
+            base.Initialize();          
         }
 
         protected override void LoadContent()
@@ -57,6 +56,11 @@ namespace DreamWorld.Entities.Global
                 if (mesh.Name.ToLower().Contains("cog04"))
                     cogs[3] = mesh;               
             }
+            SoundEffect3D sound = new SoundEffect3D(this, GameScreen.Content.Load<SoundEffect>(@"Audio\Effects\Steam Engine"));
+            sounds.Add(sound);
+            sound.Boost = .75f;
+            sound.Play();
+
             base.LoadContent();
         }
 

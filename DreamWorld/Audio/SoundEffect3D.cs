@@ -1,4 +1,6 @@
-﻿using DreamWorld.ScreenManagement.Screens;
+﻿using DreamWorld.Entities;
+using DreamWorld.ScreenManagement.Screens;
+using JigLibX.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 
@@ -6,48 +8,49 @@ namespace DreamWorld.Audio
 {
     public class SoundEffect3D
     {
-        private string soundEffect;                
+        private SoundEffectInstance sfxInstance;
+        private Entity entity;
+        private AudioEmitter emitter;
 
-        public AudioEmitter Emitter { get; private set; }
-        public SoundEffectInstance Sound { get; private set; }
+        public float Boost { get; set;}
 
-        public float DistanceFactor { get; set; }
-
-        public SoundEffect3D(string soundEffect)
-        {
-            this.soundEffect = soundEffect;
-            DistanceFactor = 10;
+        public SoundEffect3D(Entity entity, SoundEffect sfxInstance) : this (entity, sfxInstance, true)
+        {            
         }
 
-
-        public void Initialize()
+        public SoundEffect3D(Entity entity, SoundEffect sfx, bool looped)
         {
-            Emitter = new AudioEmitter();
-            LoadContent();
+            this.entity = entity;
+            sfxInstance = sfx.CreateInstance();
+            emitter = new AudioEmitter();
+            sfxInstance.IsLooped = looped;
+            Apply3D();
         }
-
-
-        protected void LoadContent()
-        {
-            Sound = GameScreen.Instance.Content.Load<SoundEffect>(@"Audio\Effects\" + soundEffect).CreateInstance();            
-//            Apply3D();
-//            Sound.IsLooped = true;
-//            Sound.Play();
-        }        
 
         public void Update(GameTime gameTime)
-        {            
-            Apply3D();    
+        {
+            if (!sfxInstance.IsDisposed)
+                Apply3D();   
+        }
+
+        public void Play()
+        {
+            if(!sfxInstance.IsDisposed) 
+                sfxInstance.Play();
+        }
+
+        public void Stop()
+        {
+            if (!sfxInstance.IsDisposed)
+                sfxInstance.Stop();            
         }
 
         private void Apply3D()
-        {
+        {            
             AudioListener listener = GameScreen.Instance.Camera.Listener;
-
-            Emitter.Position = Vector3.Normalize(Emitter.Position) * DistanceFactor;
-            listener.Position = Vector3.Normalize(listener.Position) * DistanceFactor;
-
-            Sound.Apply3D(listener, Emitter);          
+            emitter.Position = Vector3.Lerp(entity.Body.Position, listener.Position, Boost);
+            emitter.Forward = Vector3.Transform(Vector3.Forward, entity.Body.Orientation);
+            sfxInstance.Apply3D(listener, emitter);
         }
     }
 }

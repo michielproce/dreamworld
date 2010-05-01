@@ -50,7 +50,7 @@ namespace DreamWorld.Entities
         public bool IgnoreEdgeDetection { get; protected set; }
         public bool RenderCollisionPrimitives { get; protected set; }
         
-        private List<SoundEffect3D> sounds;
+        protected List<SoundEffect3D> sounds;
 
         protected Matrix[] transforms;
 
@@ -91,9 +91,6 @@ namespace DreamWorld.Entities
 
             Body = body;
             Skin = skin;
-
-            foreach (SoundEffect3D sound in sounds)
-                sound.Initialize();
 
             if (SpawnInformation != null)
             {
@@ -155,10 +152,7 @@ namespace DreamWorld.Entities
         public virtual void Update(GameTime gameTime)
         {
            foreach (SoundEffect3D sound in sounds)
-           {
-               sound.Emitter.Position = Body.Position;
-               sound.Update(gameTime);
-           }
+                sound.Update(gameTime);
 
            Animation.Update(gameTime);
             
@@ -206,13 +200,6 @@ namespace DreamWorld.Entities
                     GameScreen.debugDrawer.DrawShape(wf);
                 }
             #endif
-        }
-
-        protected void AddSoundEffect(SoundEffect3D sound)
-        {
-            sounds.Add(sound);
-            if(initialized)
-                sound.Initialize();
         }
 
         public static Entity CreateFromSpawnInfo(SpawnInformation spawn)
