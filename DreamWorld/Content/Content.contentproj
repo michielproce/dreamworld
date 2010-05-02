@@ -818,6 +818,16 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
+    <Compile Include="Models\Village\Rock.X">
+      <Name>Rock</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
+    <Compile Include="Models\Village\RockTree.X">
+      <Name>RockTree</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DefaultModelProcessor</Processor>
+    </Compile>
     <None Include="Texts\Help.xml">
       <Name>Help</Name>
       <Importer>EffectImporter</Importer>
