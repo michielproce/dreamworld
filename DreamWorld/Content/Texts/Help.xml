@@ -45,7 +45,7 @@ In front of you are two platforms, blue and green, go ahead and test it out!</Te
       <Entity>tutorialSign06</Entity>
       <Text>Now that you've practiced rotating platforms, let's put it to use!
 In front of you is a red group of platforms. Stand on the platform in front of you, select the group and rotate it along the horizontal axis twice to get across.
-One more thing: If need an overview of the level, you can view it by holding {tab|the back button}.</Text>
+One more thing: If need an overview of the level, you can see it by holding {tab|the back button}.</Text>
     </HelpItem>
 	<HelpItem>
       <Entity>tutorialSign07</Entity>
@@ -86,14 +86,15 @@ On the meadow to your left is another sign that will help you solve the puzzle.<
       <Entity>puzzleSign02</Entity>
       <Text>This puzzle is about food! 
 As you can see, there are two pairs of cows in this puzzle. Unlike platforms, they're not connected to a center (the glowing thingies), instead, they rotate around each other. Select one cow and it'll rotate around the other. And vice versa.
+As such, the cows are linked together. When you move one cow onto a platform, but the other cow is not on the same platform, the cows will fall when you move the platform.
 Your goal is to get both pairs to the other meadow, across the puzzle. Good luck!
 P.S. If a cow falls down, the both of the pair will be respawned in this meadow.</Text>
     </HelpItem>
     <HelpItem>
       <Entity>villageSignAfterTutorial</Entity>
-      <Text>Now that you've learned how the Dreamworld works, find a spot which could use some improvement.
+      <Text>Now that you've learned how the Dreamworld works, find a spot that could use some improvement.
 At this moment there is only one, more will be available in later versions of the game.
-Tip: It's behind you!</Text>
+Hint: Look for some collapsed stables near the crates.</Text>
     </HelpItem>
     <HelpItem>
       <Entity>villageSignAfterPuzzle1</Entity>
