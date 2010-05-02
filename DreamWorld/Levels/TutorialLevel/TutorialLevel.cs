@@ -93,9 +93,9 @@ namespace DreamWorld.Levels.TutorialLevel
         protected override void VictoryEventHandler()
         {
             if (!GameScreen.IsExiting)
-            {
-                GameScreen.ScreenManager.AddScreen(new GameScreen(new VillageLevel.VillageLevel(VillageLevel.VillageLevel.Stage.FINISHED_TUTORIAL)));
+            {                
                 GameScreen.ExitScreen();
+                GameScreen.ScreenManager.AddScreen(new GameScreen(new VillageLevel.VillageLevel(VillageLevel.VillageLevel.Stage.FINISHED_TUTORIAL)));
             }
         }
     }
