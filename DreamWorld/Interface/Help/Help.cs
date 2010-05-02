@@ -13,7 +13,7 @@ namespace DreamWorld.Interface.Help
     public class Help
     {
         public const string HELP_FILE = @"\Texts\Help.xml";
-        public const float HELP_DISTANCE = 20f;
+        public const float HELP_DISTANCE = 15f;
 
         public List<HelpItem> Items { get; set; }
 
