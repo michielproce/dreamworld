@@ -82,10 +82,10 @@ namespace DreamWorld.ScreenManagement.Screens
             SpriteFont font = ScreenManager.Font;
 
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
-            Vector2 defaultSize = new Vector2(1280, 720);
+            Vector2 vpSize = new Vector2(viewport.Width, viewport.Height);
 
             Vector2 textSize = font.MeasureString(Message);
-            Vector2 textPosition = (defaultSize - textSize) / 2;
+            Vector2 textPosition = (vpSize - textSize) / 2;
 
             Rectangle position = new Rectangle((viewport.Width - backgroundTexture.Width) / 2, (viewport.Height - backgroundTexture.Height) / 2, backgroundTexture.Width, backgroundTexture.Height);
             position.Y += 5;
@@ -93,7 +93,7 @@ namespace DreamWorld.ScreenManagement.Screens
 
             ScreenManager.FadeBackBufferToBlack(TransitionAlpha * 2 / 3);
 
-            spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState, Matrix.CreateScale((float)viewport.Width / 1280, (float)viewport.Height / 720, 1));
+            spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState);
 
             spriteBatch.Draw(backgroundTexture, position, color);
 

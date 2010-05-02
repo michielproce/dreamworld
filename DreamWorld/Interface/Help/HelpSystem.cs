@@ -14,15 +14,15 @@ namespace DreamWorld.Interface.Help
         private GameScreen gameScreen;
         private HelpScreen helpScreen;
 
-        private string hint;
-        private SpriteFont hintFont;
+        private string hint;        
         private Vector2 hintSize;
         private Vector2 hintPos;
 
         private Entity customHelper;
 
         public bool ScreenActive { get; set; }
-        public Entity Helper { get; set; }        
+        public Entity Helper { get; set; }
+        public SpriteFont HintFont { get; private set; }
 
         public HelpSystem(GameScreen gameScreen)
         {
@@ -30,7 +30,7 @@ namespace DreamWorld.Interface.Help
 
             Help.LoadInstance();
         
-            hintFont = GameScreen.Instance.Content.Load<SpriteFont>(@"Fonts\helphint");
+            HintFont = GameScreen.Instance.Content.Load<SpriteFont>(@"Fonts\helphint");
         }
         
 
@@ -43,7 +43,7 @@ namespace DreamWorld.Interface.Help
             {                
                 if(hint == null) {
                     hint = StringUtil.ParsePlatform("{Click the left mouse button|Press B} to read the sign.");
-                    hintSize = hintFont.MeasureString(hint);
+                    hintSize = HintFont.MeasureString(hint);
                     hintPos = new Vector2(gameScreen.GraphicsDevice.Viewport.Width / 2f - hintSize.X / 2f, 50f);
                 }
 
@@ -77,8 +77,8 @@ namespace DreamWorld.Interface.Help
             {
                 SpriteBatch spriteBatch = gameScreen.ScreenManager.SpriteBatch;
                 spriteBatch.Begin();
-                spriteBatch.DrawString(hintFont, hint, hintPos + new Vector2(2), Color.Black);
-                spriteBatch.DrawString(hintFont, hint, hintPos, Color.White);                
+                spriteBatch.DrawString(HintFont, hint, hintPos + new Vector2(2), Color.Black);
+                spriteBatch.DrawString(HintFont, hint, hintPos, Color.White);                
                 spriteBatch.End();
             }
         }
