@@ -1792,16 +1792,16 @@
       <Group>0</Group>
     </SpawnInformation>
     <SpawnInformation>
-      <Name>entity634075392962968750</Name>
+      <Name>wentity634075392962968750</Name>
       <TypeName>DreamWorld.Levels.VillageLevel.Entities.Bricks</TypeName>
       <Position>
-        <X>109</X>
+        <X>70</X>
         <Y>-550</Y>
-        <Z>-51</Z>
+        <Z>-80</Z>
       </Position>
       <Rotation>
         <X>0</X>
-        <Y>0</Y>
+        <Y>330</Y>
         <Z>0</Z>
       </Rotation>
       <Scale>
@@ -2768,6 +2768,66 @@
         <X>0.3</X>
         <Y>0.3</Y>
         <Z>0.3</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity634084085193790000</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.RockTree</TypeName>
+      <Position>
+        <X>353</X>
+        <Y>-548.2664</Y>
+        <Z>511</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>290</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>0.5</X>
+        <Y>0.5</Y>
+        <Z>0.5</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity634084088442750000</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.Bricks</TypeName>
+      <Position>
+        <X>409</X>
+        <Y>-550</Y>
+        <Z>393</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>100</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>0.3</X>
+        <Y>0.3</Y>
+        <Z>0.3</Z>
+      </Scale>
+      <Group>0</Group>
+    </SpawnInformation>
+    <SpawnInformation>
+      <Name>entity634084093177880000</Name>
+      <TypeName>DreamWorld.Levels.VillageLevel.Entities.Rock</TypeName>
+      <Position>
+        <X>125</X>
+        <Y>-546</Y>
+        <Z>-170</Z>
+      </Position>
+      <Rotation>
+        <X>0</X>
+        <Y>120</Y>
+        <Z>0</Z>
+      </Rotation>
+      <Scale>
+        <X>0.5</X>
+        <Y>0.5</Y>
+        <Z>0.5</Z>
       </Scale>
       <Group>0</Group>
     </SpawnInformation>
