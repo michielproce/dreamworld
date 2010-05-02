@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DreamWorld.Cameras;
 using DreamWorld.Entities;
+using DreamWorld.Levels.VillageLevel.Entities;
 using DreamWorld.Rendering.Particles;
 using DreamWorld.Rendering.Postprocessing;
 using DreamWorld.ScreenManagement.Screens;
@@ -177,9 +178,16 @@ namespace DreamWorld.Levels
             foreach (Group group in Groups.Values)
             {
                 foreach(Entity entity in group.Entities.Values)
-                {
-                    if(!ignoreList.Contains(entity.Skin))
+                {       
+                    // HACK: remove some items from the ignore list.
+                    if(ignoreList.Contains(entity.Skin) && (
+                        entity is Statue ||
+                        entity is TrashedHouse))
+                        ignoreList.Remove(entity.Skin);
+                    // END OF HACK
+                    if(!ignoreList.Contains(entity.Skin)) 
                         entity.Draw(gameTime, !entity.IgnoreEdgeDetection ? "NormalDepth" : "IgnoreNormalDepth");
+
                 }
             }
 
