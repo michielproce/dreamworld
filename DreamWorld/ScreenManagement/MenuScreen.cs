@@ -13,9 +13,9 @@ namespace DreamWorld.ScreenManagement
         public SpriteFont SmallFont;
 
         protected List<MenuEntry> MenuEntries { get; private set; }
-        internal int selectedEntry;
-        protected Vector2 menuPosition = new Vector2(100, 250);
-        protected Vector2 entryOffset;
+        internal int SelectedEntry;
+        protected Vector2 MenuPosition = new Vector2(100, 250);
+        protected Vector2 EntryOffset;
 
         protected MenuScreen()
         {
@@ -26,7 +26,7 @@ namespace DreamWorld.ScreenManagement
 
         private void OnSelectEntry()
         {
-            MenuEntries[selectedEntry].OnSelectEntry();
+            MenuEntries[SelectedEntry].OnSelectEntry();
         }
 
         protected virtual void OnCancel()
@@ -45,7 +45,7 @@ namespace DreamWorld.ScreenManagement
 
             for (int i = 0; i < MenuEntries.Count; i++)
             {
-                bool isSelected = IsActive && (i == selectedEntry);
+                bool isSelected = IsActive && (i == SelectedEntry);
 
                 MenuEntries[i].Update(isSelected, gameTime);
             }
@@ -57,18 +57,18 @@ namespace DreamWorld.ScreenManagement
 
             if (menuInput.Up)
             {
-                selectedEntry--;
+                SelectedEntry--;
 
-                if (selectedEntry < 0)
-                    selectedEntry = MenuEntries.Count - 1;
+                if (SelectedEntry < 0)
+                    SelectedEntry = MenuEntries.Count - 1;
             }
 
             if (menuInput.Down)
             {
-                selectedEntry++;
+                SelectedEntry++;
 
-                if (selectedEntry >= MenuEntries.Count)
-                    selectedEntry = 0;
+                if (SelectedEntry >= MenuEntries.Count)
+                    SelectedEntry = 0;
             }
 
             if (menuInput.Select)
@@ -85,7 +85,7 @@ namespace DreamWorld.ScreenManagement
         {
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
-            Vector2 position = menuPosition;
+            Vector2 position = MenuPosition;
 
             float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
 
@@ -99,7 +99,7 @@ namespace DreamWorld.ScreenManagement
             
             if (Background != null)
             {
-                Color color = IsExiting ? Color.White : new Color(255, 255, 255, TransitionAlpha); ;
+                Color color = IsExiting ? Color.White : new Color(255, 255, 255, TransitionAlpha);
                     
                 spriteBatch.Draw(Background, Vector2.Zero, color);
             }
@@ -114,12 +114,12 @@ namespace DreamWorld.ScreenManagement
         {
             MenuEntry menuEntry = MenuEntries[key];
 
-            bool isSelected = IsActive && (key == selectedEntry);
+            bool isSelected = IsActive && (key == SelectedEntry);
 
             menuEntry.Draw(gameTime, this, position, isSelected);
 
             position.Y += menuEntry.GetHeight(this);
-            position += entryOffset;
+            position += EntryOffset;
         }
 
     }

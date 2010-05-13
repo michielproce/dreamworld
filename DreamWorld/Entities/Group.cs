@@ -11,16 +11,16 @@ namespace DreamWorld.Entities
 {
     public class Group
     {
-        private GameScreen GameScreen;
+        private readonly GameScreen _gameScreen;
 
-        public int groupId;
+        public int GroupId;
 
         public Dictionary<string, Entity> Entities { get; private set; }
         public GroupCenter Center;
         public Vector3 AllowedRotations;
-        private List<CollisionSkin> IgnoreCollisionSkins;
+        private readonly List<CollisionSkin> _ignoredCollisionSkins;
 
-        private float AmountRotated;
+        private float _amountRotated;
         public Color Color;
         private Quaternion OriginalRotation { get; set; }
         private Quaternion TargetRotation { get; set; }
@@ -29,9 +29,7 @@ namespace DreamWorld.Entities
         {
             get
             {
-                if (IsRotating)
-                    return Quaternion.Lerp(OriginalRotation, TargetRotation, AmountRotated);
-                return OriginalRotation;
+                return IsRotating ? Quaternion.Lerp(OriginalRotation, TargetRotation, _amountRotated) : OriginalRotation;
             }
         }
 
@@ -48,9 +46,9 @@ namespace DreamWorld.Entities
                 {
                     foreach (CollisionInfo collision in entity.Skin.Collisions)
                     {
-                        if ((!IgnoreCollisionSkins.Contains(collision.SkinInfo.Skin0) &&
+                        if ((!_ignoredCollisionSkins.Contains(collision.SkinInfo.Skin0) &&
                              collision.SkinInfo.Skin0.Owner.Immovable) ||
-                            (!IgnoreCollisionSkins.Contains(collision.SkinInfo.Skin1) &&
+                            (!_ignoredCollisionSkins.Contains(collision.SkinInfo.Skin1) &&
                              collision.SkinInfo.Skin1.Owner.Immovable))
                         {
                             return true;
@@ -65,11 +63,11 @@ namespace DreamWorld.Entities
         {
             get
             {
-                if (!(GameScreen.Level is PuzzleLevel))
+                if (!(_gameScreen.Level is PuzzleLevel))
                     return false;
                 return Center != null &&
-                       Vector3.Distance(Center.Body.Position, GameScreen.Level.Player.Body.Position) <
-                       ((PuzzleLevel) GameScreen.Level).SelectionRadius;
+                       Vector3.Distance(Center.Body.Position, _gameScreen.Level.Player.Body.Position) <
+                       PuzzleLevel.SelectionRadius;
             }
         }
 
@@ -77,9 +75,9 @@ namespace DreamWorld.Entities
 
         public Group()
         {
-            GameScreen = GameScreen.Instance;
+            _gameScreen = GameScreen.Instance;
             Entities = new Dictionary<string, Entity>();
-            IgnoreCollisionSkins = new List<CollisionSkin>();
+            _ignoredCollisionSkins = new List<CollisionSkin>();
             OriginalRotation = Quaternion.Identity;
             TargetRotation = Quaternion.Identity;
             AllowedRotations = Vector3.One;
@@ -92,8 +90,8 @@ namespace DreamWorld.Entities
             {
                 entity.Initialize();
 
-                if (entity.Skin != null && !IgnoreCollisionSkins.Contains(entity.Skin))
-                    IgnoreCollisionSkins.Add(entity.Skin);
+                if (entity.Skin != null && !_ignoredCollisionSkins.Contains(entity.Skin))
+                    _ignoredCollisionSkins.Add(entity.Skin);
             }
         }
 
@@ -108,12 +106,12 @@ namespace DreamWorld.Entities
                     CancelRotation();
                 }
 
-                AmountRotated += RotationSpeed;
+                _amountRotated += RotationSpeed;
 
-                if (AmountRotated >= 1)
+                if (_amountRotated >= 1)
                 {
                     OriginalRotation = TargetRotation;
-                    AmountRotated = 0;
+                    _amountRotated = 0;
                 }
 
                 Quaternion rotationSinceLastUpdate = Quaternion.Concatenate(Quaternion.Inverse(oldRotation), Rotation);
@@ -127,13 +125,9 @@ namespace DreamWorld.Entities
                         // Rotate bodies that collide with this entity and are movable
                         for (int i = 0; i <= entity.Skin.Collisions.Count - 1; i++)
                         {
-                            CollisionSkin skin;
-                            if (entity.Skin == entity.Skin.Collisions[i].SkinInfo.Skin0)
-                                skin = entity.Skin.Collisions[i].SkinInfo.Skin1;
-                            else
-                                skin = entity.Skin.Collisions[i].SkinInfo.Skin0;
+                            CollisionSkin skin = entity.Skin == entity.Skin.Collisions[i].SkinInfo.Skin0 ? entity.Skin.Collisions[i].SkinInfo.Skin1 : entity.Skin.Collisions[i].SkinInfo.Skin0;
 
-                            if (!IgnoreCollisionSkins.Contains(skin) && !skin.Owner.Immovable)
+                            if (!_ignoredCollisionSkins.Contains(skin) && !skin.Owner.Immovable)
                                 RotateBody(skin.Owner, rotationSinceLastUpdate, Center.Body.Position, false);
                         }
                     }
@@ -172,7 +166,7 @@ namespace DreamWorld.Entities
             Entities.Add(name, entity);
 
             if (entity.Skin != null)
-                IgnoreCollisionSkins.Add(entity.Skin);
+                _ignoredCollisionSkins.Add(entity.Skin);
         }
 
         /// <summary>
@@ -183,8 +177,8 @@ namespace DreamWorld.Entities
         {
             if (!Entities.ContainsKey(name))
                 throw new InvalidOperationException("Entity " + name + " doesn't exist");
-            if (IgnoreCollisionSkins.Contains(Entities[name].Skin))
-                IgnoreCollisionSkins.Remove(Entities[name].Skin);
+            if (_ignoredCollisionSkins.Contains(Entities[name].Skin))
+                _ignoredCollisionSkins.Remove(Entities[name].Skin);
             Entities[name].DisablePhysics();
             Entities.Remove(name);
         }
@@ -192,7 +186,7 @@ namespace DreamWorld.Entities
         /// <summary>
         /// Returns true if this group is allowed to rotate in this direction
         /// </summary>
-        public virtual bool IsRotationAllowed(Vector3 direction)
+        protected virtual bool IsRotationAllowed(Vector3 direction)
         {
             return ((direction.X == 0 || AllowedRotations.X != 0) && (direction.Y == 0 || AllowedRotations.Y != 0)) &&
                    (direction.Z == 0 || AllowedRotations.Z != 0);
@@ -221,12 +215,12 @@ namespace DreamWorld.Entities
                 Quaternion.CreateFromYawPitchRoll(direction.Y, direction.X, direction.Z));
         }
 
-        public void CancelRotation()
+        private void CancelRotation()
         {
             Quaternion temp = OriginalRotation;
             OriginalRotation = TargetRotation;
             TargetRotation = temp;
-            AmountRotated = 1 - AmountRotated;
+            _amountRotated = 1 - _amountRotated;
         }
 
         public bool EntityNameExists(string name)

@@ -9,7 +9,7 @@ namespace DreamWorld.ScreenManagement
 {
     public class ScreenManager : DrawableGameComponent
     {
-        private readonly List<Screen> screens = new List<Screen>();
+        private readonly List<Screen> _screens = new List<Screen>();
 
         public InputManager InputManager { get; private set; }
 
@@ -17,7 +17,7 @@ namespace DreamWorld.ScreenManagement
         public SpriteFont Font { get; private set; }
         public Texture2D BlankTexture { get; private set; }
         public Rectangle FullscreenDestination { get; private set; }
-        private bool Initialized;
+        private bool _initialized;
 
         public ScreenManager(Game game) : base(game)
         {
@@ -29,10 +29,10 @@ namespace DreamWorld.ScreenManagement
 
             InputManager = ((DreamWorldGame)Game).InputManager;
 
-            foreach (Screen screen in screens)
+            foreach (Screen screen in _screens)
                 screen.Initialize();
             FullscreenDestination = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
-            Initialized = true;
+            _initialized = true;
         }
 
         protected override void LoadContent()
@@ -47,7 +47,7 @@ namespace DreamWorld.ScreenManagement
 
         protected override void UnloadContent()
         {
-            foreach (Screen screen in screens)
+            foreach (Screen screen in _screens)
                 screen.UnloadContent();
         }
 
@@ -57,9 +57,9 @@ namespace DreamWorld.ScreenManagement
             bool otherScreenHasFocus = !Game.IsActive;
             bool coveredByOtherScreen = false;
 
-            for (int i = screens.Count; i > 0; i--)
+            for (int i = _screens.Count; i > 0; i--)
             {
-                Screen screen = screens[i - 1];
+                Screen screen = _screens[i - 1];
 
                 screen.OtherScreenHasFocus = otherScreenHasFocus;
                 screen.CoveredByOtherScreen = coveredByOtherScreen;
@@ -80,7 +80,7 @@ namespace DreamWorld.ScreenManagement
             DreamWorldGame dreamWorldGame = (DreamWorldGame)Game;
             dreamWorldGame.GraphicsDeviceManager.GraphicsDevice.Clear(Color.Black);
 
-            foreach (Screen screen in screens)
+            foreach (Screen screen in _screens)
             {
                 if (screen.State == ScreenState.Hidden)
                     continue;
@@ -95,18 +95,18 @@ namespace DreamWorld.ScreenManagement
             screen.ScreenManager = this;
             screen.IsExiting = false;
 
-            screens.Add(screen);
+            _screens.Add(screen);
 
             if (screen.LoadingScreen != null)
             {
                 AddScreen(screen.LoadingScreen);
-                if (Initialized)
+                if (_initialized)
                 {
                     Thread loadingThread = new Thread(screen.Initialize);
                     loadingThread.Start();
                 }
             }
-            else if (Initialized)
+            else if (_initialized)
             {
                 screen.Initialize();
             }
@@ -115,10 +115,10 @@ namespace DreamWorld.ScreenManagement
 
         public void RemoveScreen(Screen screen)
         {
-            if (Initialized)
+            if (_initialized)
                 screen.UnloadContent();
 
-            screens.Remove(screen);
+            _screens.Remove(screen);
         }
 
 

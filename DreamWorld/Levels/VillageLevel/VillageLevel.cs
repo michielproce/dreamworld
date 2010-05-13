@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DreamWorld.Audio;
 using DreamWorld.Cameras;
 using DreamWorld.Entities;
 using DreamWorld.Levels.VillageLevel.Entities;
 using DreamWorld.Rendering.Postprocessing;
-using DreamWorld.ScreenManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
@@ -16,14 +14,14 @@ namespace DreamWorld.Levels.VillageLevel
     {
         public enum Stage
         {
-            START,
-            FINISHED_TUTORIAL,
-            FINISHED_PUZZLE1,
+            Start,
+            FinishedTutorial,
+            FinishedPuzzle1,
         }
 
         public Stage CurrentStage { get; private set;}
 
-        public float maximumWalkingHeight { get; private set; }
+        public float MaximumWalkingHeight { get; private set; }
 
         public override string LevelInformationFileName
         {
@@ -35,12 +33,12 @@ namespace DreamWorld.Levels.VillageLevel
             CurrentStage = stage;
         }
 
-        public override void InitBloom(ref Bloom bloom)
+        protected override void InitBloom(ref Bloom bloom)
         {
             switch (CurrentStage)
             {
-                case Stage.START:
-                case Stage.FINISHED_TUTORIAL:
+                case Stage.Start:
+                case Stage.FinishedTutorial:
                     bloom.BloomThreshold = .3f;
                     bloom.BlurAmount = 4f;
                     bloom.BloomIntensity = 1f;
@@ -49,7 +47,7 @@ namespace DreamWorld.Levels.VillageLevel
                     bloom.BaseSaturation = .85f;
                     break;
 
-                case Stage.FINISHED_PUZZLE1:
+                case Stage.FinishedPuzzle1:
                     bloom.BloomThreshold = .3f;
                     bloom.BlurAmount = 4f;
                     bloom.BloomIntensity = 1f;
@@ -62,7 +60,7 @@ namespace DreamWorld.Levels.VillageLevel
 
         public override void Initialize()
         {
-            maximumWalkingHeight = -525;
+            MaximumWalkingHeight = -525;
             Skybox = new Skybox("Village") { Name = "Skybox" };
             Terrain = new Terrain("Village") { Name = "Terrain" };
             
@@ -83,7 +81,7 @@ namespace DreamWorld.Levels.VillageLevel
 
                     switch (CurrentStage)
                     {
-                        case Stage.START:
+                        case Stage.Start:
                             if (entity.Value is Stable ||
                                 entity.Value is CowDummy ||
                                 "villageSignAfterTutorial".Equals(entity.Key) ||
@@ -93,7 +91,7 @@ namespace DreamWorld.Levels.VillageLevel
                                 toRemove.Add(entity.Value);
                             break;
 
-                        case Stage.FINISHED_TUTORIAL:
+                        case Stage.FinishedTutorial:
                             if (entity.Value is Stable ||
                                 entity.Value is CowDummy || 
                                 "villageSignAfterPuzzle1".Equals(entity.Key) ||
@@ -101,7 +99,7 @@ namespace DreamWorld.Levels.VillageLevel
                                 toRemove.Add(entity.Value);                                                                                 
                             break;
 
-                        case Stage.FINISHED_PUZZLE1:
+                        case Stage.FinishedPuzzle1:
                             if (entity.Value is StableTrashed || 
                                 "villageSign3".Equals(entity.Key) || 
                                 "villageTubes3".Equals(entity.Key) || 
@@ -121,11 +119,11 @@ namespace DreamWorld.Levels.VillageLevel
             // Move the player to it's location
             switch (CurrentStage)
             {
-                case Stage.FINISHED_TUTORIAL:
+                case Stage.FinishedTutorial:
                     Player.Body.MoveTo(new Vector3(300, -550, 90), Matrix.Identity);
                     break;
 
-                case Stage.FINISHED_PUZZLE1:
+                case Stage.FinishedPuzzle1:
                     Player.Body.MoveTo(new Vector3(250, -550, 275), Matrix.CreateRotationY(MathHelper.ToRadians(130)));
                     break;
             }

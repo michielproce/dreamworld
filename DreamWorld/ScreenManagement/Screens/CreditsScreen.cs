@@ -6,8 +6,8 @@ namespace DreamWorld.ScreenManagement.Screens
 {
     public  class CreditsScreen : Screen
     {
-        private Rectangle destination;
-        private Texture2D texture;
+        private Rectangle _destination;
+        private Texture2D _texture;
 
         public CreditsScreen()
         {           
@@ -17,9 +17,9 @@ namespace DreamWorld.ScreenManagement.Screens
 
         protected override void LoadContent()
         {
-            texture = ScreenManager.Game.Content.Load<Texture2D>(@"Textures\Menu\credits");
+            _texture = ScreenManager.Game.Content.Load<Texture2D>(@"Textures\Menu\credits");
             Viewport vp = ScreenManager.Game.GraphicsDevice.Viewport;
-            destination = new Rectangle(0, 0, vp.Width, vp.Height);
+            _destination = new Rectangle(0, 0, vp.Width, vp.Height);
         }
 
 
@@ -40,7 +40,7 @@ namespace DreamWorld.ScreenManagement.Screens
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             spriteBatch.Begin();
             Color color = IsExiting ? Color.White : new Color(255, 255, 255, TransitionAlpha);
-            spriteBatch.Draw(texture, destination, color);
+            spriteBatch.Draw(_texture, _destination, color);
             spriteBatch.End();
         }
     }

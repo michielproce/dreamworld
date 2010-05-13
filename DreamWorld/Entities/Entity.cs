@@ -45,16 +45,14 @@ namespace DreamWorld.Entities
         
         public Model Model { get; protected set; }
 
-        public Animation Animation { get; private set; }
+        protected Animation Animation { get; set; }
 
         public bool IgnoreEdgeDetection { get; protected set; }
         public bool RenderCollisionPrimitives { get; protected set; }
         
-        protected List<SoundEffect3D> sounds;
+        protected readonly List<SoundEffect3D> Sounds;
 
-        protected Matrix[] transforms;
-
-        protected bool initialized;
+        protected Matrix[] Transforms;
 
         protected Entity()
         {
@@ -66,7 +64,7 @@ namespace DreamWorld.Entities
             Scale = Vector3.One;
             Animation = new Animation();
             World = Matrix.Identity;
-            sounds = new List<SoundEffect3D>();
+            Sounds = new List<SoundEffect3D>();
         }
 
         ~Entity()
@@ -103,7 +101,6 @@ namespace DreamWorld.Entities
             Body.Immovable = true;
 
             LoadContent();
-            initialized = true;
         }
 
         public void Spawn()
@@ -136,7 +133,7 @@ namespace DreamWorld.Entities
             if (sd != null)
                 Animation.Load(sd);
 
-            transforms = new Matrix[Model.Bones.Count];
+            Transforms = new Matrix[Model.Bones.Count];
         }
 
         protected virtual void GetPhysicsInformation(out Body body, out CollisionSkin skin, out Vector3 centerOfMass)
@@ -151,7 +148,7 @@ namespace DreamWorld.Entities
 
         public virtual void Update(GameTime gameTime)
         {
-           foreach (SoundEffect3D sound in sounds)
+           foreach (SoundEffect3D sound in Sounds)
                 sound.Update(gameTime);
 
            Animation.Update(gameTime);
@@ -171,13 +168,13 @@ namespace DreamWorld.Entities
         {
             if (Model != null)
             {
-                Model.CopyAbsoluteBoneTransformsTo(transforms);
+                Model.CopyAbsoluteBoneTransformsTo(Transforms);
                 foreach (ModelMesh mesh in Model.Meshes)
                 {
                     foreach (Effect effect in mesh.Effects)
                     {
                         effect.CurrentTechnique = effect.Techniques[technique];
-                        effect.Parameters["world"].SetValue(transforms[mesh.ParentBone.Index]*World);
+                        effect.Parameters["world"].SetValue(Transforms[mesh.ParentBone.Index]*World);
                         effect.Parameters["view"].SetValue(GameScreen.Camera.View);
                         effect.Parameters["projection"].SetValue(GameScreen.Camera.Projection);
                         if (Group != null)

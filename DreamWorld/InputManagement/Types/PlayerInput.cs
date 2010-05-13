@@ -6,11 +6,11 @@ namespace DreamWorld.InputManagement.Types
 {
     public class PlayerInput : Input
     {
-        public const float HorizontalMouseRotationSpeed = MathHelper.Pi/2000f;
-        public const float HorizontalGamePadRotationSpeed = MathHelper.Pi/100f;
-        public const float HorizontalKeyboardRotationSpeed = MathHelper.Pi / 100f;
-        public const float VerticalMouseRotationSpeed = MathHelper.Pi/2000f;
-        public const float VerticalGamePadRotationSpeed = MathHelper.Pi/100f;
+        private const float HorizontalMouseRotationSpeed = MathHelper.Pi/2000f;
+        private const float HorizontalGamePadRotationSpeed = MathHelper.Pi/100f;
+        private const float HorizontalKeyboardRotationSpeed = MathHelper.Pi / 100f;
+        private const float VerticalMouseRotationSpeed = MathHelper.Pi/2000f;
+        private const float VerticalGamePadRotationSpeed = MathHelper.Pi/100f;
 
         public Vector3 Movement
         {

@@ -1,7 +1,6 @@
 using System;
 using DreamWorld.Audio;
 using DreamWorld.Cameras;
-using DreamWorld.Entities;
 using DreamWorld.Helpers.Renderers;
 using DreamWorld.InputManagement;
 using DreamWorld.InputManagement.Types;
@@ -27,16 +26,16 @@ namespace DreamWorld.ScreenManagement.Screens
         public InputManager InputManager { get; private set; }
         public GraphicsDevice GraphicsDevice { get; private set; }
         public DebugDrawer debugDrawer;
-        public DreamWorldPhysicsSystem PhysicsSystem { get; private set; }
+        private DreamWorldPhysicsSystem PhysicsSystem { get; set; }
         public HelpSystem HelpSystem { get; private set; }
         
         public VoiceOver VoiceOver { get; set; }
 
-        private bool crosshairVisible;
-        private Texture2D crosshairTexture;
-        private Vector2 crosshairPosition;
+        private bool _crosshairVisible;
+        private Texture2D _crosshairTexture;
+        private Vector2 _crosshairPosition;
 
-        private SpriteFont subtitleFont;
+        private SpriteFont _subtitleFont;
 
         public GameScreen(Level level)
         {
@@ -68,12 +67,12 @@ namespace DreamWorld.ScreenManagement.Screens
 
             HelpSystem = new HelpSystem(this);
 
-            crosshairVisible = Level is PuzzleLevel;
-            crosshairTexture = Content.Load<Texture2D>(@"Textures\Interface\crosshair");
-            crosshairPosition = new Vector2(GraphicsDevice.Viewport.Width / 2 - crosshairTexture.Width / 2,
-                GraphicsDevice.Viewport.Height / 2 - crosshairTexture.Height / 2);
+            _crosshairVisible = Level is PuzzleLevel;
+            _crosshairTexture = Content.Load<Texture2D>(@"Textures\Interface\crosshair");
+            _crosshairPosition = new Vector2(GraphicsDevice.Viewport.Width / 2 - _crosshairTexture.Width / 2,
+                GraphicsDevice.Viewport.Height / 2 - _crosshairTexture.Height / 2);
             
-            subtitleFont = Content.Load<SpriteFont>(@"Fonts\subtitle");
+            _subtitleFont = Content.Load<SpriteFont>(@"Fonts\subtitle");
             
             LoadingScreen.Loaded = true;
         }
@@ -90,19 +89,19 @@ namespace DreamWorld.ScreenManagement.Screens
             {
                 #if (DEBUG && !XBOX)
                     if (InputManager.Debug.ToggleDebugCameraReticle)
-                        crosshairVisible = !crosshairVisible;
+                        _crosshairVisible = !_crosshairVisible;
 
                     if (((DreamWorldGame)ScreenManager.Game).InputManager.Debug.ToggleDebugCamera)
                     {
                         if (Camera is DebugCamera)
                         {
-                            crosshairVisible = Level is PuzzleLevel;
+                            _crosshairVisible = Level is PuzzleLevel;
                             ((DebugCamera)Camera).DisposeForm();
                             Camera = new ThirdPersonCamera();                            
                         }
                         else 
                         {
-                            crosshairVisible = true;
+                            _crosshairVisible = true;
                             Camera = new DebugCamera { Position = Camera.Position };
                         }
                         Camera.Initialize();
@@ -118,26 +117,26 @@ namespace DreamWorld.ScreenManagement.Screens
                 {
                     if (((DreamWorldGame)ScreenManager.Game).InputManager.Player.ShowOverview && Camera is ThirdPersonCamera)
                     {
-                        crosshairVisible = false;
+                        _crosshairVisible = false;
                         Camera = new OverviewCamera
                         {
-                            targetPosition = Level.overviewPosition,
-                            targetLookat = Level.overviewLookat,
-                            oldCamera = Camera as ThirdPersonCamera,
-                            player = Level.Player
+                            TargetPosition = Level.OverviewPosition,
+                            TargetLookat = Level.OverviewLookat,
+                            OldCamera = Camera as ThirdPersonCamera,
+                            Player = Level.Player
                         };
                         Camera.Initialize();
                     }
                     else if (!((DreamWorldGame)ScreenManager.Game).InputManager.Player.ShowOverview && Camera is OverviewCamera)
                     {
                         OverviewCamera overviewCamera = (OverviewCamera)Camera;
-                        overviewCamera.isExitting = true;
+                        overviewCamera.IsExitting = true;
 
-                        if (overviewCamera.transition == 0)
+                        if (overviewCamera.Transition == 0)
                         {
-                            Camera = overviewCamera.oldCamera;
+                            Camera = overviewCamera.OldCamera;
                             if (Level is PuzzleLevel)
-                                crosshairVisible = true;
+                                _crosshairVisible = true;
                         }
                     }
                 }
@@ -192,7 +191,7 @@ namespace DreamWorld.ScreenManagement.Screens
 
         private void ConfirmExitTutorialMessageBoxAccepted(object sender, EventArgs e)
         {
-            ScreenManager.AddScreen(new GameScreen(new VillageLevel(VillageLevel.Stage.FINISHED_TUTORIAL)));
+            ScreenManager.AddScreen(new GameScreen(new VillageLevel(VillageLevel.Stage.FinishedTutorial)));
             ExitScreen();
         }
 
@@ -213,21 +212,21 @@ namespace DreamWorld.ScreenManagement.Screens
                 if(VoiceOver.Audio.State == SoundState.Playing && ((DreamWorldGame) ScreenManager.Game).Config.Subtitles)
                 {
                     Viewport vp = GraphicsDevice.Viewport;
-                    string text = StringUtil.CutLine(vp, subtitleFont, VoiceOver.Text, 0.9f);
-                    Vector2 textSize = subtitleFont.MeasureString(text);
+                    string text = StringUtil.CutLine(vp, _subtitleFont, VoiceOver.Text, 0.9f);
+                    Vector2 textSize = _subtitleFont.MeasureString(text);
                     Vector2 textPosition = new Vector2(vp.Width / 2f - textSize.X / 2f, vp.Height - textSize.Y - 30f);
 
                     ScreenManager.SpriteBatch.Begin();
-                    ScreenManager.SpriteBatch.DrawString(subtitleFont, text, textPosition + new Vector2(2), Color.Black);
-                    ScreenManager.SpriteBatch.DrawString(subtitleFont, text, textPosition, Color.White);
+                    ScreenManager.SpriteBatch.DrawString(_subtitleFont, text, textPosition + new Vector2(2), Color.Black);
+                    ScreenManager.SpriteBatch.DrawString(_subtitleFont, text, textPosition, Color.White);
                     ScreenManager.SpriteBatch.End();
                 }
             }
 
-            if (crosshairVisible)
+            if (_crosshairVisible)
             {
                 ScreenManager.SpriteBatch.Begin();
-                ScreenManager.SpriteBatch.Draw(crosshairTexture, crosshairPosition, Color.White);
+                ScreenManager.SpriteBatch.Draw(_crosshairTexture, _crosshairPosition, Color.White);
                 ScreenManager.SpriteBatch.End();
             }
                         

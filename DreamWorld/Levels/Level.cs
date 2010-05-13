@@ -6,10 +6,7 @@ using DreamWorld.Levels.VillageLevel.Entities;
 using DreamWorld.Rendering.Particles;
 using DreamWorld.Rendering.Postprocessing;
 using DreamWorld.ScreenManagement.Screens;
-using DreamWorld.Util;
 using JigLibX.Collision;
-using JigLibX.Geometry;
-using JigLibX.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -17,7 +14,7 @@ namespace DreamWorld.Levels
 {
     public abstract class Level
     {
-        public DreamWorldGame Game { protected get; set; }
+        protected DreamWorldGame Game { get; set; }
         public GameScreen GameScreen { get; set; }
         public Terrain Terrain { get; protected set; }
         public Skybox Skybox { get; protected set; }
@@ -25,25 +22,25 @@ namespace DreamWorld.Levels
         public Player Player { get; private set; }
 
         public Dictionary<int, Group> Groups { get; private set; }
-        private Dictionary<string, ParticleSystem> particleSystems;
+        private readonly Dictionary<string, ParticleSystem> _particleSystems;
 
         public LevelInformation LevelInformation { get; private set; }
         
         public Color LoadingColor { get; protected set;  }
 
-        private bool initialized;
+        private bool _initialized;
 
-        private SpriteBatch spriteBatch;
+        private SpriteBatch _spriteBatch;
         protected Bloom bloom;
-        private EdgeDetection edgeDetection;
+        private EdgeDetection _edgeDetection;
 
-        public Vector3 overviewPosition = new Vector3(50, 500, 150);
-        public Vector3 overviewLookat = new Vector3(150, 0, 150);
+        public Vector3 OverviewPosition = new Vector3(50, 500, 150);
+        public Vector3 OverviewLookat = new Vector3(150, 0, 150);
 
         protected Level()
         {
             Groups = new Dictionary<int, Group>();
-            particleSystems = new Dictionary<string, ParticleSystem>();
+            _particleSystems = new Dictionary<string, ParticleSystem>();
             LoadingColor = Color.Black;
         }
 
@@ -75,10 +72,10 @@ namespace DreamWorld.Levels
 
             foreach (KeyValuePair<int, Group> group in Groups)
             {
-                group.Value.groupId = group.Key;
+                group.Value.GroupId = group.Key;
                 group.Value.Initialize();
             }
-            foreach (ParticleSystem particleSystem in particleSystems.Values)
+            foreach (ParticleSystem particleSystem in _particleSystems.Values)
                 particleSystem.Initialize();
 
             Player.Initialize();
@@ -90,12 +87,12 @@ namespace DreamWorld.Levels
             Player.Respawn();
             Player.Group = GetGroup(0);
             
-            spriteBatch = new SpriteBatch(Game.GraphicsDevice);
-            bloom = new Bloom(Game, spriteBatch);
+            _spriteBatch = new SpriteBatch(Game.GraphicsDevice);
+            bloom = new Bloom(Game, _spriteBatch);
             InitBloom(ref bloom);
 
-            edgeDetection = new EdgeDetection(Game, spriteBatch);
-            initialized = true;
+            _edgeDetection = new EdgeDetection(Game, _spriteBatch);
+            _initialized = true;
         }
 
         public Group GetGroup(int groupId)
@@ -109,7 +106,7 @@ namespace DreamWorld.Levels
             return group;
         }
 
-        public void SetGroup(Group group, int groupId)
+        protected void SetGroup(Group group, int groupId)
         {
             // In case of a class that derive from Group, add it manually.
             Groups.Add(groupId, group);
@@ -137,18 +134,18 @@ namespace DreamWorld.Levels
 
         public void AddParticleSystem(string name, ParticleSystem particleSystem)
         {
-            if (particleSystems.ContainsKey(name))
+            if (_particleSystems.ContainsKey(name))
                 throw new InvalidOperationException("Particle System " + name + " already exists");
 
-            particleSystems.Add(name, particleSystem);
+            _particleSystems.Add(name, particleSystem);
             
-            if(initialized)
+            if(_initialized)
                 particleSystem.Initialize();
         }
 
         public virtual void Update(GameTime gameTime)
         {
-            foreach (ParticleSystem particleSystem in particleSystems.Values)
+            foreach (ParticleSystem particleSystem in _particleSystems.Values)
                 particleSystem.Update(gameTime);
             foreach (Group group in Groups.Values)
                 group.Update(gameTime);               
@@ -166,8 +163,8 @@ namespace DreamWorld.Levels
                     ignoreList.Add(skin);
             }
 
-            edgeDetection.PrepareDraw();
-            edgeDetection.PrepareDrawNormalDepth();
+            _edgeDetection.PrepareDraw();
+            _edgeDetection.PrepareDrawNormalDepth();
             
             if (Skybox != null)
                 Skybox.Draw(gameTime, "IgnoreNormalDepth");
@@ -191,17 +188,15 @@ namespace DreamWorld.Levels
                 }
             }
 
-            edgeDetection.PrepareDrawDefault();                
+            _edgeDetection.PrepareDrawDefault();                
 
             DrawEntities(gameTime, ignoreList);
 
-            edgeDetection.Draw(gameTime);
+            _edgeDetection.Draw(gameTime);
 
-            foreach (ParticleSystem particleSystem in particleSystems.Values)
+            foreach (ParticleSystem particleSystem in _particleSystems.Values)
                 particleSystem.Draw(gameTime);
 
-            
-      
             bloom.Draw(gameTime);
         }
 
@@ -251,6 +246,6 @@ namespace DreamWorld.Levels
         }
 
         public abstract string LevelInformationFileName { get; }
-        public abstract void InitBloom(ref Bloom bloom);
+        protected abstract void InitBloom(ref Bloom bloom);
     }
 }

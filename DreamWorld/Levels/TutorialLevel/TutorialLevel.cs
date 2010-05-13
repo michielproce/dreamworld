@@ -1,7 +1,6 @@
 ﻿using System;
 using DreamWorld.Cameras;
 using DreamWorld.Entities;
-using DreamWorld.Entities.Global;
 using DreamWorld.Rendering.Postprocessing;
 using DreamWorld.ScreenManagement.Screens;
 using Microsoft.Xna.Framework;
@@ -14,7 +13,7 @@ namespace DreamWorld.Levels.TutorialLevel
     class TutorialLevel : PuzzleLevel
     {
         // True if the player is reading the last sign
-        private bool readingLastSign;
+        private bool _readingLastSign;
 
         public TutorialLevel()
         {
@@ -34,14 +33,14 @@ namespace DreamWorld.Levels.TutorialLevel
 
             base.Initialize();
 
-            overviewPosition = new Vector3(146.2f, 117.2f, -328.4f);
-            overviewLookat = new Vector3(146.7f, 116.7f, -327.8f);
+            OverviewPosition = new Vector3(146.2f, 117.2f, -328.4f);
+            OverviewLookat = new Vector3(146.7f, 116.7f, -327.8f);
 
             ThirdPersonCamera cam = GameScreen.Camera as ThirdPersonCamera;
             if (cam != null)
                 cam.VerticalRotation = MathHelper.ToRadians(-15);     
 
-            _hud.Hidden = true;
+            Hud.Hidden = true;
 
             GameScreen.TransitionOnTime = TimeSpan.FromSeconds(3);            
         }
@@ -54,10 +53,10 @@ namespace DreamWorld.Levels.TutorialLevel
             if (GameScreen.HelpSystem.Helper != null)
             {
                 if (GameScreen.HelpSystem.Helper.Name == "tutorialSign03" && GameScreen.HelpSystem.ScreenActive)
-                    _hud.Hidden = false;
+                    Hud.Hidden = false;
 
                 if (GameScreen.HelpSystem.Helper.Name == "tutorialSign11" && GameScreen.HelpSystem.ScreenActive)
-                    readingLastSign = true;
+                    _readingLastSign = true;
             }
 
             // Update for bloom
@@ -70,7 +69,7 @@ namespace DreamWorld.Levels.TutorialLevel
             base.Update(gameTime);
         }
 
-        public override void InitBloom(ref Bloom bloom)
+        protected override void InitBloom(ref Bloom bloom)
         {
             bloom.BloomThreshold = .3f;
             bloom.BlurAmount = 8f;
@@ -87,7 +86,7 @@ namespace DreamWorld.Levels.TutorialLevel
                 return true;
 #endif
             // The game is won when the player is done reading the last sign.
-            return readingLastSign && GameScreen.HelpSystem.Helper != null && !GameScreen.HelpSystem.ScreenActive;
+            return _readingLastSign && GameScreen.HelpSystem.Helper != null && !GameScreen.HelpSystem.ScreenActive;
         }
 
         protected override void VictoryEventHandler()
@@ -95,7 +94,7 @@ namespace DreamWorld.Levels.TutorialLevel
             if (!GameScreen.IsExiting)
             {                
                 GameScreen.ExitScreen();
-                GameScreen.ScreenManager.AddScreen(new GameScreen(new VillageLevel.VillageLevel(VillageLevel.VillageLevel.Stage.FINISHED_TUTORIAL)));
+                GameScreen.ScreenManager.AddScreen(new GameScreen(new VillageLevel.VillageLevel(VillageLevel.VillageLevel.Stage.FinishedTutorial)));
             }
         }
     }

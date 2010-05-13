@@ -1,9 +1,7 @@
 ﻿using System;
 using DreamWorld.Entities;
-using DreamWorld.Interface.Help;
 using DreamWorld.Rendering.Particles.Systems;
 using DreamWorld.ScreenManagement.Screens;
-using DreamWorld.ScreenManagement.Screens.Cutscenes;
 using DreamWorld.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -35,7 +33,7 @@ namespace DreamWorld.Levels.VillageLevel.Entities
         public override void Update(GameTime gameTime)
         {
             VillageLevel vl = Level as VillageLevel;
-            if (vl != null && vl.CurrentStage == VillageLevel.Stage.FINISHED_TUTORIAL)
+            if (vl != null && vl.CurrentStage == VillageLevel.Stage.FinishedTutorial)
             {
                 if (Vector3.Distance(Level.Player.Body.Position, Body.Position) <= 30f)
                 {
@@ -58,12 +56,6 @@ namespace DreamWorld.Levels.VillageLevel.Entities
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// Creates all needed object information for the JigLibX physics simulator.
-        /// </summary>
-        /// <param name="body">Returns Body.</param>
-        /// <param name="skin">Returns CollisionSkin.</param>
-        /// <param name="centerOfMass">Returns the center of mass wich is usefull for drawing objects.</param>
         protected override void GetPhysicsInformation(out JigLibX.Physics.Body body, out JigLibX.Collision.CollisionSkin skin, out Vector3 centerOfMass)
         {
             #region Header

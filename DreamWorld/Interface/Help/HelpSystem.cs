@@ -1,7 +1,5 @@
 ﻿using DreamWorld.Cameras;
 using DreamWorld.Entities;
-using DreamWorld.Levels;
-using DreamWorld.ScreenManagement;
 using DreamWorld.ScreenManagement.Screens;
 using DreamWorld.Util;
 using Microsoft.Xna.Framework;
@@ -11,14 +9,14 @@ namespace DreamWorld.Interface.Help
 {
     public class HelpSystem
     {                        
-        private GameScreen gameScreen;
-        private HelpScreen helpScreen;
+        private readonly GameScreen _gameScreen;
+        private HelpScreen _helpScreen;
 
-        private string hint;        
-        private Vector2 hintSize;
-        private Vector2 hintPos;
+        private string _hint;        
+        private Vector2 _hintSize;
+        private Vector2 _hintPos;
 
-        private Entity customHelper;
+        private Entity _customHelper;
 
         public bool ScreenActive { get; set; }
         public Entity Helper { get; set; }
@@ -26,7 +24,7 @@ namespace DreamWorld.Interface.Help
 
         public HelpSystem(GameScreen gameScreen)
         {
-            this.gameScreen = gameScreen;
+            _gameScreen = gameScreen;
 
             Help.LoadInstance();
         
@@ -36,57 +34,57 @@ namespace DreamWorld.Interface.Help
 
         public void Update(GameTime gameTime)
         {
-            if(gameScreen.Camera is DebugCamera)
+            if(_gameScreen.Camera is DebugCamera)
                 return;
 
             if (Helper != null) 
             {                
-                if(hint == null) {
-                    hint = StringUtil.ParsePlatform("{Click the left mouse button|Press B} to read the sign.");
-                    hintSize = HintFont.MeasureString(hint);
-                    hintPos = new Vector2(gameScreen.GraphicsDevice.Viewport.Width / 2f - hintSize.X / 2f, 50f);
+                if(_hint == null) {
+                    _hint = StringUtil.ParsePlatform("{Click the left mouse button|Press B} to read the sign.");
+                    _hintSize = HintFont.MeasureString(_hint);
+                    _hintPos = new Vector2(_gameScreen.GraphicsDevice.Viewport.Width / 2f - _hintSize.X / 2f, 50f);
                 }
 
-                if(gameScreen.InputManager.Player.ApplyRotation)
+                if(_gameScreen.InputManager.Player.ApplyRotation)
                 {                    
-                    helpScreen = new HelpScreen(this, Help.Instance.FindHelp(Helper));                    
-                    gameScreen.ScreenManager.AddScreen(helpScreen);                    
+                    _helpScreen = new HelpScreen(this, Help.Instance.FindHelp(Helper));                    
+                    _gameScreen.ScreenManager.AddScreen(_helpScreen);                    
                 }
 
                 // Remove the helper if we're to far away.
-                if (Vector3.Distance(gameScreen.Level.Player.Body.Position, Helper.Body.Position) > Help.HELP_DISTANCE)
+                if (Vector3.Distance(_gameScreen.Level.Player.Body.Position, Helper.Body.Position) > Help.HelpDistance)
                 {
                     Helper = null;
-                    hint = null;
+                    _hint = null;
                 }
             }
-            if(customHelper != null)
+            if(_customHelper != null)
             {
                 // Remove the custom helper if we're to far away.
-                if (Vector3.Distance(gameScreen.Level.Player.Body.Position, customHelper.Body.Position) > Help.HELP_DISTANCE)
+                if (Vector3.Distance(_gameScreen.Level.Player.Body.Position, _customHelper.Body.Position) > Help.HelpDistance)
                 {
-                    customHelper = null;
-                    hint = null;
+                    _customHelper = null;
+                    _hint = null;
                 }                
             }
         }
 
         public void Draw(GameTime gameTime)
         {
-            if (hint != null && !ScreenActive)
+            if (_hint != null && !ScreenActive)
             {
-                SpriteBatch spriteBatch = gameScreen.ScreenManager.SpriteBatch;
+                SpriteBatch spriteBatch = _gameScreen.ScreenManager.SpriteBatch;
                 spriteBatch.Begin();
-                spriteBatch.DrawString(HintFont, hint, hintPos + new Vector2(2), Color.Black);
-                spriteBatch.DrawString(HintFont, hint, hintPos, Color.White);                
+                spriteBatch.DrawString(HintFont, _hint, _hintPos + new Vector2(2), Color.Black);
+                spriteBatch.DrawString(HintFont, _hint, _hintPos, Color.White);                
                 spriteBatch.End();
             }
         }
 
         public void ShowCustomHint(string hint, Entity helper)
         {
-            this.hint = hint;
-            this.customHelper = helper;
+            _hint = hint;
+            _customHelper = helper;
         }
     }
 }

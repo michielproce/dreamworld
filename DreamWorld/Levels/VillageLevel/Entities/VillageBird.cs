@@ -1,6 +1,4 @@
-﻿using System;
-using DreamWorld.Entities;
-using DreamWorld.Entities.Global;
+﻿using DreamWorld.Entities.Global;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 

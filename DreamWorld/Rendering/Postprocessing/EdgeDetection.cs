@@ -5,23 +5,23 @@ namespace DreamWorld.Rendering.Postprocessing
 {
     public class EdgeDetection : PostProcessor
     {
-        private Effect postprocessEffect;
-        private RenderTarget2D sceneRenderTarget;
-        private RenderTarget2D normalDepthRenderTarget;
+        private readonly Effect _postprocessEffect;
+        private readonly RenderTarget2D _sceneRenderTarget;
+        private readonly RenderTarget2D _normalDepthRenderTarget;
 
 
         public EdgeDetection(Game game, SpriteBatch spriteBatch) : base(game, spriteBatch)
         {
 
-            postprocessEffect = game.Content.Load<Effect>("Effects\\EdgeDetection");
+            _postprocessEffect = game.Content.Load<Effect>("Effects\\EdgeDetection");
 
             PresentationParameters pp = device.PresentationParameters;
 
-            sceneRenderTarget = new RenderTarget2D(device,
+            _sceneRenderTarget = new RenderTarget2D(device,
                                     pp.BackBufferWidth, pp.BackBufferHeight, 1,
                                     pp.BackBufferFormat, pp.MultiSampleType, pp.MultiSampleQuality);
 
-            normalDepthRenderTarget = new RenderTarget2D(device,
+            _normalDepthRenderTarget = new RenderTarget2D(device,
                                     pp.BackBufferWidth, pp.BackBufferHeight, 1,
                                     pp.BackBufferFormat, pp.MultiSampleType, pp.MultiSampleQuality);
 
@@ -38,13 +38,13 @@ namespace DreamWorld.Rendering.Postprocessing
 
         public void PrepareDrawNormalDepth()
         {
-            device.SetRenderTarget(0, normalDepthRenderTarget);
+            device.SetRenderTarget(0, _normalDepthRenderTarget);
             device.Clear(Color.Black);
         }
 
         public void PrepareDrawDefault()
         {
-            device.SetRenderTarget(0, sceneRenderTarget);
+            device.SetRenderTarget(0, _sceneRenderTarget);
             device.Clear(Color.White);
         }
 
@@ -53,12 +53,12 @@ namespace DreamWorld.Rendering.Postprocessing
         {
             device.SetRenderTarget(0, null);
 
-            EffectParameterCollection parameters = postprocessEffect.Parameters;
+            EffectParameterCollection parameters = _postprocessEffect.Parameters;
 
-            Vector2 resolution = new Vector2(sceneRenderTarget.Width,
-                                             sceneRenderTarget.Height);
+            Vector2 resolution = new Vector2(_sceneRenderTarget.Width,
+                                             _sceneRenderTarget.Height);
 
-            Texture2D normalDepthTexture = normalDepthRenderTarget.GetTexture();
+            Texture2D normalDepthTexture = _normalDepthRenderTarget.GetTexture();
 
             parameters["ScreenResolution"].SetValue(resolution);
             parameters["NormalDepthTexture"].SetValue(normalDepthTexture);
@@ -67,15 +67,15 @@ namespace DreamWorld.Rendering.Postprocessing
                               SpriteSortMode.Immediate,
                               SaveStateMode.None);
 
-            postprocessEffect.Begin();
-            postprocessEffect.CurrentTechnique.Passes[0].Begin();
+            _postprocessEffect.Begin();
+            _postprocessEffect.CurrentTechnique.Passes[0].Begin();
 
-            spriteBatch.Draw(sceneRenderTarget.GetTexture(), Vector2.Zero, Color.White);
+            spriteBatch.Draw(_sceneRenderTarget.GetTexture(), Vector2.Zero, Color.White);
 
             spriteBatch.End();
 
-            postprocessEffect.CurrentTechnique.Passes[0].End();
-            postprocessEffect.End();
+            _postprocessEffect.CurrentTechnique.Passes[0].End();
+            _postprocessEffect.End();
         }
     }
 }

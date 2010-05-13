@@ -1,5 +1,4 @@
-﻿using System;
-using DreamWorld.Interface.Help;
+﻿using DreamWorld.Interface.Help;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -17,7 +16,7 @@ namespace DreamWorld.Entities.Global
         public override void Update(GameTime gameTime)
         {
             // If we're close to this entity, and we have a help item, set this as the active helper.
-            if (Vector3.Distance(Level.Player.Body.Position, Body.Position) <= Help.HELP_DISTANCE
+            if (Vector3.Distance(Level.Player.Body.Position, Body.Position) <= Help.HelpDistance
                 && Help.Instance.HasHelp(this))
             {
                 GameScreen.HelpSystem.Helper = this;

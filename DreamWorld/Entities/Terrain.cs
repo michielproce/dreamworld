@@ -1,24 +1,23 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.Entities
 {
     public class Terrain : Entity
     {
-        private string terrain;
+        private readonly string _terrain;
 
         public HeightMapInfo HeightMapInfo { get; private set; }
 
         public Terrain(string terrain)
         {
-            this.terrain = terrain;
+            _terrain = terrain;
             IgnoreEdgeDetection = true;
         }
 
         protected override void LoadContent()
         {
-            Model = GameScreen.Content.Load<Model>(@"Terrains\" + terrain);
+            Model = GameScreen.Content.Load<Model>(@"Terrains\" + _terrain);
             HeightMapInfo = Model.Tag as HeightMapInfo;
             if (HeightMapInfo == null)
             {

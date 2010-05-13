@@ -14,13 +14,13 @@ namespace DreamWorld.Levels.VillageLevel.Entities
         public static bool ListInEditor = true;
 
         private static Random random = new Random();
-        private HelpParticleSystem particleSystem;
-        private int frames;
+        private HelpParticleSystem _particleSystem;
+        private int _frames;
 
         public override void Initialize()
         {
-            particleSystem = new HelpParticleSystem();
-            Level.AddParticleSystem(Name + "_particleSystem", particleSystem);
+            _particleSystem = new HelpParticleSystem();
+            Level.AddParticleSystem(Name + "_particleSystem", _particleSystem);
 
             Animation.InitialClip = "Standing";
             base.Initialize();
@@ -35,9 +35,9 @@ namespace DreamWorld.Levels.VillageLevel.Entities
         public override void Update(GameTime gameTime)
         {
             VillageLevel vl = Level as VillageLevel;
-            if (vl != null && vl.CurrentStage == VillageLevel.Stage.START)
+            if (vl != null && vl.CurrentStage == VillageLevel.Stage.Start)
             {
-                if (Vector3.Distance(Level.Player.Body.Position, Body.Position) <= Help.HELP_DISTANCE)
+                if (Vector3.Distance(Level.Player.Body.Position, Body.Position) <= Help.HelpDistance)
                 {
                     GameScreen.HelpSystem.ShowCustomHint(
                         StringUtil.ParsePlatform("{Click the left mouse button|Press B} to talk."), this);
@@ -50,19 +50,13 @@ namespace DreamWorld.Levels.VillageLevel.Entities
                 }
 
                 const int dim = 3;
-                if (frames++ % 10 == 0)
-                    particleSystem.AddParticle(Body.Position + new Vector3(random.Next(dim * 2) - dim, 13, random.Next(dim * 2) - dim), Vector3.Zero);                
+                if (_frames++ % 10 == 0)
+                    _particleSystem.AddParticle(Body.Position + new Vector3(random.Next(dim * 2) - dim, 13, random.Next(dim * 2) - dim), Vector3.Zero);                
             }
             
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// Creates all needed object information for the JigLibX physics simulator.
-        /// </summary>
-        /// <param name="body">Returns Body.</param>
-        /// <param name="skin">Returns CollisionSkin.</param>
-        /// <param name="centerOfMass">Returns the center of mass wich is usefull for drawing objects.</param>
         protected override void GetPhysicsInformation(out JigLibX.Physics.Body body, out JigLibX.Collision.CollisionSkin skin, out Vector3 centerOfMass)
         {
             #region Header

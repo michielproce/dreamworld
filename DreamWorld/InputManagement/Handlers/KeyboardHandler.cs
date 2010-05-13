@@ -7,7 +7,7 @@ namespace DreamWorld.InputManagement.Handlers
         public KeyboardState State { get; private set; }
         private KeyboardState PreviousState { get; set; }
 
-        public override void HandleInput()
+        protected override void HandleInput()
         {
             PreviousState = State;
             State = Keyboard.GetState();

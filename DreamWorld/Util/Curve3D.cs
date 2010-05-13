@@ -5,12 +5,12 @@ namespace DreamWorld.Util
 {
     public class Curve3D
     {
-        private Curve curveX;
-        private Curve curveY;
-        private Curve curveZ;
+        private readonly Curve _curveX;
+        private readonly Curve _curveY;
+        private readonly Curve _curveZ;
 
-        private float length;
-        private Vector3? lastPoint;
+        private float _length;
+        private Vector3? _lastPoint;
 
         public Curve3D(CurveLoopType loopType)
             : this(loopType, loopType)
@@ -19,32 +19,32 @@ namespace DreamWorld.Util
 
         public Curve3D(CurveLoopType preLoopType, CurveLoopType postLoopType)
         {
-            curveX = new Curve();
-            curveY = new Curve();
-            curveZ = new Curve();
+            _curveX = new Curve();
+            _curveY = new Curve();
+            _curveZ = new Curve();
 
-            curveX.PostLoop = postLoopType;
-            curveY.PostLoop = postLoopType;
-            curveZ.PostLoop = postLoopType;
+            _curveX.PostLoop = postLoopType;
+            _curveY.PostLoop = postLoopType;
+            _curveZ.PostLoop = postLoopType;
 
-            curveX.PreLoop = preLoopType;
-            curveY.PreLoop = preLoopType;
-            curveZ.PreLoop = preLoopType;
+            _curveX.PreLoop = preLoopType;
+            _curveY.PreLoop = preLoopType;
+            _curveZ.PreLoop = preLoopType;
         }
 
         public void AddPoint(Vector3 point)
         {
-            if(lastPoint.HasValue)
-                length += Vector3.Distance(point, (Vector3)lastPoint);
-            AddPoint(point, length);
+            if(_lastPoint.HasValue)
+                _length += Vector3.Distance(point, (Vector3)_lastPoint);
+            AddPoint(point, _length);
         }
 
         public void AddPoint(Vector3 point, float time)
         {
-            curveX.Keys.Add(new CurveKey(time, point.X));
-            curveY.Keys.Add(new CurveKey(time, point.Y));
-            curveZ.Keys.Add(new CurveKey(time, point.Z));    
-            lastPoint = point;
+            _curveX.Keys.Add(new CurveKey(time, point.X));
+            _curveY.Keys.Add(new CurveKey(time, point.Y));
+            _curveZ.Keys.Add(new CurveKey(time, point.Z));    
+            _lastPoint = point;
         }
        
 
@@ -52,9 +52,9 @@ namespace DreamWorld.Util
         {
             return new Vector3
                     {
-                        X = curveX.Evaluate(time),
-                        Y = curveY.Evaluate(time),
-                        Z = curveZ.Evaluate(time)
+                        X = _curveX.Evaluate(time),
+                        Y = _curveY.Evaluate(time),
+                        Z = _curveZ.Evaluate(time)
                     };
         }        
 
@@ -66,30 +66,30 @@ namespace DreamWorld.Util
             CurveKey next;
             int prevIndex;
             int nextIndex;
-            for (int i = 0; i < curveX.Keys.Count; i++)
+            for (int i = 0; i < _curveX.Keys.Count; i++)
             {
                 prevIndex = i - 1;
                 if (prevIndex < 0) prevIndex = i;
 
                 nextIndex = i + 1;
-                if (nextIndex == curveX.Keys.Count) nextIndex = i;
+                if (nextIndex == _curveX.Keys.Count) nextIndex = i;
 
-                prev = curveX.Keys[prevIndex];
-                next = curveX.Keys[nextIndex];
-                current = curveX.Keys[i];
+                prev = _curveX.Keys[prevIndex];
+                next = _curveX.Keys[nextIndex];
+                current = _curveX.Keys[i];
                 SetCurveKeyTangent(ref prev, ref current, ref next);
-                curveX.Keys[i] = current;
-                prev = curveY.Keys[prevIndex];
-                next = curveY.Keys[nextIndex];
-                current = curveY.Keys[i];
+                _curveX.Keys[i] = current;
+                prev = _curveY.Keys[prevIndex];
+                next = _curveY.Keys[nextIndex];
+                current = _curveY.Keys[i];
                 SetCurveKeyTangent(ref prev, ref current, ref next);
-                curveY.Keys[i] = current;
+                _curveY.Keys[i] = current;
 
-                prev = curveZ.Keys[prevIndex];
-                next = curveZ.Keys[nextIndex];
-                current = curveZ.Keys[i];
+                prev = _curveZ.Keys[prevIndex];
+                next = _curveZ.Keys[nextIndex];
+                current = _curveZ.Keys[i];
                 SetCurveKeyTangent(ref prev, ref current, ref next);
-                curveZ.Keys[i] = current;
+                _curveZ.Keys[i] = current;
             }
         }
 

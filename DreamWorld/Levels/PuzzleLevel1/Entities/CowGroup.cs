@@ -17,7 +17,7 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
             }
         }
 
-        public override bool IsRotationAllowed(Vector3 direction)
+        protected override bool IsRotationAllowed(Vector3 direction)
         {
             // Don't rotate if a cow is falling down
             if (Center is Cow && ((Cow)Center).IsFalling)

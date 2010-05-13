@@ -109,7 +109,6 @@
     <Compile Include="Helpers\Debug\Collision.cs" />
     <Compile Include="Helpers\Debug\TriangleFinder.cs" />
     <Compile Include="InputManagement\Handlers\GamePadHandler.cs" />
-    <Compile Include="InputManagement\Gesture.cs" />
     <Compile Include="InputManagement\InputHandler.cs" />
     <Compile Include="InputManagement\InputManager.cs" />
     <Compile Include="InputManagement\Input.cs" />

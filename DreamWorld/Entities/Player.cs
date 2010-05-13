@@ -15,7 +15,7 @@ namespace DreamWorld.Entities
 {
     public class Player : Entity
     {
-        private static Random random = new Random();
+        private static readonly Random random = new Random();
 
         enum PlayerState
         {
@@ -24,26 +24,26 @@ namespace DreamWorld.Entities
             Jumping
         }
 
-        private const float movementSpeed = .7f;
-        private const float jumpStart = 1f;
-        private const float jumpGravity = .05f;
-        private float jumpVelocity;
+        private const float MovementSpeed = .7f;
+        private const float JumpStart = 1f;
+        private const float JumpGravity = .05f;
+        private float _jumpVelocity;
 
-        private PlayerState playerState = PlayerState.OnTerrain;
+        private PlayerState _playerState = PlayerState.OnTerrain;
 
         public readonly Vector3 CameraOffset = new Vector3(0,12,0);
 
-        private InputManager inputManager;
+        private InputManager _inputManager;
 
         public Vector3 SpawnPosition { get; set;}
         public Matrix SpawnOrientation { get; set; }
 
-        private SoundEffect3D footStepSound;
-        private List<SoundEffect3D> jumpSounds;
+        private SoundEffect3D _footStepSound;
+        private List<SoundEffect3D> _jumpSounds;
 
         public override void Initialize()
         {
-            inputManager = GameScreen.InputManager;
+            _inputManager = GameScreen.InputManager;
             Animation.InitialClip = "Standing";
             Scale = new Vector3(.12f);
 
@@ -59,19 +59,19 @@ namespace DreamWorld.Entities
             Model = GameScreen.Content.Load<Model>(@"Models\Global\Player");                       
             base.LoadContent();
 
-            footStepSound = new SoundEffect3D(this, GameScreen.Content.Load<SoundEffect>(@"Audio\Effects\Footstep"));
-            footStepSound.Boost = .8f;
+            _footStepSound = new SoundEffect3D(this, GameScreen.Content.Load<SoundEffect>(@"Audio\Effects\Footstep"));
+            _footStepSound.Boost = .8f;
 
-            jumpSounds = new List<SoundEffect3D>();
+            _jumpSounds = new List<SoundEffect3D>();
             for (int i = 1; i <= 3; i++)
             {
                 SoundEffect3D jumpSound = new SoundEffect3D(this, GameScreen.Content.Load<SoundEffect>(@"Audio\Effects\Jump" + i), false);
-                jumpSounds.Add(jumpSound);
+                _jumpSounds.Add(jumpSound);
                 jumpSound.Boost = .9f;
-                sounds.Add(jumpSound);                
+                Sounds.Add(jumpSound);                
             }
 
-            sounds.Add(footStepSound);
+            Sounds.Add(_footStepSound);
         }
 
         public override void Update(GameTime gameTime)
@@ -81,9 +81,9 @@ namespace DreamWorld.Entities
                     return;
             #endif
 
-            Body.Orientation *= Matrix.CreateRotationY(inputManager.Player.Rotation);
+            Body.Orientation *= Matrix.CreateRotationY(_inputManager.Player.Rotation);
 
-            Vector3 movement = Vector3.Transform(inputManager.Player.Movement * movementSpeed, Body.Orientation);
+            Vector3 movement = Vector3.Transform(_inputManager.Player.Movement * MovementSpeed, Body.Orientation);
 
             if (IsOnTerrain())
             {
@@ -91,21 +91,21 @@ namespace DreamWorld.Entities
             } 
             else if (IsOnPlatform())
             {
-                playerState = PlayerState.OnPlatform;
-                jumpVelocity = 0;
+                _playerState = PlayerState.OnPlatform;
+                _jumpVelocity = 0;
             }
             else
             {
-                playerState = PlayerState.Jumping;
+                _playerState = PlayerState.Jumping;
             }
 
-            if (inputManager.Player.Jump && playerState != PlayerState.Jumping)
+            if (_inputManager.Player.Jump && _playerState != PlayerState.Jumping)
                 StartJumping();
 
-            if (playerState == PlayerState.Jumping)
+            if (_playerState == PlayerState.Jumping)
             {
-                jumpVelocity -= jumpGravity;
-                movement.Y = jumpVelocity;
+                _jumpVelocity -= JumpGravity;
+                movement.Y = _jumpVelocity;
             }
 
             for (int i = 0; i <= Skin.Collisions.Count - 1; i++)
@@ -131,25 +131,25 @@ namespace DreamWorld.Entities
             {
                 float currentHeight = Level.Terrain.HeightMapInfo.GetHeight(Body.Position);
                 float nextHeight = Level.Terrain.HeightMapInfo.GetHeight(Body.Position + movement);
-                if (Body.Position.Y > ((VillageLevel)Level).maximumWalkingHeight && currentHeight < nextHeight)
+                if (Body.Position.Y > ((VillageLevel)Level).MaximumWalkingHeight && currentHeight < nextHeight)
                     movement = new Vector3(0, movement.Y, 0);
             }
 
-            if(playerState == PlayerState.Jumping)
-                jumpVelocity = movement.Y;
+            if(_playerState == PlayerState.Jumping)
+                _jumpVelocity = movement.Y;
 
             Body.Position += movement;
 
-            if (playerState != PlayerState.Jumping)
+            if (_playerState != PlayerState.Jumping)
             {
                 if (new Vector2(movement.X, movement.Z).Length() != 0)
                 {
-                    footStepSound.Play();
+                    _footStepSound.Play();
                     Animation.StartClip("Running");
                 }
                 else
                 {
-                    footStepSound.Stop();
+                    _footStepSound.Stop();
                     Animation.StartClip("Standing");
                 }
             } 
@@ -160,11 +160,11 @@ namespace DreamWorld.Entities
 
         private void StartJumping()
         {
-            footStepSound.Stop();
-            jumpSounds[random.Next(jumpSounds.Count)].Play();
+            _footStepSound.Stop();
+            _jumpSounds[random.Next(_jumpSounds.Count)].Play();
             Animation.StartClip("Jumping");
-            playerState = PlayerState.Jumping;
-            jumpVelocity = jumpStart;
+            _playerState = PlayerState.Jumping;
+            _jumpVelocity = JumpStart;
         }
 
         private bool IsOnTerrain()
@@ -188,8 +188,8 @@ namespace DreamWorld.Entities
             if (Level.Terrain != null)
             {
                 Body.Position = new Vector3(Body.Position.X, Level.Terrain.HeightMapInfo.GetHeight(Body.Position), Body.Position.Z);
-                jumpVelocity = 0;
-                playerState = PlayerState.OnTerrain;
+                _jumpVelocity = 0;
+                _playerState = PlayerState.OnTerrain;
             }
         }
 
@@ -212,11 +212,11 @@ namespace DreamWorld.Entities
 
         public void Respawn()
         {
-            jumpVelocity = 0;
+            _jumpVelocity = 0;
             Body.MoveTo(SpawnPosition, SpawnOrientation);
         }
 
-        protected override void GetPhysicsInformation(out JigLibX.Physics.Body body, out JigLibX.Collision.CollisionSkin skin, out Vector3 centerOfMass)
+        protected override void GetPhysicsInformation(out JigLibX.Physics.Body body, out CollisionSkin skin, out Vector3 centerOfMass)
         {
             #region Header
             // Variables

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using DreamWorld.Entities;
-using DreamWorld.Levels;
 using DreamWorld.ScreenManagement.Screens;
 using DreamWorld.Util;
 
@@ -12,22 +11,22 @@ namespace DreamWorld.Interface.Help
     [Serializable]
     public class Help
     {
-        public const string HELP_FILE = @"\Texts\Help.xml";
-        public const float HELP_DISTANCE = 15f;
+        private const string HelpFile = @"\Texts\Help.xml";
+        public const float HelpDistance = 15f;
 
         public List<HelpItem> Items { get; set; }
 
-        private Dictionary<string, string> itemsDictionary;
+        private Dictionary<string, string> _itemsDictionary;
 
-        private static Help instance;
+        private static Help _instance;
 
         public static Help Instance
         {
             get
             {
-                if (instance == null)
+                if (_instance == null)
                     LoadInstance();
-                return instance;
+                return _instance;
             }
         }
 
@@ -38,14 +37,14 @@ namespace DreamWorld.Interface.Help
         public static void LoadInstance()
         {
             XmlSerializer xs = new XmlSerializer(typeof(Help));
-            StreamReader reader = File.OpenText(GameScreen.Instance.Content.RootDirectory + HELP_FILE);
-            instance = (Help)xs.Deserialize(reader);
+            StreamReader reader = File.OpenText(GameScreen.Instance.Content.RootDirectory + HelpFile);
+            _instance = (Help)xs.Deserialize(reader);
             reader.Close();
 
             // Build the internal dictionary
-            instance.itemsDictionary = new Dictionary<string, string>();
-            foreach (HelpItem item in instance.Items)
-                instance.itemsDictionary.Add(item.Entity, item.Text);
+            _instance._itemsDictionary = new Dictionary<string, string>();
+            foreach (HelpItem item in _instance.Items)
+                _instance._itemsDictionary.Add(item.Entity, item.Text);
         }
 
         public string FindHelp(Entity entity)
@@ -53,10 +52,10 @@ namespace DreamWorld.Interface.Help
             return FindHelp(entity.Name);
         }
 
-        public string FindHelp(string entityName)
+        private string FindHelp(string entityName)
         {
-            string text = null;
-            itemsDictionary.TryGetValue(entityName, out text);
+            string text;
+            _itemsDictionary.TryGetValue(entityName, out text);
             return StringUtil.ParsePlatform(text);
         }
 
@@ -65,9 +64,9 @@ namespace DreamWorld.Interface.Help
             return HasHelp(entity.Name);
         }
 
-        public bool HasHelp(string entityName)
+        private bool HasHelp(string entityName)
         {
-            return itemsDictionary.ContainsKey(entityName);
+            return _itemsDictionary.ContainsKey(entityName);
         }
             
     }

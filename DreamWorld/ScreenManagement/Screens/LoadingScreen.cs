@@ -9,40 +9,35 @@ namespace DreamWorld.ScreenManagement.Screens
     {
         public bool Loaded
         {
-            get { return loaded; }
-            internal set { loaded = value; }
+            get { return _loaded; }
+            internal set { _loaded = value; }
         }
-        public bool loaded;
 
-        private Texture2D loadingTexture;
-        private Vector2 loadingTexturePosition;
-        private Color color;
+        private bool _loaded;
+
+        private Texture2D _loadingTexture;
+        private Vector2 _loadingTexturePosition;
+        private Color _color;
 
         public LoadingScreen(Color color)
         {
-            this.color = color;
+            _color = color;
             TransitionOffTime = TimeSpan.FromSeconds(0.5f);
             TransitionOnTime = TimeSpan.FromSeconds(0.5f);
         }
 
         protected override void LoadContent()
         {
-            loadingTexture = ScreenManager.Game.Content.Load<Texture2D>(@"Textures\Menu\loadingMorwir");
-            loadingTexturePosition = new Vector2(ScreenManager.GraphicsDevice.Viewport.TitleSafeArea.Right - loadingTexture.Width, 
-                ScreenManager.GraphicsDevice.Viewport.TitleSafeArea.Bottom - loadingTexture.Height) - 
+            _loadingTexture = ScreenManager.Game.Content.Load<Texture2D>(@"Textures\Menu\loadingMorwir");
+            _loadingTexturePosition = new Vector2(ScreenManager.GraphicsDevice.Viewport.TitleSafeArea.Right - _loadingTexture.Width, 
+                ScreenManager.GraphicsDevice.Viewport.TitleSafeArea.Bottom - _loadingTexture.Height) - 
                 new Vector2(100, 80);
         }
 
         public override void HandleInput()
         {
-            MenuInput menuInput = ScreenManager.InputManager.Menu;
-
-            if (loaded 
-//                && (menuInput.Select || menuInput.Cancel)
-                )
-            {
+            if (_loaded)
                 ExitScreen();
-            }
         }
 
         public override void Draw(GameTime gameTime)
@@ -50,15 +45,15 @@ namespace DreamWorld.ScreenManagement.Screens
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             SpriteFont font = ScreenManager.Font;
 
-            string text = (loaded ? "Loaded!" : "Loading...");
+            string text = (_loaded ? "Loaded!" : "Loading...");
 
             Vector2 textPosition = new Vector2(80, 60);            
 
             spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState);
            
-            spriteBatch.Draw(ScreenManager.BlankTexture, ScreenManager.FullscreenDestination, color);
-            spriteBatch.Draw(loadingTexture, loadingTexturePosition, new Color(255, 255, 255, TransitionAlpha));
-            spriteBatch.DrawString(font, text, textPosition, new Color(255 - color.R, 255 - color.G, 255 - color.B, TransitionAlpha));
+            spriteBatch.Draw(ScreenManager.BlankTexture, ScreenManager.FullscreenDestination, _color);
+            spriteBatch.Draw(_loadingTexture, _loadingTexturePosition, new Color(255, 255, 255, TransitionAlpha));
+            spriteBatch.DrawString(font, text, textPosition, new Color(255 - _color.R, 255 - _color.G, 255 - _color.B, TransitionAlpha));
 
             spriteBatch.End();
         }

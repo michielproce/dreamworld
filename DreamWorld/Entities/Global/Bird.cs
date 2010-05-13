@@ -1,5 +1,4 @@
 ﻿using System;
-using JigLibX.Physics;
 using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Entities.Global
@@ -11,11 +10,11 @@ namespace DreamWorld.Entities.Global
             Flying, Gliding
         }
 
-        private State state;
-        private TimeSpan lastStateSwitch;
-        private static Random random = new Random();
-        private float? initialHeight;
-        private float prevRotation;
+        private State _state;
+        private TimeSpan _lastStateSwitch;
+        private static readonly Random random = new Random();
+        private float? _initialHeight;
+        private float _prevRotation;
         
 
         protected abstract float Speed { get; }
@@ -23,10 +22,10 @@ namespace DreamWorld.Entities.Global
 
         public override void Initialize()
         {
-            state = State.Flying;
+            _state = State.Flying;
 
             if (Level.Terrain != null && Level.Terrain.HeightMapInfo.IsOnHeightmap(SpawnInformation.Position))            
-                initialHeight = SpawnInformation.Position.Y - Level.Terrain.HeightMapInfo.GetHeight(SpawnInformation.Position);            
+                _initialHeight = SpawnInformation.Position.Y - Level.Terrain.HeightMapInfo.GetHeight(SpawnInformation.Position);            
             base.Initialize();
         }
 
@@ -34,7 +33,7 @@ namespace DreamWorld.Entities.Global
         {
             Vector3 target = SpawnInformation.Position;
             Vector3 position = Body.Position;            
-            TimeSpan timeInState = gameTime.TotalGameTime - lastStateSwitch;
+            TimeSpan timeInState = gameTime.TotalGameTime - _lastStateSwitch;
 
 
             // Make the bird face the target.
@@ -43,8 +42,8 @@ namespace DreamWorld.Entities.Global
                 rot += MathHelper.TwoPi;
 
             // Make sure the bird doesn't get a seizure.            
-            rot = MathHelper.Clamp(rot, prevRotation - MaxRotation, prevRotation + MaxRotation);
-            prevRotation = rot;
+            rot = MathHelper.Clamp(rot, _prevRotation - MaxRotation, _prevRotation + MaxRotation);
+            _prevRotation = rot;
 
             // Apply the rotation
             Body.Orientation = Matrix.CreateRotationY(rot);
@@ -54,10 +53,10 @@ namespace DreamWorld.Entities.Global
             Body.Position += forward;
 
             // Keep it on the same height on the heightmap
-            if (initialHeight.HasValue && Level.Terrain.HeightMapInfo.IsOnHeightmap(position))
-                Body.Position = new Vector3(Body.Position.X, Level.Terrain.HeightMapInfo.GetHeight(position) + (float)initialHeight, Body.Position.Z);
+            if (_initialHeight.HasValue && Level.Terrain.HeightMapInfo.IsOnHeightmap(position))
+                Body.Position = new Vector3(Body.Position.X, Level.Terrain.HeightMapInfo.GetHeight(position) + (float)_initialHeight, Body.Position.Z);
 
-            switch (state)
+            switch (_state)
             {
                 case State.Flying:
                     // Animation is playing.
@@ -69,8 +68,8 @@ namespace DreamWorld.Entities.Global
                     // - The dice likes us                    
                     if (timeInState.Seconds >= 5 && Math.Abs(Animation.CurrentTimeSpan.Milliseconds - 750f) < 30 && random.NextDouble() < .075)
                     {
-                        state = State.Gliding;
-                        lastStateSwitch = gameTime.TotalGameTime;
+                        _state = State.Gliding;
+                        _lastStateSwitch = gameTime.TotalGameTime;
                     }
                     break;
                 case State.Gliding:
@@ -79,8 +78,8 @@ namespace DreamWorld.Entities.Global
                     // Switch after 3 seconds of gliding
                     if (timeInState.Seconds >= 3)
                     {                        
-                        state = State.Flying;
-                        lastStateSwitch = gameTime.TotalGameTime;
+                        _state = State.Flying;
+                        _lastStateSwitch = gameTime.TotalGameTime;
                     }
                     break;                    
             }

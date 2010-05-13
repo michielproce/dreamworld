@@ -5,11 +5,11 @@ namespace DreamWorld.Entities
 {
     public class Skybox : Entity
     {
-        private string skybox;
+        private readonly string _skybox;
 
         public Skybox(string skybox)
         {
-            this.skybox = skybox;
+            _skybox = skybox;
             IgnoreEdgeDetection = true;            
         }
 
@@ -22,7 +22,7 @@ namespace DreamWorld.Entities
 
         protected override void LoadContent()
         {
-            Model = GameScreen.Content.Load<Model>(@"Models\Skyboxes\" + skybox);     
+            Model = GameScreen.Content.Load<Model>(@"Models\Skyboxes\" + _skybox);     
             base.LoadContent();
         }
 

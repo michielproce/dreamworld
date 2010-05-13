@@ -7,18 +7,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DreamWorld.ScreenManagement.Screens
 {
-
     class MessageBoxScreen : Screen
     {
-        public string Message;
+        private readonly string _message;
 
-        private Texture2D backgroundTexture;
-        private Texture2D foregroundTexture;
-
-        private float headerAspectRatio;
-        private const float bodyToHeaderRatio = 1.1f;
-        private const int hPadding = 32;
-        private const int vPadding = 16;
+        private Texture2D _backgroundTexture;
+        private Texture2D _foregroundTexture;
 
         public event EventHandler Accepted;
         public event EventHandler Cancelled;
@@ -31,13 +25,13 @@ namespace DreamWorld.ScreenManagement.Screens
 
         public MessageBoxScreen(string message, bool includeUsageText)
         {
-            Message = message;
+            _message = message;
 
             string usageText = StringUtil.ParsePlatform("\n{Enter | A button} to accept.\n" +
                                                         "{Escape|B button} to cancel.");
 
             if (includeUsageText)
-                Message += usageText;
+                _message += usageText;
 
             IsPopup = true;
 
@@ -49,10 +43,8 @@ namespace DreamWorld.ScreenManagement.Screens
         {
             ContentManager content = ScreenManager.Game.Content;
 
-            backgroundTexture = content.Load<Texture2D>(@"Textures/Menu/confirmBackground");
-            foregroundTexture = content.Load<Texture2D>(@"Textures/Menu/confirmForeground");
-
-            headerAspectRatio = (float)backgroundTexture.Width / backgroundTexture.Height;
+            _backgroundTexture = content.Load<Texture2D>(@"Textures/Menu/confirmBackground");
+            _foregroundTexture = content.Load<Texture2D>(@"Textures/Menu/confirmForeground");
         }
 
         public override void HandleInput()
@@ -84,10 +76,10 @@ namespace DreamWorld.ScreenManagement.Screens
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             Vector2 vpSize = new Vector2(viewport.Width, viewport.Height);
 
-            Vector2 textSize = font.MeasureString(Message);
+            Vector2 textSize = font.MeasureString(_message);
             Vector2 textPosition = (vpSize - textSize) / 2;
 
-            Rectangle position = new Rectangle((viewport.Width - backgroundTexture.Width) / 2, (viewport.Height - backgroundTexture.Height) / 2, backgroundTexture.Width, backgroundTexture.Height);
+            Rectangle position = new Rectangle((viewport.Width - _backgroundTexture.Width) / 2, (viewport.Height - _backgroundTexture.Height) / 2, _backgroundTexture.Width, _backgroundTexture.Height);
             position.Y += 5;
             Color color = new Color(255, 255, 255, TransitionAlpha);
 
@@ -95,11 +87,11 @@ namespace DreamWorld.ScreenManagement.Screens
 
             spriteBatch.Begin(SpriteBlendMode.AlphaBlend, SpriteSortMode.Immediate, SaveStateMode.SaveState);
 
-            spriteBatch.Draw(backgroundTexture, position, color);
+            spriteBatch.Draw(_backgroundTexture, position, color);
 
-            spriteBatch.DrawString(font, Message, textPosition, new Color(0,0,0, TransitionAlpha));
+            spriteBatch.DrawString(font, _message, textPosition, new Color(0,0,0, TransitionAlpha));
 
-            spriteBatch.Draw(foregroundTexture, position, color);                       
+            spriteBatch.Draw(_foregroundTexture, position, color);                       
 
             spriteBatch.End();
         }

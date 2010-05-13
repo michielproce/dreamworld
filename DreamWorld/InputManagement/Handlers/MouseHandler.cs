@@ -12,20 +12,20 @@ namespace DreamWorld.InputManagement.Handlers
             RightButton
         }
 
-        public Point Position { get; private set; }
-        public MouseState PreviousState { get; private set; }
+        private Point Position { get; set; }
+        private MouseState PreviousState { get; set; }
         public Vector2 Movement { get; private set; }
         public bool IgnoreReset { get; set; }
-        private Point center;
+        private Point _center;
 
         public override void Initialize()
         {
             InputManager.Game.IsMouseVisible = false;
-            center = new Point(InputManager.Game.GraphicsDevice.Viewport.Width / 2, InputManager.Game.GraphicsDevice.Viewport.Height / 2);
+            _center = new Point(InputManager.Game.GraphicsDevice.Viewport.Width / 2, InputManager.Game.GraphicsDevice.Viewport.Height / 2);
             ResetMouse();
         }
 
-        public override void HandleInput()
+        protected override void HandleInput()
         {
             MouseState state = Mouse.GetState();
             
@@ -33,8 +33,8 @@ namespace DreamWorld.InputManagement.Handlers
             
             Movement = new Vector2
                {
-                   X =  center.X - state.X,
-                   Y = center.Y - state.Y
+                   X =  _center.X - state.X,
+                   Y = _center.Y - state.Y
                };            
 
             PreviousState = Mouse.GetState();
@@ -82,7 +82,7 @@ namespace DreamWorld.InputManagement.Handlers
         public void ResetMouse()
         {
             if(!IgnoreReset)
-                Mouse.SetPosition(center.X, center.Y);
+                Mouse.SetPosition(_center.X, _center.Y);
         }
     }
 }

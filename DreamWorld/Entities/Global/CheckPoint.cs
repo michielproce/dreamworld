@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using DreamWorld.Cameras;
+﻿using DreamWorld.Cameras;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -14,12 +12,6 @@ namespace DreamWorld.Entities.Global
         {
             Model = GameScreen.Content.Load<Model>(@"Models\Debug\CheckPoint");
             base.LoadContent();
-
-            
-            //Body.IsActive = false;
-
-//            Body.DisableBody();            
-            
         }
 
         public override void Draw(GameTime gameTime, string technique)

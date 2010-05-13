@@ -6,9 +6,9 @@ namespace DreamWorld.ScreenManagement
 {
     class MenuEntry
     {
-        public string Text;
+        private readonly string _text;
 
-        float selectionFade;
+        private float _selectionFade;
         public event EventHandler Selected;
 
         protected internal virtual void OnSelectEntry()
@@ -20,7 +20,7 @@ namespace DreamWorld.ScreenManagement
 
         public MenuEntry(string text)
         {
-            Text = text;
+            _text = text;
         }
 
 
@@ -28,7 +28,7 @@ namespace DreamWorld.ScreenManagement
         {
             float fadeSpeed = (float)gameTime.ElapsedGameTime.TotalSeconds * 4;
 
-            selectionFade = isSelected ? Math.Min(selectionFade + fadeSpeed, 1) : Math.Max(selectionFade - fadeSpeed, 0);
+            _selectionFade = isSelected ? Math.Min(_selectionFade + fadeSpeed, 1) : Math.Max(_selectionFade - fadeSpeed, 0);
         }
 
         public virtual void Draw(GameTime gameTime, MenuScreen screen, Vector2 position, bool isSelected)
@@ -37,8 +37,8 @@ namespace DreamWorld.ScreenManagement
             SpriteFont font = screen.Font ?? screen.ScreenManager.Font;
             Vector2 origin = new Vector2(0, 0.5f * font.LineSpacing);
             
-            screen.ScreenManager.SpriteBatch.DrawString(font, Text, position + new Vector2(1), Color.Black, 0, origin, 1, SpriteEffects.None, 0);
-            screen.ScreenManager.SpriteBatch.DrawString(font, Text, position, color, 0, origin, 1, SpriteEffects.None, 0);            
+            screen.ScreenManager.SpriteBatch.DrawString(font, _text, position + new Vector2(1), Color.Black, 0, origin, 1, SpriteEffects.None, 0);
+            screen.ScreenManager.SpriteBatch.DrawString(font, _text, position, color, 0, origin, 1, SpriteEffects.None, 0);            
         }
 
         public virtual int GetHeight(MenuScreen screen)

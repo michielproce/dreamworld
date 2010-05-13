@@ -7,9 +7,9 @@ namespace DreamWorld.Entities
 {
     public class Animation
     {
-        private SkinningData skinningData;
-        private AnimationPlayer animationPlayer;
-        private Matrix[] boneTransforms;
+        private SkinningData _skinningData;
+        private AnimationPlayer _animationPlayer;
+        private Matrix[] _boneTransforms;
 
         public bool Loaded { get; private set; }
         public string InitialClip { get; set; }
@@ -18,20 +18,20 @@ namespace DreamWorld.Entities
         public string CurrentClip { get; private set; }
         public TimeSpan CurrentTimeSpan { get; private set; }
 
-        private Dictionary<string, Matrix> additionalBoneTransforms;
+        private readonly Dictionary<string, Matrix> _additionalBoneTransforms;
         
         public Animation()
         {       
-            additionalBoneTransforms = new Dictionary<string, Matrix>();
+            _additionalBoneTransforms = new Dictionary<string, Matrix>();
             Speed = 1;
         }
 
         public void Load(SkinningData skinningData)
         {
-            this.skinningData = skinningData;            
+            _skinningData = skinningData;            
             
-            animationPlayer = new AnimationPlayer(skinningData);
-            boneTransforms = new Matrix[skinningData.BindPose.Count];
+            _animationPlayer = new AnimationPlayer(skinningData);
+            _boneTransforms = new Matrix[skinningData.BindPose.Count];
 
             if (InitialClip != null)
                 StartClip(InitialClip);
@@ -47,7 +47,7 @@ namespace DreamWorld.Entities
         {
             if (!clip.Equals(CurrentClip))
             {
-                animationPlayer.StartClip(skinningData.AnimationClips[clip]);
+                _animationPlayer.StartClip(_skinningData.AnimationClips[clip]);
                 CurrentClip = clip;
             }
         }
@@ -61,7 +61,7 @@ namespace DreamWorld.Entities
         {
             get
             {
-                return animationPlayer.GetSkinTransforms();
+                return _animationPlayer.GetSkinTransforms();
             }
         }
 
@@ -78,23 +78,23 @@ namespace DreamWorld.Entities
 
         public void SetAdditionalBoneTransform(string bone, Matrix transform)
         {
-            if (additionalBoneTransforms.ContainsKey(bone))
-                additionalBoneTransforms[bone] = transform;
+            if (_additionalBoneTransforms.ContainsKey(bone))
+                _additionalBoneTransforms[bone] = transform;
             else
-                additionalBoneTransforms.Add(bone, transform);
+                _additionalBoneTransforms.Add(bone, transform);
         }
 
         private void AdvanceAnimation(TimeSpan ts)
         {            
-            animationPlayer.UpdateBoneTransforms(ts, true);
-            animationPlayer.GetBoneTransforms().CopyTo(boneTransforms, 0);
-            foreach (KeyValuePair<string, Matrix> pair in additionalBoneTransforms)
+            _animationPlayer.UpdateBoneTransforms(ts, true);
+            _animationPlayer.GetBoneTransforms().CopyTo(_boneTransforms, 0);
+            foreach (KeyValuePair<string, Matrix> pair in _additionalBoneTransforms)
             {
-                 int index = skinningData.BoneIndices[pair.Key];
-                boneTransforms[index] = pair.Value * boneTransforms[index];
+                 int index = _skinningData.BoneIndices[pair.Key];
+                _boneTransforms[index] = pair.Value * _boneTransforms[index];
             }
-            animationPlayer.UpdateWorldTransforms(Matrix.Identity, boneTransforms);
-            animationPlayer.UpdateSkinTransforms();
+            _animationPlayer.UpdateWorldTransforms(Matrix.Identity, _boneTransforms);
+            _animationPlayer.UpdateSkinTransforms();
 
             CurrentTimeSpan += ts;
         }

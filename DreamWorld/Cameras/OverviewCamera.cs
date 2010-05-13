@@ -1,35 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using DreamWorld.Entities;
-using DreamWorld.ScreenManagement.Screens;
-using DreamWorld.Util;
-using JigLibX.Collision;
-using JigLibX.Geometry;
-using JigLibX.Physics;
+﻿using DreamWorld.Entities;
 using Microsoft.Xna.Framework;
 
 namespace DreamWorld.Cameras
 {
     class OverviewCamera : Camera
     {
-        public ThirdPersonCamera oldCamera;
-        public Player player;
+        public ThirdPersonCamera OldCamera;
+        public Player Player;
 
-        public Vector3 targetPosition;
-        public Vector3 targetLookat;
+        public Vector3 TargetPosition;
+        public Vector3 TargetLookat;
 
-        private Vector3 startPosition;
-        private Vector3 startLookat;
+        private Vector3 _startPosition;
+        private Vector3 _startLookat;
 
-        public bool isExitting;
-        public float transitionSpeed = 0.015f;
-        public float transition;
+        public bool IsExitting;
+        private const float TransitionSpeed = 0.015f;
+        public float Transition;
 
         public override Vector3 Direction
         {
             get
             {
-                return Vector3.Normalize(Vector3.SmoothStep(startLookat, targetLookat, transition) - Position);
+                return Vector3.Normalize(Vector3.SmoothStep(_startLookat, TargetLookat, Transition) - Position);
             }
         }
 
@@ -49,15 +42,15 @@ namespace DreamWorld.Cameras
             UpdateTransition();
 
             // Update the start vectors in case the player has moved.
-            oldCamera.Update(gameTime);
-            startPosition = oldCamera.Position;
-            startLookat = player.Body.Position + player.CameraOffset;
+            OldCamera.Update(gameTime);
+            _startPosition = OldCamera.Position;
+            _startLookat = Player.Body.Position + Player.CameraOffset;
 
-            Position = Vector3.SmoothStep(startPosition, targetPosition, transition);
+            Position = Vector3.SmoothStep(_startPosition, TargetPosition, Transition);
 
             View = Matrix.CreateLookAt(
                     Position,
-                    Vector3.SmoothStep(startLookat, targetLookat, transition),
+                    Vector3.SmoothStep(_startLookat, TargetLookat, Transition),
                     Vector3.Up);
 
             base.Update(gameTime);
@@ -65,17 +58,17 @@ namespace DreamWorld.Cameras
 
         private void UpdateTransition()
         {
-            if (isExitting)
+            if (IsExitting)
             {
-                transition -= transitionSpeed;
-                if (transition < 0)
-                    transition = 0;
+                Transition -= TransitionSpeed;
+                if (Transition < 0)
+                    Transition = 0;
             }
             else
             {
-                transition += transitionSpeed;
-                if (transition > 1)
-                    transition = 1;
+                Transition += TransitionSpeed;
+                if (Transition > 1)
+                    Transition = 1;
             }
         }
     }

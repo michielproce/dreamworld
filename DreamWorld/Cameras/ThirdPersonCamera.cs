@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using DreamWorld.ScreenManagement.Screens;
 using DreamWorld.Util;
 using JigLibX.Collision;
 using JigLibX.Geometry;
@@ -11,17 +9,17 @@ namespace DreamWorld.Cameras
 {
     class ThirdPersonCamera : Camera
     {
-        private const float minCameraHeight = 2f;
-        private bool camOnFloor;
+        private const float MinCameraHeight = 2f;
+        private bool _camOnFloor;
 
-        private const float minDistance = 5f;
-        private const float maxDistance = 100f;
-        private float distance = 35f;
+        private const float MinDistance = 5f;
+        private const float MaxDistance = 100f;
+        private float _distance = 35f;
 
-        private const float minVerticalRotation = -MathHelper.PiOver2 * .99f;
-        private const float maxVerticalRotation = -minVerticalRotation;        
+        private const float MinVerticalRotation = -MathHelper.PiOver2 * .99f;
+        private const float MaxVerticalRotation = -MinVerticalRotation;        
 
-        private float horizontalRotation;
+        private float _horizontalRotation;
 
         public float VerticalRotation { get; set; }
 
@@ -49,43 +47,43 @@ namespace DreamWorld.Cameras
             Vector3 playerDirection = Vector3.Transform(Vector3.Forward, level.Player.Body.Orientation);
             float playerRotation = MathHelper.Pi + (float)Math.Atan2(playerDirection.X, playerDirection.Z);
 
-            distance -= inputManager.Player.Zoom;
-            if (distance < minDistance)
-                distance = minDistance;
-            if (distance > maxDistance)
-                distance = maxDistance;
+            _distance -= inputManager.Player.Zoom;
+            if (_distance < MinDistance)
+                _distance = MinDistance;
+            if (_distance > MaxDistance)
+                _distance = MaxDistance;
 
             float verticalRotationInput = inputManager.Player.VerticalRotation;
-            if (camOnFloor && verticalRotationInput < 0)
+            if (_camOnFloor && verticalRotationInput < 0)
                 verticalRotationInput = 0;
             VerticalRotation -= verticalRotationInput;
-            if (VerticalRotation < minVerticalRotation)
-                VerticalRotation = minVerticalRotation;
-            if (VerticalRotation > maxVerticalRotation)
-                VerticalRotation = maxVerticalRotation;
+            if (VerticalRotation < MinVerticalRotation)
+                VerticalRotation = MinVerticalRotation;
+            if (VerticalRotation > MaxVerticalRotation)
+                VerticalRotation = MaxVerticalRotation;
 
             if (inputManager.Player.ResetHorizontalRotation)
-                horizontalRotation = 0;
-            horizontalRotation += inputManager.Player.HorizontalRotation;
+                _horizontalRotation = 0;
+            _horizontalRotation += inputManager.Player.HorizontalRotation;
 
             Position = playerPosition + 
                 Vector3.Transform(
                     Vector3.Transform(
-                        new Vector3(0, 0, distance),
+                        new Vector3(0, 0, _distance),
                         Matrix.CreateRotationX(VerticalRotation)),
-                    Matrix.CreateRotationY(playerRotation + horizontalRotation));
+                    Matrix.CreateRotationY(playerRotation + _horizontalRotation));
 
             if(level.Terrain != null)
             {
-                float cameraHeight = level.Terrain.HeightMapInfo.GetHeight(Position) + minCameraHeight;
+                float cameraHeight = level.Terrain.HeightMapInfo.GetHeight(Position) + MinCameraHeight;
                 if (Position.Y < cameraHeight)
                 {
-                    camOnFloor = true;
+                    _camOnFloor = true;
                     Position = new Vector3(Position.X, cameraHeight, Position.Z);
                 }
                 else
                 {
-                    camOnFloor = false;
+                    _camOnFloor = false;
                 }
             }
 

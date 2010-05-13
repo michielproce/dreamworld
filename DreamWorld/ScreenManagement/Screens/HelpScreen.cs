@@ -8,21 +8,21 @@ namespace DreamWorld.ScreenManagement.Screens
 {
     public class HelpScreen : Screen
     {        
-        private string closeText;
-        private Vector2 closePos;
+        private string _closeText;
+        private Vector2 _closePos;
 
-        private Texture2D signTexture;
-        private Texture2D glassTexture;
+        private Texture2D _signTexture;
+        private Texture2D _glassTexture;
   
-        private HelpSystem helpSystem;
-        private string text;
-        private Vector2 fontPos;
-        private SpriteFont font;
+        private readonly HelpSystem _helpSystem;
+        private string _text;
+        private Vector2 _fontPos;
+        private SpriteFont _font;
 
         public HelpScreen(HelpSystem helpSystem, string text)
         {
-            this.helpSystem = helpSystem;
-            this.text = text;
+            _helpSystem = helpSystem;
+            _text = text;
 
             helpSystem.ScreenActive = true;
             IsPopup = true;
@@ -32,24 +32,24 @@ namespace DreamWorld.ScreenManagement.Screens
         protected override void LoadContent()
         {
             Viewport vp = ScreenManager.GraphicsDevice.Viewport;
-            closeText = StringUtil.ParsePlatform("{Click the left mouse button|Press B} to return.");
-            Vector2 closeSize = helpSystem.HintFont.MeasureString(closeText);
-            closePos = new Vector2(vp.Width/2f - closeSize.X/2f, vp.Height * .925f);
+            _closeText = StringUtil.ParsePlatform("{Click the left mouse button|Press B} to return.");
+            Vector2 closeSize = _helpSystem.HintFont.MeasureString(_closeText);
+            _closePos = new Vector2(vp.Width/2f - closeSize.X/2f, vp.Height * .925f);
 
-            signTexture = Content.Load<Texture2D>(@"Textures\Interface\helpscreen");
-            glassTexture = Content.Load<Texture2D>(@"Textures\Interface\helpscreenglass");
-            font = Content.Load<SpriteFont>(@"Fonts\helptext");
+            _signTexture = Content.Load<Texture2D>(@"Textures\Interface\helpscreen");
+            _glassTexture = Content.Load<Texture2D>(@"Textures\Interface\helpscreenglass");
+            _font = Content.Load<SpriteFont>(@"Fonts\helptext");
             
             // Create paragraphs, not to far apart.
-            text = text.Replace("\n", "\n\n");
-            font.LineSpacing = 24;
+            _text = _text.Replace("\n", "\n\n");
+            _font.LineSpacing = 24;
 
             // Cut the lines            
-            text = StringUtil.CutLine(vp, font, text, 0.45f);
+            _text = StringUtil.CutLine(vp, _font, _text, 0.45f);
 
             // Center the text
-            Vector2 size = font.MeasureString(text);
-            fontPos = new Vector2(vp.Width / 2f - size.X / 2f, vp.Height / 2f - size.Y /2f);
+            Vector2 size = _font.MeasureString(_text);
+            _fontPos = new Vector2(vp.Width / 2f - size.X / 2f, vp.Height / 2f - size.Y /2f);
         }
 
         public override void Update(GameTime gameTime)
@@ -57,7 +57,7 @@ namespace DreamWorld.ScreenManagement.Screens
             if (ScreenManager.InputManager.Player.ApplyRotation)
             {               
                 ExitScreen();
-                helpSystem.ScreenActive = false;
+                _helpSystem.ScreenActive = false;
             }
             base.Update(gameTime);
         }
@@ -70,14 +70,14 @@ namespace DreamWorld.ScreenManagement.Screens
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;            
             spriteBatch.Begin();
             
-            spriteBatch.Draw(signTexture, new Rectangle(0,0,vp.Width, vp.Height), Color.White);
+            spriteBatch.Draw(_signTexture, new Rectangle(0,0,vp.Width, vp.Height), Color.White);
             
-            spriteBatch.DrawString(font, text, fontPos, Color.Black);
+            spriteBatch.DrawString(_font, _text, _fontPos, Color.Black);
             
-            spriteBatch.DrawString(helpSystem.HintFont, closeText, closePos + new Vector2(-1, 1), Color.Black);
-            spriteBatch.DrawString(helpSystem.HintFont, closeText, closePos, new Color(204, 180, 167));
+            spriteBatch.DrawString(_helpSystem.HintFont, _closeText, _closePos + new Vector2(-1, 1), Color.Black);
+            spriteBatch.DrawString(_helpSystem.HintFont, _closeText, _closePos, new Color(204, 180, 167));
 
-            spriteBatch.Draw(glassTexture, new Rectangle(0, 0, vp.Width, vp.Height), Color.White);
+            spriteBatch.Draw(_glassTexture, new Rectangle(0, 0, vp.Width, vp.Height), Color.White);
 
             spriteBatch.End();
 

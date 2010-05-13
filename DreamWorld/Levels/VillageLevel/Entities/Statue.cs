@@ -8,18 +8,18 @@ namespace DreamWorld.Levels.VillageLevel.Entities
 {
     public class Statue : Entity
     {
-        private const string FOOD_SYMBOL = "mesh_cowSymbol";
+        private const string FoodSymbol = "mesh_cowSymbol";
 
         private static Random random = new Random();
-        private int frames;
-        private GoldSparkleParticleSystem particleSystem;
+        private int _frames;
+        private GoldSparkleParticleSystem _particleSystem;
 
         public static bool ListInEditor = true;
 
         public override void Initialize()
         {
-            particleSystem = new GoldSparkleParticleSystem();
-            Level.AddParticleSystem(Name + "_particleSystem", particleSystem);
+            _particleSystem = new GoldSparkleParticleSystem();
+            Level.AddParticleSystem(Name + "_particleSystem", _particleSystem);
 
             base.Initialize();
         }
@@ -34,20 +34,20 @@ namespace DreamWorld.Levels.VillageLevel.Entities
         public override void Draw(GameTime gameTime, string technique)
         {
             VillageLevel vl = Level as VillageLevel;
-            if (vl != null && vl.CurrentStage == VillageLevel.Stage.FINISHED_PUZZLE1)
+            if (vl != null && vl.CurrentStage == VillageLevel.Stage.FinishedPuzzle1)
             {
                 Vector3 offset = new Vector3(0, (float)(random.NextDouble() - .5) * 3, (float)(random.NextDouble() - .5) * 3);
-                if (frames++ % 30 == 0)
-                    particleSystem.AddParticle(Body.Position + new Vector3(-10, 29, 1) + offset, Vector3.Zero);
+                if (_frames++ % 30 == 0)
+                    _particleSystem.AddParticle(Body.Position + new Vector3(-10, 29, 1) + offset, Vector3.Zero);
 
-                Model.CopyAbsoluteBoneTransformsTo(transforms);
+                Model.CopyAbsoluteBoneTransformsTo(Transforms);
                 foreach (ModelMesh mesh in Model.Meshes)
                 {
-                    bool isCow = FOOD_SYMBOL.Equals(mesh.Name);
+                    bool isCow = FoodSymbol.Equals(mesh.Name);
                     foreach (Effect effect in mesh.Effects)
                     {
                         effect.CurrentTechnique = isCow ? effect.Techniques["Highlight"] : effect.Techniques["Default"];
-                        effect.Parameters["world"].SetValue(transforms[mesh.ParentBone.Index]*World);
+                        effect.Parameters["world"].SetValue(Transforms[mesh.ParentBone.Index]*World);
                         effect.Parameters["view"].SetValue(GameScreen.Camera.View);
                         effect.Parameters["projection"].SetValue(GameScreen.Camera.Projection);
                         if (isCow)
@@ -60,13 +60,6 @@ namespace DreamWorld.Levels.VillageLevel.Entities
                 base.Draw(gameTime, technique);
         }
 
-
-        /// <summary>
-        /// Creates all needed object information for the JigLibX physics simulator.
-        /// </summary>
-        /// <param name="body">Returns Body.</param>
-        /// <param name="skin">Returns CollisionSkin.</param>
-        /// <param name="centerOfMass">Returns the center of mass wich is usefull for drawing objects.</param>
         protected override void GetPhysicsInformation(out JigLibX.Physics.Body body, out JigLibX.Collision.CollisionSkin skin, out Vector3 centerOfMass)
         {
 	        #region Header

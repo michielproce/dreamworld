@@ -13,13 +13,6 @@ namespace DreamWorld.Levels.VillageLevel.Entities
             base.LoadContent();
         }
 
-
-        /// <summary>
-        /// Creates all needed object information for the JigLibX physics simulator.
-        /// </summary>
-        /// <param name="body">Returns Body.</param>
-        /// <param name="skin">Returns CollisionSkin.</param>
-        /// <param name="centerOfMass">Returns the center of mass wich is usefull for drawing objects.</param>
         protected override void GetPhysicsInformation(out JigLibX.Physics.Body body, out JigLibX.Collision.CollisionSkin skin, out Vector3 centerOfMass)
         {
             #region Header

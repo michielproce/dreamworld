@@ -12,15 +12,13 @@ using Microsoft.Xna.Framework.Graphics;
 namespace DreamWorld.Cameras
 {
     public class DebugCamera : Camera
-    {        
+    {
+        private bool _mouseLook = true;
 
-        private SpriteBatch spriteBatch;
-        private bool mouseLook = true;
-
-        public const float MaxPitch = MathHelper.PiOver2 * .99f; // Matrix.createLookAt gets confused with maxPitch > 90 degrees
-        private Vector3 lookAt;       
-        private float yaw;
-        private float pitch;
+        private const float MaxPitch = MathHelper.PiOver2 * .99f; // Matrix.createLookAt gets confused with maxPitch > 90 degrees
+        private Vector3 _lookAt;       
+        private float _yaw;
+        private float _pitch;
 
         public EntityForm Form { get; private set;}
 
@@ -36,8 +34,6 @@ namespace DreamWorld.Cameras
                device.Viewport.AspectRatio,
                1.0f,
                10000.0f);
-            
-            spriteBatch = new SpriteBatch(inputManager.Game.GraphicsDevice);
 
             base.Initialize();
         }
@@ -45,21 +41,21 @@ namespace DreamWorld.Cameras
         public override void Update(GameTime gameTime)
         {
             // Look around with the mouse
-            if (mouseLook)
+            if (_mouseLook)
             {                
                 Move(inputManager.Debug.Movement);
                 Rotate(inputManager.Debug.Rotation.X, inputManager.Debug.Rotation.Y);
-                lookAt = Position + RotatedDirection(Vector3.Forward);
+                _lookAt = Position + RotatedDirection(Vector3.Forward);
                 View = Matrix.CreateLookAt(
                         Position,
-                        lookAt,
+                        _lookAt,
                         Vector3.Up);     
             }
             
            
             if (inputManager.Debug.SelectEntity)
             {
-                if (mouseLook)
+                if (_mouseLook)
                 {
                     float distance;
                     float closestDistance = float.MaxValue;
@@ -130,18 +126,18 @@ namespace DreamWorld.Cameras
 
         private void Rotate(float yaw, float pitch)
         {
-            this.yaw += yaw;
-            this.pitch += pitch;           
+            _yaw += yaw;
+            _pitch += pitch;           
 
-            if (this.pitch > MaxPitch)
-                this.pitch = MaxPitch;
-            if (this.pitch < -MaxPitch)
-                this.pitch = -MaxPitch;
+            if (_pitch > MaxPitch)
+                _pitch = MaxPitch;
+            if (_pitch < -MaxPitch)
+                _pitch = -MaxPitch;
         }
 
         private Vector3 RotatedDirection(Vector3 direction)
         {            
-            return Vector3.Transform(direction, Quaternion.CreateFromYawPitchRoll(yaw, pitch, 0));
+            return Vector3.Transform(direction, Quaternion.CreateFromYawPitchRoll(_yaw, _pitch, 0));
         }
 
         private void ShowForm(Entity entity)
@@ -159,9 +155,9 @@ namespace DreamWorld.Cameras
 
         public void ToggleMouseLook(bool enabled)
         {            
-            mouseLook = enabled;
-            inputManager.Game.IsMouseVisible = !mouseLook;
-            inputManager.Mouse.IgnoreReset = !mouseLook;
+            _mouseLook = enabled;
+            inputManager.Game.IsMouseVisible = !_mouseLook;
+            inputManager.Mouse.IgnoreReset = !_mouseLook;
             inputManager.Mouse.ResetMouse();
             inputManager.DisableInput = false;
         }
@@ -170,7 +166,7 @@ namespace DreamWorld.Cameras
         {
             get
             {
-                return Vector3.Normalize(lookAt - Position);
+                return Vector3.Normalize(_lookAt - Position);
             }
         }
 

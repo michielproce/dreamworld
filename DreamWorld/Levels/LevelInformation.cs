@@ -11,14 +11,14 @@ namespace DreamWorld.Levels
     [Serializable]
     public class LevelInformation
     {
-        public const string CONTENT_LOCATION = @"..\..\..\Content\Levels\";
+        private const string ContentLocation = @"..\..\..\Content\Levels\";
 
         public Vector3 PlayerStartPosition { get; set; }
         public Vector3 PlayerStartRotation { get; set; }
         public List<SpawnInformation> Spawns { get; set; }
         public List<GroupColorInformation> GroupColors { get; set; }
 
-        public LevelInformation()
+        private LevelInformation()
         {
             Spawns = new List<SpawnInformation>();
             GroupColors = new List<GroupColorInformation>();            
@@ -63,7 +63,7 @@ namespace DreamWorld.Levels
         public static void Save(LevelInformation levelInformation, string fileName)
         {
             XmlSerializer xs = new XmlSerializer(levelInformation.GetType());
-            StreamWriter writer = File.CreateText(CONTENT_LOCATION + fileName); // We use CONTENT_LOCATION because we don't want to save in the 'bin/Content' directory
+            StreamWriter writer = File.CreateText(ContentLocation + fileName); // We use ContentLocation because we don't want to save in the 'bin/Content' directory
             xs.Serialize(writer, levelInformation);
             writer.Flush();
             writer.Close();

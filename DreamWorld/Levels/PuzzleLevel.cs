@@ -13,16 +13,16 @@ namespace DreamWorld.Levels
 {
     public abstract class PuzzleLevel : Level
     {
-        protected internal float SelectionRadius = 110;
+        protected internal const float SelectionRadius = 110;
 
         private int _selectedGroup;
-        protected PuzzleHUD _hud;
+        protected PuzzleHUD Hud;
 
         public override void Initialize()
         {            
             base.Initialize();
-            _hud = new PuzzleHUD(GameScreen);
-            _hud.Load(GameScreen.Content);
+            Hud = new PuzzleHUD(GameScreen);
+            Hud.Load(GameScreen.Content);
         }
 
         public Group GetSelectedGroup()
@@ -37,7 +37,7 @@ namespace DreamWorld.Levels
             return null;
         }
 
-        public void SetSelectedGroup(Group group)
+        private void SetSelectedGroup(Group group)
         {
             int[] keys = new int[Groups.Count];
             Groups.Keys.CopyTo(keys, 0);
@@ -55,12 +55,12 @@ namespace DreamWorld.Levels
         {
             PlayerInput input = Game.InputManager.Player;           
             
-            _hud.Cycle(input.CycleAxle);
+            Hud.Cycle(input.CycleAxle);
 
             if(input.ApplyRotation && !GameScreen.HelpSystem.ScreenActive)
-                RotateGroup(_hud.CurrentDirection);
+                RotateGroup(Hud.CurrentDirection);
 
-            _hud.Update(gameTime);
+            Hud.Update(gameTime);
 
             SelectGroup();
 
@@ -132,7 +132,7 @@ namespace DreamWorld.Levels
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            _hud.Draw(gameTime);
+            Hud.Draw(gameTime);
         }
     }
 }

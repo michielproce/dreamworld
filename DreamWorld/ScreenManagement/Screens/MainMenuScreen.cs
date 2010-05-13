@@ -1,5 +1,4 @@
 using System;
-using DreamWorld.Levels.PuzzleLevel1;
 using DreamWorld.ScreenManagement.Screens.Cutscenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,8 +10,8 @@ namespace DreamWorld.ScreenManagement.Screens
     {
         public MainMenuScreen()
         {
-            menuPosition = new Vector2(150, 255);
-            entryOffset = new Vector2(0, 26);
+            MenuPosition = new Vector2(150, 255);
+            EntryOffset = new Vector2(0, 26);
 
             MenuEntry playGameMenuEntry = new MenuEntry("Play game");
             playGameMenuEntry.Selected += PlayGameMenuEntrySelected;

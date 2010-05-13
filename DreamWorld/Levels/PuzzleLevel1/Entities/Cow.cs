@@ -7,15 +7,15 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
 {
     class Cow : GroupCenter
     {
-        private const float gravity = .05f;
-        private float velocity;
-        private static Random random = new Random();
+        private const float Gravity = .05f;
+        private float _velocity;
+        private static readonly Random random = new Random();
 
-        public Vector3 startPosition = Vector3.Zero;
+        public Vector3 StartPosition = Vector3.Zero;
 
         public bool IsFalling
         {
-            get { return velocity < 0; }
+            get { return _velocity < 0; }
         }
 
         public override void Initialize()
@@ -68,28 +68,22 @@ namespace DreamWorld.Levels.PuzzleLevel1.Entities
 
             if (!Group.IsRotating && !Group.IsColliding)
             {
-                velocity -= gravity;
-                Body.Position += new Vector3(0, velocity, 0);
+                _velocity -= Gravity;
+                Body.Position += new Vector3(0, _velocity, 0);
             }
             else
             {
-                velocity = 0;
+                _velocity = 0;
             }
         }
 
         public void Respawn()
         {
             Animation.Paused = true;
-            velocity = 0;
-            Body.MoveTo(startPosition, Matrix.Identity);
+            _velocity = 0;
+            Body.MoveTo(StartPosition, Matrix.Identity);
         }
 
-        /// <summary>
-        /// Creates all needed object information for the JigLibX physics simulator.
-        /// </summary>
-        /// <param name="body">Returns Body.</param>
-        /// <param name="skin">Returns CollisionSkin.</param>
-        /// <param name="centerOfMass">Returns the center of mass wich is usefull for drawing objects.</param>
         protected override void GetPhysicsInformation(out JigLibX.Physics.Body body,
                                                       out JigLibX.Collision.CollisionSkin skin, out Vector3 centerOfMass)
         {

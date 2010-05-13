@@ -18,10 +18,10 @@ namespace DreamWorld.Interface.Debug.Forms
         public Entity Entity { get; set; }        
         public DebugCamera DebugCamera { private get; set; }
 
-        private bool updating;
-        private int lastEntityTypeSelected;
+        private bool _updating;
+        private int _lastEntityTypeSelected;
         
-        private bool isPuzzleLevel;
+        private readonly bool isPuzzleLevel;
 
         public EntityForm(bool isPuzzleLevel)
         {
@@ -35,13 +35,13 @@ namespace DreamWorld.Interface.Debug.Forms
                 group.Visible = true;
             }
 
-            foreach (string entityTypeName in findEntityTypeNames())
+            foreach (string entityTypeName in FindEntityTypeNames())
                 entityTypes.Items.Add(entityTypeName);
         }
 
         public void UpdateForm()
         {            
-            updating = true;
+            _updating = true;
             Text = "Entity: " + Entity.SpawnInformation.Name;
 
             for (int i = 0; i < entityTypes.Items.Count; i++)
@@ -49,7 +49,7 @@ namespace DreamWorld.Interface.Debug.Forms
                 if (entityTypes.Items[i].Equals(Entity.SpawnInformation.TypeName))
                 {
                     entityTypes.SelectedIndex = i;
-                    lastEntityTypeSelected = i;
+                    _lastEntityTypeSelected = i;
                     break;
                 }
             }
@@ -68,10 +68,10 @@ namespace DreamWorld.Interface.Debug.Forms
             scaleX.Text = Entity.SpawnInformation.Scale.X.ToString();
             scaleY.Text = Entity.SpawnInformation.Scale.Y.ToString();
             scaleZ.Text = Entity.SpawnInformation.Scale.Z.ToString();
-            updating = false;
+            _updating = false;
         }
 
-        private List<string> findEntityTypeNames()
+        private List<string> FindEntityTypeNames()
         {
             List<string> entityTypeNames = new List<string>();
             Type[] types = Assembly.GetAssembly(GetType()).GetTypes();
@@ -98,7 +98,7 @@ namespace DreamWorld.Interface.Debug.Forms
 
         private void OKButton_Click(object sender, EventArgs e)
         {
-            if(updating)
+            if(_updating)
                 return;
             if(Level.EntityNameExists(entityName.Text) && !Entity.SpawnInformation.Name.Equals(entityName.Text))
             {
@@ -109,10 +109,10 @@ namespace DreamWorld.Interface.Debug.Forms
             
             bool changed = false;
 
-            if (lastEntityTypeSelected != entityTypes.SelectedIndex)
+            if (_lastEntityTypeSelected != entityTypes.SelectedIndex)
             {
                 Entity.SpawnInformation.TypeName = entityTypes.Items[entityTypes.SelectedIndex].ToString();
-                lastEntityTypeSelected = entityTypes.SelectedIndex;
+                _lastEntityTypeSelected = entityTypes.SelectedIndex;
                 changed = true;
             }
 
@@ -145,10 +145,10 @@ namespace DreamWorld.Interface.Debug.Forms
                 changed = true;
             }
             
-            int groupID;
-            if(int.TryParse(group.Text, out groupID))
+            int groupId;
+            if(int.TryParse(group.Text, out groupId))
             {
-                Entity.SpawnInformation.Group = groupID;
+                Entity.SpawnInformation.Group = groupId;
                 changed = true;
             }
             

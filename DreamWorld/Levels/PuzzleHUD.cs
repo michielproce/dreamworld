@@ -15,30 +15,30 @@ namespace DreamWorld.Levels
 
         private const float height = .25f; // Height relative to the game height
 
-        private GraphicsDevice device;
-        private GameScreen gameScreen;
-        private Model model;
-        private Matrix world;
-        private Matrix[] transforms;        
-        private Viewport viewport;
-        private Viewport originalViewport;
+        private readonly GraphicsDevice _device;
+        private readonly GameScreen _gameScreen;
+        private Model _model;
+        private Matrix _world;
+        private Matrix[] _transforms;        
+        private Viewport _viewport;
+        private Viewport _originalViewport;
         
-        private ModelMesh[] axles;
-        private int currentAxle;
-        private int currentDirection;
+        private readonly ModelMesh[] _axles;
+        private int _currentAxle;
+        private int _currentDirection;
 
-        private float rotation;
+        private float _rotation;
 
         public bool Hidden { get; set;}
 
         public PuzzleHUD(GameScreen gameScreen)
         {
-            this.gameScreen = gameScreen;
-            this.device =  gameScreen.GraphicsDevice;
+            _gameScreen = gameScreen;
+            _device =  gameScreen.GraphicsDevice;
             
-            axles = new ModelMesh[3];
-            currentAxle = XZ;
-            currentDirection = CW;
+            _axles = new ModelMesh[3];
+            _currentAxle = XZ;
+            _currentDirection = CW;
         }
 
         public void Cycle(int direction)
@@ -46,9 +46,9 @@ namespace DreamWorld.Levels
             if(direction == 0)
                 return;
 
-            if(direction != currentDirection)
+            if(direction != _currentDirection)
             {
-                currentDirection = direction;   
+                _currentDirection = direction;   
             } else
             {
                 CycleAxle(direction);
@@ -57,12 +57,12 @@ namespace DreamWorld.Levels
 
         private void CycleAxle(int direction)
         {
-            currentAxle += direction;            
-            if(currentAxle > axles.Length - 1)            
-                currentAxle = 0;
-            if (currentAxle < 0)
-                currentAxle = axles.Length - 1;            
-            rotation = 0;            
+            _currentAxle += direction;            
+            if(_currentAxle > _axles.Length - 1)            
+                _currentAxle = 0;
+            if (_currentAxle < 0)
+                _currentAxle = _axles.Length - 1;            
+            _rotation = 0;            
         }
 
         public Vector3 CurrentDirection
@@ -71,14 +71,14 @@ namespace DreamWorld.Levels
             {
                 Vector3 v = Vector3.Zero;
                 
-                if (currentAxle == XZ)
+                if (_currentAxle == XZ)
                     v = new Vector3(0, 1, 0);
-                if (currentAxle == XY)
+                if (_currentAxle == XY)
                     v = new Vector3(0, 0, 1);
-                if (currentAxle == YZ)
+                if (_currentAxle == YZ)
                     v = new Vector3(1, 0, 0);
 
-                v *= currentDirection;
+                v *= _currentDirection;
 
                 return v;
             }
@@ -86,28 +86,28 @@ namespace DreamWorld.Levels
 
         public void Load(ContentManager content)
         {
-            viewport = new Viewport();
-            viewport.Height = (int)(height*device.Viewport.Height);
-            viewport.Width = (int)(height*device.Viewport.Height);
-            viewport.X = device.Viewport.TitleSafeArea.Right/2 - viewport.Width/2;
-            viewport.Y = device.Viewport.TitleSafeArea.Bottom - viewport.Height;
+            _viewport = new Viewport();
+            _viewport.Height = (int)(height*_device.Viewport.Height);
+            _viewport.Width = (int)(height*_device.Viewport.Height);
+            _viewport.X = _device.Viewport.TitleSafeArea.Right/2 - _viewport.Width/2;
+            _viewport.Y = _device.Viewport.TitleSafeArea.Bottom - _viewport.Height;
 
-            model = content.Load<Model>(@"Models\Puzzle\Axles");
+            _model = content.Load<Model>(@"Models\Puzzle\Axles");
 
-            world = Matrix.CreateScale(new Vector3(.5f));
+            _world = Matrix.CreateScale(new Vector3(.5f));
 
-            transforms = new Matrix[model.Bones.Count];
-            model.CopyAbsoluteBoneTransformsTo(transforms);
+            _transforms = new Matrix[_model.Bones.Count];
+            _model.CopyAbsoluteBoneTransformsTo(_transforms);
 
             
-            foreach (ModelMesh mesh in model.Meshes)
+            foreach (ModelMesh mesh in _model.Meshes)
             {
                 if(mesh.Name.EndsWith("XZ", true, null))
-                    axles[XZ] = mesh;
+                    _axles[XZ] = mesh;
                 if (mesh.Name.EndsWith("XY", true, null))
-                    axles[XY] = mesh;
+                    _axles[XY] = mesh;
                 if (mesh.Name.EndsWith("YZ", true, null))
-                    axles[YZ] = mesh;
+                    _axles[YZ] = mesh;
                 foreach (Effect effect in mesh.Effects)
                 {
                     effect.Parameters["projection"].SetValue(Matrix.CreatePerspective(1,1,1,10));
@@ -117,7 +117,7 @@ namespace DreamWorld.Levels
 
         public void Update(GameTime gameTime)
         {
-            rotation += MathHelper.TwoPi/500f * currentDirection;
+            _rotation += MathHelper.TwoPi/500f * _currentDirection;
         }
 
         public void Draw(GameTime gameTime)
@@ -125,41 +125,41 @@ namespace DreamWorld.Levels
             if(Hidden)
                 return;
 
-            originalViewport = device.Viewport;
-            device.Viewport = viewport;
-            device.RenderState.DepthBufferEnable = true;            
+            _originalViewport = _device.Viewport;
+            _device.Viewport = _viewport;
+            _device.RenderState.DepthBufferEnable = true;            
             
-            Vector3 cameraPosition = -Vector3.Normalize(gameScreen.Camera.Direction);
+            Vector3 cameraPosition = -Vector3.Normalize(_gameScreen.Camera.Direction);
             cameraPosition.Y += 0.35f;
             cameraPosition.Normalize();
             cameraPosition *= 2.4f;
             
-            foreach (ModelMesh mesh in model.Meshes) {
+            foreach (ModelMesh mesh in _model.Meshes) {
                 foreach (Effect effect in mesh.Effects)
                 {
                     effect.Parameters["view"].SetValue(Matrix.CreateLookAt(cameraPosition, Vector3.Zero, Vector3.Up));
                     
-                    if(mesh.Equals(axles[currentAxle]))
+                    if(mesh.Equals(_axles[_currentAxle]))
                     {
                         effect.CurrentTechnique = effect.Techniques["Highlight"];                        
-                        if(currentAxle == XZ)
-                            effect.Parameters["world"].SetValue(transforms[mesh.ParentBone.Index] * world * Matrix.CreateRotationY(rotation));
-                        if (currentAxle == XY)
-                            effect.Parameters["world"].SetValue(transforms[mesh.ParentBone.Index] * world * Matrix.CreateRotationZ(rotation));
-                        if (currentAxle == YZ)
-                            effect.Parameters["world"].SetValue(transforms[mesh.ParentBone.Index] * world * Matrix.CreateRotationX(rotation));                        
+                        if(_currentAxle == XZ)
+                            effect.Parameters["world"].SetValue(_transforms[mesh.ParentBone.Index] * _world * Matrix.CreateRotationY(_rotation));
+                        if (_currentAxle == XY)
+                            effect.Parameters["world"].SetValue(_transforms[mesh.ParentBone.Index] * _world * Matrix.CreateRotationZ(_rotation));
+                        if (_currentAxle == YZ)
+                            effect.Parameters["world"].SetValue(_transforms[mesh.ParentBone.Index] * _world * Matrix.CreateRotationX(_rotation));                        
                     } 
                     else
                     {
                         effect.CurrentTechnique = effect.Techniques["Default"];
-                        effect.Parameters["world"].SetValue(transforms[mesh.ParentBone.Index] * world);
+                        effect.Parameters["world"].SetValue(_transforms[mesh.ParentBone.Index] * _world);
                     }
                 }
                 mesh.Draw();
             }
 
-            device.Viewport = originalViewport;
-            device.RenderState.DepthBufferEnable = false;
+            _device.Viewport = _originalViewport;
+            _device.RenderState.DepthBufferEnable = false;
         }
     }
 }

@@ -10,47 +10,47 @@ namespace DreamWorld.ScreenManagement
 {
     public abstract class CutsceneScreen : Screen
     {
-        private TimeSpan? startTime;
+        private TimeSpan? _startTime;
 
-        private TimeSpan totalLineDuration = TimeSpan.Zero;
-        private int currentLine;
-        private bool started;
-        private SoundEffectInstance currentSoundEffectInstance;
+        private TimeSpan _totalLineDuration = TimeSpan.Zero;
+        private int _currentLine;
+        private bool _started;
+        private SoundEffectInstance _currentSoundEffectInstance;
 
-        protected Texture2D texture;
-        protected List<CutsceneLine> lines;
+        protected Texture2D Texture;
+        protected List<CutsceneLine> Lines;
 
-        protected TimeSpan delay = TimeSpan.Zero;
-        protected Song song;
-        protected float volume = 1;
+        protected TimeSpan Delay = TimeSpan.Zero;
+        protected Song Song;
+        protected float Volume = 1;
 
-        private Vector2 textPosition;
-        private SpriteFont font;
-        private string text;
+        private Vector2 _textPosition;
+        private SpriteFont _font;
+        private string _text;
 
-        private SpriteFont hintFont;
-        private Vector2 hintPosition;
-        private string hintText;
+        private SpriteFont _hintFont;
+        private Vector2 _hintPosition;
+        private string _hintText;
 
         protected CutsceneScreen()
         {
-            text = "";
+            _text = "";
         }
 
         protected override void LoadContent()
         {
-            font = Content.Load<SpriteFont>(@"Fonts\subtitle");
-            hintFont = Content.Load<SpriteFont>(@"Fonts\helphint");
-            hintText = StringUtil.ParsePlatform("Press {enter|a} to skip.");
-            Vector2 hintSize = hintFont.MeasureString(hintText);
-            hintPosition = new Vector2(ScreenManager.GraphicsDevice.Viewport.Width - hintSize.X - 10, 5);
+            _font = Content.Load<SpriteFont>(@"Fonts\subtitle");
+            _hintFont = Content.Load<SpriteFont>(@"Fonts\helphint");
+            _hintText = StringUtil.ParsePlatform("Press {enter|a} to skip.");
+            Vector2 hintSize = _hintFont.MeasureString(_hintText);
+            _hintPosition = new Vector2(ScreenManager.GraphicsDevice.Viewport.Width - hintSize.X - 10, 5);
 
-            lines = new List<CutsceneLine>();
+            Lines = new List<CutsceneLine>();
             LoadCutscene();
-            if (song != null)
+            if (Song != null)
             {
-                MediaPlayer.Play(song);
-                MediaPlayer.Volume = volume;
+                MediaPlayer.Play(Song);
+                MediaPlayer.Volume = Volume;
             }
 
             base.LoadContent();
@@ -60,33 +60,33 @@ namespace DreamWorld.ScreenManagement
         {
             if(ScreenManager.InputManager.Menu.Select || ScreenManager.InputManager.Menu.Cancel)
                 Stop();
-            if (!startTime.HasValue)
+            if (!_startTime.HasValue)
             {
-                startTime = gameTime.TotalGameTime;                
+                _startTime = gameTime.TotalGameTime;                
             }            
-            TimeSpan total = gameTime.TotalGameTime - (TimeSpan) startTime;
-            if (total < delay)
+            TimeSpan total = gameTime.TotalGameTime - (TimeSpan) _startTime;
+            if (total < Delay)
             {
                 base.Update(gameTime);
                 return;
             }
-            if(!started)
+            if(!_started)
             {
                 PlayCurrentLine();
-                startTime = gameTime.TotalGameTime;
-                started = true;
+                _startTime = gameTime.TotalGameTime;
+                _started = true;
             }
-            if (currentLine == lines.Count - 1)
+            if (_currentLine == Lines.Count - 1)
                 MediaPlayer.Volume *= .99f;
-            if (currentLine < lines.Count)
+            if (_currentLine < Lines.Count)
             {                                
-                if (totalLineDuration - lines[currentLine].Delay < total)
-                    text = "";
+                if (_totalLineDuration - Lines[_currentLine].Delay < total)
+                    _text = "";
 
-                if (totalLineDuration < total)
+                if (_totalLineDuration < total)
                 {
-                    currentLine++;
-                    if (currentLine < lines.Count)
+                    _currentLine++;
+                    if (_currentLine < Lines.Count)
                     {                        
                         PlayCurrentLine();   
                     }
@@ -100,8 +100,8 @@ namespace DreamWorld.ScreenManagement
         }
         private void Stop()
         {
-            if(currentSoundEffectInstance != null)
-                currentSoundEffectInstance.Stop(true);
+            if(_currentSoundEffectInstance != null)
+                _currentSoundEffectInstance.Stop(true);
             MediaPlayer.Stop();            
             ExitScreen();            
             ScreenManager.AddScreen(LoadNextScreen());
@@ -110,17 +110,17 @@ namespace DreamWorld.ScreenManagement
 
         private void PlayCurrentLine()
         {
-            if (lines[currentLine].Texture != null)
-                texture = lines[currentLine].Texture;
-            text = StringUtil.CutLine(ScreenManager.GraphicsDevice.Viewport, font, lines[currentLine].Text, .9f);
-            Vector2 textSize = font.MeasureString(text);
+            if (Lines[_currentLine].Texture != null)
+                Texture = Lines[_currentLine].Texture;
+            _text = StringUtil.CutLine(ScreenManager.GraphicsDevice.Viewport, _font, Lines[_currentLine].Text, .9f);
+            Vector2 textSize = _font.MeasureString(_text);
             Viewport vp = ScreenManager.GraphicsDevice.Viewport;           
-            textPosition = new Vector2(vp.Width / 2f - textSize.X / 2f, vp.Height - textSize.Y - 30f);
-            SoundEffect sound = Content.Load<SoundEffect>(lines[currentLine].Audio);
+            _textPosition = new Vector2(vp.Width / 2f - textSize.X / 2f, vp.Height - textSize.Y - 30f);
+            SoundEffect sound = Content.Load<SoundEffect>(Lines[_currentLine].Audio);
 
-            currentSoundEffectInstance = sound.CreateInstance();            
-            currentSoundEffectInstance.Play();
-            totalLineDuration += sound.Duration + lines[currentLine].Delay;
+            _currentSoundEffectInstance = sound.CreateInstance();            
+            _currentSoundEffectInstance.Play();
+            _totalLineDuration += sound.Duration + Lines[_currentLine].Delay;
         }
 
         public override void Draw(GameTime gameTime)
@@ -128,16 +128,16 @@ namespace DreamWorld.ScreenManagement
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             spriteBatch.Begin();
             spriteBatch.Draw(ScreenManager.BlankTexture, ScreenManager.FullscreenDestination, Color.Black);
-            spriteBatch.Draw(texture, ScreenManager.GraphicsDevice.Viewport.TitleSafeArea, new Color(255, 255, 255, TransitionAlpha));
+            spriteBatch.Draw(Texture, ScreenManager.GraphicsDevice.Viewport.TitleSafeArea, new Color(255, 255, 255, TransitionAlpha));
 
             if (((DreamWorldGame)ScreenManager.Game).Config.Subtitles)
             {
-                spriteBatch.DrawString(font, text, textPosition + new Vector2(2), Color.Black);
-                spriteBatch.DrawString(font, text, textPosition, Color.White);
+                spriteBatch.DrawString(_font, _text, _textPosition + new Vector2(2), Color.Black);
+                spriteBatch.DrawString(_font, _text, _textPosition, Color.White);
             }
 
-            spriteBatch.DrawString(hintFont, hintText, hintPosition + new Vector2(2), Color.Black);
-            spriteBatch.DrawString(hintFont, hintText, hintPosition, Color.White);
+            spriteBatch.DrawString(_hintFont, _hintText, _hintPosition + new Vector2(2), Color.Black);
+            spriteBatch.DrawString(_hintFont, _hintText, _hintPosition, Color.White);
 
             spriteBatch.End();
 

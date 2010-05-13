@@ -6,61 +6,61 @@ namespace DreamWorld.ScreenManagement.Screens
 {
     internal class SettingsMenuScreen : MenuScreen
     {
-        private readonly Config config;
+        private readonly Config _config;
 
-        private readonly SettingsMenuEntry resolutionEntry;
-        private readonly SettingsMenuEntry fullscreenEntry;
-        private readonly SettingsMenuEntry antiAliasingEntry;
-        private readonly SettingsMenuEntry verticalSyncEntry;
-        private readonly SettingsMenuEntry subtitlesEntry;
-        private readonly SettingsMenuEntry invertCameraEntry;
+        private readonly SettingsMenuEntry _resolutionEntry;
+        private readonly SettingsMenuEntry _fullscreenEntry;
+        private readonly SettingsMenuEntry _antiAliasingEntry;
+        private readonly SettingsMenuEntry _verticalSyncEntry;
+        private readonly SettingsMenuEntry _subtitlesEntry;
+        private readonly SettingsMenuEntry _invertCameraEntry;
 
-        private readonly MenuEntry saveMenuEntry;
-        private readonly MenuEntry exitMenuEntry;
+        private readonly MenuEntry _saveMenuEntry;
+        private readonly MenuEntry _exitMenuEntry;
 
         public SettingsMenuScreen()
         {
-            menuPosition = new Vector2(150, 215);
-            entryOffset = new Vector2(0, 5);
+            MenuPosition = new Vector2(150, 215);
+            EntryOffset = new Vector2(0, 5);
 
-            config = Config.Load();
+            _config = Config.Load();
 
-            resolutionEntry = new SettingsMenuEntry("Resolution", "");
-            fullscreenEntry = new SettingsMenuEntry("Screenmode", "");
-            antiAliasingEntry = new SettingsMenuEntry("Anti-aliasing", "");
-            verticalSyncEntry = new SettingsMenuEntry("Vertical sync", "");
-            subtitlesEntry = new SettingsMenuEntry("Subtitles", "");
-            invertCameraEntry = new SettingsMenuEntry("Invert camera", "");
-            saveMenuEntry = new MenuEntry("Save");
-            exitMenuEntry = new MenuEntry("Cancel");
+            _resolutionEntry = new SettingsMenuEntry("Resolution", "");
+            _fullscreenEntry = new SettingsMenuEntry("Screenmode", "");
+            _antiAliasingEntry = new SettingsMenuEntry("Anti-aliasing", "");
+            _verticalSyncEntry = new SettingsMenuEntry("Vertical sync", "");
+            _subtitlesEntry = new SettingsMenuEntry("Subtitles", "");
+            _invertCameraEntry = new SettingsMenuEntry("Invert camera", "");
+            _saveMenuEntry = new MenuEntry("Save");
+            _exitMenuEntry = new MenuEntry("Cancel");
 
-            resolutionEntry.Selected += ResolutionMenuEntrySelected;
-            fullscreenEntry.Selected += FullscreenMenuEntrySelected;
-            antiAliasingEntry.Selected += AntiAliasingMenuEntrySelected;
-            verticalSyncEntry.Selected += VerticalSyncMenuEntrySelected;
-            subtitlesEntry.Selected += SubtitlesMenuEntrySelected;
-            invertCameraEntry.Selected += InvertCameraMenuEntrySelected;
-            saveMenuEntry.Selected += SaveMenuEntrySelected;
-            exitMenuEntry.Selected += OnCancel;
+            _resolutionEntry.Selected += ResolutionMenuEntrySelected;
+            _fullscreenEntry.Selected += FullscreenMenuEntrySelected;
+            _antiAliasingEntry.Selected += AntiAliasingMenuEntrySelected;
+            _verticalSyncEntry.Selected += VerticalSyncMenuEntrySelected;
+            _subtitlesEntry.Selected += SubtitlesMenuEntrySelected;
+            _invertCameraEntry.Selected += InvertCameraMenuEntrySelected;
+            _saveMenuEntry.Selected += SaveMenuEntrySelected;
+            _exitMenuEntry.Selected += OnCancel;
 
-            MenuEntries.Add(resolutionEntry);
-            MenuEntries.Add(fullscreenEntry);
-            MenuEntries.Add(antiAliasingEntry);
-            MenuEntries.Add(verticalSyncEntry);
-            MenuEntries.Add(subtitlesEntry);
-            MenuEntries.Add(invertCameraEntry);
-            MenuEntries.Add(saveMenuEntry);
-            MenuEntries.Add(exitMenuEntry);
+            MenuEntries.Add(_resolutionEntry);
+            MenuEntries.Add(_fullscreenEntry);
+            MenuEntries.Add(_antiAliasingEntry);
+            MenuEntries.Add(_verticalSyncEntry);
+            MenuEntries.Add(_subtitlesEntry);
+            MenuEntries.Add(_invertCameraEntry);
+            MenuEntries.Add(_saveMenuEntry);
+            MenuEntries.Add(_exitMenuEntry);
         }
 
         public override void Initialize()
         {
             foreach (DisplayMode mode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
             {
-                if (mode.Width == config.Width && mode.Height == config.Height)
+                if (mode.Width == _config.Width && mode.Height == _config.Height)
                 {
-                    config.Width = mode.Width;
-                    config.Height = mode.Height;
+                    _config.Width = mode.Width;
+                    _config.Height = mode.Height;
                     break;
                 }
             }
@@ -81,12 +81,12 @@ namespace DreamWorld.ScreenManagement.Screens
 
         private void SetMenuEntryText()
         {
-            resolutionEntry.Value =     config.Width + " x " + config.Height;
-            fullscreenEntry.Value =     config.Fullscreen ? "Fullscreen" : "Windowed";
-            antiAliasingEntry.Value =   config.AntiAliasing ? "On" : "Off";
-            verticalSyncEntry.Value =   config.VerticalSync ? "On" : "Off";
-            subtitlesEntry.Value =      config.Subtitles ? "On" : "Off";
-            invertCameraEntry.Value =   config.InvertCamera ? "On" : "Off";
+            _resolutionEntry.Value =     _config.Width + " x " + _config.Height;
+            _fullscreenEntry.Value =     _config.Fullscreen ? "Fullscreen" : "Windowed";
+            _antiAliasingEntry.Value =   _config.AntiAliasing ? "On" : "Off";
+            _verticalSyncEntry.Value =   _config.VerticalSync ? "On" : "Off";
+            _subtitlesEntry.Value =      _config.Subtitles ? "On" : "Off";
+            _invertCameraEntry.Value =   _config.InvertCamera ? "On" : "Off";
         }
 
         private void ResolutionMenuEntrySelected(object sender, EventArgs e)
@@ -95,60 +95,60 @@ namespace DreamWorld.ScreenManagement.Screens
 
             foreach (DisplayMode mode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
             {
-                if (found && (config.Width != mode.Width || config.Height != mode.Height))
+                if (found && (_config.Width != mode.Width || _config.Height != mode.Height))
                 {
-                    config.Width = mode.Width;
-                    config.Height = mode.Height;
+                    _config.Width = mode.Width;
+                    _config.Height = mode.Height;
                     SetMenuEntryText();
                     return;
                 }
 
-                if (config.Width == mode.Width && config.Height == mode.Height)
+                if (_config.Width == mode.Width && _config.Height == mode.Height)
                     found = true;
             }
 
             // Not found? Select the first
             foreach (DisplayMode mode in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
             {
-                config.Width = mode.Width;
-                config.Height = mode.Height;
+                _config.Width = mode.Width;
+                _config.Height = mode.Height;
                 return;
             }
         }
 
         private void FullscreenMenuEntrySelected(object sender, EventArgs e)
         {
-            config.Fullscreen = !config.Fullscreen;
+            _config.Fullscreen = !_config.Fullscreen;
             SetMenuEntryText();
         }
 
         private void AntiAliasingMenuEntrySelected(object sender, EventArgs e)
         {
-            config.AntiAliasing = !config.AntiAliasing;
+            _config.AntiAliasing = !_config.AntiAliasing;
             SetMenuEntryText();
         }
 
         private void VerticalSyncMenuEntrySelected(object sender, EventArgs e)
         {
-            config.VerticalSync = !config.VerticalSync;
+            _config.VerticalSync = !_config.VerticalSync;
             SetMenuEntryText();
         }
 
         private void SubtitlesMenuEntrySelected(object sender, EventArgs e)
         {
-            config.Subtitles = !config.Subtitles;
+            _config.Subtitles = !_config.Subtitles;
             SetMenuEntryText();
         }
 
         private void InvertCameraMenuEntrySelected(object sender, EventArgs e)
         {
-            config.InvertCamera = !config.InvertCamera;
+            _config.InvertCamera = !_config.InvertCamera;
             SetMenuEntryText();
         }
 
         private void SaveMenuEntrySelected(object sender, EventArgs e)
         {
-            Config.Save(config);
+            Config.Save(_config);
 
             ((DreamWorldGame) ScreenManager.Game).ApplyConfig();
 
@@ -170,17 +170,17 @@ namespace DreamWorld.ScreenManagement.Screens
         {
             MenuEntry menuEntry = MenuEntries[key];
 
-            if (saveMenuEntry == menuEntry)
+            if (_saveMenuEntry == menuEntry)
                 position += new Vector2(0, 10);
-            else if (exitMenuEntry == menuEntry)
-                position += new Vector2(160, -entryOffset.Y - menuEntry.GetHeight(this));
+            else if (_exitMenuEntry == menuEntry)
+                position += new Vector2(160, -EntryOffset.Y - menuEntry.GetHeight(this));
 
-            bool isSelected = IsActive && (key == selectedEntry);
+            bool isSelected = IsActive && (key == SelectedEntry);
 
             menuEntry.Draw(gameTime, this, position, isSelected);
 
             position.Y += menuEntry.GetHeight(this);
-            position += entryOffset;
+            position += EntryOffset;
         }
     }
 }

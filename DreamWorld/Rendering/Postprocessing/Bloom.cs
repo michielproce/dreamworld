@@ -13,19 +13,19 @@ namespace DreamWorld.Rendering.Postprocessing
         public float BloomSaturation { get; set; }
         public float BaseSaturation { get; set; }
 
-        Effect bloomExtractEffect;
-        Effect bloomCombineEffect;
-        Effect gaussianBlurEffect;
+        private readonly Effect _bloomExtractEffect;
+        private readonly Effect _bloomCombineEffect;
+        private readonly Effect _gaussianBlurEffect;
 
-        ResolveTexture2D resolveTarget;
-        RenderTarget2D renderTarget1;
-        RenderTarget2D renderTarget2;
+        readonly ResolveTexture2D _resolveTarget;
+        readonly RenderTarget2D _renderTarget1;
+        readonly RenderTarget2D _renderTarget2;
 
         public Bloom(Game game, SpriteBatch spriteBatch) : base(game, spriteBatch)
         {                  
-            bloomExtractEffect = game.Content.Load<Effect>(@"Effects\BloomExtract");
-            bloomCombineEffect = game.Content.Load<Effect>(@"Effects\BloomCombine");
-            gaussianBlurEffect = game.Content.Load<Effect>(@"Effects\GaussianBlur");
+            _bloomExtractEffect = game.Content.Load<Effect>(@"Effects\BloomExtract");
+            _bloomCombineEffect = game.Content.Load<Effect>(@"Effects\BloomCombine");
+            _gaussianBlurEffect = game.Content.Load<Effect>(@"Effects\GaussianBlur");
 
             PresentationParameters pp = device.PresentationParameters;
 
@@ -34,51 +34,51 @@ namespace DreamWorld.Rendering.Postprocessing
 
             SurfaceFormat format = pp.BackBufferFormat;
             
-            resolveTarget = new ResolveTexture2D(device, width, height, 1,
+            _resolveTarget = new ResolveTexture2D(device, width, height, 1,
                 format);
 
             width /= 2;
             height /= 2;
             
-            renderTarget1 = new RenderTarget2D(device, width, height, 1,
+            _renderTarget1 = new RenderTarget2D(device, width, height, 1,
                 format, pp.MultiSampleType, pp.MultiSampleQuality);
-            renderTarget2 = new RenderTarget2D(device, width, height, 1,
+            _renderTarget2 = new RenderTarget2D(device, width, height, 1,
                 format, pp.MultiSampleType, pp.MultiSampleQuality);
         }
 
         public override void Draw(GameTime gameTime)
         {            
-            device.ResolveBackBuffer(resolveTarget);
+            device.ResolveBackBuffer(_resolveTarget);
             
             // Pass 1: Extract bloom
-            bloomExtractEffect.Parameters["BloomThreshold"].SetValue(BloomThreshold);
-            DrawFullscreenQuad(resolveTarget, renderTarget1, bloomExtractEffect);
+            _bloomExtractEffect.Parameters["BloomThreshold"].SetValue(BloomThreshold);
+            DrawFullscreenQuad(_resolveTarget, _renderTarget1, _bloomExtractEffect);
 
             // Pass 2: Horizontal Blur
-            SetBlurEffectParameters(1.0f / (float)renderTarget1.Width, 0);
-            DrawFullscreenQuad(renderTarget1.GetTexture(), renderTarget2, gaussianBlurEffect);
+            SetBlurEffectParameters(1.0f / _renderTarget1.Width, 0);
+            DrawFullscreenQuad(_renderTarget1.GetTexture(), _renderTarget2, _gaussianBlurEffect);
 
             // Pass 3: Vertical Blur
-            SetBlurEffectParameters(0, 1.0f / (float)renderTarget1.Height);
-            DrawFullscreenQuad(renderTarget2.GetTexture(), renderTarget1, gaussianBlurEffect);
+            SetBlurEffectParameters(0, 1.0f / _renderTarget1.Height);
+            DrawFullscreenQuad(_renderTarget2.GetTexture(), _renderTarget1, _gaussianBlurEffect);
             
             // Pass 4: Combine
             device.SetRenderTarget(0, null);
 
-            EffectParameterCollection parameters = bloomCombineEffect.Parameters;
+            EffectParameterCollection parameters = _bloomCombineEffect.Parameters;
 
             parameters["BloomIntensity"].SetValue(BloomIntensity);
             parameters["BaseIntensity"].SetValue(BaseIntensity);
             parameters["BloomSaturation"].SetValue(BloomSaturation);
             parameters["BaseSaturation"].SetValue(BaseSaturation);
 
-            device.Textures[1] = resolveTarget;
+            device.Textures[1] = _resolveTarget;
 
             Viewport viewport = device.Viewport;
 
-            DrawFullscreenQuad(renderTarget1.GetTexture(),
+            DrawFullscreenQuad(_renderTarget1.GetTexture(),
                                viewport.Width, viewport.Height,
-                               bloomCombineEffect);
+                               _bloomCombineEffect);
         }
 
 
@@ -109,10 +109,8 @@ namespace DreamWorld.Rendering.Postprocessing
         
         private void SetBlurEffectParameters(float dx, float dy)
         {
-            EffectParameter weightsParameter, offsetsParameter;
-
-            weightsParameter = gaussianBlurEffect.Parameters["SampleWeights"];
-            offsetsParameter = gaussianBlurEffect.Parameters["SampleOffsets"];
+            EffectParameter weightsParameter = _gaussianBlurEffect.Parameters["SampleWeights"];
+            EffectParameter offsetsParameter = _gaussianBlurEffect.Parameters["SampleOffsets"];
 
             int sampleCount = weightsParameter.Elements.Count;
 

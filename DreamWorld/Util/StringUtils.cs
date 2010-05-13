@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using DreamWorld.ScreenManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -36,14 +35,13 @@ namespace DreamWorld.Util
             float maxWidth = vp.Width * amount;
             int maxChars = (int)Math.Floor(maxWidth / charWidth);
 
-            return StringUtil.CutLine(line, maxChars);
+            return CutLine(line, maxChars);
         }
         
         public static string ParsePlatform(string text)
         {
             // Example: Press {Enter|B} to begin.
             // {PC|XBOX} is parsed.
-//            Regex.Replace(.)
 
             int platform = GamePad.GetState(PlayerIndex.One).IsConnected ? 2 : 1;
             Regex regex = new Regex(@"{(.*?)\|(.*?)}");

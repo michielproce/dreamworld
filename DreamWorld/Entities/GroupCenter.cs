@@ -8,15 +8,15 @@ namespace DreamWorld.Entities
     public class GroupCenter : Entity
     {
         public static bool ListInEditor = true;
-        private GroupCenterParticleSystem particleSystem;
-        private int frames;
-        private bool hideModel;
+        private GroupCenterParticleSystem _particleSystem;
+        private int _frames;
+        private bool _hideModel;
         
 
         public override void Initialize()
         {
-            particleSystem = new GroupCenterParticleSystem(Group.Color);
-            Level.AddParticleSystem(Group.groupId + "_groupCenter", particleSystem);
+            _particleSystem = new GroupCenterParticleSystem(Group.Color);
+            Level.AddParticleSystem(Group.GroupId + "_groupCenter", _particleSystem);
             base.Initialize();
         }
 
@@ -26,7 +26,7 @@ namespace DreamWorld.Entities
             if (Model == null)
             {
                 Model = GameScreen.Content.Load<Model>(@"Models\Puzzle\GroupCenter");
-                hideModel = true;
+                _hideModel = true;
             }
 
             base.LoadContent();
@@ -36,14 +36,14 @@ namespace DreamWorld.Entities
         {
             int framesPerParticle = this is Cow && Group.IsRotating ? 5 : 15;
 
-            if (frames++ % framesPerParticle == 0)
-                particleSystem.AddParticle(Body.Position, Vector3.Zero);
+            if (_frames++ % framesPerParticle == 0)
+                _particleSystem.AddParticle(Body.Position, Vector3.Zero);
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime, string technique)
         {
-            if(!hideModel)
+            if(!_hideModel)
                 base.Draw(gameTime, technique);
         }
     }

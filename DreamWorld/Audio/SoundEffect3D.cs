@@ -1,6 +1,5 @@
 ﻿using DreamWorld.Entities;
 using DreamWorld.ScreenManagement.Screens;
-using JigLibX.Physics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 
@@ -8,9 +7,9 @@ namespace DreamWorld.Audio
 {
     public class SoundEffect3D
     {
-        private SoundEffectInstance sfxInstance;
-        private Entity entity;
-        private AudioEmitter emitter;
+        private readonly SoundEffectInstance _sfxInstance;
+        private readonly Entity _entity;
+        private readonly AudioEmitter _emitter;
 
         public float Boost { get; set;}
 
@@ -20,37 +19,37 @@ namespace DreamWorld.Audio
 
         public SoundEffect3D(Entity entity, SoundEffect sfx, bool looped)
         {
-            this.entity = entity;
-            sfxInstance = sfx.CreateInstance();
-            emitter = new AudioEmitter();
-            sfxInstance.IsLooped = looped;
+            _entity = entity;
+            _sfxInstance = sfx.CreateInstance();
+            _emitter = new AudioEmitter();
+            _sfxInstance.IsLooped = looped;
             Apply3D();
         }
 
         public void Update(GameTime gameTime)
         {
-            if (!sfxInstance.IsDisposed)
+            if (!_sfxInstance.IsDisposed)
                 Apply3D();   
         }
 
         public void Play()
         {
-            if(!sfxInstance.IsDisposed) 
-                sfxInstance.Play();
+            if(!_sfxInstance.IsDisposed) 
+                _sfxInstance.Play();
         }
 
         public void Stop()
         {
-            if (!sfxInstance.IsDisposed)
-                sfxInstance.Stop();            
+            if (!_sfxInstance.IsDisposed)
+                _sfxInstance.Stop();            
         }
 
         private void Apply3D()
         {            
             AudioListener listener = GameScreen.Instance.Camera.Listener;
-            emitter.Position = Vector3.Lerp(entity.Body.Position, listener.Position, Boost);
-            emitter.Forward = Vector3.Transform(Vector3.Forward, entity.Body.Orientation);
-            sfxInstance.Apply3D(listener, emitter);
+            _emitter.Position = Vector3.Lerp(_entity.Body.Position, listener.Position, Boost);
+            _emitter.Forward = Vector3.Transform(Vector3.Forward, _entity.Body.Orientation);
+            _sfxInstance.Apply3D(listener, _emitter);
         }
     }
 }

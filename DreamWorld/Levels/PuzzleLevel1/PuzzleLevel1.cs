@@ -50,8 +50,8 @@ namespace DreamWorld.Levels.PuzzleLevel1
                 cam.VerticalRotation = MathHelper.ToRadians(-15);            
 
             _cows = new Cow[4];
-            _cows[0] = new Cow { Name = "Cow1", Scale = new Vector3(0.4f), startPosition = new Vector3(220, 30, -20) };
-            _cows[1] = new Cow { Name = "Cow2", Scale = new Vector3(0.4f), startPosition = new Vector3(280, 30, -20) };
+            _cows[0] = new Cow { Name = "Cow1", Scale = new Vector3(0.4f), StartPosition = new Vector3(220, 30, -20) };
+            _cows[1] = new Cow { Name = "Cow2", Scale = new Vector3(0.4f), StartPosition = new Vector3(280, 30, -20) };
 
             _cows[0].Group = group1;
             _cows[1].Group = group2;
@@ -61,8 +61,8 @@ namespace DreamWorld.Levels.PuzzleLevel1
             _cows[0].Initialize();
             _cows[1].Initialize();
 
-            _cows[2] = new Cow { Name = "Cow3", Scale = new Vector3(0.4f), startPosition = new Vector3(160, 30, -40) };
-            _cows[3] = new Cow { Name = "Cow4", Scale = new Vector3(0.4f), startPosition = new Vector3(100, 30, -40) };
+            _cows[2] = new Cow { Name = "Cow3", Scale = new Vector3(0.4f), StartPosition = new Vector3(160, 30, -40) };
+            _cows[3] = new Cow { Name = "Cow4", Scale = new Vector3(0.4f), StartPosition = new Vector3(100, 30, -40) };
 
             _cows[2].Group = group3;
             _cows[3].Group = group4;
@@ -91,7 +91,7 @@ namespace DreamWorld.Levels.PuzzleLevel1
         protected override void VictoryEventHandler()
         {
             GameScreen.ExitScreen();
-            Level villageLevel = new VillageLevel.VillageLevel(VillageLevel.VillageLevel.Stage.FINISHED_PUZZLE1);
+            Level villageLevel = new VillageLevel.VillageLevel(VillageLevel.VillageLevel.Stage.FinishedPuzzle1);
             GameScreen.ScreenManager.AddScreen(new GameScreen(villageLevel));            
         }
 
@@ -120,7 +120,7 @@ namespace DreamWorld.Levels.PuzzleLevel1
             base.Update(gameTime);
         }
 
-        public override void InitBloom(ref Bloom bloom)
+        protected override void InitBloom(ref Bloom bloom)
         {
             bloom.BloomThreshold = .3f;
             bloom.BlurAmount = 8f;

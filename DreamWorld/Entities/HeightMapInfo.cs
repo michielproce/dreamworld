@@ -6,11 +6,11 @@ namespace DreamWorld.Entities
 {
     public class HeightMapInfo
     {
-        private float terrainScale;
-        private float[,] heights;
-        private Vector3 heightmapPosition;
-        private float heightmapWidth;
-        private float heightmapHeight;
+        private readonly float _terrainScale;
+        private readonly float[,] _heights;
+        private readonly Vector3 _heightmapPosition;
+        private readonly float _heightmapWidth;
+        private readonly float _heightmapHeight;
 
         public HeightMapInfo(float[,] heights, float terrainScale)
         {
@@ -19,45 +19,44 @@ namespace DreamWorld.Entities
                 throw new ArgumentNullException("heights");
             }
 
-            this.terrainScale = terrainScale;
-            this.heights = heights;
+            _terrainScale = terrainScale;
+            _heights = heights;
 
-            heightmapWidth = (heights.GetLength(0) - 1) * terrainScale;
-            heightmapHeight = (heights.GetLength(1) - 1) * terrainScale;
+            _heightmapWidth = (heights.GetLength(0) - 1) * terrainScale;
+            _heightmapHeight = (heights.GetLength(1) - 1) * terrainScale;
 
-            heightmapPosition.X = -(heights.GetLength(0) - 1) * terrainScale / 2;
-            heightmapPosition.Z = -(heights.GetLength(1) - 1) * terrainScale / 2;
+            _heightmapPosition.X = -(heights.GetLength(0) - 1) * terrainScale / 2;
+            _heightmapPosition.Z = -(heights.GetLength(1) - 1) * terrainScale / 2;
         }
 
         public bool IsOnHeightmap(Vector3 position)
         {
-            Vector3 positionOnHeightmap = position - heightmapPosition;
+            Vector3 positionOnHeightmap = position - _heightmapPosition;
 
             return (positionOnHeightmap.X > 0 &&
-                positionOnHeightmap.X < heightmapWidth &&
+                positionOnHeightmap.X < _heightmapWidth &&
                 positionOnHeightmap.Z > 0 &&
-                positionOnHeightmap.Z < heightmapHeight);
+                positionOnHeightmap.Z < _heightmapHeight);
         }
 
         public float GetHeight(Vector3 position)
         {
-            Vector3 positionOnHeightmap = position - heightmapPosition;
+            Vector3 positionOnHeightmap = position - _heightmapPosition;
 
-            int left, top;
-            left = (int)positionOnHeightmap.X / (int)terrainScale;
-            top = (int)positionOnHeightmap.Z / (int)terrainScale;
+            int left = (int)positionOnHeightmap.X / (int)_terrainScale;
+            int top = (int)positionOnHeightmap.Z / (int)_terrainScale;
 
-            float xNormalized = (positionOnHeightmap.X % terrainScale) / terrainScale;
-            float zNormalized = (positionOnHeightmap.Z % terrainScale) / terrainScale;
+            float xNormalized = (positionOnHeightmap.X % _terrainScale) / _terrainScale;
+            float zNormalized = (positionOnHeightmap.Z % _terrainScale) / _terrainScale;
 
             float topHeight = MathHelper.Lerp(
-                heights[left, top],
-                heights[left + 1, top],
+                _heights[left, top],
+                _heights[left + 1, top],
                 xNormalized);
 
             float bottomHeight = MathHelper.Lerp(
-                heights[left, top + 1],
-                heights[left + 1, top + 1],
+                _heights[left, top + 1],
+                _heights[left + 1, top + 1],
                 xNormalized);
 
             return MathHelper.Lerp(topHeight, bottomHeight, zNormalized);

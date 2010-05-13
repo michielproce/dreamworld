@@ -13,6 +13,6 @@ namespace DreamWorld.InputManagement
                 HandleInput();
         }
 
-        public abstract void HandleInput();
+        protected abstract void HandleInput();
     }
 }

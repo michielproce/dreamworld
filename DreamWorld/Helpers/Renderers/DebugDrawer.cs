@@ -7,67 +7,67 @@ namespace DreamWorld.Helpers.Renderers
 {
     public class DebugDrawer : DrawableGameComponent
     {
-        BasicEffect basicEffect;
-        List<VertexPositionColor> vertexData;
+        private BasicEffect _basicEffect;
+        private readonly List<VertexPositionColor> _vertexData;
 
-        private GameScreen GameScreen;
+        private readonly GameScreen _gameScreen;
 
         public DebugDrawer(Game game, GameScreen gameScreen)
             : base(game)
         {
-            GameScreen = gameScreen;
-            vertexData = new List<VertexPositionColor>();
+            _gameScreen = gameScreen;
+            _vertexData = new List<VertexPositionColor>();
         }
 
         public override void Initialize()
         {
             base.Initialize();
 
-            basicEffect = new BasicEffect(GraphicsDevice, null);
+            _basicEffect = new BasicEffect(GraphicsDevice, null);
             GraphicsDevice.VertexDeclaration = new VertexDeclaration(GraphicsDevice, VertexPositionColor.VertexElements);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            if (vertexData.Count == 0) return;
+            if (_vertexData.Count == 0) return;
 
 
             GraphicsDevice.RenderState.AlphaBlendEnable = true;
             GraphicsDevice.RenderState.SourceBlend = Blend.SourceAlpha;
             GraphicsDevice.RenderState.DestinationBlend = Blend.InverseSourceAlpha;
 
-            basicEffect.AmbientLightColor = Vector3.One;
-            basicEffect.View = GameScreen.Camera.View;
-            basicEffect.Projection = GameScreen.Camera.Projection;
-            basicEffect.VertexColorEnabled = true;
+            _basicEffect.AmbientLightColor = Vector3.One;
+            _basicEffect.View = _gameScreen.Camera.View;
+            _basicEffect.Projection = _gameScreen.Camera.Projection;
+            _basicEffect.VertexColorEnabled = true;
 
-            basicEffect.Begin();
-            foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
+            _basicEffect.Begin();
+            foreach (EffectPass pass in _basicEffect.CurrentTechnique.Passes)
             {
                 pass.Begin();
 
-                GraphicsDevice.DrawUserPrimitives(PrimitiveType.LineStrip, vertexData.ToArray(), 0, vertexData.Count - 1);
+                GraphicsDevice.DrawUserPrimitives(PrimitiveType.LineStrip, _vertexData.ToArray(), 0, _vertexData.Count - 1);
 
                 pass.End();
             }
-            basicEffect.End();
+            _basicEffect.End();
 
-            vertexData.Clear();
+            _vertexData.Clear();
 
             base.Draw(gameTime);
         }
 
         public void DrawShape(VertexPositionColor[] shape)
         {
-            if (vertexData.Count > 0)
+            if (_vertexData.Count > 0)
             {
-                vertexData.Add(new VertexPositionColor(vertexData[vertexData.Count - 1].Position, Color.TransparentWhite));
-                vertexData.Add(new VertexPositionColor(shape[0].Position, Color.TransparentWhite));
+                _vertexData.Add(new VertexPositionColor(_vertexData[_vertexData.Count - 1].Position, Color.TransparentWhite));
+                _vertexData.Add(new VertexPositionColor(shape[0].Position, Color.TransparentWhite));
             }
 
             foreach (VertexPositionColor vps in shape)
             {
-                vertexData.Add(vps);
+                _vertexData.Add(vps);
             }
         }
     }

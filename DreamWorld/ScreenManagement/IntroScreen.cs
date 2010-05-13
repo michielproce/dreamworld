@@ -7,21 +7,21 @@ namespace DreamWorld.ScreenManagement
 {
     public abstract class IntroScreen : Screen
     {
-        private Texture2D texture;
+        private Texture2D _texture;
 
-        private TimeSpan duration;
+        private readonly TimeSpan _duration;
         
         
         protected IntroScreen()
         {
-            duration = TimeSpan.FromSeconds(3);
+            _duration = TimeSpan.FromSeconds(3);
             TransitionOnTime = TimeSpan.FromMilliseconds(500);
             TransitionOffTime = TimeSpan.FromMilliseconds(500);            
         }
 
         protected override void LoadContent()
         {
-            texture = ScreenManager.Game.Content.Load<Texture2D>(@"Textures\Intro\" + TextureName);
+            _texture = ScreenManager.Game.Content.Load<Texture2D>(@"Textures\Intro\" + TextureName);
         }
 
         protected abstract string TextureName { get; }
@@ -29,7 +29,7 @@ namespace DreamWorld.ScreenManagement
 
         public override void Update(GameTime gameTime)
         {
-            if (gameTime.TotalGameTime > duration && !IsExiting)
+            if (gameTime.TotalGameTime > _duration && !IsExiting)
             {
                 ScreenManager.AddScreen(new GlobalIntroCutscene());
                 ExitScreen();
@@ -42,7 +42,7 @@ namespace DreamWorld.ScreenManagement
         {
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             spriteBatch.Begin();
-            spriteBatch.Draw(texture, ScreenManager.Game.GraphicsDevice.Viewport.TitleSafeArea, new Color(255, 255, 255, TransitionAlpha));
+            spriteBatch.Draw(_texture, ScreenManager.Game.GraphicsDevice.Viewport.TitleSafeArea, new Color(255, 255, 255, TransitionAlpha));
             spriteBatch.End();
         }    
     }

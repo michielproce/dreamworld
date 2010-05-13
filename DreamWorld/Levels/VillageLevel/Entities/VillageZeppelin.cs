@@ -9,17 +9,17 @@ namespace DreamWorld.Levels.VillageLevel.Entities
     {
         public static bool ListInEditor = true;
 
-        private Curve3D path;
+        private readonly Curve3D _path;
         
         public VillageZeppelin()
         {
-            path = new Curve3D(CurveLoopType.Cycle);
-            path.AddPoint(new Vector3(0, 0, -200));
-            path.AddPoint(new Vector3(500, -100, -1100));
-            path.AddPoint(new Vector3(-500, -30, -600));
-            path.AddPoint(new Vector3(-300, -10, 0));
-            path.AddPoint(new Vector3(0, 0, -200));                       
-            path.SetTangents();
+            _path = new Curve3D(CurveLoopType.Cycle);
+            _path.AddPoint(new Vector3(0, 0, -200));
+            _path.AddPoint(new Vector3(500, -100, -1100));
+            _path.AddPoint(new Vector3(-500, -30, -600));
+            _path.AddPoint(new Vector3(-300, -10, 0));
+            _path.AddPoint(new Vector3(0, 0, -200));                       
+            _path.SetTangents();
         }
 
         public override void Initialize()
@@ -36,7 +36,7 @@ namespace DreamWorld.Levels.VillageLevel.Entities
 
         protected override Curve3D Path
         {
-            get { return path; }
+            get { return _path; }
         }
     }
 }
